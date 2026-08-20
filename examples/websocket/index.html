@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>WebSocket Chat Room Example</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; }
+  #log { border: 1px solid #ccc; height: 320px; overflow-y: auto; padding: 0.5rem; margin-bottom: 0.5rem; }
+  .system { color: #888; font-style: italic; }
+  .presence { color: #0a7; font-size: 0.85em; }
+  .chat b { color: #245; }
+  form { display: flex; gap: 0.5rem; }
+  input { flex: 1; padding: 0.4rem; }
+  button { padding: 0.4rem 0.8rem; }
+  #setup { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+  <h1>WebSocket Chat Room</h1>
+
+  <div id="setup">
+    <input id="username" placeholder="username" value="alice" />
+    <input id="room" placeholder="room id" value="general" />
+    <button id="connectBtn">Connect</button>
+    <button id="disconnectBtn" disabled>Disconnect</button>
+  </div>
+
+  <div id="log"></div>
+
+  <form id="chatForm">
+    <input id="message" placeholder="Type a message and press Enter" disabled autocomplete="off" />
+    <button type="submit" disabled id="sendBtn">Send</button>
+  </form>
+
+  <script>
+    const log = document.getElementById("log");
+    const connectBtn = document.getElementById("connectBtn");
+    const disconnectBtn = document.getElementById("disconnectBtn");
+    const chatForm = document.getElementById("chatForm");
+    const messageInput = document.getElementById("message");
+    const sendBtn = document.getElementById("sendBtn");
+
+    let socket = null;
+
+    function appendLine(text, cls) {
+      const div = document.createElement("div");
+      if (cls) div.className = cls;
+      div.textContent = text;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    connectBtn.addEventListener("click", () => {
+      const username = document.getElementById("username").value.trim() || "anonymous";
+      const room = document.getElementById("room").value.trim() || "general";
+
+      const protocol = location.protocol === "https:" ? "wss" : "ws";
+      const url = `${protocol}://${location.host}/ws/${encodeURIComponent(room)}?username=${encodeURIComponent(username)}`;
+      socket = new WebSocket(url);
+
+      socket.addEventListener("open", () => {
+        appendLine(`Connected to room "${room}" as ${username}.`, "system");
+        connectBtn.disabled = true;
+        disconnectBtn.disabled = false;
+        messageInput.disabled = false;
+        sendBtn.disabled = false;
+      });
+
+      socket.addEventListener("message", (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === "chat") {
+          appendLine(`${data.username}: ${data.text}`, "chat");
+        } else if (data.type === "system") {
+          appendLine(data.text, "system");
+        } else if (data.type === "presence") {
+          appendLine(`(${data.count} user(s) in room "${data.room_id}")`, "presence");
+        }
+      });
+
+      socket.addEventListener("close", () => {
+        appendLine("Disconnected.", "system");
+        connectBtn.disabled = false;
+        disconnectBtn.disabled = true;
+        messageInput.disabled = true;
+        sendBtn.disabled = true;
+      });
+    });
+
+    disconnectBtn.addEventListener("click", () => {
+      if (socket) socket.close();
+    });
+
+    chatForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const text = messageInput.value;
+      if (!text.trim() || !socket || socket.readyState !== WebSocket.OPEN) return;
+      socket.send(JSON.stringify({ text }));
+      messageInput.value = "";
+    });
+  </script>
+</body>
+</html>

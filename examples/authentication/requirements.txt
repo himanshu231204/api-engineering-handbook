@@ -1,0 +1,11 @@
+fastapi>=0.111,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.6,<3.0
+python-dotenv>=1.0,<2.0
+passlib[bcrypt]>=1.7.4,<2.0
+python-jose[cryptography]>=3.3,<4.0
+
+# passlib 1.7.4 (the latest release) reads bcrypt's internal
+# `__about__.__version__` attribute, which bcrypt removed in 4.1.0. Pinning
+# below that avoids a spurious crash on the first hash/verify call.
+bcrypt>=4.0,<4.1

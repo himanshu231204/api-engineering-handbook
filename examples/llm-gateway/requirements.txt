@@ -1,0 +1,7 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+
+# Only needed if you implement the real-provider branches in providers.py
+# against HTTP-based provider APIs.
+# httpx>=0.27

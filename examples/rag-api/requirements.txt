@@ -1,0 +1,8 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+python-multipart>=0.0.9
+
+# Only needed if you implement _embed_via_api() in vector_store.py or the
+# real call_llm() branch in main.py against an HTTP-based provider API.
+# httpx>=0.27

@@ -1,0 +1,17 @@
+{
+  // Relaxed ruleset for a large, hand-written prose handbook. Disables rules that
+  // fight normal technical writing (long lines, HTML in tables, duplicate headings
+  // across different chapter files, etc.) and keeps the ones that catch real
+  // authoring mistakes (bad link syntax, unclosed emphasis, inconsistent list
+  // markers within a single file). The `markdown-lint` CI job runs with
+  // continue-on-error, so this is advisory, not a merge gate.
+  "default": true,
+  "MD013": false,   // line length — prose wraps naturally, not enforced
+  "MD024": {         // duplicate headings — allowed across sibling files ("## Why This Matters" repeats by design)
+    "siblings_only": true
+  },
+  "MD025": false,    // multiple top-level headings — some files intentionally have more than one H1-style section
+  "MD033": false,    // inline HTML — used sparingly for badges/formatting in README.md
+  "MD041": false,    // first line must be a top-level heading — front-matter-free files may open differently
+  "MD034": false     // bare URLs — a few code/HTTP examples include them intentionally
+}

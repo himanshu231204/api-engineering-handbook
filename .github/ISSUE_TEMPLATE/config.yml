@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Chapter status / roadmap question
+    url: https://github.com/himanshu231204/api-engineering-handbook/blob/main/ROADMAP.md
+    about: Check the roadmap and each Part's README.md status table before asking "is X written yet?" — planned chapters are listed there.
+  - name: Contributing guide
+    url: https://github.com/himanshu231204/api-engineering-handbook/blob/main/CONTRIBUTING.md
+    about: Read this before opening a PR for a new chapter, example, or resource.

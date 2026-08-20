@@ -1,0 +1,6 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+
+# Only needed if you implement _stream_from_real_provider in llm_client.py
+# against a real HTTP-based provider API. Uncomment to use it:
+# httpx>=0.27

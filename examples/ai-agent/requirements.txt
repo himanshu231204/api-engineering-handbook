@@ -1,0 +1,11 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+
+# Only needed if you implement _call_real_provider() in llm_client.py
+# against an HTTP-based provider API.
+# httpx>=0.27
+
+# Only needed if you replace mcp_server_example.py's hand-rolled JSON-RPC
+# with the official MCP SDK for a production server:
+# mcp>=1.0

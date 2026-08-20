@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>LLM Streaming (SSE) Example</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; }
+  #output { border: 1px solid #ccc; min-height: 160px; padding: 0.75rem; white-space: pre-wrap; margin-top: 1rem; }
+  form { display: flex; gap: 0.5rem; }
+  input { flex: 1; padding: 0.4rem; }
+  button { padding: 0.4rem 0.8rem; }
+  #status { color: #888; font-size: 0.85em; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+  <h1>LLM Streaming (SSE) Example</h1>
+  <form id="promptForm">
+    <input id="prompt" placeholder="Ask something..." value="Explain SSE in one sentence." autocomplete="off" />
+    <button type="submit">Send</button>
+  </form>
+  <div id="status"></div>
+  <div id="output"></div>
+
+  <script>
+    const form = document.getElementById("promptForm");
+    const output = document.getElementById("output");
+    const status = document.getElementById("status");
+    let source = null;
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const prompt = document.getElementById("prompt").value.trim();
+      if (!prompt) return;
+
+      if (source) source.close();
+      output.textContent = "";
+      status.textContent = "Connecting...";
+
+      const url = `/chat/stream?prompt=${encodeURIComponent(prompt)}`;
+      source = new EventSource(url);
+
+      source.onopen = () => {
+        status.textContent = "Streaming...";
+      };
+
+      source.onmessage = (event) => {
+        if (event.data === "[DONE]") {
+          status.textContent = "Done.";
+          source.close();
+          return;
+        }
+        const data = JSON.parse(event.data);
+        if (data.error) {
+          status.textContent = `Error: ${data.error}`;
+          source.close();
+          return;
+        }
+        output.textContent += data.text;
+      };
+
+      source.onerror = () => {
+        status.textContent = "Connection closed.";
+        source.close();
+      };
+    });
+  </script>
+</body>
+</html>
