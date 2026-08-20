@@ -1,0 +1,94 @@
+site_name: API Engineering Handbook
+site_description: >-
+  A free, open-source handbook covering HTTP fundamentals through production
+  LLM gateways, RAG pipelines, and AI agent APIs.
+site_url: https://himanshu231204.github.io/api-engineering-handbook/
+repo_url: https://github.com/himanshu231204/api-engineering-handbook
+repo_name: himanshu231204/api-engineering-handbook
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  font: false
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/gen_pages.py
+
+hooks:
+  - scripts/mkdocs_hooks.py
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - tables
+  - fenced_code
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - admonition
+  - attr_list
+  - md_in_html
+
+nav:
+  - Home: index.md
+  - Curriculum:
+      - "00 · Introduction": 00-introduction/README.md
+      - "01 · API Foundations": 01-api-foundations/README.md
+      - "02 · REST API Design": 02-rest-api-design/README.md
+      - "03 · Building APIs": 03-building-apis/README.md
+      - "04 · Databases & APIs": 04-databases-and-apis/README.md
+      - "05 · Authentication & Authorization": 05-authentication-authorization/README.md
+      - "06 · Production Reliability": 06-production-reliability/README.md
+      - "07 · Caching & Performance": 07-caching-performance/README.md
+      - "08 · Async & Event-Driven Systems": 08-async-systems/README.md
+      - "09 · Real-Time APIs & Webhooks": 09-realtime-and-webhooks/README.md
+      - "10 · API Security": 10-api-security/README.md
+      - "11 · Microservices & Distributed Systems": 11-microservices-distributed-systems/README.md
+      - "12 · Observability": 12-observability/README.md
+      - "13 · API Testing": 13-api-testing/README.md
+      - "14 · AI API Engineering": 14-ai-api-engineering/README.md
+      - "15 · Production AI Systems": 15-production-ai-systems/README.md
+      - "16 · RAG APIs": 16-rag-apis/README.md
+      - "17 · AI Agents & MCP": 17-ai-agents-and-mcp/README.md
+      - "18 · Production Architecture": 18-production-architecture/README.md
+      - "19 · System Design Case Studies": 19-system-design-case-studies/README.md
+      - "20 · Capstone Projects": 20-capstone-projects/README.md
+  - Projects: projects/index.md
+  - Resources: resources/index.md
+  - Diagrams: diagrams/index.md
