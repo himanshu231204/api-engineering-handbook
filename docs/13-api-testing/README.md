@@ -14,14 +14,14 @@ How to test APIs at every level: unit, integration, and end-to-end tests, contra
 |---|---|---|
 | 1 | [Unit Testing](unit-testing.md) | ✅ Written |
 | 2 | [Integration Testing](integration-testing.md) | ✅ Written |
-| 3 | End-to-End Testing | 🚧 Planned |
-| 4 | Contract Testing | 🚧 Planned |
+| 3 | [End-to-End Testing](end-to-end-testing.md) | ✅ Written |
+| 4 | [Contract Testing](contract-testing.md) | ✅ Written |
 | 5 | [Load Testing](load-testing.md) | ✅ Written |
-| 6 | Stress Testing | 🚧 Planned |
-| 7 | Chaos Testing Basics | 🚧 Planned |
-| 8 | API Mocking | 🚧 Planned |
-| 9 | Test Databases | 🚧 Planned |
-| 10 | CI/CD Testing Pipelines | 🚧 Planned |
+| 6 | [Stress Testing](stress-testing.md) | ✅ Written |
+| 7 | [Chaos Testing Basics](chaos-testing-basics.md) | ✅ Written |
+| 8 | [API Mocking](api-mocking.md) | ✅ Written |
+| 9 | [Test Databases](test-databases.md) | ✅ Written |
+| 10 | [CI/CD Testing Pipelines](cicd-testing-pipelines.md) | ✅ Written |
 
 ## Next
 

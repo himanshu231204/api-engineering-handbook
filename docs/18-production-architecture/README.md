@@ -46,9 +46,9 @@ Parts 1–17. This part assumes you've read (or at least skimmed) every layer it
 | 2 | [Request Flow, End to End](request-flow.md) | ✅ Written |
 | 3 | [Failure Scenarios](failure-scenarios.md) | ✅ Written |
 | 4 | [Scaling Strategy](scaling-strategy.md) | ✅ Written |
-| 5 | Security in Production | 🚧 Planned |
-| 6 | Observability in Production | 🚧 Planned |
-| 7 | Cost Management | 🚧 Planned |
+| 5 | [Security in Production](security-in-production.md) | ✅ Written |
+| 6 | [Observability in Production](observability-in-production.md) | ✅ Written |
+| 7 | [Cost Management](cost-management.md) | ✅ Written |
 
 ## Related Diagram
 

@@ -19,12 +19,13 @@ Every part has a complete index page describing exactly what it will cover, even
 - [x] **v0.2 — Core foundations.** Parts 1–3 (API Foundations, REST Design, Building APIs with FastAPI) written in full.
 - [x] **v0.3 — AI API engineering core.** Parts 14–17 (LLM APIs, Production AI Systems, RAG APIs, AI Agents & MCP) written in full.
 - [x] **v0.4a — Databases.** Part 4 (Databases & APIs) written in full.
-- [ ] **v0.4 — Backend production skills.** Parts 5–10 (Auth, Reliability, Caching, Async, Realtime, Security) written in full (currently a priority subset per part — see each README for what remains 🚧 Planned).
-- [ ] **v0.5 — Distributed systems & operations.** Parts 11–13 (Microservices, Observability, Testing) written in full.
-- [ ] **v0.6 — Synthesis.** Parts 18–19 (Production Architecture, System Design Case Studies) written in full.
-- [ ] **v0.7 — Capstones.** All 10 capstone projects fully specified with implementation plans; reference implementations for at least 3 projects.
-- [ ] **v0.8 — Examples complete.** All 12 `examples/` directories runnable with their own README and tests.
-- [ ] **v1.0 — Full handbook.** All 190 chapters written, all diagrams in place, all cheatsheets/exercises/interview questions complete, full link and consistency audit passed.
+- [x] **v0.4 — Backend production skills.** Parts 5–10 (Auth, Reliability, Caching, Async, Realtime, Security) written in full.
+- [x] **v0.5 — Distributed systems & operations.** Parts 11–13 (Microservices, Observability, Testing) written in full.
+- [x] **v0.6 — Synthesis.** Parts 18–19 (Production Architecture, System Design Case Studies) written in full.
+- [x] **v0.9 — All 190 chapters written.** Every part's status table is 100% ✅ Written, 0 broken internal links across the repo (`scripts/check_links.py`).
+- [ ] **v0.7 — Capstone reference implementations.** All 10 capstone projects are fully specified (done); reference implementations for at least 3 projects beyond the spec stage.
+- [ ] **v0.8 — Examples hardening.** All 12 `examples/` directories live-tested end to end with real dependencies installed (several are currently syntax-verified but not fully runtime-tested — see each example's README for its verification status).
+- [ ] **v1.0 — Polish pass.** Full read-through for tone/terminology consistency across all 20 parts, glossary cross-reference audit, and a pass to replace any illustrative pseudo-SDK code with real, currently-correct provider SDK calls where a stable public API exists.
 
 ## How Contributions Fit In
 

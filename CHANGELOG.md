@@ -5,14 +5,22 @@ All notable changes to this project are documented here. Format loosely follows 
 ## [Unreleased]
 
 ### Added
+- `CLAUDE.md` and `AGENTS.md` — conventions for AI coding agents working in this repo (chapter template, status model, cross-linking rules, verification scripts).
+- `.github/workflows/ci.yml` — link check + examples compile check on every push/PR, plus an advisory markdownlint pass.
+- `scripts/check_links.py` and `scripts/check_examples_compile.py`.
+- `.github/PULL_REQUEST_TEMPLATE.md` and `.github/ISSUE_TEMPLATE/` (bug report, chapter request).
+- **All 190 chapters across all 20 parts are now written.** Every part's `README.md` status table is 100% ✅ Written — Parts 5–13 and 18 went from a curated subset to fully complete (Auth, Production Reliability, Caching, Async Systems, Realtime & Webhooks, API Security, Microservices, Observability, API Testing, Production Architecture).
 - Repository scaffold: full `docs/` structure for all 20 parts plus introduction, `examples/`, `diagrams/`, `projects/`, and `resources/`.
 - Root documentation: `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `ROADMAP.md`, `LICENSE`.
 - Part index pages (`README.md`) for all 20 parts with chapter lists, prerequisites, and status tracking.
-- Full chapters for Part 1 (API Foundations), Part 2 (REST API Design), and Part 3 (Building APIs).
-- Full chapters for Part 14 (AI API Engineering), Part 15 (Production AI Systems), Part 16 (RAG APIs), and Part 17 (AI Agents & MCP).
 - Core architecture diagrams in `diagrams/`.
-- Initial cheatsheets, glossary, and interview question sets in `resources/`.
+- Cheatsheets, glossary, interview question sets, and exercises in `resources/`.
 - Capstone project specifications in `projects/01`–`projects/10`.
+- 12 runnable code examples in `examples/`.
+- 10 fully worked system design case studies in `docs/19-system-design-case-studies/`.
+
+### Fixed
+- Repaired stray cross-part links (wrong filenames, links to not-yet-written chapters) discovered while completing Parts 5–13 and 18; `scripts/check_links.py` now reports 0 broken links across 269 Markdown files.
 
 ## [0.1.0] — Initial scaffold
 - Project initialized.

@@ -13,13 +13,13 @@ How to move data between client and server without waiting for a poll: polling, 
 | # | Chapter | Status |
 |---|---|---|
 | 1 | [Polling](polling.md) | ✅ Written |
-| 2 | Long Polling | 🚧 Planned |
+| 2 | [Long Polling](long-polling.md) | ✅ Written |
 | 3 | [Webhooks](webhooks.md) | ✅ Written |
 | 4 | [WebSocket](websocket.md) | ✅ Written |
 | 5 | [Server-Sent Events](server-sent-events.md) | ✅ Written |
-| 6 | Streaming APIs | 🚧 Planned |
-| 7 | Event Ordering | 🚧 Planned |
-| 8 | Duplicate Events | 🚧 Planned |
+| 6 | [Streaming APIs](streaming-apis.md) | ✅ Written |
+| 7 | [Event Ordering](event-ordering.md) | ✅ Written |
+| 8 | [Duplicate Events](duplicate-events.md) | ✅ Written |
 | 9 | [Webhook Signature Verification](webhook-signature-verification.md) | ✅ Written |
 
 ## Related Examples
