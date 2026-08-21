@@ -15,13 +15,13 @@ How to move work outside the request/response cycle: sync vs. async APIs, Python
 | 1 | [Sync vs Async](sync-vs-async.md) | ✅ Written |
 | 2 | [Python asyncio](python-asyncio.md) | ✅ Written |
 | 3 | [Background Tasks](background-tasks.md) | ✅ Written |
-| 4 | [Job Queues](job-queues.md) | ✅ Written |
-| 5 | [Workers](workers.md) | ✅ Written |
+| 4 | Job Queues | 🚧 Planned |
+| 5 | Workers | 🚧 Planned |
 | 6 | [Message Queues](message-queues.md) | ✅ Written |
-| 7 | [RabbitMQ Concepts](rabbitmq-concepts.md) | ✅ Written |
-| 8 | [Kafka Concepts](kafka-concepts.md) | ✅ Written |
-| 9 | [Event-Driven Architecture](event-driven-architecture.md) | ✅ Written |
-| 10 | [Eventual Consistency](eventual-consistency.md) | ✅ Written |
+| 7 | RabbitMQ Concepts | 🚧 Planned |
+| 8 | Kafka Concepts | 🚧 Planned |
+| 9 | Event-Driven Architecture | 🚧 Planned |
+| 10 | Eventual Consistency | 🚧 Planned |
 
 ## Related Example
 

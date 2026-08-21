@@ -15,12 +15,12 @@ Why caching exists, how to use Redis correctly, cache-aside and write-through pa
 | 1 | [Why Caching Matters](why-caching-matters.md) | ✅ Written |
 | 2 | [Redis](redis.md) | ✅ Written |
 | 3 | [Cache-Aside Pattern](cache-aside.md) | ✅ Written |
-| 4 | [Write-Through Caching](write-through-caching.md) | ✅ Written |
-| 5 | [TTL](ttl.md) | ✅ Written |
+| 4 | Write-Through Caching | 🚧 Planned |
+| 5 | TTL | 🚧 Planned |
 | 6 | [Cache Invalidation](cache-invalidation.md) | ✅ Written |
-| 7 | [Distributed Caching](distributed-caching.md) | ✅ Written |
-| 8 | [CDN Basics](cdn-basics.md) | ✅ Written |
-| 9 | [Performance Bottlenecks](performance-bottlenecks.md) | ✅ Written |
+| 7 | Distributed Caching | 🚧 Planned |
+| 8 | CDN Basics | 🚧 Planned |
+| 9 | Performance Bottlenecks | 🚧 Planned |
 | 10 | [Latency and P95/P99](latency-and-percentiles.md) | ✅ Written |
 
 ## Related Example

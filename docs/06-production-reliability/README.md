@@ -15,16 +15,16 @@ How APIs stay correct and available when the network is unreliable, downstream s
 | 1 | [Timeouts](timeouts.md) | ✅ Written |
 | 2 | [Retries](retries.md) | ✅ Written |
 | 3 | [Exponential Backoff](exponential-backoff.md) | ✅ Written |
-| 4 | [Jitter](jitter.md) | ✅ Written |
-| 5 | [Idempotency in Practice](idempotency-in-practice.md) | ✅ Written |
+| 4 | Jitter | 🚧 Planned |
+| 5 | Idempotency in Practice | 🚧 Planned |
 | 6 | [Rate Limiting](rate-limiting.md) | ✅ Written |
 | 7 | [Circuit Breakers](circuit-breakers.md) | ✅ Written |
-| 8 | [Bulkheads](bulkheads.md) | ✅ Written |
-| 9 | [Graceful Degradation](graceful-degradation.md) | ✅ Written |
-| 10 | [Health Checks](health-checks.md) | ✅ Written |
-| 11 | [Readiness and Liveness Probes](readiness-and-liveness-probes.md) | ✅ Written |
+| 8 | Bulkheads | 🚧 Planned |
+| 9 | Graceful Degradation | 🚧 Planned |
+| 10 | Health Checks | 🚧 Planned |
+| 11 | Readiness and Liveness Probes | 🚧 Planned |
 
-> Note: chapter 5 here (`idempotency-in-practice.md`) covers *implementing* idempotency (idempotency keys, storage, replay behavior) as a reliability pattern — see [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md) for the conceptual/HTTP-semantics introduction first.
+> Note: chapter 5 here (idempotency in practice) will cover *implementing* idempotency (idempotency keys, storage, replay behavior) as a reliability pattern — see [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md) for the conceptual/HTTP-semantics introduction first.
 
 ## Related Example
 
