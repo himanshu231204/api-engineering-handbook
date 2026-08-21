@@ -14,14 +14,14 @@ Parts 3–9.
 |---|---|---|
 | 1 | [Monolith vs Microservices](monolith-vs-microservices.md) | ✅ Written |
 | 2 | [API Gateway](api-gateway.md) | ✅ Written |
-| 3 | [Service Discovery](service-discovery.md) | ✅ Written |
-| 4 | [Load Balancing](load-balancing.md) | ✅ Written |
-| 5 | [Service-to-Service Authentication](service-to-service-authentication.md) | ✅ Written |
+| 3 | Service Discovery | 🚧 Planned |
+| 4 | Load Balancing | 🚧 Planned |
+| 5 | Service-to-Service Authentication | 🚧 Planned |
 | 6 | [REST vs gRPC](rest-vs-grpc.md) | ✅ Written |
-| 7 | [Protocol Buffers](protocol-buffers.md) | ✅ Written |
-| 8 | [Distributed Transactions](distributed-transactions.md) | ✅ Written |
+| 7 | Protocol Buffers | 🚧 Planned |
+| 8 | Distributed Transactions | 🚧 Planned |
 | 9 | [Saga Pattern](saga-pattern.md) | ✅ Written |
-| 10 | [Event-Driven Microservices](event-driven-microservices.md) | ✅ Written |
+| 10 | Event-Driven Microservices | 🚧 Planned |
 
 ## Next
 

@@ -14,12 +14,12 @@ How to defend APIs against real, common attacks: secrets management, CORS, CSRF,
 |---|---|---|
 | 1 | [Secrets Management](secrets-management.md) | ✅ Written |
 | 2 | [CORS](cors.md) | ✅ Written |
-| 3 | [CSRF](csrf.md) | ✅ Written |
+| 3 | CSRF | 🚧 Planned |
 | 4 | [SQL Injection](sql-injection.md) | ✅ Written |
-| 5 | [XSS and APIs](xss-and-apis.md) | ✅ Written |
+| 5 | XSS and APIs | 🚧 Planned |
 | 6 | [Input Validation](input-validation.md) | ✅ Written |
-| 7 | [Rate-Limit Abuse Protection](rate-limit-abuse-protection.md) | ✅ Written |
-| 8 | [Webhook Security](webhook-security.md) | ✅ Written |
+| 7 | Rate-Limit Abuse Protection | 🚧 Planned |
+| 8 | Webhook Security | 🚧 Planned |
 | 9 | [OWASP API Security Top 10](owasp-api-security.md) | ✅ Written |
 
 ## Next
