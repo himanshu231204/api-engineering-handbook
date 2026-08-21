@@ -13,15 +13,15 @@ How to know what your API is actually doing in production: logging, structured l
 | # | Chapter | Status |
 |---|---|---|
 | 1 | [Logging](logging.md) | ✅ Written |
-| 2 | [Structured Logging](structured-logging.md) | ✅ Written |
+| 2 | Structured Logging | 🚧 Planned |
 | 3 | [Metrics](metrics.md) | ✅ Written |
-| 4 | [Tracing](tracing.md) | ✅ Written |
+| 4 | Tracing | 🚧 Planned |
 | 5 | [Distributed Tracing](distributed-tracing.md) | ✅ Written |
-| 6 | [Request IDs](request-ids.md) | ✅ Written |
-| 7 | [OpenTelemetry](opentelemetry.md) | ✅ Written |
-| 8 | [Error Monitoring](error-monitoring.md) | ✅ Written |
+| 6 | Request IDs | 🚧 Planned |
+| 7 | OpenTelemetry | 🚧 Planned |
+| 8 | Error Monitoring | 🚧 Planned |
 | 9 | [SLI, SLO, SLA](sli-slo-sla.md) | ✅ Written |
-| 10 | [Debugging Production APIs](debugging-production-apis.md) | ✅ Written |
+| 10 | Debugging Production APIs | 🚧 Planned |
 
 ## Next
 

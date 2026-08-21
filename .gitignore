@@ -24,5 +24,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# AI agent tooling
+.opencode/
+
 # Logs
 *.log
