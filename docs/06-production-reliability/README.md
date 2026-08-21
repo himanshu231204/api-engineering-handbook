@@ -24,6 +24,8 @@ How APIs stay correct and available when the network is unreliable, downstream s
 | 10 | Health Checks | 🚧 Planned |
 | 11 | Readiness and Liveness Probes | 🚧 Planned |
 
+> Note: chapter 5 here (idempotency in practice) will cover *implementing* idempotency (idempotency keys, storage, replay behavior) as a reliability pattern — see [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md) for the conceptual/HTTP-semantics introduction first.
+
 ## Related Example
 
 [`examples/fastapi-crud/`](../../examples/fastapi-crud/) is extended with retry/backoff and rate-limiting middleware.
