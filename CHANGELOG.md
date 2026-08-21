@@ -18,6 +18,7 @@ All notable changes to this project are documented here. Format loosely follows 
 - Capstone project specifications in `projects/01`–`projects/10`.
 - 12 runnable code examples in `examples/`.
 - 10 fully worked system design case studies in `docs/19-system-design-case-studies/`.
+- Reference implementations (FastAPI + Pydantic v2 + SQLAlchemy async + SQLite) for capstone projects 01 (Bookshelf CRUD API), 02 (Authentication Service), and 04 (Webhook Processing System), each with `app/`, `tests/`, `requirements.txt`, `.env.example`, and a "Reference Implementation" section on its `README.md` — satisfies the v0.7 milestone.
 
 ### Fixed
 - Repaired stray cross-part links (wrong filenames, links to not-yet-written chapters) discovered while completing Parts 5–13 and 18; `scripts/check_links.py` now reports 0 broken links across 269 Markdown files.

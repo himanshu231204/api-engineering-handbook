@@ -141,3 +141,21 @@ CREATE INDEX idx_books_published_year ON books (published_year);
 
 - [Project index (Part 20)](../../docs/20-capstone-projects/README.md)
 - [Handbook home](../../README.md)
+
+## Reference Implementation
+
+A working reference implementation of this spec lives in this directory under `app/` and `tests/`, following the folder structure above (FastAPI + Pydantic v2 + SQLAlchemy async + SQLite via `aiosqlite`). It implements every endpoint in the API table above, full validation (ISBN format, blank fields, ratings/page counts), pagination + filtering + sorting on `GET /books`, idempotent `DELETE` (repeat calls return 204), and 409 on duplicate ISBN for both `POST` and updates.
+
+To run it:
+
+```bash
+cd projects/01-crud-api
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --reload
+# in another shell:
+pytest
+```
+
+**Verification status**: every file under `app/` and `tests/` was byte-compiled successfully with `python3 -m py_compile`. `pip install` and `pytest` could not actually be run in the sandbox this was built in (outbound access to PyPI was network-blocked), so the test suite has **not** been executed end-to-end — treat it as syntax-verified only until you run `pytest` yourself.

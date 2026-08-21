@@ -168,3 +168,21 @@ CREATE TABLE oauth_identities (
 - [Project index (Part 20)](../../docs/20-capstone-projects/README.md)
 - [Handbook home](../../README.md)
 - Consumed by: [Project 3 — Payment API](../03-payment-api/README.md), [Project 10 — Production AI SaaS](../10-production-ai-saas/README.md)
+
+## Reference Implementation
+
+A working reference implementation lives in this directory under `app/` and `tests/` (FastAPI + Pydantic v2 + SQLAlchemy async + SQLite via `aiosqlite`, HS256 JWTs via `python-jose`, bcrypt hashing via `passlib`). It covers registration with password-strength validation, login, refresh-token rotation with reuse detection (a revoked token being replayed revokes the whole token family), logout, password reset (which revokes all existing sessions), `GET /auth/me`, RBAC via a `require_role("admin")` dependency and a protected `/admin/users` route, and a process-local rate limiter on `/auth/login` and `/auth/password/forgot`. **Not implemented**: OAuth social login and the JWKS/RS256 endpoint — both are called out as optional/advanced-improvement items above, so this reference uses HS256 with a shared secret instead.
+
+To run it:
+
+```bash
+cd projects/02-authentication-service
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env   # set a real JWT_SECRET_KEY
+uvicorn app.main:app --reload
+# in another shell:
+pytest
+```
+
+**Verification status**: every file under `app/` and `tests/` was byte-compiled successfully with `python3 -m py_compile`. `pip install` and `pytest` could not actually be run in the sandbox this was built in (outbound access to PyPI was network-blocked), so the test suite has **not** been executed end-to-end — treat it as syntax-verified only until you run `pytest` yourself.

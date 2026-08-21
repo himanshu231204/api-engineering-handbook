@@ -195,3 +195,21 @@ CREATE TABLE delivery_attempts (
 
 - [Project index (Part 20)](../../docs/20-capstone-projects/README.md)
 - [Handbook home](../../README.md)
+
+## Reference Implementation
+
+A working reference implementation lives in this directory under `app/` and `tests/` (FastAPI + Pydantic v2 + SQLAlchemy async + SQLite via `aiosqlite`, `httpx` for outbound delivery). It covers inbound signature verification with a replay-protection timestamp window, inbound deduplication on `(source, provider_event_id)` (race-safe via the DB unique constraint, with an `IntegrityError` fallback path for concurrent duplicates), subscription CRUD with a signing secret shown once and SSRF-blocking on `target_url`, secret rotation with a grace period, and a `delivery_worker.attempt_delivery()` function implementing HMAC-signed delivery, exponential backoff with jitter, and dead-lettering after `max_attempts`, plus `redeliver` and `dead-letters` endpoints. The delivery worker is exposed as a plain async function per delivery rather than a standing polling loop (see its module docstring) — wire it to a scheduler/cron/task queue for continuous operation. An additional `POST /events` endpoint (not in the original table) publishes an internal domain event so the outbound fan-out is reachable over HTTP.
+
+To run it:
+
+```bash
+cd projects/04-webhook-system
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+uvicorn app.main:app --reload
+# in another shell:
+pytest
+```
+
+**Verification status**: every file under `app/` and `tests/` was byte-compiled successfully with `python3 -m py_compile`. `pip install` and `pytest` could not actually be run in the sandbox this was built in (outbound access to PyPI was network-blocked), so the test suite has **not** been executed end-to-end — treat it as syntax-verified only until you run `pytest` yourself. The retry/dead-letter tests use `httpx.MockTransport` so they don't require real network access once dependencies are installed.

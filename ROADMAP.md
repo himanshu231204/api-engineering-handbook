@@ -23,7 +23,7 @@ Every part has a complete index page describing exactly what it will cover, even
 - [x] **v0.5 — Distributed systems & operations.** Parts 11–13 (Microservices, Observability, Testing) written in full.
 - [x] **v0.6 — Synthesis.** Parts 18–19 (Production Architecture, System Design Case Studies) written in full.
 - [x] **v0.9 — All 190 chapters written.** Every part's status table is 100% ✅ Written, 0 broken internal links across the repo (`scripts/check_links.py`).
-- [ ] **v0.7 — Capstone reference implementations.** All 10 capstone projects are fully specified (done); reference implementations for at least 3 projects beyond the spec stage.
+- [x] **v0.7 — Capstone reference implementations.** All 10 capstone projects are fully specified (done); reference implementations for at least 3 projects beyond the spec stage.
 - [ ] **v0.8 — Examples hardening.** All 12 `examples/` directories live-tested end to end with real dependencies installed (several are currently syntax-verified but not fully runtime-tested — see each example's README for its verification status).
 - [ ] **v1.0 — Polish pass.** Full read-through for tone/terminology consistency across all 20 parts, glossary cross-reference audit, and a pass to replace any illustrative pseudo-SDK code with real, currently-correct provider SDK calls where a stable public API exists.
 
