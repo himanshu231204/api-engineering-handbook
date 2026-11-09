@@ -1,5 +1,12 @@
 # Dependency Injection
 
+> [!TIP]
+> **In one line:** Routes declare what they need with Depends(...) and FastAPI builds and supplies it, resolving the whole chain of sub-dependencies once per request.
+>
+> **In plain English:** Instead of every route opening its own database session and checking the login itself, each route just lists what it needs. FastAPI hands those things over ready to use, like a surgical nurse who passes the surgeon exactly the instruments on the list, and in tests you can swap any one of them for a fake.
+>
+> **You'll be able to:** Write `yield` dependencies for setup and teardown such as DB sessions · Chain dependencies like `get_current_user` → `require_admin` · Override a dependency in tests with `app.dependency_overrides`
+
 ## Why This Matters
 
 Almost every route in a real API needs the same few things: a database session, the current authenticated user, some configuration values, maybe a rate limiter. Without a systematic way to provide these, you end up either duplicating setup code in every route or reaching for global variables — which makes testing painful (you can't easily swap a real database for a fake one) and creates hidden coupling between routes and infrastructure.
@@ -95,6 +102,8 @@ flowchart TD
     CurrentUser --> DB2["get_db() - cached, same instance as DB1"]
     Token --> Header["Authorization header"]
 ```
+
+![Dependency graph where FastAPI builds get_settings, get_db and get_current_user before calling the route, and a test override swaps get_db for an in-memory fake](../assets/diagrams/03-dependency-injection.svg)
 
 ## Request / Response Example
 
@@ -221,5 +230,28 @@ Dependency injection is exactly how you'll manage LLM and vector-database client
 - Dependencies are cached per-request by default, avoiding redundant work when multiple parts of the tree need the same resource.
 - `app.dependency_overrides` is the main lever for testing FastAPI apps in isolation.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In a yield dependency, when does the code after yield run?</summary>
+
+After the response has been produced, and even if the route raised an exception, because it sits in a `finally`-style teardown position. That is why it is the standard place to close DB sessions.
+
+</details>
+
+<details markdown="1">
+<summary>2. Both require_admin (through get_current_user) and the route itself depend on get_db. How many sessions are created for one request, and why?</summary>
+
+One. FastAPI caches dependency results per request by default, so every node that asks for `get_db` gets the same session instance. Set `use_cache=False` if you genuinely need separate calls.
+
+</details>
+
+<details markdown="1">
+<summary>3. You want to test a route without a real database or real login. What do you change in the route code?</summary>
+
+Nothing. Set `app.dependency_overrides[get_db] = get_test_db` (and override `get_current_user` with a fake user) in the test; FastAPI swaps that node of the dependency tree while the route code stays the same.
+
+</details>
 
 Previous: `response-models.md` · Next: `middleware.md`.

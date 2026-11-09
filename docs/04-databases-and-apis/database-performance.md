@@ -1,5 +1,12 @@
 # Database Performance
 
+> [!TIP]
+> **In one line:** Most slow endpoints come from too many queries per request (N+1) or too much work per query (missing indexes), and EXPLAIN ANALYZE shows which.
+>
+> **In plain English:** Database speed comes down to two things: how many times you ask, and how hard each question is. It is like grocery shopping: one trip with a full list beats twenty trips for one item each, and a well-labeled store beats searching every aisle.
+>
+> **You'll be able to:** Spot and fix N+1 queries with `selectinload` · Read `EXPLAIN ANALYZE` output for `Seq Scan` vs `Index Scan` · Index foreign keys and judge when denormalizing is worth it
+
 ## Why This Matters
 
 Most production API slowness traces back to the database, and most of that traces back to a small handful of recurring, well-understood causes: too many queries per request, missing indexes, and schema designs that force expensive joins on hot paths. Understanding these deeply — not just knowing the buzzwords — is what lets you diagnose a slow endpoint in minutes instead of guessing your way through it.
@@ -84,6 +91,8 @@ flowchart TB
     end
 ```
 
+![N+1 problem: lazy loading runs 1 query for posts plus 20 queries for authors, while selectinload runs 2 queries in total](../assets/diagrams/04-n-plus-one.svg)
+
 ## Request / Response Example
 
 ```
@@ -165,6 +174,29 @@ RAG retrieval pipelines commonly combine a vector similarity search with relatio
 - Foreign key columns are not automatically indexed in Postgres; index them explicitly if you filter or join on them.
 - Denormalization trades write complexity and consistency risk for read performance — use it deliberately, not as a first resort.
 - Reducing round trips (batching) and reducing per-query work (indexing) are the two levers that matter most for database performance.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How many queries does selectinload(Post.author) issue for 20 posts, and what does the second one look like?</summary>
+
+Two: one for the posts, and one `SELECT ... FROM authors WHERE id IN (...)` that batches all author IDs. The count stays at two whether there are 20 posts or 200.
+
+</details>
+
+<details markdown="1">
+<summary>2. Does Postgres automatically index foreign key columns? Why does it matter?</summary>
+
+No; only the referenced primary key side is indexed automatically. An unindexed foreign key makes every join or filter on that relationship a sequential scan, so index it explicitly.
+
+</details>
+
+<details markdown="1">
+<summary>3. EXPLAIN ANALYZE on SELECT * FROM orders WHERE user_id = 42 shows Seq Scan and "Rows Removed by Filter: 499988". What does it tell you, and what is the fix?</summary>
+
+Postgres read about half a million rows to find 12, because there is no index on `user_id`. Add one, using `CREATE INDEX CONCURRENTLY` on a live table, and the plan becomes an `Index Scan`, in the chapter's example going from about 113 ms to 0.06 ms.
+
+</details>
 
 ---
 Previous: [Pagination at Scale](pagination-at-scale.md) · Next: [API + Database Architecture](api-database-architecture.md) · Back to [Part 4 README](README.md)

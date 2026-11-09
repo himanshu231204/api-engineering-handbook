@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="488" viewBox="0 0 880 488" role="img" aria-labelledby="t d">
+  <title id="t">FastAPI request lifecycle</title>
+  <desc id="d">A request goes from the client through the ASGI server, middleware, routing, dependency injection and Pydantic validation into your handler; the result is serialized by the response model and passes back out through middleware to the client. Invalid input stops at validation with a 422.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="487" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The life of a FastAPI request</text>
+  <text x="32" y="66" class="sub">Follow the numbers: in along the top, back out along the bottom.</text>
+
+  <rect x="32" y="104" width="140" height="72" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="134" class="lbl" fill="#111827">Client</text>
+  <text x="48" y="158" class="note">sends HTTP request</text>
+  <rect x="201" y="104" width="140" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="223" cy="129" r="12" fill="#1c7c54"/>
+  <text x="223" y="133" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="241" y="134" class="lbl" fill="#111827">ASGI server</text>
+  <text x="217" y="158" class="note">Uvicorn</text>
+  <rect x="370" y="104" width="140" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="392" cy="129" r="12" fill="#1c7c54"/>
+  <text x="392" y="133" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="410" y="134" class="lbl" fill="#111827">Middleware</text>
+  <text x="386" y="158" class="note">on the way in</text>
+  <rect x="539" y="104" width="140" height="72" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="561" cy="129" r="12" fill="#1c7c54"/>
+  <text x="561" y="133" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <text x="579" y="134" class="lbl" fill="#111827">Routing</text>
+  <text x="555" y="158" class="note">find the route</text>
+  <rect x="708" y="104" width="140" height="72" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="730" cy="129" r="12" fill="#1c7c54"/>
+  <text x="730" y="133" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">4</text>
+  <text x="748" y="134" class="lbl" fill="#111827">Dependencies</text>
+  <text x="724" y="158" class="note">run Depends()</text>
+  <rect x="708" y="248" width="140" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="730" cy="273" r="12" fill="#1c7c54"/>
+  <text x="730" y="277" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">5</text>
+  <text x="748" y="278" class="lbl" fill="#111827">Validation</text>
+  <text x="724" y="302" class="note">Pydantic checks</text>
+  <rect x="539" y="248" width="140" height="72" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="561" cy="273" r="12" fill="#1c7c54"/>
+  <text x="561" y="277" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">6</text>
+  <text x="579" y="278" class="lbl" fill="#111827">Your handler</text>
+  <text x="555" y="302" class="note">business logic</text>
+  <rect x="370" y="248" width="140" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="392" cy="273" r="12" fill="#1c7c54"/>
+  <text x="392" y="277" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">7</text>
+  <text x="410" y="278" class="lbl" fill="#111827">Serialize</text>
+  <text x="386" y="302" class="note">response_model</text>
+  <rect x="201" y="248" width="140" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="223" cy="273" r="12" fill="#1c7c54"/>
+  <text x="223" y="277" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">8</text>
+  <text x="241" y="278" class="lbl" fill="#111827">Middleware</text>
+  <text x="217" y="302" class="note">on the way out</text>
+  <rect x="32" y="248" width="140" height="72" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="278" class="lbl" fill="#111827">Client</text>
+  <text x="48" y="302" class="note">receives JSON</text>
+  <line x1="174" y1="140" x2="198" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="343" y1="140" x2="367" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="512" y1="140" x2="536" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="681" y1="140" x2="705" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="778" y1="178" x2="778" y2="245" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="706" y1="284" x2="682" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="537" y1="284" x2="513" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="368" y1="284" x2="344" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="199" y1="284" x2="175" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="778" y1="322" x2="778" y2="377" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <rect x="560" y="380" width="288" height="76" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="576" y="404" class="lbl" fill="#b91c1c">422 Unprocessable Entity</text>
+  <text x="576" y="424" class="note">Input failed validation: your handler</text>
+  <text x="576" y="442" class="note">never runs. Error lists which field (loc).</text>
+  <rect x="32" y="380" width="500" height="76" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="404" class="lbl" fill="#111827">Read it as a loop</text>
+  <text x="48" y="424" class="note">Steps 2 and 8 are the same middleware: requests pass in,</text>
+  <text x="48" y="442" class="note">responses pass back out. Steps 3–5 happen before your code.</text>
+
+</svg>

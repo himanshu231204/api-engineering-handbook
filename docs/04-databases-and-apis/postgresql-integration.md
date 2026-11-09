@@ -1,5 +1,12 @@
 # PostgreSQL Integration
 
+> [!TIP]
+> **In one line:** Wire PostgreSQL into FastAPI through an async driver and one shared SQLAlchemy engine, handing each request its own session via a dependency.
+>
+> **In plain English:** PostgreSQL is a strict, reliable database that lives outside your program, like a bank vault in another building: dependable, but every visit is a trip. You set up the route to it once when the app starts, then let each request borrow a session and give it back.
+>
+> **You'll be able to:** Build an async engine with a `postgresql+asyncpg://` URL from an environment variable · Write a `get_session` dependency with `async_sessionmaker` · Pick sensible `pool_size`, `max_overflow`, and `pool_pre_ping`
+
 ## Why This Matters
 
 Choosing a database is one of the few decisions in API engineering that's expensive to reverse. PostgreSQL has become the default choice for good technical reasons, not just popularity, and knowing how to wire it into a FastAPI application correctly — asynchronously, safely, with proper connection lifecycle — is a foundational skill every backend engineer needs before touching anything more advanced.
@@ -181,6 +188,29 @@ Postgres with the `pgvector` extension is a common choice for RAG systems that w
 - SQLAlchemy's async engine + `AsyncSession` gives you a uniform interface for raw SQL and ORM queries.
 - Create the engine once at startup; inject sessions per request via a dependency.
 - Always load `DATABASE_URL` from environment variables, never hardcode it.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is asyncpg's role, and what does SQLAlchemy's async engine add on top of it?</summary>
+
+`asyncpg` is the async, Postgres-specific driver that speaks the wire protocol. SQLAlchemy's `create_async_engine` wraps it with a connection pool and `AsyncSession`, giving one interface for raw SQL and ORM queries.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does pool_pre_ping=True matter in cloud environments?</summary>
+
+Managed databases silently drop idle connections. Pre-ping checks that a connection is alive before handing it out, so the first query after a quiet period does not fail with a connection-reset error.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate calls create_async_engine() inside the route handler. What goes wrong under load?</summary>
+
+Every request builds a brand-new engine and pool, which defeats pooling and leaks connections until the database's limit is exhausted. Create one engine per process at startup and inject sessions per request.
+
+</details>
 
 ---
 Previous: [SQL Fundamentals](sql-fundamentals.md) · Next: [ORM Concepts](orm-concepts.md) · Back to [Part 4 README](README.md)

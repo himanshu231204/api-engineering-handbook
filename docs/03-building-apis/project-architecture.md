@@ -1,5 +1,12 @@
 # Project Architecture
 
+> [!TIP]
+> **In one line:** Split a FastAPI app into routers, services, and repositories, with dependencies pointing one way only, so each layer can be tested and changed alone.
+>
+> **In plain English:** One giant file stops working once a team and many features arrive. Splitting it is like the departments of a company: the front desk talks to customers, the specialists apply the rules, and the stockroom fetches and stores things, and nobody does another department's job.
+>
+> **You'll be able to:** Lay out a `routers/`, `services/`, `repositories/`, `core/` project tree · Keep HTTP code, business rules, and data access in their own layers · Wire layers together with `Depends` and swap fakes in tests
+
 ## Why This Matters
 
 A single `main.py` with every route, model, and database call crammed into one file works fine for a weekend prototype. It stops working the moment a second person joins the project, or the third feature is added, or you need to write a test that doesn't spin up the entire app. Project architecture is about drawing boundaries — between HTTP concerns, business logic, and data access — so that each piece can be understood, tested, and changed independently.
@@ -140,6 +147,8 @@ flowchart TD
     Core -.provides settings & deps to.-> Repo
 ```
 
+![Layered project: routers call services, services call repositories, repositories talk to the database, with what each layer may and may not know](../assets/diagrams/03-layered-project.svg)
+
 ## Request / Response Example
 
 ```http
@@ -247,5 +256,28 @@ This layering pays off enormously once you add AI features. An `LLMService` (bus
 - `core/` holds cross-cutting infrastructure: config, security, shared dependency providers.
 - This structure scales cleanly into AI features — LLM and vector-DB clients just become another repository-like dependency.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In which direction should dependencies point between routers, services, and repositories?</summary>
+
+Routers depend on services, and services depend on repositories, never the reverse and never skipping a layer. A router should not call a repository directly.
+
+</details>
+
+<details markdown="1">
+<summary>2. What usually goes wrong when a router calls the database directly "just this once"?</summary>
+
+It becomes a pattern, so business logic ends up split between routers and services. Later rules such as audit logging or notifications have to be retrofitted in many routers instead of one service, and those routes cannot be tested without a real database.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your order router checks whether stock is sufficient before saving. Where should that check live, and how does the client learn it failed?</summary>
+
+In the service layer, for example `OrderService.create_order`, which raises a domain error like `InsufficientStockError`. A central exception handler translates that into an HTTP 409; the router stays a thin HTTP translator.
+
+</details>
 
 Previous: `exception-handling.md` · Next: `environment-variables.md`.

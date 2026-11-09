@@ -1,5 +1,12 @@
 # ORM Concepts
 
+> [!TIP]
+> **In one line:** An ORM translates between Python objects and relational tables, and you must still know the SQL it generates, especially for relationships.
+>
+> **In plain English:** Your code thinks in objects such as a user with a list of orders, while the database thinks in flat tables linked by IDs. An ORM is like a translator between two languages: very convenient, but you should still notice when it turns one sentence into twenty.
+>
+> **You'll be able to:** Explain the impedance mismatch and the session as a unit of work · Eager-load relationships with `selectinload` to avoid N+1 · Decide when raw SQL via `text()` beats the ORM
+
 ## Why This Matters
 
 Most production API code never writes raw SQL — it calls ORM methods that generate SQL underneath. That's a huge productivity win, but it's also a leaky abstraction: the moment you don't understand what SQL your ORM is actually generating, you write code that silently issues hundreds of queries per request (the N+1 problem) or that can't express a query the ORM wasn't designed for. Understanding what an ORM does — and doesn't do — is what separates engineers who use SQLAlchemy well from engineers who get burned by it in production.
@@ -161,6 +168,29 @@ When an LLM agent has a "database tool," you're effectively giving it ORM-like o
 - Lazy-loaded relationships are the root cause of the N+1 query trap — eager-load explicitly.
 - Raw SQL is the right tool for complex reporting queries, bulk operations, and anything the ORM expresses awkwardly.
 - Query construction (`select()`) is lazy — nothing hits the database until you `execute()`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. When does select(User).where(...) actually send SQL to the database?</summary>
+
+Only when you call `await session.execute(stmt)`. Building the statement is lazy, which lets you compose filters conditionally before running it.
+
+</details>
+
+<details markdown="1">
+<summary>2. What is the N+1 trap, and why does it hide in development?</summary>
+
+You fetch N rows with one query, then access a lazy relationship per row, which fires one extra query each: N+1 in total. With a small local dataset and a fast local database it feels instant, so it only hurts with real data and network latency.
+
+</details>
+
+<details markdown="1">
+<summary>3. You add an Order with session.add(order) and the client gets a 200, but the order never appears in the database. What did you most likely forget?</summary>
+
+`await session.commit()`. `add()` only stages the change in the session's unit of work; nothing is flushed and committed until you commit.
+
+</details>
 
 ---
 Previous: [PostgreSQL Integration](postgresql-integration.md) · Next: [Database Transactions](database-transactions.md) · Back to [Part 4 README](README.md)

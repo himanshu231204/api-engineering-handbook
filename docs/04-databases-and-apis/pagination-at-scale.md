@@ -1,5 +1,12 @@
 # Pagination at Scale
 
+> [!TIP]
+> **In one line:** OFFSET pagination gets slower the deeper users page; keyset (cursor) pagination uses an index to jump straight to the next rows at constant cost.
+>
+> **In plain English:** Asking the database to skip 4,000 rows makes it walk past all 4,000 every time. Keyset pagination is like a deli queue with ticket numbers: "serve everyone after ticket 1042" is instant, while "skip the first 4,000 people" means counting them all.
+>
+> **You'll be able to:** Explain why `OFFSET` cost grows with page depth · Implement keyset pagination with a `(created_at, id)` cursor and matching index · Choose when plain `OFFSET` is good enough
+
 ## Why This Matters
 
 [Part 2's pagination chapter](../02-rest-api-design/pagination.md) introduced the API contract for pagination — `page`/`limit` or `cursor` parameters in a request, `next`/`previous` links in a response. This chapter goes one level deeper: what actually happens inside the database when you implement that contract, why the naive approach (`OFFSET`) quietly degrades as your table grows, and how to build pagination that stays fast at millions of rows.
@@ -66,6 +73,8 @@ flowchart TB
         B1 -.cost is constant regardless of depth.-> B2
     end
 ```
+
+![OFFSET pagination reads and discards every skipped row so cost grows with depth, while keyset pagination seeks through an index straight to the cursor at constant cost](../assets/diagrams/04-offset-vs-keyset.svg)
 
 ## Request / Response Example
 
@@ -171,6 +180,29 @@ RAG ingestion pipelines that page through large source tables or document stores
 - Cursors need a unique, indexed composite key (typically `sort_column, id`) to guarantee stable ordering without skips or duplicates.
 - `OFFSET` remains fine for small or shallow pagination — apply keyset pagination where it's actually needed.
 - This chapter builds on the API-contract-level pagination design in [Part 2 — Pagination](../02-rest-api-design/pagination.md); read that first if you haven't.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why does LIMIT 20 OFFSET 4000 do far more work than its 20 returned rows suggest?</summary>
+
+Postgres must walk through all 4,020 rows in order and discard the first 4,000 before returning 20, on every request for that page. The cost grows with page depth.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does the cursor include id as well as created_at?</summary>
+
+`created_at` alone is not unique, since two rows can share a timestamp, so rows at a page boundary could be skipped or repeated. Adding `id` as a tiebreaker gives a stable, total order.
+
+</details>
+
+<details markdown="1">
+<summary>3. You switched to keyset pagination, but EXPLAIN shows a full sort and deep pages are still slow. What is the likely cause?</summary>
+
+There is no index matching the `ORDER BY` and cursor columns, or the column order or sort direction differs, such as missing `(created_at DESC, id DESC)`. Without a matching index Postgres falls back to scanning and sorting, which erases the benefit.
+
+</details>
 
 ---
 Previous: [Repository Pattern](repository-pattern.md) · Next: [Database Performance](database-performance.md) · Back to [Part 4 README](README.md)

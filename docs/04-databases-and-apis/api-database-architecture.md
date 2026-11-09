@@ -1,5 +1,12 @@
 # API + Database Architecture
 
+> [!TIP]
+> **In one line:** At system scale, decide who owns each database, send tolerant reads to replicas and writes to the primary, and put a cache in front, invalidating it on every write.
+>
+> **In plain English:** As traffic grows, one database cannot do everything. It is like a busy kitchen: a small fridge holds the most-used ingredients for speed (the cache), photocopies of the recipe book let more cooks read at once (replicas), and only the master book is ever edited (the primary).
+>
+> **You'll be able to:** Choose between one database per service and a shared database · Route reads and writes between primary and replicas, including read-your-own-write · Implement cache-aside reads with invalidation on write
+
 ## Why This Matters
 
 Every chapter in this part covers one piece — SQL, the ORM, transactions, pooling, migrations, the repository pattern, pagination, performance. This chapter puts the pieces together: how should the API layer and the database layer be organized *as a system*, at the scale of an entire service or a fleet of services? Getting this wrong shows up as coupling that makes independent deployment impossible, or as a database that becomes a shared bottleneck no team can safely touch.
@@ -196,6 +203,29 @@ An LLM gateway or RAG API (see [Part 15 — Production AI Systems](../15-product
 - Caching (cache-aside, see [Part 7](../07-caching-performance/cache-aside.md)) reduces the number of reads that reach the database at all, and is a separate lever from replica capacity.
 - Cache invalidation on write is the most commonly forgotten step in this architecture — missing it silently serves stale data.
 - Fix slow queries (indexes, N+1) before scaling with replicas — replicas amplify capacity, they don't fix inefficient queries.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the main benefit of one database per service in a microservices architecture?</summary>
+
+Independent deployability: other services cannot query its tables directly, so one team's schema change cannot silently break another team. The cost is that cross-service data needs API composition or events instead of a SQL join.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a read replica not serve the page a user lands on right after saving a change?</summary>
+
+Replicas apply changes asynchronously, so replication lag can mean the user's own write is not visible yet. Route read-your-own-write requests to the primary.
+
+</details>
+
+<details markdown="1">
+<summary>3. After PATCH /users/42, the profile still shows the old name for about a minute, then fixes itself. Which step was most likely missed?</summary>
+
+Cache invalidation. The write updated the primary but never deleted the `user:42` key, so reads keep hitting the stale cached value until its 60-second TTL expires. Add `DEL user:42` after the write; if a replica is involved too, route that read to the primary.
+
+</details>
 
 ---
 Previous: [Database Performance](database-performance.md) · Back to [Part 4 README](README.md) · Next: [Part 5 — Authentication & Authorization](../05-authentication-authorization/README.md)

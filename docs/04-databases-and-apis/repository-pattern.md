@@ -1,5 +1,12 @@
 # Repository Pattern
 
+> [!TIP]
+> **In one line:** A repository hides persistence behind domain-named methods like get_by_email, so business logic stays testable and storage can change without touching callers.
+>
+> **In plain English:** Instead of SQL scattered through your routes, one class answers questions such as find user by email. It is like a wall power socket: your appliances plug in and work without caring which power plant made the electricity, and in tests you can plug into a fake.
+>
+> **You'll be able to:** Define a repository `Protocol` with SQLAlchemy and in-memory implementations · Wire a repository into routes with `Depends` · Decide when the pattern is worth it and when it is overkill
+
 ## Why This Matters
 
 When your route handlers directly call `session.execute(select(User)...)` scattered across dozens of files, two problems compound over time: your business logic and your persistence details tangle together, and testing anything requires a real database. The repository pattern draws a clean line between "what data operations does my application need" and "how exactly are those operations implemented against Postgres" — a boundary that pays off as the codebase grows, and costs real complexity when it doesn't.
@@ -195,6 +202,29 @@ The repository pattern is a natural fit for exposing safe, bounded database acce
 - Its main payoffs are testability (fake repositories in unit tests) and the ability to change persistence implementation without touching callers.
 - It's overkill for small CRUD APIs where calling the ORM session directly is simpler and equally maintainable — apply it deliberately, not by default.
 - Multi-repository operations that must be atomic need a shared session/transaction, not independently managed ones.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What design principle does the repository pattern apply?</summary>
+
+Dependency inversion: high-level business logic depends on an abstraction (the repository interface), not on low-level persistence details such as SQLAlchemy sessions or SQL strings.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is it a mistake for repository methods to return SQLAlchemy Select or Query objects?</summary>
+
+It leaks persistence-specific types through the interface, so callers become coupled to SQLAlchemy again. The abstraction is defeated, and an in-memory fake can no longer stand in for the real implementation.
+
+</details>
+
+<details markdown="1">
+<summary>3. A transfer service calls debit() on one repository and credit() on another, and each repository opens its own session. What can go wrong?</summary>
+
+The two writes run in separate transactions, so a crash between them leaves money debited but never credited. Pass one shared session or unit of work into both repositories so the whole transfer commits or rolls back together.
+
+</details>
 
 ---
 Previous: [Migrations](migrations.md) · Next: [Pagination at Scale](pagination-at-scale.md) · Back to [Part 4 README](README.md)

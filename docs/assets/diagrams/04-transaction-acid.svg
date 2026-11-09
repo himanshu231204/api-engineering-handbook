@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="508" viewBox="0 0 880 508" role="img" aria-labelledby="t d">
+  <title id="t">A database transaction for a money transfer</title>
+  <desc id="d">A transfer debits account A and credits account B inside BEGIN and COMMIT. If both updates succeed, COMMIT saves both. If the process crashes after the debit, ROLLBACK undoes it, so both balances return to $100 and nothing is half-done.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="507" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">A transaction is all or nothing</text>
+  <text x="32" y="66" class="sub">Moving $50 from account A to account B takes two writes. They must succeed or fail together.</text>
+
+  <rect x="32" y="114" width="140" height="190" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="144" class="h">Before</text>
+  <text x="48" y="176" class="code">A = $100</text>
+  <text x="48" y="200" class="code">B = $100</text>
+  <text x="48" y="236" class="note">move $50</text>
+  <text x="48" y="254" class="note">from A to B</text>
+  <text x="200" y="112" class="lbl" fill="#1c7c54">Everything works</text>
+  <rect x="200" y="124" width="96" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="220" cy="144" r="12" fill="#1c7c54"/>
+  <text x="220" y="148" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="238" y="149" class="code">BEGIN</text>
+  <text x="214" y="169" class="note">start</text>
+  <rect x="316" y="124" width="170" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="336" cy="144" r="12" fill="#1c7c54"/>
+  <text x="336" y="148" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="354" y="149" class="code">UPDATE A −50</text>
+  <text x="330" y="169" class="note">debit A</text>
+  <rect x="506" y="124" width="170" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="526" cy="144" r="12" fill="#1c7c54"/>
+  <text x="526" y="148" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <text x="544" y="149" class="code">UPDATE B +50</text>
+  <text x="520" y="169" class="note">credit B</text>
+  <rect x="696" y="124" width="152" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="716" cy="144" r="12" fill="#1c7c54"/>
+  <text x="716" y="148" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">4</text>
+  <text x="734" y="149" class="code">COMMIT</text>
+  <text x="710" y="169" class="note">both saved</text>
+  <line x1="298" y1="152" x2="313" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="488" y1="152" x2="503" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="678" y1="152" x2="693" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="200" y="208" class="lbl" fill="#1c7c54">Result: A = $50, B = $150. Both changes become visible together.</text>
+  <text x="200" y="250" class="lbl" fill="#b91c1c">Crash between the two updates</text>
+  <rect x="200" y="262" width="96" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="220" cy="282" r="12" fill="#1c7c54"/>
+  <text x="220" y="286" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="238" y="287" class="code">BEGIN</text>
+  <text x="214" y="307" class="note">start</text>
+  <rect x="316" y="262" width="170" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="336" cy="282" r="12" fill="#1c7c54"/>
+  <text x="336" y="286" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="354" y="287" class="code">UPDATE A −50</text>
+  <text x="330" y="307" class="note">debit A</text>
+  <rect x="506" y="262" width="170" height="56" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="520" y="287" class="code">✗ crash</text>
+  <text x="520" y="307" class="note">credit never runs</text>
+  <rect x="696" y="262" width="152" height="56" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="716" cy="282" r="12" fill="#1c7c54"/>
+  <text x="716" y="286" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <text x="734" y="287" class="code">ROLLBACK</text>
+  <text x="710" y="307" class="note">undo since BEGIN</text>
+  <line x1="298" y1="290" x2="313" y2="290" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="488" y1="290" x2="503" y2="290" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="678" y1="290" x2="693" y2="290" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="200" y="346" class="lbl" fill="#b91c1c">Result: A = $100, B = $100. The debit is undone, nothing is half-done.</text>
+  <line x1="174" y1="152" x2="197" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="174" y1="290" x2="197" y2="290" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="392" width="816" height="84" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="418" class="lbl" fill="#1c7c54">Atomicity</text>
+  <text x="48" y="440" class="note">all of it happens,</text>
+  <text x="48" y="458" class="note">or none of it does</text>
+  <text x="252" y="418" class="lbl" fill="#1c7c54">Consistency</text>
+  <text x="252" y="440" class="note">constraints (keys, NOT NULL)</text>
+  <text x="252" y="458" class="note">always hold afterwards</text>
+  <line x1="238" y1="406" x2="238" y2="462" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="456" y="418" class="lbl" fill="#1c7c54">Isolation</text>
+  <text x="456" y="440" class="note">others never see your</text>
+  <text x="456" y="458" class="note">half-finished changes</text>
+  <line x1="442" y1="406" x2="442" y2="462" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="660" y="418" class="lbl" fill="#1c7c54">Durability</text>
+  <text x="660" y="440" class="note">after COMMIT, the data</text>
+  <text x="660" y="458" class="note">survives a crash</text>
+  <line x1="646" y1="406" x2="646" y2="462" stroke="#e5e7eb" stroke-width="1"/>
+
+</svg>
