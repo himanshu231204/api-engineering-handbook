@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Anatomy of an HTTP request and response</title>
+  <desc id="d">An HTTP request has a request line, headers, a blank line and an optional body. The response mirrors it with a status line, headers, a blank line and a body.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Anatomy of an HTTP message</text>
+  <text x="32" y="66" class="sub">Requests and responses share the same 4-part shape. Read top to bottom.</text>
+
+  <!-- ===== REQUEST (left) ===== -->
+  <text x="32" y="104" class="h">Client → Server: Request</text>
+  <!-- start line -->
+  <rect x="32" y="116" width="380" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="143" class="code">POST /orders HTTP/1.1</text>
+  <!-- headers -->
+  <rect x="32" y="170" width="380" height="96" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="196" class="code">Host: api.shop.com</text>
+  <text x="48" y="220" class="code">Content-Type: application/json</text>
+  <text x="48" y="244" class="code">Authorization: Bearer eyJhb…</text>
+  <!-- blank line -->
+  <rect x="32" y="276" width="380" height="26" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="48" y="294" class="note">(empty line — “headers are done”)</text>
+  <!-- body -->
+  <rect x="32" y="312" width="380" height="60" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="338" class="code">{"item": "book", "qty": 2}</text>
+  <text x="48" y="358" class="note">optional — GET usually has none</text>
+
+  <!-- ===== RESPONSE (right) ===== -->
+  <text x="468" y="104" class="h">Server → Client: Response</text>
+  <rect x="468" y="116" width="380" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="484" y="143" class="code">HTTP/1.1 201 Created</text>
+  <rect x="468" y="170" width="380" height="96" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="484" y="196" class="code">Content-Type: application/json</text>
+  <text x="484" y="220" class="code">Location: /orders/42</text>
+  <text x="484" y="244" class="code">Cache-Control: no-store</text>
+  <rect x="468" y="276" width="380" height="26" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="484" y="294" class="note">(empty line)</text>
+  <rect x="468" y="312" width="380" height="60" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="484" y="338" class="code">{"id": 42, "status": "pending"}</text>
+  <text x="484" y="358" class="note">the data you asked for</text>
+
+  <!-- arrow between -->
+  <line x1="414" y1="242" x2="464" y2="242" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- legend -->
+  <g transform="translate(32,398)">
+    <rect width="816" height="48" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <rect x="16" y="16" width="16" height="16" rx="4" fill="#e8f5ee" stroke="#1c7c54"/>
+    <text x="40" y="29" class="lbl" fill="#1c7c54">Start line</text>
+    <text x="118" y="29" class="note">what &amp; where / what happened</text>
+    <rect x="320" y="16" width="16" height="16" rx="4" fill="#eff6ff" stroke="#2563eb"/>
+    <text x="344" y="29" class="lbl" fill="#2563eb">Headers</text>
+    <text x="406" y="29" class="note">metadata (key: value)</text>
+    <rect x="580" y="16" width="16" height="16" rx="4" fill="#fef3c7" stroke="#b45309"/>
+    <text x="604" y="29" class="lbl" fill="#b45309">Body</text>
+    <text x="646" y="29" class="note">the actual payload</text>
+  </g>
+</svg>
