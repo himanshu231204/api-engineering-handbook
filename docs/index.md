@@ -76,7 +76,7 @@ Every chapter has the same shape, so you always know where you are.
 | New to backend development | [Part 0 — Introduction](00-introduction/README.md), then follow the [Study Plan](study-plan.md) (Track A) |
 | Comfortable with CRUD, want production depth | [Part 5 — Authentication](05-authentication-authorization/README.md) (Study Plan Track B) |
 | Building AI-powered APIs | [Part 14 — AI API Engineering](14-ai-api-engineering/README.md) (Study Plan Track C) |
-| Prepping for system design interviews | [Part 19 — Case Studies](19-system-design-case-studies/README.md) and the [Diagrams](diagrams/index.md) page |
+| Prepping for system design interviews | [Part 19 — Case Studies](19-system-design-case-studies/README.md) and the [Diagrams](../diagrams/) page |
 | Ready to build something end-to-end | [Capstone Projects](20-capstone-projects/README.md) |
 
 ## Learn by doing

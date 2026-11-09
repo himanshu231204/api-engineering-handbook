@@ -25,7 +25,7 @@ Every chapter has the same shape, so you can use the same routine every time:
 | 6. **Check Yourself** | Answer each question *before* opening it. Two of three right = move on. Otherwise re-read the section the answer points to. | 5 min |
 | 7. **Exercises** | Do the Beginner one now; come back for Intermediate/Advanced on review day. | 10+ min |
 
-Then tick the chapter off on the [Progress Tracker](progress.md).
+Then tick the chapter off on the [Progress Tracker](https://himanshu231204.github.io/api-engineering-handbook/progress/) (on the website).
 
 !!! tip "The one rule that matters"
     **Explain it to someone else.** After each part, write a 5-sentence explanation of its main idea as if to a friend who doesn't code. If you can't, you've found exactly what to re-read.
@@ -105,5 +105,5 @@ You're ready to move on when you can do all four, without notes:
 ## Review Rhythm
 
 - **End of every week:** re-take the Check Yourself quizzes from the week *before* last (spaced repetition beats re-reading).
-- **Every 4 weeks:** browse the [Diagrams](diagrams/index.md) page and explain each diagram out loud.
+- **Every 4 weeks:** browse the [Diagrams](../diagrams/) page and explain each diagram out loud.
 - **Before interviews:** the [cheatsheets](../resources/cheatsheets/http-methods.md) and [interview questions](../resources/interview-questions/backend-engineer.md).

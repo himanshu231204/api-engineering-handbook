@@ -65,6 +65,28 @@ Rules: ~1200–2200 words, first-principles teaching (problem → why → soluti
 
 **`projects/NN-slug/README.md`** uses: Goal → Builds On → Requirements → Architecture (Mermaid) → API Endpoints → Database Schema → Suggested Folder Structure → Step-by-Step Implementation Plan → Advanced Improvements → Production Checklist.
 
+## Learner aids (every chapter, including Part 19 case studies)
+
+Two additions sit *around* the template — they don't add or reorder `##` sections:
+
+1. **TL;DR callout**, directly under the `# Title` line:
+
+   ```markdown
+   > [!TIP]
+   > **In one line:** <the single most important idea, ≤ 30 words>
+   >
+   > **In plain English:** <2–3 jargon-free sentences>
+   >
+   > **You'll be able to:** <outcome> · <outcome> · <outcome>
+   ```
+
+   GitHub renders `> [!TIP]` natively; `scripts/mkdocs_hooks.py` converts it to a styled "TL;DR" box on the Pages site.
+2. **Check Yourself quiz** — a `## Check Yourself` H3 at the end of `## Key Takeaways` (end of file for Part 19) with 3 questions (recall, why/what-if, applied scenario), each as `<details markdown="1"><summary>N. Question</summary>` + blank line + answer + blank line + `</details>`. Blank lines and `markdown="1"` are required.
+
+## SVG concept diagrams
+
+Hand-drawn SVGs live in `docs/assets/diagrams/<NN>-<name>.svg` (NN = part number) and are embedded with `![alt text](../assets/diagrams/<NN>-<name>.svg)`. Copy the visual system of `docs/assets/diagrams/01-http-request-anatomy.svg`: width 880, own white rounded background (so it reads in dark mode), `<title>`/`<desc>`, the same `<style>` classes, the fixed palette (green = main path, blue = client/info, amber = data, red = failure, purple = AI/external, slate = infra), numbered circles for ordered steps, no text under 12px. Escape `&` as `&amp;`. They supplement Mermaid diagrams, they don't replace them. The site's Diagrams page lists every SVG automatically.
+
 ## Cross-linking rules
 
 - Sibling chapter in the same part: bare relative filename (`oauth2.md`).

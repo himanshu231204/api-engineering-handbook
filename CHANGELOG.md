@@ -5,6 +5,11 @@ All notable changes to this project are documented here. Format loosely follows 
 ## [Unreleased]
 
 ### Added
+- **Readability pass:** every written chapter now opens with a TL;DR callout ("In one line" / "In plain English" / "You'll be able to") and ends with a 3-question **Check Yourself** quiz with hidden answers.
+- **Hand-drawn SVG concept diagrams** in `docs/assets/diagrams/` (HTTP anatomy, DNS, TLS, JWT, OAuth 2.0, circuit breaker, token bucket, cache-aside, queues, webhooks, tokenization, RAG pipeline, agent loop, MCP and more), embedded in their chapters and collected on the site's Diagrams page.
+- **Redesigned GitHub Pages site:** full chapter navigation in the sidebar, generated from the part status tables; four learning tracks as top tabs; prev/next links; "Part N · Chapter k of M" crumbs; progress bars on part pages; fixed brand colours and dark-mode contrast; new home page with a learning-path diagram.
+- `docs/study-plan.md` (three week-by-week tracks) and a browser-saved Progress Tracker page.
+- `scripts/check_svgs.py` and a strict `mkdocs build` job in CI.
 - `CLAUDE.md` and `AGENTS.md` — conventions for AI coding agents working in this repo (chapter template, status model, cross-linking rules, verification scripts).
 - `.github/workflows/ci.yml` — link check + examples compile check on every push/PR, plus an advisory markdownlint pass.
 - `scripts/check_links.py` and `scripts/check_examples_compile.py`.
