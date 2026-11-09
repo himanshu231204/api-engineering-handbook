@@ -1,5 +1,12 @@
 # Design an Authentication API
 
+> [!TIP]
+> **In one line:** Issue short-lived signed JWTs that every service verifies locally with cached public keys, and make the database-checked, rotating refresh token the place where sessions get revoked.
+>
+> **In plain English:** An access token is like a festival wristband: any gate can check it at a glance without phoning the box office, but it expires quickly. To get a fresh wristband you go back to the box office with your refresh ticket — and that is where a stolen or cancelled ticket gets caught.
+>
+> **You'll be able to:** Explain why 10,000+ verifications per second rules out a database lookup per request · Design refresh-token rotation with reuse detection · Decide between fail-open and fail-closed when the rate-limit store goes down
+
 ## Problem Statement
 
 Design an authentication service that other services in a company's backend depend on. It needs to support username/password login, social login via OAuth (Google, GitHub), issue tokens that downstream APIs can verify cheaply without calling back to the auth service on every request, and survive credential-stuffing and brute-force attacks at internet scale. Assume this service backs a consumer product with millions of users, and that multiple internal microservices (not just one monolith) need to validate the identity of the caller on every request.
@@ -236,3 +243,26 @@ At 10x traffic (50M DAU), the login/refresh path scales horizontally trivially �
 - [Part 7 — Redis](../07-caching-performance/redis.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why do the capacity numbers push this design toward JWTs verified locally instead of opaque tokens checked in a database?</summary>
+
+5M DAU × 40 calls/day ≈ 200M verifications/day ≈ 2,300/s on average and 10,000+/s at peak, spread across every service. A database hit per verification would need a cluster sized just for that and would make every API in the company depend on the auth database; local signature checks against cached JWKS keys are sub-millisecond and need no network call.
+
+</details>
+
+<details markdown="1">
+<summary>2. A JWT cannot be revoked before it expires. How does the design live with that?</summary>
+
+Access tokens are kept short-lived (15 minutes), which bounds how long a leaked one is useful. The long-lived refresh token is opaque, stored hashed and checked in the database on every use, so logout and "log out everywhere" revoke refresh tokens — that is the real revocation control point.
+
+</details>
+
+<details markdown="1">
+<summary>3. A refresh token that was already rotated (and so invalidated) is presented again. What should the auth service do?</summary>
+
+Treat it as a theft signal: someone — the user or an attacker — is replaying an old token, which means both have a copy. Revoke the entire token family (every token in that rotation chain) and force a fresh login, limiting the damage to one detected reuse.
+
+</details>

@@ -1,5 +1,12 @@
 # Design a Multi-Tenant AI SaaS
 
+> [!TIP]
+> **In one line:** Compose auth, RAG, agents and an LLM gateway on shared infrastructure, but enforce tenant_id isolation independently at every layer and meter cost per tenant where it is incurred.
+>
+> **In plain English:** It is like an apartment building: tenants share the plumbing, lifts and power, but every flat has its own lock, and the key is checked at every door, not just the lobby. Each flat also has its own meter, so a heavy user is limited by — and pays for — only their own usage.
+>
+> **You'll be able to:** Decide what must be isolated per tenant and what can be safely shared · Design defense-in-depth tenant_id checks from JWT claim to vector filter · Use a power-law tenant distribution to justify shared pools, per-tenant caps and a dedicated tier
+
 ## Problem Statement
 
 Design the overall backend architecture for a B2B SaaS product where each customer (tenant) gets their own AI-powered assistant that can answer questions grounded in their own documents (RAG), take autonomous action via an agent when asked, and is billed based on usage. This is the synthesis case study of the handbook: it doesn't introduce fundamentally new mechanisms so much as it forces a decision about how authentication, RAG, agents, and an LLM gateway — each already designed in isolation in earlier case studies — compose into one coherent system, with tenant isolation as the thread running through every layer rather than a feature bolted on afterward.
@@ -216,3 +223,26 @@ At 10x scale (30,000 tenants, ~650 messages/s peak):
 - Related case studies: [Design a RAG API](design-a-rag-api.md), [Design an AI Agent API](design-an-ai-agent-api.md), [Design an LLM Gateway](design-an-llm-gateway.md), [Design an Authentication API](design-an-authentication-api.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Roughly what is the platform's daily LLM spend, and why does that make per-tenant budgets a product feature?</summary>
+
+About 1.125M RAG queries × $0.01 ≈ $11,250 plus 112,500 agent runs × $0.15 ≈ $16,875, so roughly $28,000/day. That spend directly sets gross margin per tenant, so tracking and enforcing each tenant's budget must be first-class, not an afterthought.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why enforce per-tenant rate and cost limits at the LLM gateway rather than only at the top-level tenant API?</summary>
+
+A single chat request can trigger an agent run that makes many internal LLM calls; a check that runs once at the outer API would let all of them through. Enforcing where the cost is actually incurred closes that gap, at the price of the gateway needing to be tenant-aware.
+
+</details>
+
+<details markdown="1">
+<summary>3. One vector-DB shard goes down in one incident, and the tenant metadata database in another. How do the blast radii differ?</summary>
+
+The shard outage only affects the tenants routed to that shard — a bounded set you can name and notify. The metadata database (auth, users, usage) is needed by every request, so its outage is platform-wide; that is why it gets the highest availability investment, replication and failover.
+
+</details>

@@ -1,5 +1,12 @@
 # Design a File Upload API
 
+> [!TIP]
+> **In one line:** Keep the app server out of the byte path: hand clients short-lived presigned URLs to upload chunks straight to object storage, then scan files asynchronously before anyone can download them.
+>
+> **In plain English:** The app server acts like a front desk that issues a temporary key card to the storage room instead of carrying every box itself. Big files go in as small pieces, so a dropped connection costs one piece rather than the whole file, and nothing is shown to others until it passes a virus check.
+>
+> **You'll be able to:** Design a presigned, chunked, resumable multipart upload flow · Use bandwidth math to show why proxying uploads through app servers fails · Handle abandoned uploads, scan-worker crashes and late malware discoveries
+
 ## Problem Statement
 
 Design an API that lets users upload files — profile pictures up to a few MB, but also documents and videos up to several GB — reliably, without routing gigabytes of bytes through the application servers, and without a flaky connection forcing a user to restart a 2 GB upload from zero. The uploaded files need to be scanned for malware before they're considered "available," and the system needs a metadata layer (owner, filename, status, permissions) that's separate from the actual bytes.
@@ -202,3 +209,26 @@ At 10x scale (60 uploads/s average, ~800 concurrent uploads), the metadata API a
 - [Part 6 — Retries](../06-production-reliability/retries.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. With 860,000 uploads/day averaging 15 MB, how much ingress is that, and why does the architecture make that number mostly irrelevant to the app tier?</summary>
+
+860,000 × 15 MB ≈ 12.9 TB/day. Because clients upload directly to object storage with presigned URLs, none of those bytes pass through the application servers — the app tier only handles small JSON metadata requests, instead of being sized like a storage gateway.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is malware scanning asynchronous (a scanning status) rather than done before the upload is acknowledged?</summary>
+
+Scanning a multi-GB file can take tens of seconds, and a synchronous scan would force the app server to fetch and stream the whole file itself — contradicting the core rule that it never touches the bytes. The trade-off is that a file is not available immediately; the status field gates downloads until the scan passes.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user's connection drops at 80% of a 2 GB upload. What happens — and what if they never come back?</summary>
+
+Only the in-flight 8 MB chunk is lost. The client asks the status endpoint which parts already landed and re-uploads just the missing ones. If the user abandons the upload, a periodic cleanup job aborts multipart uploads past their expires_at so orphaned parts stop costing storage.
+
+</details>

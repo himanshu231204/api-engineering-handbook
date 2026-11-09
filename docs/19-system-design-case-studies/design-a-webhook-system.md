@@ -1,5 +1,12 @@
 # Design a Webhook System
 
+> [!TIP]
+> **In one line:** A webhook provider guarantees at-least-once delivery to unreliable customer endpoints by signing payloads, retrying with backoff and jitter, isolating endpoints from each other, and dead-lettering what never succeeds.
+>
+> **In plain English:** It is like a courier delivering parcels to thousands of shops whose doors are often locked. Each parcel is sealed so it can't be faked, the courier comes back later (waiting longer each time) when nobody answers, and one closed shop never holds up the rest of the route.
+>
+> **You'll be able to:** Size delivery throughput and delivery-log storage from event volume · Design a retry scheduler with exponential backoff, jitter, max attempts and a dead-letter state · Defend at-least-once delivery and per-endpoint queue isolation
+
 ## Problem Statement
 
 Design the webhook *provider* side of a platform — the system that reliably delivers event notifications (e.g., `order.created`, `payment.succeeded`) to customer-registered HTTP endpoints. Customer servers are unreliable by definition: they go down, they're slow, they return 500s during their own deploys. The platform must still guarantee at-least-once delivery, protect customers from receiving forged events, give them visibility into delivery health, and avoid one customer's broken endpoint degrading delivery to everyone else.
@@ -203,3 +210,26 @@ At 10x scale (500M events/day, ~13,000 deliveries/s peak):
 - [Part 2 — Idempotency](../02-rest-api-design/idempotency.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. 110M delivery attempts/day at about 500 bytes each, kept for a 30-day dashboard window — how much log storage is that, and how should it be managed?</summary>
+
+110M × 500 bytes ≈ 55 GB/day, so 30 days ≈ 1.6 TB rolling. Partition the deliveries table by day and move or drop anything older than the dashboard window, since the real query pattern is "recent deliveries for this endpoint".
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does the design settle for at-least-once delivery instead of exactly-once?</summary>
+
+When a request times out, the platform cannot know whether the receiver processed it and the acknowledgement was lost, or never got it — so exactly-once over an unreliable network is not achievable. Instead every delivery carries a stable X-Webhook-Delivery-Id so receivers can deduplicate on their side.
+
+</details>
+
+<details markdown="1">
+<summary>3. During a flash sale one customer's endpoint starts taking 20 seconds to respond. What stops this from slowing delivery to every other customer?</summary>
+
+The 5-second worker timeout treats the slow response as a failure and schedules a retry with backoff, so workers aren't tied up waiting. Delivery queues are sharded per endpoint, so the backlog stays in that customer's shard; if failures persist, deliveries are dead-lettered and the endpoint is eventually auto-disabled.
+
+</details>

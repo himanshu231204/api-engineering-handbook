@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="530" viewBox="0 0 880 530" role="img" aria-labelledby="t d">
+  <title id="t">Payment flow: from idempotency key to ledger</title>
+  <desc id="d">Top row, the synchronous request: the client sends POST /payment-intents with an Idempotency-Key, the API checks whether the key was seen before, creates the payment intent in pending status before charging, then asks the payment processor to charge the card token. Bottom row, the asynchronous confirmation: the processor later sends a signed webhook, the API verifies the signature and dedupes the event id, a worker updates the status and writes balanced double-entry ledger rows in one transaction, and the order is marked paid.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="529" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Payment flow: never charge twice</text>
+  <text x="32" y="66" class="sub">Top row runs during the HTTP request. Bottom row happens later, when the processor (PSP) confirms.</text>
+  <text x="32" y="100" class="h">During the request</text>
+  <rect x="32" y="112" width="210" height="120" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="138" r="12" fill="#1c7c54"/>
+  <text x="56" y="142.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <text x="76" y="143" class="lbl" fill="#2563eb">Client</text>
+  <text x="48" y="172" class="code">POST /payment-intents</text>
+  <text x="48" y="194" class="code">Idempotency-Key: k1</text>
+  <text x="48" y="216" class="note">same key on every retry</text>
+  <line x1="244" y1="172.0" x2="268" y2="172.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="270" y="112" width="180" height="120" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="294" cy="138" r="12" fill="#1c7c54"/>
+  <text x="294" y="142.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <text x="314" y="143" class="lbl" fill="#b45309">Check the key</text>
+  <text x="286" y="172" class="note">seen + same body →</text>
+  <text x="286" y="194" class="note">return stored result</text>
+  <text x="286" y="216" class="note">seen + new body → 409</text>
+  <line x1="452" y1="172.0" x2="476" y2="172.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="478" y="112" width="170" height="120" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="502" cy="138" r="12" fill="#1c7c54"/>
+  <text x="502" y="142.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <text x="522" y="143" class="lbl" fill="#1c7c54">Create intent</text>
+  <text x="494" y="172" class="code">status=pending</text>
+  <text x="494" y="194" class="note">saved BEFORE charging,</text>
+  <text x="494" y="216" class="note">so a crash is safe</text>
+  <line x1="650" y1="172.0" x2="674" y2="172.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="676" y="112" width="172" height="120" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="700" cy="138" r="12" fill="#1c7c54"/>
+  <text x="700" y="142.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <text x="720" y="143" class="lbl" fill="#6d28d9">Charge via PSP</text>
+  <text x="692" y="172" class="code">pm_tok_abc</text>
+  <text x="692" y="194" class="note">card token, never the</text>
+  <text x="692" y="216" class="note">raw card number</text>
+  <text x="32" y="288" class="h">Later, asynchronously</text>
+  <rect x="676" y="300" width="172" height="146" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="700" cy="326" r="12" fill="#1c7c54"/>
+  <text x="700" y="330.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <text x="720" y="331" class="lbl" fill="#6d28d9">PSP webhook</text>
+  <text x="692" y="360" class="code">evt_9 succeeded</text>
+  <text x="692" y="382" class="note">signed; may arrive</text>
+  <text x="692" y="404" class="note">more than once</text>
+  <rect x="468" y="300" width="180" height="146" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="492" cy="326" r="12" fill="#1c7c54"/>
+  <text x="492" y="330.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">6</text>
+  <text x="512" y="331" class="lbl" fill="#b91c1c">Verify + dedupe</text>
+  <text x="484" y="360" class="note">HMAC signature valid?</text>
+  <text x="484" y="382" class="note">event_id new?</text>
+  <text x="484" y="404" class="note">→ enqueue, reply 200</text>
+  <rect x="32" y="300" width="150" height="146" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="326" r="12" fill="#1c7c54"/>
+  <text x="56" y="330.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">8</text>
+  <text x="76" y="331" class="lbl" fill="#2563eb">Order paid</text>
+  <text x="48" y="360" class="note">order service is</text>
+  <text x="48" y="382" class="note">notified and starts</text>
+  <text x="48" y="404" class="note">fulfilment</text>
+  <rect x="210" y="300" width="230" height="146" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="234" cy="326" r="12" fill="#1c7c54"/>
+  <text x="234" y="330.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">7</text>
+  <text x="254" y="331" class="lbl" fill="#b45309">One DB transaction</text>
+  <text x="226" y="356" class="code">status = succeeded</text>
+  <rect x="222" y="366" width="206" height="48" rx="6" fill="#ffffff" stroke="#e5e7eb"/>
+  <line x1="222" y1="390" x2="428" y2="390" stroke="#e5e7eb"/>
+  <text x="232" y="384" class="code">+4999  psp_receivable</text>
+  <text x="232" y="408" class="code">−4999  sales</text>
+  <text x="226" y="434" class="note">ledger rows always sum to zero</text>
+  <line x1="674" y1="373.0" x2="650" y2="373.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="466" y1="373.0" x2="442" y2="373.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="208" y1="373.0" x2="184" y2="373.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="762.0" y1="234" x2="762.0" y2="297" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="752.0" y="270.0" class="note" text-anchor="end">seconds to days later</text>
+  <rect x="32" y="464" width="816" height="44" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="491" class="lbl" fill="#1c7c54">Client timed out?</text>
+  <text x="176" y="491" class="note">It retries with the same key k1. Step 2 finds k1 and returns the first result: no second charge.</text>
+</svg>

@@ -1,5 +1,12 @@
 # Design a Chat API
 
+> [!TIP]
+> **In one line:** A chat backend saves every message durably first, then fans it out live through WebSocket gateways and pub/sub; offline users get a push notification and catch up from history.
+>
+> **In plain English:** Live connections are like phone calls — instant but easily dropped — while the database is like a mailbox that never loses a letter. The design always posts the letter first, then rings everyone who is on the line; anyone who missed the call reads their mailbox when they come back.
+>
+> **You'll be able to:** Estimate concurrent connections and gateway instances from daily active users · Route one message to every device of every member across many gateways · Explain why persist-then-fan-out turns delivery failures into delays, not data loss
+
 ## Problem Statement
 
 Design the backend for a messaging product like a 1:1 and group chat feature: users need real-time message delivery when both parties are online, reliable delivery and message history when they're not, read receipts and presence (online/offline/typing), and delivery to multiple devices for the same user (phone + laptop + tablet, all logged in simultaneously). The service needs to behave correctly across the full matrix of "sender online/offline" × "recipient online/offline" × "recipient has 1-N devices."
@@ -150,6 +157,8 @@ graph TB
     Gateway -.->|if recipient offline| Queue --> Push
 ```
 
+![Chat fan-out: sender's WebSocket gateway passes the message to the message service, which saves it first and publishes to pub/sub; gateways push it to every member device, and offline members get a push notification](../assets/diagrams/19-chat-fanout.svg)
+
 ## Data Flow
 
 **Sending a message (recipient online):**
@@ -210,3 +219,26 @@ At 10x scale (45M concurrent connections, 230,000 messages/s peak):
 - [Part 2 — Pagination](../02-rest-api-design/pagination.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How does the design arrive at roughly 450 WebSocket gateway instances at peak?</summary>
+
+10M DAU × 30% online at the same time × 1.5 devices each ≈ 4.5 million open connections. At about 10,000 connections per tuned event-loop server, that is 4.5M ÷ 10,000 ≈ 450 instances — and the limit is memory and file descriptors per instance, not CPU.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why persist the message before fanning it out, instead of delivering live first and saving asynchronously?</summary>
+
+Saving first makes durability unconditional: if live delivery fails, the message is only late, never lost. Delivering first would shave a little latency but open a window where a recipient sees a message that then fails to save — unacceptable when message history is a core promise.
+
+</details>
+
+<details markdown="1">
+<summary>3. A gateway instance holding 10,000 connections crashes. What do those users experience, and how do they get the messages they missed?</summary>
+
+Their sockets drop; clients reconnect with backoff and the load balancer sends them to another instance. On reconnect each client calls the history/sync endpoint with its last-seen message ID and pulls anything sent during the gap from the database — nothing is lost because every message was persisted before delivery, and pub/sub was never relied on as a buffer.
+
+</details>
