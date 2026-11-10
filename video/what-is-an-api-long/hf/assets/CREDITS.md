@@ -7,6 +7,8 @@
 | On-screen text "FROM THE HANDBOOK GLOSSARY" | Quote of the API entry | `resources/glossary.md` in this repo | MIT (this repository) | 2026-11-10 |
 | FastAPI endpoint code on screen | `get_user` example | `docs/00-introduction/what-is-an-api.md` in this repo | MIT (this repository) | 2026-11-10 |
 | Terminal output (200 / 404 / 422) | Real output of `uvicorn main:app` + `curl -i` against that example (`demo/main.py`, `demo/real_output_8000.txt`); some headers trimmed on screen | Run locally with FastAPI + uvicorn | Original, made for this video | 2026-11-10 |
+| `repo/svg/00-what-is-an-api.svg`, `01-http-request-anatomy.svg`, `01-status-code-families.svg` | The handbook's concept diagrams, converted to a dark neon palette by `video/tools/repo_svg_to_dark.py` | `docs/assets/diagrams/` in this repo | MIT (this repository) | 2026-11-10 |
+| `repo/mermaid/what-is-an-api-sequence.svg` | The chapter's Mermaid sequence diagram, rendered by `video/tools/mermaid_to_svg.py` (mermaid-cli) | `docs/00-introduction/what-is-an-api.md` | MIT (this repository); Mermaid is MIT | 2026-11-10 |
 | `</>` emblem, boxes, arrows, chips | Diagrams and logo mark | Original SVG/HTML, made for this video | Original | — |
 | Voice | AI narration, Kokoro `am_michael` (not a human voice, not a clone) | https://github.com/thewh1teagle/kokoro-onnx (model files v1.0) | Apache-2.0 | 2026-11-10 |
 | Sound effects | Whoosh, thunk, pop, tick, shutter | Synthesized in numpy (`build/mix.py`) | Original | — |

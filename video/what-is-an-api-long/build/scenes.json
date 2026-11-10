@@ -79,7 +79,9 @@
    "c3",
    "c4"
   ],
-  "assets": [],
+  "assets": [
+   "repo/svg/00-what-is-an-api.svg"
+  ],
   "pill": "change the kitchen, keep the menu"
  },
  {
@@ -124,14 +126,27 @@
   "pill": "GET /users/42"
  },
  {
-  "id": "c2c",
+  "id": "c2b2",
   "start": 118.499,
-  "dur": 27.459,
+  "dur": 9.267,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "e4"
+  ],
+  "assets": [
+   "repo/svg/01-http-request-anatomy.svg"
+  ],
+  "pill": "same four-part shape, both ways"
+ },
+ {
+  "id": "c2c",
+  "start": 127.766,
+  "dur": 17.691,
   "kind": "code_card",
   "chapter": 2,
   "keys": [
    "f1",
-   "f2",
    "f3",
    "f4"
   ],
@@ -139,9 +154,23 @@
   "pill": "status first, then the body"
  },
  {
+  "id": "c2e",
+  "start": 145.457,
+  "dur": 9.978,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "f2"
+  ],
+  "assets": [
+   "repo/svg/01-status-code-families.svg"
+  ],
+  "pill": "the first digit tells you whose move it is"
+ },
+ {
   "id": "c2d",
-  "start": 145.958,
-  "dur": 12.318,
+  "start": 155.435,
+  "dur": 12.319,
   "kind": "svg_flow",
   "chapter": 2,
   "keys": [
@@ -152,7 +181,7 @@
  },
  {
   "id": "card3",
-  "start": 158.276,
+  "start": 167.754,
   "dur": 1.67,
   "kind": "chapter_card",
   "chapter": 3,
@@ -162,9 +191,26 @@
   "card": true
  },
  {
+  "id": "c3m",
+  "start": 169.424,
+  "dur": 23.558,
+  "kind": "svg_flow",
+  "chapter": 3,
+  "keys": [
+   "q1",
+   "q2",
+   "q3",
+   "q4"
+  ],
+  "assets": [
+   "repo/mermaid/what-is-an-api-sequence.svg"
+  ],
+  "pill": "the whole trip, in one diagram"
+ },
+ {
   "id": "c3a",
-  "start": 159.946,
-  "dur": 28.451,
+  "start": 192.982,
+  "dur": 28.45,
   "kind": "code_card",
   "chapter": 3,
   "keys": [
@@ -180,7 +226,7 @@
  },
  {
   "id": "c3b",
-  "start": 188.397,
+  "start": 221.432,
   "dur": 13.937,
   "kind": "terminal_clip",
   "chapter": 3,
@@ -196,7 +242,7 @@
  },
  {
   "id": "c3c",
-  "start": 202.334,
+  "start": 235.369,
   "dur": 16.818,
   "kind": "svg_compare",
   "chapter": 3,
@@ -210,7 +256,7 @@
  },
  {
   "id": "card4",
-  "start": 219.152,
+  "start": 252.187,
   "dur": 1.67,
   "kind": "chapter_card",
   "chapter": 4,
@@ -221,7 +267,7 @@
  },
  {
   "id": "c4a",
-  "start": 220.822,
+  "start": 253.857,
   "dur": 19.668,
   "kind": "svg_icons",
   "chapter": 4,
@@ -235,8 +281,8 @@
  },
  {
   "id": "c4b",
-  "start": 240.49,
-  "dur": 28.121,
+  "start": 273.525,
+  "dur": 28.122,
   "kind": "stat_drop",
   "chapter": 4,
   "keys": [
@@ -252,7 +298,7 @@
  },
  {
   "id": "card5",
-  "start": 268.611,
+  "start": 301.647,
   "dur": 1.67,
   "kind": "chapter_card",
   "chapter": 5,
@@ -263,7 +309,7 @@
  },
  {
   "id": "m1",
-  "start": 270.281,
+  "start": 303.317,
   "dur": 14.283,
   "kind": "svg_diagram",
   "chapter": 5,
@@ -275,8 +321,8 @@
  },
  {
   "id": "m2",
-  "start": 284.564,
-  "dur": 11.797,
+  "start": 317.6,
+  "dur": 11.796,
   "kind": "svg_compare",
   "chapter": 5,
   "keys": [
@@ -287,7 +333,7 @@
  },
  {
   "id": "m3",
-  "start": 296.361,
+  "start": 329.396,
   "dur": 8.517,
   "kind": "svg_compare",
   "chapter": 5,
@@ -299,7 +345,7 @@
  },
  {
   "id": "m4",
-  "start": 304.878,
+  "start": 337.913,
   "dur": 12.643,
   "kind": "svg_flow",
   "chapter": 5,
@@ -311,7 +357,7 @@
  },
  {
   "id": "m5",
-  "start": 317.521,
+  "start": 350.556,
   "dur": 13.969,
   "kind": "svg_compare",
   "chapter": 5,
@@ -323,7 +369,7 @@
  },
  {
   "id": "card6",
-  "start": 331.49,
+  "start": 364.525,
   "dur": 1.67,
   "kind": "chapter_card",
   "chapter": 6,
@@ -334,7 +380,7 @@
  },
  {
   "id": "rec",
-  "start": 333.16,
+  "start": 366.195,
   "dur": 17.807,
   "kind": "recap_grid",
   "chapter": 6,
@@ -351,8 +397,8 @@
  },
  {
   "id": "out",
-  "start": 350.967,
-  "dur": 16.666,
+  "start": 384.002,
+  "dur": 16.665,
   "kind": "end_screen",
   "chapter": 6,
   "keys": [

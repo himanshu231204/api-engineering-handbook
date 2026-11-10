@@ -39,12 +39,19 @@ L("c2b","e1",2,"Here's a real request. GET, slash users, slash forty-two.","A re
 L("c2b","e2",2,"GET is the method. It says what you want to do. The path says which thing you want.","The [method] says what to do. The [path] says which thing.")
 L("c2b","e3",2,"Headers add context. Accept says you want JSON. Authorization says who you are.","[Headers] add context: what you accept, who you are.")
 
+L("c2b2","e4",2,"Every HTTP message, request or response, has the same shape: a start line, headers, an empty line, and an optional body.","Same shape: a [start line], [headers], an empty line, a [body].")
+
 L("c2c","f1",2,"The server answers with a status code. Two hundred means OK.","The server answers with a [status code]. [200] means OK.")
-L("c2c","f2",2,"Status codes come in families. Two hundreds mean success. Four hundreds mean the caller made a mistake. Five hundreds mean the server did.","[2xx] success. [4xx] the caller erred. [5xx] the server erred.")
 L("c2c","f3",2,"Then comes the body, in JSON. An id, a name, an email.","Then the [body], in [JSON]: an id, a name, an email.")
 L("c2c","f4",2,"Nothing in this response says whether the data came from Post gress Q L, Mongo D B, or a plain dictionary. That's the point.","Nothing says if the data came from [PostgreSQL], [MongoDB] or a [dictionary].")
+L("c2e","f2",2,"Status codes come in families. Two hundreds mean success. Four hundreds mean the caller made a mistake. Five hundreds mean the server did.","[2xx] success. [4xx] the caller erred. [5xx] the server erred.")
 
 L("c2d","g1",2,"One more thing from M D N. HTTP is stateless. Every request stands alone, so the server doesn't remember the last one unless you send something that identifies you.","HTTP is [stateless]. Every request stands [alone].")
+
+L("c3m","q1",3,"Now zoom out. Here is the whole trip, drawn in the handbook as a sequence diagram.","Zoom out: the whole [trip], as a [sequence diagram].")
+L("c3m","q2",3,"The client sends a request. The API matches the route and validates it.","[Request] in. [Route matched], request [validated].")
+L("c3m","q3",3,"Server logic fetches data from the database, and the result travels back as a response.","[Fetch] data. The [result] travels back as a [response].")
+L("c3m","q4",3,"The client only ever depends on the API on the left. Everything to the right is free to change.","The client depends on the [API]. The rest is free to [change].")
 
 L("c3a","i1",3,"Now the other side. This is a complete API endpoint, written in FastAPI, the framework this handbook builds with.","The provider side: a complete endpoint in [FastAPI].")
 L("c3a","i2",3,"One decorator maps GET, slash users, slash user id, to a Python function.","One [decorator] maps a [route] to a [function].")

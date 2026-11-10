@@ -1,0 +1,84 @@
+{
+ "chapter": "docs/00-introduction/what-is-an-api.md",
+ "title": "What Is an API?",
+ "tldr": {
+  "In one line": "An API is a contract that lets one program ask another to do something without knowing how it works inside — so both sides can change independently.",
+  "In plain English": "Think of a wall socket: you plug in a lamp without knowing anything about the power station. The shape of the socket is the promise. A web API is the same kind of promise between two programs, sent over the internet using HTTP.",
+  "You'll be able to": "Explain what an API is (and isn't) in one sentence · Spot the client, the contract and the server in any app you use · Read a basic HTTP request and its JSON response"
+ },
+ "sections": [
+  "Why This Matters",
+  "Core Concept",
+  "Mental Model",
+  "How It Works",
+  "Architecture",
+  "Request / Response Example",
+  "Code Example",
+  "Production Considerations",
+  "Common Mistakes",
+  "Best Practices",
+  "AI Engineering Perspective",
+  "Exercises",
+  "Key Takeaways"
+ ],
+ "mermaid": [
+  {
+   "mmd": "mermaid/diagram1.mmd",
+   "svg": "mermaid/diagram1.svg",
+   "section": "Architecture",
+   "first_line": "sequenceDiagram"
+  }
+ ],
+ "code": [
+  {
+   "file": "code/block1.txt",
+   "lang": "text",
+   "section": "How It Works",
+   "lines": 13
+  },
+  {
+   "file": "code/block3.http",
+   "lang": "http",
+   "section": "Request / Response Example",
+   "lines": 4
+  },
+  {
+   "file": "code/block4.http",
+   "lang": "http",
+   "section": "Request / Response Example",
+   "lines": 9
+  },
+  {
+   "file": "code/block5.py",
+   "lang": "python",
+   "section": "Code Example",
+   "lines": 18
+  }
+ ],
+ "svgs": [
+  {
+   "src": "docs/assets/diagrams/00-what-is-an-api.svg",
+   "dark": "svg/00-what-is-an-api.svg",
+   "alt": "Diagram: a client app talks to the server only through the API contract, like a diner using a menu and a waiter"
+  }
+ ],
+ "takeaways": [
+  "An API is a defined contract that lets one system ask another to do something without knowing its internals.",
+  "This handbook focuses on **web APIs**: HTTP-based client/server request/response systems.",
+  "The value of an API is decoupling — the caller and the provider can change independently as long as the contract holds.",
+  "LLM APIs, RAG APIs, and agent/MCP systems are still APIs in exactly this sense — they just happen to have a language model as the \"kitchen.\""
+ ],
+ "quiz": [
+  "1. What are the three parts of this chapter's definition of an API?",
+  "2. Why is it a mistake to copy your database column names straight into API response fields?",
+  "3. Your team moves user data from an in-memory dict to PostgreSQL. What must change for clients calling GET /users/42?"
+ ],
+ "related": {
+  "resources": [
+   "resources/glossary.md"
+  ],
+  "examples": [],
+  "diagrams": [],
+  "projects": []
+ }
+}

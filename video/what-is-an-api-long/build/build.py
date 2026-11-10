@@ -157,6 +157,30 @@ class Scene:
         SFX.append((self.start + t, "shutter"))
         return i, top
 
+    def svg_reveal(self, path, x, y, scale, axis, steps, out=None, glow=None):
+        """Inline a repo SVG / rendered Mermaid SVG (path relative to hf/) and reveal it step by step.
+        axis 'y' = top-to-bottom, 'x' = left-to-right; steps = [(local_time, svg_units_revealed)]."""
+        svg = open(f"{HF}/{path}").read()
+        vb = re.search(r'viewBox="([\-\d\.]+) ([\-\d\.]+) ([\d\.]+) ([\d\.]+)"', svg)
+        vw, vh = float(vb.group(3)), float(vb.group(4))
+        w, h = vw * scale, vh * scale
+        svg = re.sub(r"<svg ", f'<svg style="width:{w:.0f}px;height:{h:.0f}px;display:block;overflow:visible" ', svg, count=1)
+        i = self.uid()
+        self.h.append(f'<div id="{i}" class="el" style="left:{x}px;top:{y}px;width:{w:.0f}px;height:{h:.0f}px">{svg}</div>')
+        total = vh if axis == "y" else vw
+        def clip(u):
+            r = max(0.0, 100.0 * (1 - u / total))
+            return f"inset(0 0 {r:.2f}% 0)" if axis == "y" else f"inset(0 {r:.2f}% 0 0)"
+        full = "inset(0 0 100% 0)" if axis == "y" else "inset(0 100% 0 0)"
+        t0, u0 = steps[0]
+        self.js.append(f'tl.fromTo("#{i}",{{opacity:1,clipPath:"{full}"}},{{opacity:1,clipPath:"{clip(u0)}",duration:.5,ease:"power2.out"}},{t0});')
+        for (ta, ua), (tb, ub) in zip(steps, steps[1:]):
+            self.js.append(f'tl.fromTo("#{i}",{{clipPath:"{clip(ua)}"}},{{clipPath:"{clip(ub)}",duration:.5,ease:"power2.out",immediateRender:false}},{tb});')
+        if out is not None:
+            self.js.append(f'tl.fromTo("#{i}",{{opacity:1}},{{opacity:0,duration:.2,immediateRender:false}},{out});')
+        SFX.append((self.start + t0, "shutter"))
+        return i, (w, h)
+
     def ring(self, x, y, w, h, color=YEL, t=0.0, out=None, r=18):
         i = self.uid()
         self.h.append(f'<svg id="{i}" class="svgl" width="{W}" height="{Hh}" viewBox="0 0 {W} {Hh}"><rect id="{i}-r" x="{x}" y="{y}" width="{w}" height="{h}" rx="{r}" fill="none" stroke="{color}" stroke-width="6" stroke-dasharray="{2 * (w + h):.0f}" stroke-dashoffset="{2 * (w + h):.0f}" stroke-linecap="round"/></svg>')
@@ -351,19 +375,23 @@ def beat_c1b():
 
 
 def beat_c1c():
-    S = sc("c1c", "svg_analogy", pill="change the kitchen, keep the menu")
-    S.box(110, 190, 440, 220, CYAN, "You", "the client", t=S.t("c1", "restaurant"))
-    S.box(740, 170, 440, 260, LIME, "Menu + waiter", "the API contract", tsize=44, t=S.t("c1", "menu"))
-    S.box(1370, 190, 440, 220, SLATE, "Kitchen", "the server", dashed=True, t=S.t("c1", "kitchen"))
-    S.arrow(560, 270, 730, 270, CYAN, t=S.t("c1", "tell"), label="order", label_dy=-42)
-    S.arrow(730, 350, 560, 350, LIME, t=S.t("c1", "cooks"))
-    S.arrow(1190, 270, 1360, 270, GREY, t=S.t("c1", "kitchen"))
-    S.arrow(1360, 350, 1190, 350, GREY, t=S.t("c1", "cooks"), label="dish", label_dy=18)
+    S = sc("c1c", "svg_analogy", pill="change the kitchen, keep the menu", assets=["repo/svg/00-what-is-an-api.svg"])
+    oc = S.t("c4") - 0.05
+    S.box(110, 190, 440, 220, CYAN, "You", "the client", t=S.t("c1", "restaurant"), out=oc)
+    S.box(740, 170, 440, 260, LIME, "Menu + waiter", "the API contract", tsize=44, t=S.t("c1", "menu"), out=oc)
+    S.box(1370, 190, 440, 220, SLATE, "Kitchen", "the server", dashed=True, t=S.t("c1", "kitchen"), out=oc)
+    S.arrow(560, 270, 730, 270, CYAN, t=S.t("c1", "tell"), label="order", label_dy=-42, out=oc)
+    S.arrow(730, 350, 560, 350, LIME, t=S.t("c1", "cooks"), out=oc)
+    S.arrow(1190, 270, 1360, 270, GREY, t=S.t("c1", "kitchen"), out=oc)
+    S.arrow(1360, 350, 1190, 350, GREY, t=S.t("c1", "cooks"), label="dish", label_dy=18, out=oc)
     for i, (txt, ph) in enumerate([("new chefs", "chefs"), ("new stove", "stove"), ("new recipe", "recipe")]):
-        S.chip(txt, 1450, 470 + i * 78, ORG, w=290, size=36, t=S.t("c2", ph))
-    S.text("✓", 905, 440, 110, size=140, color=LIME, align="center", anim="slam", t=S.t("c3", "menu"), sfx="thunk")
-    S.note("same menu, nobody notices", 140, 590, YEL, 62, w=760, t=S.t("c3", "notice"))
-    S.text(f'Both sides change <span style="color:{YEL}">independently</span>', 110, 700, 1700, size=72, align="center", t=S.t("c4", "independently") - 0.4)
+        S.chip(txt, 1450, 470 + i * 78, ORG, w=290, size=36, t=S.t("c2", ph), out=oc)
+    S.text("✓", 905, 440, 110, size=140, color=LIME, align="center", anim="slam", t=S.t("c3", "menu"), sfx="thunk", out=oc)
+    S.note("same menu, nobody notices", 140, 590, YEL, 62, w=760, t=S.t("c3", "notice"), out=oc)
+    # the handbook's own diagram for this chapter (docs/assets/diagrams/00-what-is-an-api.svg), revealed as the line is spoken
+    S.chip("from the handbook", 300, 76, LIME, size=30, t=S.t("c4", "whole"))
+    S.svg_reveal("assets/repo/svg/00-what-is-an-api.svg", 300, 130, 1.5, "y",
+                 [(S.t("c4", "whole"), 76), (S.t("c4", "Both"), 296), (S.t("c4", "holds"), 420)])
     S.write()
 
 
@@ -407,6 +435,38 @@ def beat_c2b():
     S.write()
 
 
+def beat_c2b2():
+    S = sc("c2b2", "svg_diagram", pill="same four-part shape, both ways", assets=["repo/svg/01-http-request-anatomy.svg"])
+    S.chip("from the handbook", 460, 44, LIME, size=30, t=S.t("e4", "Every"))
+    S.svg_reveal("assets/repo/svg/01-http-request-anatomy.svg", 322, 100, 1.45, "y",
+                 [(S.t("e4", "Every"), 92), (S.t("e4", "start"), 165), (S.t("e4", "headers"), 272), (S.t("e4", "empty"), 308),
+                  (S.t("e4", "optional"), 378), (S.t("e4", "body") + 0.5, 470)])
+    S.write()
+
+
+def beat_c2e():
+    S = sc("c2e", "svg_diagram", pill="the first digit tells you whose move it is", assets=["repo/svg/01-status-code-families.svg"])
+    S.chip("from the handbook", 460, 44, LIME, size=30, t=S.t("f2", "Status"))
+    S.svg_reveal("assets/repo/svg/01-status-code-families.svg", 300, 100, 1.5, "y",
+                 [(S.t("f2", "Status"), 80), (S.t("f2", "families"), 150), (S.t("f2", "Two"), 222), (S.t("f2", "Four"), 366), (S.t("f2", "Five"), 440)])
+    S.write()
+
+
+def beat_c3m():
+    S = sc("c3m", "svg_flow", pill="the whole trip, in one diagram", assets=["repo/mermaid/what-is-an-api-sequence.svg"])
+    X0, Y0, SC_ = 143, 95, 1.4
+    S.chip("Mermaid diagram from the handbook chapter", 460, 44, LIME, size=30, t=S.t("q1", "Now"))
+    S.svg_reveal("assets/repo/mermaid/what-is-an-api-sequence.svg", X0, Y0, SC_, "y",
+                 [(S.t("q1", "Now"), 92), (S.t("q2", "request"), 145), (S.t("q2", "matches"), 192), (S.t("q3", "fetches"), 236),
+                  (S.t("q3", "database"), 282), (S.t("q3", "result"), 326), (S.t("q3", "response"), 372), (S.t("q3", "response") + 0.7, 489)])
+    # q4: the API boundary. Client + API on the left depend on the contract; the right side is free to change
+    S.ring(173, Y0 + 2, 760, 640, LIME, t=S.t("q4", "depends"))
+    S.ring(950, Y0 + 2, 830, 640, PINK, t=S.t("q4", "free"))
+    S.chip("the client depends on this", 183, 748, LIME, size=30, t=S.t("q4", "depends"))
+    S.chip("free to change", 960, 748, PINK, size=30, ink=False, t=S.t("q4", "free"))
+    S.write()
+
+
 def beat_c2c():
     S = sc("c2c", "code_card", pill="status first, then the body")
     lines = [f'<span class="k">HTTP/1.1</span> <span class="g">200 OK</span>', f'<span class="f">Content-Type:</span> application/json', '',
@@ -416,9 +476,6 @@ def beat_c2c():
     times = [t1, t1 + 0.3, 0.1, t3, t3 + 0.25, t3 + 0.5, t3 + 0.75, t3 + 1.0]
     cid, ids, (y0, lh) = S.code(120, 140, 960, lines, "response", size=36, lh=54, times=times)
     S.stat(200, "", 1180, 120, 560, LIME, "OK", S.t("f1", "200"), size=210)
-    fam_t = [S.t("f2", "200"), S.t("f2", "400"), S.t("f2", "500")]
-    for i, (txt, col) in enumerate([("2xx  success", LIME), ("4xx  caller erred", ORG), ("5xx  server erred", RED)]):
-        S.chip(txt, 1180, 420 + i * 86, col, w=520, size=38, t=fam_t[i])
     # f4: where did the data come from?
     t4 = S.t("f4", "PostgreSQL")
     for i, (txt, col) in enumerate([("PostgreSQL?", CYAN), ("MongoDB?", LIME), ("a dict?", PINK)]):
@@ -626,7 +683,7 @@ def beat_out():
     S.write()
 
 
-for fn in (beat_hook, beat_road, beat_c1a, beat_c1b, beat_c1c, beat_c2a, beat_c2b, beat_c2c, beat_c2d, beat_c3a, beat_c3b, beat_c3c, beat_c4a, beat_c4b,
+for fn in (beat_hook, beat_road, beat_c1a, beat_c1b, beat_c1c, beat_c2a, beat_c2b, beat_c2b2, beat_c2c, beat_c2e, beat_c2d, beat_c3m, beat_c3a, beat_c3b, beat_c3c, beat_c4a, beat_c4b,
            beat_m1, beat_m2, beat_m3, beat_m4, beat_m5, beat_rec, beat_out):
     fn()
 

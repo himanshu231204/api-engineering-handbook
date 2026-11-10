@@ -147,6 +147,10 @@ For an `examples/*` project, "verify" means: `python3 scripts/check_examples_com
 
 Chapters are large (1200–2200 words each with a diagram and code) and independent by file, which makes them a good fit for parallel subagents — one agent per part (or per priority subset within a part), each restricted to writing files only inside its own `docs/<slug>/` directory and updating only that part's own `README.md` status table. See recent git log messages (`docs: write Part N, ... chapters`) for the pattern this repo was actually built with. Don't have two agents write into the same directory concurrently.
 
+## Videos
+
+One video per handbook topic is tracked in `video/ROADMAP.md`. To make or re-cut one, use the repo skill `.claude/skills/handbook-video/` (invoke `/handbook-video`). It builds on the concept-explainer pipeline but takes everything from the repo: the chapter's Mermaid diagrams, the concept SVGs in `docs/assets/diagrams/`, its code, the glossary and a real run of the example. Tools live in `video/tools/`; a finished worked example is `video/what-is-an-api-long/`. Finished MP4s are not committed.
+
 ## House rules
 
 - No placeholder text (`TODO`, `coming soon`, lorem ipsum) in any committed chapter — either it's fully written or it's a 🚧 Planned row with no file.

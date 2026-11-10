@@ -6,7 +6,7 @@ Primary keyword: **what is an api**
 **What Is an API? A Plain-English Guide with a Real FastAPI Demo** (62 characters)
 
 Alternates:
-- What Is an API? Explained in 6 Minutes (Beginner Guide) (55)
+- What Is an API? Explained in 7 Minutes (Beginner Guide) (55)
 - What Is an API? Why It's a Promise, Not a URL (45)
 
 ## Description (175 words)
@@ -19,10 +19,10 @@ Chapters:
 00:00 Intro: what is an API?
 00:26 The contract
 01:19 A request, line by line
-02:38 The server side
-03:39 Who calls APIs
-04:28 Five mistakes
-05:31 Recap and what's next
+02:47 The server side
+04:12 Who calls APIs
+05:01 Five mistakes
+06:04 Recap and what's next
 
 Source chapter and exercises (free, open source): https://github.com/himanshu231204/api-engineering-handbook
 MDN, Overview of HTTP: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
@@ -38,10 +38,10 @@ Try the exercise: add a GET /users endpoint and decide what it should return whe
 00:00 Intro: what is an API?
 00:26 The contract
 01:19 A request, line by line
-02:38 The server side
-03:39 Who calls APIs
-04:28 Five mistakes
-05:31 Recap and what's next
+02:47 The server side
+04:12 Who calls APIs
+05:01 Five mistakes
+06:04 Recap and what's next
 ```
 
 ## Tags (20 tags, 361 characters)

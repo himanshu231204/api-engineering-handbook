@@ -6,7 +6,7 @@ One video per handbook topic, 5–10 minutes each. This page tracks which topics
 
 ## How videos are made and tracked
 
-- Each video is made with the concept-explainer skill: one topic per video, 5–10 minutes.
+- Each video is made with the repo's `handbook-video` skill (`.claude/skills/handbook-video/`, built on the concept-explainer skill): one topic per video, 5–10 minutes, using the chapter's own diagrams, Mermaid and code.
 - Finished videos are not committed to the repo. Upload to YouTube, then put the link in the **Video** column and update the status and the counts below.
 - Status: ⬜ Planned → ✍️ Scripted (script written) → 🎬 Rendered (video made, not uploaded) → ✅ Published (YouTube link added). ⭐ marks a pilot video.
 

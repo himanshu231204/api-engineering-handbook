@@ -40,7 +40,63 @@
 <div id="c1c-e12" class="el chip" style="left:1450px;top:626px;width:290px;background:#FF9100;color:#0E0622;font-size:36px;">new recipe</div>
 <div id="c1c-e13" class="el " style="left:905px;top:440px;width:110px;font-size:140px;font-weight:900;color:#39FF88;text-align:center;line-height:1.12;">✓</div>
 <div id="c1c-e14" class="el note" style="left:140px;top:590px;width:760px;font-family:'Caveat';font-weight:700;font-size:62px;color:#FFE500;transform-origin:left center;line-height:1;">same menu, nobody notices</div>
-<div id="c1c-e15" class="el " style="left:110px;top:700px;width:1700px;font-size:72px;font-weight:900;color:#fff;text-align:center;line-height:1.12;">Both sides change <span style="color:#FFE500">independently</span></div>
+<div id="c1c-e15" class="el chip" style="left:300px;top:76px;background:#39FF88;color:#0E0622;font-size:30px;">from the handbook</div>
+<div id="c1c-e16" class="el" style="left:300px;top:130px;width:1320px;height:630px"><svg style="width:1320px;height:630px;display:block;overflow:visible" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420" role="img" aria-labelledby="r00-what-is-an-api-t r00-what-is-an-api-d">
+  <title id="r00-what-is-an-api-t">What an API is</title>
+  <desc id="r00-what-is-an-api-d">A client app talks to a server only through an API contract, like a diner using a menu and a waiter. The kitchen behind it can change freely as long as the contract holds.</desc>
+  <defs>
+    <marker id="r00-what-is-an-api-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8199BB"/>
+    </marker>
+    <style>
+      .r00-what-is-an-api-title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r00-what-is-an-api-sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r00-what-is-an-api-h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r00-what-is-an-api-lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .r00-what-is-an-api-note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r00-what-is-an-api-code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <text x="32" y="44" class="r00-what-is-an-api-title">An API is a contract in the middle</text>
+  <text x="32" y="66" class="r00-what-is-an-api-sub">The client only depends on the menu. Everything behind it can change.</text>
+  <rect x="32" y="96" width="208" height="156" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="48" y="126" class="r00-what-is-an-api-h">Client app</text>
+  <text x="48" y="152" class="r00-what-is-an-api-note">phone app, browser,</text>
+  <text x="48" y="170" class="r00-what-is-an-api-note">script or AI agent</text>
+  <text x="48" y="208" class="r00-what-is-an-api-note">Asks. Never sees</text>
+  <text x="48" y="226" class="r00-what-is-an-api-note">how the answer is made.</text>
+  <rect x="336" y="96" width="208" height="156" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="2.5"/>
+  <text x="352" y="126" class="r00-what-is-an-api-h">API contract</text>
+  <text x="352" y="158" class="r00-what-is-an-api-code">GET /users/42</text>
+  <text x="352" y="180" class="r00-what-is-an-api-code">200 + JSON body</text>
+  <text x="352" y="214" class="r00-what-is-an-api-note">the menu: exactly what</text>
+  <text x="352" y="232" class="r00-what-is-an-api-note">you may ask and get back</text>
+  <rect x="640" y="96" width="208" height="156" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="656" y="126" class="r00-what-is-an-api-h">Server + data</text>
+  <text x="656" y="152" class="r00-what-is-an-api-note">business logic, database</text>
+  <text x="656" y="170" class="r00-what-is-an-api-note">other services</text>
+  <text x="656" y="208" class="r00-what-is-an-api-note">Hidden from the client:</text>
+  <text x="656" y="226" class="r00-what-is-an-api-note">free to change inside.</text>
+  <line x1="240" y1="152" x2="336" y2="152" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="544" y1="152" x2="640" y2="152" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="640" y1="196" x2="544" y2="196" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="336" y1="196" x2="240" y2="196" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <text x="288" y="142" class="r00-what-is-an-api-note" text-anchor="middle">request</text>
+  <text x="592" y="142" class="r00-what-is-an-api-note" text-anchor="middle">request</text>
+  <text x="288" y="216" class="r00-what-is-an-api-note" text-anchor="middle">response</text>
+  <text x="592" y="216" class="r00-what-is-an-api-note" text-anchor="middle">response</text>
+  <line x1="46" y1="266" x2="226" y2="266" stroke="#3B73ED" stroke-width="2"/>
+  <text x="136" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#5787F0">The diner</text>
+  <line x1="350" y1="266" x2="530" y2="266" stroke="#50D89F" stroke-width="2"/>
+  <text x="440" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#69DDAD">Menu + waiter</text>
+  <line x1="654" y1="266" x2="834" y2="266" stroke="#648BC4" stroke-width="2"/>
+  <text x="744" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#A0A0B0">The kitchen</text>
+  <rect x="32" y="308" width="816" height="44" rx="10" fill="#302808" stroke="#F58733" stroke-width="1.5"/>
+  <text x="440" y="335" class="r00-what-is-an-api-note" text-anchor="middle">Swap the chefs, the stove or the recipe: if the dish still matches the menu, the client never notices.</text>
+</svg>
+</div>
 </div>
 <script>
 const tl = gsap.timeline({ paused: true });
@@ -69,21 +125,24 @@ const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n
  tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
 
 tl.fromTo("#c1c-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
-A("c1c-e1","pop",0.64,null);
-A("c1c-e2","pop",2.3,null);
-A("c1c-e3","pop",4.84,null);
-D("c1c-e4",3.02,170.0,true,null);
-A("c1c-e5","fade",3.17,null);
-D("c1c-e6",5.06,170.0,true,null);
-D("c1c-e7",4.84,170.0,true,null);
-D("c1c-e8",5.06,170.0,true,null);
-A("c1c-e9","fade",5.21,null);
-A("c1c-e10","pop",8.181,null);
-A("c1c-e11","pop",9.441,null);
-A("c1c-e12","pop",10.921,null);
-A("c1c-e13","slam",13.455,null);
-A("c1c-e14","wipe",14.615,null);
-A("c1c-e15","fade",19.221,null);
+A("c1c-e1","pop",0.64,15.440999999999999);
+A("c1c-e2","pop",2.3,15.440999999999999);
+A("c1c-e3","pop",4.84,15.440999999999999);
+D("c1c-e4",3.02,170.0,true,15.440999999999999);
+A("c1c-e5","fade",3.17,15.440999999999999);
+D("c1c-e6",5.06,170.0,true,15.440999999999999);
+D("c1c-e7",4.84,170.0,true,15.440999999999999);
+D("c1c-e8",5.06,170.0,true,15.440999999999999);
+A("c1c-e9","fade",5.21,15.440999999999999);
+A("c1c-e10","pop",8.181,15.440999999999999);
+A("c1c-e11","pop",9.441,15.440999999999999);
+A("c1c-e12","pop",10.921,15.440999999999999);
+A("c1c-e13","slam",13.455,15.440999999999999);
+A("c1c-e14","wipe",14.615,15.440999999999999);
+A("c1c-e15","pop",15.801,null);
+tl.fromTo("#c1c-e16",{opacity:1,clipPath:"inset(0 0 100% 0)"},{opacity:1,clipPath:"inset(0 0 81.90% 0)",duration:.5,ease:"power2.out"},15.801);
+tl.fromTo("#c1c-e16",{clipPath:"inset(0 0 81.90% 0)"},{clipPath:"inset(0 0 29.52% 0)",duration:.5,ease:"power2.out",immediateRender:false},18.341);
+tl.fromTo("#c1c-e16",{clipPath:"inset(0 0 29.52% 0)"},{clipPath:"inset(0 0 0.00% 0)",duration:.5,ease:"power2.out",immediateRender:false},21.941);
 tl.fromTo("#c1c-stage",{opacity:1},{opacity:0,duration:.2,immediateRender:false},23.074);
 window.__timelines = window.__timelines || {};
 window.__timelines["c1c"] = tl;
