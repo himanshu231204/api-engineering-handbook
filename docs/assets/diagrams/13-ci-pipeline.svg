@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="t d">
+  <title id="t">CI testing pipeline stages</title>
+  <desc id="d">A pipeline runs six stages from fastest to slowest. Lint and type checks take about 20 seconds, unit tests about a minute, integration tests with a Postgres service about 3 minutes, contract verification about 2 minutes, end-to-end tests in a compose environment about 8 minutes, then deploy followed by a post-deploy smoke test that triggers automatic rollback on failure. Any failure in an earlier stage stops the pipeline so slower and more expensive stages never run on broken code.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="439" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">CI pipeline: fail fast, spend slow time last</text>
+  <text x="32" y="66" class="sub">Each stage is a gate. A red stage stops the pipeline, so expensive stages only run on code that passed the cheap ones.</text>
+  <text x="32" y="98" class="h">Stages, fastest to slowest</text>
+  <rect x="32" y="112" width="126" height="206" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="52" cy="136" r="12" fill="#1c7c54"/>
+  <text x="52" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="70" y="141" class="lbl" fill="#2563eb">~20 s</text>
+  <text x="44" y="170" class="lbl" fill="#111827">Lint + types</text>
+  <text x="44" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="44" y="214" class="note">style, typos,</text>
+  <text x="44" y="230" class="note">type errors</text>
+  <text x="44" y="260" class="note" font-weight="600">Fails on:</text>
+  <text x="44" y="278" class="note">any error</text>
+  <line x1="158" y1="215" x2="170" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="170" y="112" width="126" height="206" rx="12" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="190" cy="136" r="12" fill="#1c7c54"/>
+  <text x="190" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="208" y="141" class="lbl" fill="#1c7c54">~1 min</text>
+  <text x="182" y="170" class="lbl" fill="#111827">Unit tests</text>
+  <text x="182" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="182" y="214" class="note">logic bugs in</text>
+  <text x="182" y="230" class="note">pure functions</text>
+  <text x="182" y="260" class="note" font-weight="600">Fails on:</text>
+  <text x="182" y="278" class="note">any failure</text>
+  <line x1="296" y1="215" x2="308" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="308" y="112" width="126" height="206" rx="12" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="328" cy="136" r="12" fill="#1c7c54"/>
+  <text x="328" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="346" y="141" class="lbl" fill="#1c7c54">~3 min</text>
+  <text x="320" y="170" class="lbl" fill="#111827">Integration</text>
+  <text x="320" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="320" y="214" class="note">SQL, wiring,</text>
+  <text x="320" y="230" class="note">migrations</text>
+  <text x="320" y="260" class="note" font-weight="600">Fails on:</text>
+  <text x="320" y="278" class="note">any failure</text>
+  <line x1="434" y1="215" x2="446" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="446" y="112" width="126" height="206" rx="12" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="466" cy="136" r="12" fill="#1c7c54"/>
+  <text x="466" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="484" y="141" class="lbl" fill="#b45309">~2 min</text>
+  <text x="458" y="170" class="lbl" fill="#111827">Contract</text>
+  <text x="458" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="458" y="214" class="note">breaking API</text>
+  <text x="458" y="230" class="note">changes</text>
+  <text x="458" y="260" class="note" font-weight="600">Fails on:</text>
+  <text x="458" y="278" class="note">unverified</text>
+  <text x="458" y="294" class="note">consumer</text>
+  <line x1="572" y1="215" x2="584" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="584" y="112" width="126" height="206" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <circle cx="604" cy="136" r="12" fill="#1c7c54"/>
+  <text x="604" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="622" y="141" class="lbl" fill="#7c3aed">~8 min</text>
+  <text x="596" y="170" class="lbl" fill="#111827">E2E (compose)</text>
+  <text x="596" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="596" y="214" class="note">config, queues,</text>
+  <text x="596" y="230" class="note">full journeys</text>
+  <text x="596" y="260" class="note" font-weight="600">Fails on:</text>
+  <text x="596" y="278" class="note">journey fails</text>
+  <text x="596" y="294" class="note">(not flaky)</text>
+  <line x1="710" y1="215" x2="722" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="722" y="112" width="126" height="206" rx="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="742" cy="136" r="12" fill="#1c7c54"/>
+  <text x="742" y="140" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="760" y="141" class="lbl" fill="#b91c1c">~1 min</text>
+  <text x="734" y="170" class="lbl" fill="#111827">Deploy + smoke</text>
+  <text x="734" y="196" class="note" font-weight="600">Catches:</text>
+  <text x="734" y="214" class="note">bad rollout,</text>
+  <text x="734" y="230" class="note">wrong secrets</text>
+  <text x="734" y="260" class="note" font-weight="600">Action:</text>
+  <text x="734" y="278" class="note">auto rollback</text>
+  <text x="734" y="294" class="note">on failure</text>
+  <line x1="32" y1="346" x2="848" y2="346" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="32" y="368" class="note">Cheaper, runs on every push, narrow failures</text>
+  <text x="848" y="368" text-anchor="end" class="note">Slower, costlier, broad failures that need logs to diagnose</text>
+  <rect x="32" y="384" width="816" height="38" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="408" class="note">Stages 2 to 4 are independent and can run in parallel after stage 1. Cache dependencies, quarantine flaky tests, keep E2E small.</text>
+</svg>

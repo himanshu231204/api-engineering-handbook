@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Consumer-driven contract testing</title>
+  <desc id="d">The consumer team writes a test that records the requests it makes and the response fields it needs as a contract file. The contract is published to a broker or repository. The provider team's pipeline downloads the contract, replays each request against the real provider code, and checks the responses. If the provider renamed a field, verification fails and the build is blocked before deploy. If every interaction passes, the provider may deploy.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Contract testing: catch the breaking change before deploy</text>
+  <text x="32" y="66" class="sub">The consumer states what it needs; the provider proves it still delivers, on every build.</text>
+
+  <!-- Consumer -->
+  <rect x="32" y="96" width="240" height="150" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="122" r="12" fill="#1c7c54"/>
+  <text x="56" y="126" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="127" class="lbl" fill="#2563eb">Consumer test</text>
+  <text x="48" y="156" class="note">Calls a mock provider and</text>
+  <text x="48" y="174" class="note">records the contract:</text>
+  <text x="48" y="204" class="code">GET /users/7</text>
+  <text x="48" y="224" class="code">needs: id, email</text>
+
+  <!-- Broker -->
+  <rect x="320" y="96" width="240" height="150" rx="12" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="344" cy="122" r="12" fill="#1c7c54"/>
+  <text x="344" y="126" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="366" y="127" class="lbl" fill="#b45309">Broker / repo</text>
+  <text x="336" y="156" class="note">Stores contract files,</text>
+  <text x="336" y="174" class="note">versioned per consumer</text>
+  <text x="336" y="192" class="note">and per provider.</text>
+  <text x="336" y="224" class="code">web-app → user-api</text>
+
+  <!-- Provider -->
+  <rect x="608" y="96" width="240" height="150" rx="12" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="632" cy="122" r="12" fill="#1c7c54"/>
+  <text x="632" y="126" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="654" y="127" class="lbl" fill="#475569">Provider verification</text>
+  <text x="624" y="156" class="note">Replays each recorded</text>
+  <text x="624" y="174" class="note">request against the real</text>
+  <text x="624" y="192" class="note">provider code in CI.</text>
+  <text x="624" y="224" class="code">checks each response</text>
+
+  <line x1="272" y1="171" x2="316" y2="171" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="294" y="162" text-anchor="middle" class="note">publish</text>
+  <line x1="608" y1="171" x2="564" y2="171" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="586" y="162" text-anchor="middle" class="note">fetch</text>
+
+  <line x1="728" y1="246" x2="728" y2="292" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <text x="32" y="284" class="h">Two possible outcomes for the provider build</text>
+
+  <!-- Fail -->
+  <rect x="32" y="300" width="400" height="140" rx="12" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="326" class="lbl" fill="#b91c1c">Breaking change: build fails</text>
+  <text x="48" y="352" class="note">Provider renamed email to email_address.</text>
+  <text x="48" y="376" class="code">expected "email", missing</text>
+  <text x="48" y="400" class="note">Merge is blocked; the consumer never sees</text>
+  <text x="48" y="418" class="note">a broken response in production.</text>
+
+  <!-- Pass -->
+  <rect x="448" y="300" width="400" height="140" rx="12" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="464" y="326" class="lbl" fill="#1c7c54">Compatible change: build passes</text>
+  <text x="464" y="352" class="note">Provider added a new optional field.</text>
+  <text x="464" y="376" class="code">all interactions verified</text>
+  <text x="464" y="400" class="note">Safe to deploy; extra fields do not break</text>
+  <text x="464" y="418" class="note">consumers that ignore what they do not use.</text>
+</svg>
