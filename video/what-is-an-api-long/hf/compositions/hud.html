@@ -1,0 +1,43 @@
+<template>
+<style>
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif}
+#hud-bar{position:absolute;left:0;top:0;width:1920px;height:80px}
+#hud-track{position:absolute;left:20px;top:8px;width:1880px;height:4px;background:#1A1A1A}
+#hud-fill{position:absolute;left:20px;top:8px;width:1880px;height:4px;background:#FFE500;transform-origin:0 50%}
+.tick{position:absolute;top:2px;width:3px;height:16px;background:#666}
+.ht{position:absolute;left:24px;top:26px;font-size:28px;font-weight:700;color:#A0A0B0;opacity:0}
+</style>
+<div id="root" data-composition-id="hud" data-width="1920" data-height="1080">
+<div id="hud-bar"><div id="hud-track"></div><div id="hud-fill"></div><div class="tick" style="left:162.5px"></div><div class="tick" style="left:433.6px"></div><div class="tick" style="left:838.3px"></div><div class="tick" style="left:1149.6px"></div><div class="tick" style="left:1402.6px"></div><div class="tick" style="left:1724.1px"></div><div id="hud-t0" class="ht"></div><div id="hud-t1" class="ht">The contract</div><div id="hud-t2" class="ht">A request, line by line</div><div id="hud-t3" class="ht">The server side</div><div id="hud-t4" class="ht">Who calls APIs</div><div id="hud-t5" class="ht">Five mistakes</div><div id="hud-t6" class="ht">Recap</div></div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#hud-fill",{scaleX:0},{scaleX:1,duration:367.6333333333333,ease:"none"},0);
+tl.fromTo("#hud-t1",{opacity:0},{opacity:1,duration:.2},28.36);
+tl.fromTo("#hud-t1",{opacity:1},{opacity:0,duration:.15,immediateRender:false},80.58);
+tl.fromTo("#hud-t2",{opacity:0},{opacity:1,duration:.2},81.38);
+tl.fromTo("#hud-t2",{opacity:1},{opacity:0,duration:.15,immediateRender:false},159.73);
+tl.fromTo("#hud-t3",{opacity:0},{opacity:1,duration:.2},160.53);
+tl.fromTo("#hud-t3",{opacity:1},{opacity:0,duration:.15,immediateRender:false},220.60);
+tl.fromTo("#hud-t4",{opacity:0},{opacity:1,duration:.2},221.40);
+tl.fromTo("#hud-t4",{opacity:1},{opacity:0,duration:.15,immediateRender:false},270.06);
+tl.fromTo("#hud-t5",{opacity:0},{opacity:1,duration:.2},270.86);
+tl.fromTo("#hud-t5",{opacity:1},{opacity:0,duration:.15,immediateRender:false},332.94);
+tl.fromTo("#hud-t6",{opacity:0},{opacity:1,duration:.2},333.74);
+tl.fromTo("#hud-t6",{opacity:1},{opacity:0,duration:.15,immediateRender:false},367.33);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},26.11);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},27.78);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},79.13);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},80.80);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},158.28);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},159.95);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},219.15);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},220.82);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},268.61);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},270.28);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},331.49);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},333.16);
+window.__timelines = window.__timelines || {};
+window.__timelines["hud"] = tl;
+</script>
+</div>
+</template>

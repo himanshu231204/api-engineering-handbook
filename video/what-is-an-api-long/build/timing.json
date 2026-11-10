@@ -1,0 +1,5071 @@
+{
+ "total": 367.61,
+ "lines": [
+  {
+   "beat": "hook",
+   "key": "h1",
+   "ch": 0,
+   "say": "Your app talks to a server you'll never see.",
+   "cap": "Your app talks to a [server] you'll never see.",
+   "start": 0.25,
+   "end": 2.465,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Your",
+     "start": 0.2,
+     "end": 0.36
+    },
+    {
+     "w": "app",
+     "start": 0.36,
+     "end": 0.56
+    },
+    {
+     "w": "talks",
+     "start": 0.56,
+     "end": 0.82
+    },
+    {
+     "w": "to",
+     "start": 0.82,
+     "end": 1.06
+    },
+    {
+     "w": "a",
+     "start": 1.06,
+     "end": 1.16
+    },
+    {
+     "w": "server",
+     "start": 1.16,
+     "end": 1.46
+    },
+    {
+     "w": "you'll",
+     "start": 1.46,
+     "end": 1.8
+    },
+    {
+     "w": "never",
+     "start": 1.8,
+     "end": 2.0
+    },
+    {
+     "w": "see.",
+     "start": 2.0,
+     "end": 2.3
+    }
+   ],
+   "heard": "Your app talks to a server you'll never see."
+  },
+  {
+   "beat": "hook",
+   "key": "h2",
+   "ch": 0,
+   "say": "What exactly is it saying? And why do you never need to know how that server works?",
+   "cap": "What is it [saying]? Why don't you need to know how it [works]?",
+   "start": 2.705,
+   "end": 7.394,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "What",
+     "start": 2.655,
+     "end": 2.815
+    },
+    {
+     "w": "exactly",
+     "start": 2.815,
+     "end": 2.995
+    },
+    {
+     "w": "is",
+     "start": 2.995,
+     "end": 3.615
+    },
+    {
+     "w": "it",
+     "start": 3.615,
+     "end": 3.735
+    },
+    {
+     "w": "saying?",
+     "start": 3.735,
+     "end": 3.995
+    },
+    {
+     "w": "And",
+     "start": 4.775,
+     "end": 4.815
+    },
+    {
+     "w": "why",
+     "start": 4.815,
+     "end": 5.015
+    },
+    {
+     "w": "do",
+     "start": 5.015,
+     "end": 5.115
+    },
+    {
+     "w": "you",
+     "start": 5.115,
+     "end": 5.195
+    },
+    {
+     "w": "never",
+     "start": 5.195,
+     "end": 5.415
+    },
+    {
+     "w": "need",
+     "start": 5.415,
+     "end": 5.675
+    },
+    {
+     "w": "to",
+     "start": 5.675,
+     "end": 5.835
+    },
+    {
+     "w": "know",
+     "start": 5.835,
+     "end": 5.995
+    },
+    {
+     "w": "how",
+     "start": 5.995,
+     "end": 6.215
+    },
+    {
+     "w": "that",
+     "start": 6.215,
+     "end": 6.435
+    },
+    {
+     "w": "server",
+     "start": 6.435,
+     "end": 6.715
+    },
+    {
+     "w": "works?",
+     "start": 6.715,
+     "end": 7.095
+    }
+   ],
+   "heard": "What exactly is it saying? And why do you never need to know how that server works?"
+  },
+  {
+   "beat": "hook",
+   "key": "h3",
+   "ch": 0,
+   "say": "That's an A P I. By the end of this video, you'll read one, run one, and spot the mistakes that break them.",
+   "cap": "That's an [API]. You'll [read] one, [run] one, and spot the [mistakes].",
+   "start": 7.634,
+   "end": 14.266,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "That's",
+     "start": 7.584,
+     "end": 7.844
+    },
+    {
+     "w": "in",
+     "start": 7.844,
+     "end": 7.904
+    },
+    {
+     "w": "a",
+     "start": 7.904,
+     "end": 7.964
+    },
+    {
+     "w": "PI.",
+     "start": 7.964,
+     "end": 8.184
+    },
+    {
+     "w": "By",
+     "start": 9.244,
+     "end": 9.264
+    },
+    {
+     "w": "the",
+     "start": 9.264,
+     "end": 9.404
+    },
+    {
+     "w": "end",
+     "start": 9.404,
+     "end": 9.624
+    },
+    {
+     "w": "of",
+     "start": 9.624,
+     "end": 9.744
+    },
+    {
+     "w": "this",
+     "start": 9.744,
+     "end": 9.904
+    },
+    {
+     "w": "video,",
+     "start": 9.904,
+     "end": 10.244
+    },
+    {
+     "w": "you'll",
+     "start": 10.444,
+     "end": 10.604
+    },
+    {
+     "w": "read",
+     "start": 10.604,
+     "end": 10.804
+    },
+    {
+     "w": "one,",
+     "start": 10.804,
+     "end": 11.144
+    },
+    {
+     "w": "run",
+     "start": 11.464,
+     "end": 11.624
+    },
+    {
+     "w": "one,",
+     "start": 11.624,
+     "end": 11.924
+    },
+    {
+     "w": "and",
+     "start": 12.244,
+     "end": 12.404
+    },
+    {
+     "w": "spot",
+     "start": 12.404,
+     "end": 12.624
+    },
+    {
+     "w": "the",
+     "start": 12.624,
+     "end": 12.904
+    },
+    {
+     "w": "mistakes",
+     "start": 12.904,
+     "end": 13.244
+    },
+    {
+     "w": "that",
+     "start": 13.244,
+     "end": 13.604
+    },
+    {
+     "w": "break",
+     "start": 13.604,
+     "end": 13.844
+    },
+    {
+     "w": "them.",
+     "start": 13.844,
+     "end": 14.124
+    }
+   ],
+   "heard": "That's in a PI. By the end of this video, you'll read one, run one, and spot the mistakes that break them."
+  },
+  {
+   "beat": "road",
+   "key": "r1",
+   "ch": 0,
+   "say": "Here's the plan, in five parts.",
+   "cap": "Here's the plan, in [five] parts.",
+   "start": 14.716,
+   "end": 16.573,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Here's",
+     "start": 14.666,
+     "end": 14.906
+    },
+    {
+     "w": "the",
+     "start": 14.906,
+     "end": 15.006
+    },
+    {
+     "w": "plan",
+     "start": 15.006,
+     "end": 15.246
+    },
+    {
+     "w": "in",
+     "start": 15.246,
+     "end": 15.586
+    },
+    {
+     "w": "five",
+     "start": 15.586,
+     "end": 15.886
+    },
+    {
+     "w": "parts.",
+     "start": 15.886,
+     "end": 16.246
+    }
+   ],
+   "heard": "Here's the plan in five parts."
+  },
+  {
+   "beat": "road",
+   "key": "r2",
+   "ch": 0,
+   "say": "One, the contract. Two, a request, line by line. Three, the server side.",
+   "cap": "[Contract]. [Request]. [Server side].",
+   "start": 16.813,
+   "end": 21.476,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "1.",
+     "start": 16.763,
+     "end": 16.943
+    },
+    {
+     "w": "The",
+     "start": 17.083,
+     "end": 17.103
+    },
+    {
+     "w": "contract,",
+     "start": 17.103,
+     "end": 17.443
+    },
+    {
+     "w": "2.",
+     "start": 17.883,
+     "end": 18.123
+    },
+    {
+     "w": "A",
+     "start": 18.323,
+     "end": 18.343
+    },
+    {
+     "w": "request",
+     "start": 18.343,
+     "end": 18.603
+    },
+    {
+     "w": "line",
+     "start": 18.603,
+     "end": 18.983
+    },
+    {
+     "w": "by",
+     "start": 18.983,
+     "end": 19.263
+    },
+    {
+     "w": "line,",
+     "start": 19.263,
+     "end": 19.483
+    },
+    {
+     "w": "3.",
+     "start": 20.043,
+     "end": 20.183
+    },
+    {
+     "w": "The",
+     "start": 20.423,
+     "end": 20.503
+    },
+    {
+     "w": "server",
+     "start": 20.503,
+     "end": 20.743
+    },
+    {
+     "w": "side.",
+     "start": 20.743,
+     "end": 21.123
+    }
+   ],
+   "heard": "1. The contract, 2. A request line by line, 3. The server side."
+  },
+  {
+   "beat": "road",
+   "key": "r3",
+   "ch": 0,
+   "say": "Four, who calls APIs. And five, the mistakes that break them.",
+   "cap": "[Callers]. And the [mistakes] that break them.",
+   "start": 21.716,
+   "end": 25.863,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "Four",
+     "start": 21.666,
+     "end": 21.966
+    },
+    {
+     "w": "who",
+     "start": 21.966,
+     "end": 22.186
+    },
+    {
+     "w": "calls",
+     "start": 22.186,
+     "end": 22.466
+    },
+    {
+     "w": "APIs,",
+     "start": 22.466,
+     "end": 22.746
+    },
+    {
+     "w": "and",
+     "start": 23.666,
+     "end": 23.906
+    },
+    {
+     "w": "five",
+     "start": 23.906,
+     "end": 24.186
+    },
+    {
+     "w": "the",
+     "start": 24.186,
+     "end": 24.546
+    },
+    {
+     "w": "mistakes",
+     "start": 24.546,
+     "end": 24.846
+    },
+    {
+     "w": "that",
+     "start": 24.846,
+     "end": 25.206
+    },
+    {
+     "w": "break",
+     "start": 25.206,
+     "end": 25.446
+    },
+    {
+     "w": "them.",
+     "start": 25.446,
+     "end": 25.726
+    }
+   ],
+   "heard": "Four who calls APIs, and five the mistakes that break them."
+  },
+  {
+   "beat": "c1a",
+   "key": "a1",
+   "ch": 1,
+   "say": "API stands for Application Programming Interface. Strip away the acronym, and it's a contract.",
+   "cap": "API: Application Programming Interface. Strip the acronym: a [contract].",
+   "start": 27.863,
+   "end": 34.582,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "API",
+     "start": 27.813,
+     "end": 28.013
+    },
+    {
+     "w": "stands",
+     "start": 28.013,
+     "end": 28.913
+    },
+    {
+     "w": "for",
+     "start": 28.913,
+     "end": 29.193
+    },
+    {
+     "w": "Application",
+     "start": 29.193,
+     "end": 29.793
+    },
+    {
+     "w": "Programming",
+     "start": 29.793,
+     "end": 30.373
+    },
+    {
+     "w": "Interface.",
+     "start": 30.373,
+     "end": 30.953
+    },
+    {
+     "w": "Strip",
+     "start": 31.973,
+     "end": 31.993
+    },
+    {
+     "w": "away",
+     "start": 31.993,
+     "end": 32.313
+    },
+    {
+     "w": "the",
+     "start": 32.313,
+     "end": 32.533
+    },
+    {
+     "w": "acronym",
+     "start": 32.533,
+     "end": 32.833
+    },
+    {
+     "w": "and",
+     "start": 32.833,
+     "end": 33.493
+    },
+    {
+     "w": "it's",
+     "start": 33.493,
+     "end": 33.673
+    },
+    {
+     "w": "a",
+     "start": 33.673,
+     "end": 33.733
+    },
+    {
+     "w": "contract.",
+     "start": 33.733,
+     "end": 34.013
+    }
+   ],
+   "heard": "API stands for Application Programming Interface. Strip away the acronym and it's a contract."
+  },
+  {
+   "beat": "c1a",
+   "key": "a2",
+   "ch": 1,
+   "say": "One program asks another program to do something, without knowing how it gets done inside.",
+   "cap": "One program [asks] another to do something, without knowing [how].",
+   "start": 34.822,
+   "end": 40.51,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "One",
+     "start": 34.772,
+     "end": 34.952
+    },
+    {
+     "w": "program",
+     "start": 34.952,
+     "end": 35.412
+    },
+    {
+     "w": "asks",
+     "start": 35.412,
+     "end": 35.812
+    },
+    {
+     "w": "another",
+     "start": 35.812,
+     "end": 36.312
+    },
+    {
+     "w": "program",
+     "start": 36.312,
+     "end": 36.792
+    },
+    {
+     "w": "to",
+     "start": 36.792,
+     "end": 37.052
+    },
+    {
+     "w": "do",
+     "start": 37.052,
+     "end": 37.232
+    },
+    {
+     "w": "something,",
+     "start": 37.232,
+     "end": 37.672
+    },
+    {
+     "w": "without",
+     "start": 38.172,
+     "end": 38.312
+    },
+    {
+     "w": "knowing",
+     "start": 38.312,
+     "end": 38.752
+    },
+    {
+     "w": "how",
+     "start": 38.752,
+     "end": 39.072
+    },
+    {
+     "w": "it",
+     "start": 39.072,
+     "end": 39.192
+    },
+    {
+     "w": "gets",
+     "start": 39.192,
+     "end": 39.372
+    },
+    {
+     "w": "done",
+     "start": 39.372,
+     "end": 39.652
+    },
+    {
+     "w": "inside.",
+     "start": 39.652,
+     "end": 40.092
+    }
+   ],
+   "heard": "One program asks another program to do something, without knowing how it gets done inside."
+  },
+  {
+   "beat": "c1a",
+   "key": "a3",
+   "ch": 1,
+   "say": "The handbook's glossary puts it the same way: a defined contract, with no need to know the implementation.",
+   "cap": "The handbook glossary: a [defined contract], no need to know the [implementation].",
+   "start": 40.75,
+   "end": 47.488,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "The",
+     "start": 40.7,
+     "end": 40.84
+    },
+    {
+     "w": "handbook's",
+     "start": 40.84,
+     "end": 41.38
+    },
+    {
+     "w": "glossary",
+     "start": 41.38,
+     "end": 42.02
+    },
+    {
+     "w": "puts",
+     "start": 42.02,
+     "end": 42.26
+    },
+    {
+     "w": "it",
+     "start": 42.26,
+     "end": 42.42
+    },
+    {
+     "w": "the",
+     "start": 42.42,
+     "end": 42.56
+    },
+    {
+     "w": "same",
+     "start": 42.56,
+     "end": 42.82
+    },
+    {
+     "w": "way.",
+     "start": 42.82,
+     "end": 43.1
+    },
+    {
+     "w": "A",
+     "start": 43.82,
+     "end": 43.82
+    },
+    {
+     "w": "defined",
+     "start": 43.82,
+     "end": 44.12
+    },
+    {
+     "w": "contract",
+     "start": 44.12,
+     "end": 44.86
+    },
+    {
+     "w": "with",
+     "start": 44.86,
+     "end": 45.52
+    },
+    {
+     "w": "no",
+     "start": 45.52,
+     "end": 45.78
+    },
+    {
+     "w": "need",
+     "start": 45.78,
+     "end": 46.04
+    },
+    {
+     "w": "to",
+     "start": 46.04,
+     "end": 46.2
+    },
+    {
+     "w": "know",
+     "start": 46.2,
+     "end": 46.38
+    },
+    {
+     "w": "the",
+     "start": 46.38,
+     "end": 46.56
+    },
+    {
+     "w": "implementation.",
+     "start": 46.56,
+     "end": 47.02
+    }
+   ],
+   "heard": "The handbook's glossary puts it the same way. A defined contract with no need to know the implementation."
+  },
+  {
+   "beat": "c1b",
+   "key": "b1",
+   "ch": 1,
+   "say": "Think of a wall socket. You plug in a lamp, and you know nothing about the power station.",
+   "cap": "Think of a wall [socket]. You know nothing about the power [station].",
+   "start": 47.938,
+   "end": 53.061,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Think",
+     "start": 47.888,
+     "end": 48.068
+    },
+    {
+     "w": "of",
+     "start": 48.068,
+     "end": 48.268
+    },
+    {
+     "w": "a",
+     "start": 48.268,
+     "end": 48.328
+    },
+    {
+     "w": "wall",
+     "start": 48.328,
+     "end": 48.588
+    },
+    {
+     "w": "socket.",
+     "start": 48.588,
+     "end": 49.128
+    },
+    {
+     "w": "You",
+     "start": 49.728,
+     "end": 49.828
+    },
+    {
+     "w": "plug",
+     "start": 49.828,
+     "end": 50.068
+    },
+    {
+     "w": "in",
+     "start": 50.068,
+     "end": 50.308
+    },
+    {
+     "w": "a",
+     "start": 50.308,
+     "end": 50.388
+    },
+    {
+     "w": "lamp",
+     "start": 50.388,
+     "end": 50.688
+    },
+    {
+     "w": "and",
+     "start": 50.688,
+     "end": 51.028
+    },
+    {
+     "w": "you",
+     "start": 51.028,
+     "end": 51.168
+    },
+    {
+     "w": "know",
+     "start": 51.168,
+     "end": 51.328
+    },
+    {
+     "w": "nothing",
+     "start": 51.328,
+     "end": 51.668
+    },
+    {
+     "w": "about",
+     "start": 51.668,
+     "end": 51.948
+    },
+    {
+     "w": "the",
+     "start": 51.948,
+     "end": 52.088
+    },
+    {
+     "w": "power",
+     "start": 52.088,
+     "end": 52.308
+    },
+    {
+     "w": "station.",
+     "start": 52.308,
+     "end": 52.748
+    }
+   ],
+   "heard": "Think of a wall socket. You plug in a lamp and you know nothing about the power station."
+  },
+  {
+   "beat": "c1b",
+   "key": "b2",
+   "ch": 1,
+   "say": "The shape of the socket is the promise.",
+   "cap": "The shape of the socket is the [promise].",
+   "start": 53.301,
+   "end": 55.464,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "The",
+     "start": 53.251,
+     "end": 53.391
+    },
+    {
+     "w": "shape",
+     "start": 53.391,
+     "end": 53.611
+    },
+    {
+     "w": "of",
+     "start": 53.611,
+     "end": 53.811
+    },
+    {
+     "w": "the",
+     "start": 53.811,
+     "end": 53.931
+    },
+    {
+     "w": "socket",
+     "start": 53.931,
+     "end": 54.351
+    },
+    {
+     "w": "is",
+     "start": 54.351,
+     "end": 54.651
+    },
+    {
+     "w": "the",
+     "start": 54.651,
+     "end": 54.771
+    },
+    {
+     "w": "promise.",
+     "start": 54.771,
+     "end": 55.071
+    }
+   ],
+   "heard": "The shape of the socket is the promise."
+  },
+  {
+   "beat": "c1c",
+   "key": "c1",
+   "ch": 1,
+   "say": "Or think of a restaurant. You read the menu, you tell the waiter what you want, and the kitchen cooks it.",
+   "cap": "A restaurant: [menu], [waiter], [kitchen].",
+   "start": 55.914,
+   "end": 61.655,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "or",
+     "start": 55.864,
+     "end": 56.004
+    },
+    {
+     "w": "think",
+     "start": 56.004,
+     "end": 56.224
+    },
+    {
+     "w": "of",
+     "start": 56.224,
+     "end": 56.444
+    },
+    {
+     "w": "a",
+     "start": 56.444,
+     "end": 56.524
+    },
+    {
+     "w": "restaurant.",
+     "start": 56.524,
+     "end": 56.864
+    },
+    {
+     "w": "You",
+     "start": 57.744,
+     "end": 57.764
+    },
+    {
+     "w": "read",
+     "start": 57.764,
+     "end": 58.004
+    },
+    {
+     "w": "the",
+     "start": 58.004,
+     "end": 58.184
+    },
+    {
+     "w": "menu,",
+     "start": 58.184,
+     "end": 58.504
+    },
+    {
+     "w": "you",
+     "start": 58.844,
+     "end": 58.904
+    },
+    {
+     "w": "tell",
+     "start": 58.904,
+     "end": 59.104
+    },
+    {
+     "w": "the",
+     "start": 59.104,
+     "end": 59.264
+    },
+    {
+     "w": "waiter",
+     "start": 59.264,
+     "end": 59.504
+    },
+    {
+     "w": "what",
+     "start": 59.504,
+     "end": 59.824
+    },
+    {
+     "w": "you",
+     "start": 59.824,
+     "end": 59.964
+    },
+    {
+     "w": "want",
+     "start": 59.964,
+     "end": 60.264
+    },
+    {
+     "w": "and",
+     "start": 60.264,
+     "end": 60.604
+    },
+    {
+     "w": "the",
+     "start": 60.604,
+     "end": 60.724
+    },
+    {
+     "w": "kitchen",
+     "start": 60.724,
+     "end": 60.944
+    },
+    {
+     "w": "cooks",
+     "start": 60.944,
+     "end": 61.344
+    },
+    {
+     "w": "it.",
+     "start": 61.344,
+     "end": 61.604
+    }
+   ],
+   "heard": "or think of a restaurant. You read the menu, you tell the waiter what you want and the kitchen cooks it."
+  },
+  {
+   "beat": "c1c",
+   "key": "c2",
+   "ch": 1,
+   "say": "You never see the kitchen. It can swap chefs, change the stove, even rewrite the recipe.",
+   "cap": "The kitchen can swap [chefs], change the [stove], rewrite the [recipe].",
+   "start": 61.895,
+   "end": 67.469,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "You",
+     "start": 61.845,
+     "end": 61.965
+    },
+    {
+     "w": "never",
+     "start": 61.965,
+     "end": 62.105
+    },
+    {
+     "w": "see",
+     "start": 62.105,
+     "end": 62.425
+    },
+    {
+     "w": "the",
+     "start": 62.425,
+     "end": 62.565
+    },
+    {
+     "w": "kitchen.",
+     "start": 62.565,
+     "end": 62.865
+    },
+    {
+     "w": "It",
+     "start": 63.585,
+     "end": 63.625
+    },
+    {
+     "w": "can",
+     "start": 63.625,
+     "end": 63.745
+    },
+    {
+     "w": "swap",
+     "start": 63.745,
+     "end": 64.065
+    },
+    {
+     "w": "chefs,",
+     "start": 64.065,
+     "end": 64.405
+    },
+    {
+     "w": "change",
+     "start": 64.405,
+     "end": 65.045
+    },
+    {
+     "w": "the",
+     "start": 65.045,
+     "end": 65.325
+    },
+    {
+     "w": "stove,",
+     "start": 65.325,
+     "end": 65.605
+    },
+    {
+     "w": "even",
+     "start": 66.065,
+     "end": 66.225
+    },
+    {
+     "w": "rewrite",
+     "start": 66.225,
+     "end": 66.465
+    },
+    {
+     "w": "the",
+     "start": 66.465,
+     "end": 66.805
+    },
+    {
+     "w": "recipe.",
+     "start": 66.805,
+     "end": 67.185
+    }
+   ],
+   "heard": "You never see the kitchen. It can swap chefs, change the stove, even rewrite the recipe."
+  },
+  {
+   "beat": "c1c",
+   "key": "c3",
+   "ch": 1,
+   "say": "As long as the dish matches the menu, you never notice.",
+   "cap": "As long as the dish matches the [menu], you never notice.",
+   "start": 67.709,
+   "end": 71.135,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "As",
+     "start": 67.659,
+     "end": 67.839
+    },
+    {
+     "w": "long",
+     "start": 67.839,
+     "end": 68.019
+    },
+    {
+     "w": "as",
+     "start": 68.019,
+     "end": 68.279
+    },
+    {
+     "w": "the",
+     "start": 68.279,
+     "end": 68.439
+    },
+    {
+     "w": "dish",
+     "start": 68.439,
+     "end": 68.679
+    },
+    {
+     "w": "matches",
+     "start": 68.679,
+     "end": 69.139
+    },
+    {
+     "w": "the",
+     "start": 69.139,
+     "end": 69.339
+    },
+    {
+     "w": "menu,",
+     "start": 69.339,
+     "end": 69.679
+    },
+    {
+     "w": "you",
+     "start": 70.059,
+     "end": 70.259
+    },
+    {
+     "w": "never",
+     "start": 70.259,
+     "end": 70.499
+    },
+    {
+     "w": "notice.",
+     "start": 70.499,
+     "end": 70.799
+    }
+   ],
+   "heard": "As long as the dish matches the menu, you never notice."
+  },
+  {
+   "beat": "c1c",
+   "key": "c4",
+   "ch": 1,
+   "say": "That's the whole value of an API. Both sides can change independently, as long as the contract holds.",
+   "cap": "Both sides can [change independently], as long as the contract [holds].",
+   "start": 71.375,
+   "end": 78.878,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "That's",
+     "start": 71.325,
+     "end": 71.565
+    },
+    {
+     "w": "the",
+     "start": 71.565,
+     "end": 71.685
+    },
+    {
+     "w": "whole",
+     "start": 71.685,
+     "end": 71.845
+    },
+    {
+     "w": "value",
+     "start": 71.845,
+     "end": 72.385
+    },
+    {
+     "w": "of",
+     "start": 72.385,
+     "end": 72.585
+    },
+    {
+     "w": "an",
+     "start": 72.585,
+     "end": 72.705
+    },
+    {
+     "w": "API.",
+     "start": 72.705,
+     "end": 72.945
+    },
+    {
+     "w": "Both",
+     "start": 74.225,
+     "end": 74.385
+    },
+    {
+     "w": "sides",
+     "start": 74.385,
+     "end": 74.865
+    },
+    {
+     "w": "can",
+     "start": 74.865,
+     "end": 75.165
+    },
+    {
+     "w": "change",
+     "start": 75.165,
+     "end": 75.505
+    },
+    {
+     "w": "independently,",
+     "start": 75.505,
+     "end": 76.065
+    },
+    {
+     "w": "as",
+     "start": 77.045,
+     "end": 77.085
+    },
+    {
+     "w": "long",
+     "start": 77.085,
+     "end": 77.285
+    },
+    {
+     "w": "as",
+     "start": 77.285,
+     "end": 77.485
+    },
+    {
+     "w": "the",
+     "start": 77.485,
+     "end": 77.605
+    },
+    {
+     "w": "contract",
+     "start": 77.605,
+     "end": 77.825
+    },
+    {
+     "w": "holds.",
+     "start": 77.825,
+     "end": 78.445
+    }
+   ],
+   "heard": "That's the whole value of an API. Both sides can change independently, as long as the contract holds."
+  },
+  {
+   "beat": "c2a",
+   "key": "d1",
+   "ch": 2,
+   "say": "This handbook focuses on web APIs. A client sends an HTTP request, and a server sends back a response.",
+   "cap": "Web APIs: a [client] sends a [request], a [server] sends a [response].",
+   "start": 80.878,
+   "end": 89.421,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "This",
+     "start": 80.828,
+     "end": 81.008
+    },
+    {
+     "w": "handbook",
+     "start": 81.008,
+     "end": 81.448
+    },
+    {
+     "w": "focuses",
+     "start": 81.448,
+     "end": 81.928
+    },
+    {
+     "w": "on",
+     "start": 81.928,
+     "end": 82.248
+    },
+    {
+     "w": "web",
+     "start": 82.248,
+     "end": 82.468
+    },
+    {
+     "w": "APIs.",
+     "start": 82.468,
+     "end": 82.968
+    },
+    {
+     "w": "A",
+     "start": 83.988,
+     "end": 84.048
+    },
+    {
+     "w": "client",
+     "start": 84.048,
+     "end": 84.428
+    },
+    {
+     "w": "sends",
+     "start": 84.428,
+     "end": 84.928
+    },
+    {
+     "w": "an",
+     "start": 84.928,
+     "end": 85.068
+    },
+    {
+     "w": "HTTP",
+     "start": 85.068,
+     "end": 85.628
+    },
+    {
+     "w": "request",
+     "start": 85.628,
+     "end": 86.428
+    },
+    {
+     "w": "and",
+     "start": 86.428,
+     "end": 87.248
+    },
+    {
+     "w": "a",
+     "start": 87.248,
+     "end": 87.328
+    },
+    {
+     "w": "server",
+     "start": 87.328,
+     "end": 87.588
+    },
+    {
+     "w": "sends",
+     "start": 87.588,
+     "end": 88.148
+    },
+    {
+     "w": "back",
+     "start": 88.148,
+     "end": 88.408
+    },
+    {
+     "w": "a",
+     "start": 88.408,
+     "end": 88.668
+    },
+    {
+     "w": "response.",
+     "start": 88.668,
+     "end": 88.948
+    }
+   ],
+   "heard": "This handbook focuses on web APIs. A client sends an HTTP request and a server sends back a response."
+  },
+  {
+   "beat": "c2a",
+   "key": "d2",
+   "ch": 2,
+   "say": "The client is anything that starts the conversation. A browser, a phone app, another service, a script.",
+   "cap": "The client is anything that [starts] the conversation.",
+   "start": 89.661,
+   "end": 96.405,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 89.611,
+     "end": 89.731
+    },
+    {
+     "w": "client",
+     "start": 89.731,
+     "end": 89.991
+    },
+    {
+     "w": "is",
+     "start": 89.991,
+     "end": 90.231
+    },
+    {
+     "w": "anything",
+     "start": 90.231,
+     "end": 90.491
+    },
+    {
+     "w": "that",
+     "start": 90.491,
+     "end": 90.911
+    },
+    {
+     "w": "starts",
+     "start": 90.911,
+     "end": 91.171
+    },
+    {
+     "w": "the",
+     "start": 91.171,
+     "end": 91.411
+    },
+    {
+     "w": "conversation.",
+     "start": 91.411,
+     "end": 92.031
+    },
+    {
+     "w": "A",
+     "start": 92.851,
+     "end": 92.871
+    },
+    {
+     "w": "browser,",
+     "start": 92.871,
+     "end": 93.091
+    },
+    {
+     "w": "a",
+     "start": 93.871,
+     "end": 93.911
+    },
+    {
+     "w": "phone",
+     "start": 93.911,
+     "end": 94.171
+    },
+    {
+     "w": "app,",
+     "start": 94.171,
+     "end": 94.531
+    },
+    {
+     "w": "another",
+     "start": 94.931,
+     "end": 95.071
+    },
+    {
+     "w": "service,",
+     "start": 95.071,
+     "end": 95.371
+    },
+    {
+     "w": "a",
+     "start": 95.811,
+     "end": 95.811
+    },
+    {
+     "w": "script.",
+     "start": 95.811,
+     "end": 96.111
+    }
+   ],
+   "heard": "The client is anything that starts the conversation. A browser, a phone app, another service, a script."
+  },
+  {
+   "beat": "c2a",
+   "key": "d3",
+   "ch": 2,
+   "say": "M D N puts it plainly: the client always initiates. The server never does.",
+   "cap": "MDN: the client always [initiates]. The server never does.",
+   "start": 96.645,
+   "end": 102.182,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "MDN",
+     "start": 96.595,
+     "end": 97.375
+    },
+    {
+     "w": "puts",
+     "start": 97.375,
+     "end": 97.615
+    },
+    {
+     "w": "it",
+     "start": 97.615,
+     "end": 97.775
+    },
+    {
+     "w": "plainly,",
+     "start": 97.775,
+     "end": 98.015
+    },
+    {
+     "w": "the",
+     "start": 98.595,
+     "end": 98.735
+    },
+    {
+     "w": "client",
+     "start": 98.735,
+     "end": 98.975
+    },
+    {
+     "w": "always",
+     "start": 98.975,
+     "end": 99.495
+    },
+    {
+     "w": "initiates,",
+     "start": 99.495,
+     "end": 100.375
+    },
+    {
+     "w": "the",
+     "start": 100.575,
+     "end": 100.835
+    },
+    {
+     "w": "server",
+     "start": 100.835,
+     "end": 101.095
+    },
+    {
+     "w": "never",
+     "start": 101.095,
+     "end": 101.575
+    },
+    {
+     "w": "does.",
+     "start": 101.575,
+     "end": 101.875
+    }
+   ],
+   "heard": "MDN puts it plainly, the client always initiates, the server never does."
+  },
+  {
+   "beat": "c2b",
+   "key": "e1",
+   "ch": 2,
+   "say": "Here's a real request. GET, slash users, slash forty-two.",
+   "cap": "A real request: [GET /users/42]",
+   "start": 102.632,
+   "end": 106.722,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Here's",
+     "start": 102.582,
+     "end": 102.842
+    },
+    {
+     "w": "a",
+     "start": 102.842,
+     "end": 102.942
+    },
+    {
+     "w": "real",
+     "start": 102.942,
+     "end": 103.142
+    },
+    {
+     "w": "request.",
+     "start": 103.142,
+     "end": 103.702
+    },
+    {
+     "w": "Get",
+     "start": 104.382,
+     "end": 104.462
+    },
+    {
+     "w": "slash",
+     "start": 104.462,
+     "end": 104.802
+    },
+    {
+     "w": "users",
+     "start": 104.802,
+     "end": 105.182
+    },
+    {
+     "w": "slash",
+     "start": 105.182,
+     "end": 105.782
+    },
+    {
+     "w": "42.",
+     "start": 105.782,
+     "end": 106.302
+    }
+   ],
+   "heard": "Here's a real request. Get slash users slash 42."
+  },
+  {
+   "beat": "c2b",
+   "key": "e2",
+   "ch": 2,
+   "say": "GET is the method. It says what you want to do. The path says which thing you want.",
+   "cap": "The [method] says what to do. The [path] says which thing.",
+   "start": 106.962,
+   "end": 112.019,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Get",
+     "start": 106.912,
+     "end": 107.112
+    },
+    {
+     "w": "is",
+     "start": 107.112,
+     "end": 107.232
+    },
+    {
+     "w": "the",
+     "start": 107.232,
+     "end": 107.392
+    },
+    {
+     "w": "method.",
+     "start": 107.392,
+     "end": 107.692
+    },
+    {
+     "w": "It",
+     "start": 108.292,
+     "end": 108.312
+    },
+    {
+     "w": "says",
+     "start": 108.312,
+     "end": 108.512
+    },
+    {
+     "w": "what",
+     "start": 108.512,
+     "end": 108.792
+    },
+    {
+     "w": "you",
+     "start": 108.792,
+     "end": 108.932
+    },
+    {
+     "w": "want",
+     "start": 108.932,
+     "end": 109.132
+    },
+    {
+     "w": "to",
+     "start": 109.132,
+     "end": 109.292
+    },
+    {
+     "w": "do.",
+     "start": 109.292,
+     "end": 109.512
+    },
+    {
+     "w": "The",
+     "start": 110.112,
+     "end": 110.152
+    },
+    {
+     "w": "path",
+     "start": 110.152,
+     "end": 110.372
+    },
+    {
+     "w": "says",
+     "start": 110.372,
+     "end": 110.752
+    },
+    {
+     "w": "which",
+     "start": 110.752,
+     "end": 111.012
+    },
+    {
+     "w": "thing",
+     "start": 111.012,
+     "end": 111.272
+    },
+    {
+     "w": "you",
+     "start": 111.272,
+     "end": 111.472
+    },
+    {
+     "w": "want.",
+     "start": 111.472,
+     "end": 111.752
+    }
+   ],
+   "heard": "Get is the method. It says what you want to do. The path says which thing you want."
+  },
+  {
+   "beat": "c2b",
+   "key": "e3",
+   "ch": 2,
+   "say": "Headers add context. Accept says you want JSON. Authorization says who you are.",
+   "cap": "[Headers] add context: what you accept, who you are.",
+   "start": 112.259,
+   "end": 118.129,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Headers",
+     "start": 112.209,
+     "end": 112.569
+    },
+    {
+     "w": "ad",
+     "start": 112.569,
+     "end": 112.789
+    },
+    {
+     "w": "context,",
+     "start": 112.789,
+     "end": 113.249
+    },
+    {
+     "w": "except",
+     "start": 114.029,
+     "end": 114.289
+    },
+    {
+     "w": "says",
+     "start": 114.289,
+     "end": 114.589
+    },
+    {
+     "w": "you",
+     "start": 114.589,
+     "end": 114.749
+    },
+    {
+     "w": "want",
+     "start": 114.749,
+     "end": 114.949
+    },
+    {
+     "w": "Jason,",
+     "start": 114.949,
+     "end": 115.229
+    },
+    {
+     "w": "authorization",
+     "start": 116.129,
+     "end": 116.449
+    },
+    {
+     "w": "says",
+     "start": 116.449,
+     "end": 117.209
+    },
+    {
+     "w": "who",
+     "start": 117.209,
+     "end": 117.449
+    },
+    {
+     "w": "you",
+     "start": 117.449,
+     "end": 117.669
+    },
+    {
+     "w": "are.",
+     "start": 117.669,
+     "end": 117.989
+    }
+   ],
+   "heard": "Headers ad context, except says you want Jason, authorization says who you are."
+  },
+  {
+   "beat": "c2c",
+   "key": "f1",
+   "ch": 2,
+   "say": "The server answers with a status code. Two hundred means OK.",
+   "cap": "The server answers with a [status code]. [200] means OK.",
+   "start": 118.579,
+   "end": 122.738,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 118.529,
+     "end": 118.649
+    },
+    {
+     "w": "server",
+     "start": 118.649,
+     "end": 118.889
+    },
+    {
+     "w": "answers",
+     "start": 118.889,
+     "end": 119.269
+    },
+    {
+     "w": "with",
+     "start": 119.269,
+     "end": 119.669
+    },
+    {
+     "w": "a",
+     "start": 119.669,
+     "end": 119.749
+    },
+    {
+     "w": "status",
+     "start": 119.749,
+     "end": 120.029
+    },
+    {
+     "w": "code.",
+     "start": 120.029,
+     "end": 120.469
+    },
+    {
+     "w": "200",
+     "start": 121.129,
+     "end": 121.449
+    },
+    {
+     "w": "means",
+     "start": 121.449,
+     "end": 121.849
+    },
+    {
+     "w": "OK.",
+     "start": 121.849,
+     "end": 122.429
+    }
+   ],
+   "heard": "The server answers with a status code. 200 means OK."
+  },
+  {
+   "beat": "c2c",
+   "key": "f2",
+   "ch": 2,
+   "say": "Status codes come in families. Two hundreds mean success. Four hundreds mean the caller made a mistake. Five hundreds mean the server did.",
+   "cap": "[2xx] success. [4xx] the caller erred. [5xx] the server erred.",
+   "start": 122.978,
+   "end": 132.505,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Status",
+     "start": 122.928,
+     "end": 123.208
+    },
+    {
+     "w": "codes",
+     "start": 123.208,
+     "end": 123.608
+    },
+    {
+     "w": "come",
+     "start": 123.608,
+     "end": 124.028
+    },
+    {
+     "w": "in",
+     "start": 124.028,
+     "end": 124.168
+    },
+    {
+     "w": "families.",
+     "start": 124.168,
+     "end": 124.548
+    },
+    {
+     "w": "200s",
+     "start": 125.668,
+     "end": 125.968
+    },
+    {
+     "w": "mean",
+     "start": 125.968,
+     "end": 126.108
+    },
+    {
+     "w": "success.",
+     "start": 126.108,
+     "end": 126.468
+    },
+    {
+     "w": "400s",
+     "start": 127.468,
+     "end": 128.068
+    },
+    {
+     "w": "mean",
+     "start": 128.068,
+     "end": 128.248
+    },
+    {
+     "w": "the",
+     "start": 128.248,
+     "end": 128.508
+    },
+    {
+     "w": "caller",
+     "start": 128.508,
+     "end": 128.728
+    },
+    {
+     "w": "made",
+     "start": 128.728,
+     "end": 129.228
+    },
+    {
+     "w": "a",
+     "start": 129.228,
+     "end": 129.328
+    },
+    {
+     "w": "mistake.",
+     "start": 129.328,
+     "end": 129.668
+    },
+    {
+     "w": "500s",
+     "start": 130.648,
+     "end": 131.168
+    },
+    {
+     "w": "mean",
+     "start": 131.168,
+     "end": 131.348
+    },
+    {
+     "w": "the",
+     "start": 131.348,
+     "end": 131.568
+    },
+    {
+     "w": "server",
+     "start": 131.568,
+     "end": 131.828
+    },
+    {
+     "w": "did.",
+     "start": 131.828,
+     "end": 132.248
+    }
+   ],
+   "heard": "Status codes come in families. 200s mean success. 400s mean the caller made a mistake. 500s mean the server did."
+  },
+  {
+   "beat": "c2c",
+   "key": "f3",
+   "ch": 2,
+   "say": "Then comes the body, in JSON. An id, a name, an email.",
+   "cap": "Then the [body], in [JSON]: an id, a name, an email.",
+   "start": 132.745,
+   "end": 136.803,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Then",
+     "start": 132.695,
+     "end": 132.855
+    },
+    {
+     "w": "comes",
+     "start": 132.855,
+     "end": 133.095
+    },
+    {
+     "w": "the",
+     "start": 133.095,
+     "end": 133.255
+    },
+    {
+     "w": "body",
+     "start": 133.255,
+     "end": 133.555
+    },
+    {
+     "w": "in",
+     "start": 133.555,
+     "end": 133.815
+    },
+    {
+     "w": "J",
+     "start": 133.815,
+     "end": 134.015
+    },
+    {
+     "w": "-Sawn,",
+     "start": 134.015,
+     "end": 134.455
+    },
+    {
+     "w": "an",
+     "start": 135.035,
+     "end": 135.135
+    },
+    {
+     "w": "idea",
+     "start": 135.135,
+     "end": 135.495
+    },
+    {
+     "w": "name",
+     "start": 135.495,
+     "end": 135.895
+    },
+    {
+     "w": "and",
+     "start": 135.895,
+     "end": 136.195
+    },
+    {
+     "w": "email.",
+     "start": 136.195,
+     "end": 136.475
+    }
+   ],
+   "heard": "Then comes the body in J -Sawn, an idea name and email."
+  },
+  {
+   "beat": "c2c",
+   "key": "f4",
+   "ch": 2,
+   "say": "Nothing in this response says whether the data came from Post gress Q L, Mongo D B, or a plain dictionary. That's the point.",
+   "cap": "Nothing says if the data came from [PostgreSQL], [MongoDB] or a [dictionary].",
+   "start": 137.043,
+   "end": 145.588,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Nothing",
+     "start": 136.993,
+     "end": 137.333
+    },
+    {
+     "w": "in",
+     "start": 137.333,
+     "end": 137.513
+    },
+    {
+     "w": "this",
+     "start": 137.513,
+     "end": 137.633
+    },
+    {
+     "w": "response",
+     "start": 137.633,
+     "end": 138.033
+    },
+    {
+     "w": "says",
+     "start": 138.033,
+     "end": 138.453
+    },
+    {
+     "w": "whether",
+     "start": 138.453,
+     "end": 138.753
+    },
+    {
+     "w": "the",
+     "start": 138.753,
+     "end": 138.913
+    },
+    {
+     "w": "data",
+     "start": 138.913,
+     "end": 139.153
+    },
+    {
+     "w": "came",
+     "start": 139.153,
+     "end": 139.493
+    },
+    {
+     "w": "from",
+     "start": 139.493,
+     "end": 139.733
+    },
+    {
+     "w": "PostgreSQL,",
+     "start": 139.733,
+     "end": 140.593
+    },
+    {
+     "w": "MongoDB,",
+     "start": 141.513,
+     "end": 142.273
+    },
+    {
+     "w": "or",
+     "start": 143.033,
+     "end": 143.033
+    },
+    {
+     "w": "a",
+     "start": 143.033,
+     "end": 143.133
+    },
+    {
+     "w": "plain",
+     "start": 143.133,
+     "end": 143.393
+    },
+    {
+     "w": "dictionary.",
+     "start": 143.393,
+     "end": 143.773
+    },
+    {
+     "w": "That's",
+     "start": 144.773,
+     "end": 144.953
+    },
+    {
+     "w": "the",
+     "start": 144.953,
+     "end": 145.053
+    },
+    {
+     "w": "point.",
+     "start": 145.053,
+     "end": 145.253
+    }
+   ],
+   "heard": "Nothing in this response says whether the data came from PostgreSQL, MongoDB, or a plain dictionary. That's the point."
+  },
+  {
+   "beat": "c2d",
+   "key": "g1",
+   "ch": 2,
+   "say": "One more thing from M D N. HTTP is stateless. Every request stands alone, so the server doesn't remember the last one unless you send something that identifies you.",
+   "cap": "HTTP is [stateless]. Every request stands [alone].",
+   "start": 146.038,
+   "end": 158.026,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "One",
+     "start": 145.988,
+     "end": 146.188
+    },
+    {
+     "w": "more",
+     "start": 146.188,
+     "end": 146.388
+    },
+    {
+     "w": "thing",
+     "start": 146.388,
+     "end": 146.728
+    },
+    {
+     "w": "from",
+     "start": 146.728,
+     "end": 146.988
+    },
+    {
+     "w": "MDN.",
+     "start": 146.988,
+     "end": 147.988
+    },
+    {
+     "w": "HTTP",
+     "start": 149.168,
+     "end": 149.168
+    },
+    {
+     "w": "is",
+     "start": 149.168,
+     "end": 149.908
+    },
+    {
+     "w": "stateless.",
+     "start": 149.908,
+     "end": 150.428
+    },
+    {
+     "w": "Every",
+     "start": 151.288,
+     "end": 151.288
+    },
+    {
+     "w": "request",
+     "start": 151.288,
+     "end": 151.768
+    },
+    {
+     "w": "stands",
+     "start": 151.768,
+     "end": 152.188
+    },
+    {
+     "w": "alone,",
+     "start": 152.188,
+     "end": 152.588
+    },
+    {
+     "w": "so",
+     "start": 152.968,
+     "end": 153.148
+    },
+    {
+     "w": "the",
+     "start": 153.148,
+     "end": 153.268
+    },
+    {
+     "w": "server",
+     "start": 153.268,
+     "end": 153.568
+    },
+    {
+     "w": "doesn't",
+     "start": 153.568,
+     "end": 154.008
+    },
+    {
+     "w": "remember",
+     "start": 154.008,
+     "end": 154.268
+    },
+    {
+     "w": "the",
+     "start": 154.268,
+     "end": 154.588
+    },
+    {
+     "w": "last",
+     "start": 154.588,
+     "end": 154.888
+    },
+    {
+     "w": "one",
+     "start": 154.888,
+     "end": 155.208
+    },
+    {
+     "w": "unless",
+     "start": 155.208,
+     "end": 155.688
+    },
+    {
+     "w": "you",
+     "start": 155.688,
+     "end": 155.948
+    },
+    {
+     "w": "send",
+     "start": 155.948,
+     "end": 156.188
+    },
+    {
+     "w": "something",
+     "start": 156.188,
+     "end": 156.568
+    },
+    {
+     "w": "that",
+     "start": 156.568,
+     "end": 156.888
+    },
+    {
+     "w": "identifies",
+     "start": 156.888,
+     "end": 157.228
+    },
+    {
+     "w": "you.",
+     "start": 157.228,
+     "end": 157.928
+    }
+   ],
+   "heard": "One more thing from MDN. HTTP is stateless. Every request stands alone, so the server doesn't remember the last one unless you send something that identifies you."
+  },
+  {
+   "beat": "c3a",
+   "key": "i1",
+   "ch": 3,
+   "say": "Now the other side. This is a complete API endpoint, written in FastAPI, the framework this handbook builds with.",
+   "cap": "The provider side: a complete endpoint in [FastAPI].",
+   "start": 160.026,
+   "end": 168.404,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Now",
+     "start": 159.976,
+     "end": 160.176
+    },
+    {
+     "w": "the",
+     "start": 160.176,
+     "end": 160.436
+    },
+    {
+     "w": "other",
+     "start": 160.436,
+     "end": 160.636
+    },
+    {
+     "w": "side.",
+     "start": 160.636,
+     "end": 161.016
+    },
+    {
+     "w": "This",
+     "start": 161.816,
+     "end": 161.836
+    },
+    {
+     "w": "is",
+     "start": 161.836,
+     "end": 161.956
+    },
+    {
+     "w": "a",
+     "start": 161.956,
+     "end": 162.076
+    },
+    {
+     "w": "complete",
+     "start": 162.076,
+     "end": 162.416
+    },
+    {
+     "w": "API",
+     "start": 162.416,
+     "end": 162.816
+    },
+    {
+     "w": "endpoint",
+     "start": 162.816,
+     "end": 163.516
+    },
+    {
+     "w": "written",
+     "start": 163.516,
+     "end": 164.256
+    },
+    {
+     "w": "in",
+     "start": 164.256,
+     "end": 164.516
+    },
+    {
+     "w": "fast",
+     "start": 164.516,
+     "end": 164.776
+    },
+    {
+     "w": "API.",
+     "start": 164.776,
+     "end": 165.236
+    },
+    {
+     "w": "The",
+     "start": 166.276,
+     "end": 166.316
+    },
+    {
+     "w": "framework",
+     "start": 166.316,
+     "end": 166.696
+    },
+    {
+     "w": "this",
+     "start": 166.696,
+     "end": 167.036
+    },
+    {
+     "w": "handbook",
+     "start": 167.036,
+     "end": 167.536
+    },
+    {
+     "w": "builds",
+     "start": 167.536,
+     "end": 167.796
+    },
+    {
+     "w": "with.",
+     "start": 167.796,
+     "end": 168.216
+    }
+   ],
+   "heard": "Now the other side. This is a complete API endpoint written in fast API. The framework this handbook builds with."
+  },
+  {
+   "beat": "c3a",
+   "key": "i2",
+   "ch": 3,
+   "say": "One decorator maps GET, slash users, slash user id, to a Python function.",
+   "cap": "One [decorator] maps a [route] to a [function].",
+   "start": 168.644,
+   "end": 174.183,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "1",
+     "start": 168.594,
+     "end": 168.794
+    },
+    {
+     "w": "decorator",
+     "start": 168.794,
+     "end": 169.374
+    },
+    {
+     "w": "maps",
+     "start": 169.374,
+     "end": 169.594
+    },
+    {
+     "w": "get,",
+     "start": 169.594,
+     "end": 169.914
+    },
+    {
+     "w": "slash",
+     "start": 170.514,
+     "end": 170.514
+    },
+    {
+     "w": "users,",
+     "start": 170.514,
+     "end": 170.934
+    },
+    {
+     "w": "slash",
+     "start": 171.554,
+     "end": 171.774
+    },
+    {
+     "w": "user",
+     "start": 171.774,
+     "end": 172.234
+    },
+    {
+     "w": "ID",
+     "start": 172.234,
+     "end": 172.534
+    },
+    {
+     "w": "to",
+     "start": 172.534,
+     "end": 173.074
+    },
+    {
+     "w": "a",
+     "start": 173.074,
+     "end": 173.154
+    },
+    {
+     "w": "Python",
+     "start": 173.154,
+     "end": 173.354
+    },
+    {
+     "w": "function.",
+     "start": 173.354,
+     "end": 173.954
+    }
+   ],
+   "heard": "1 decorator maps get, slash users, slash user ID to a Python function."
+  },
+  {
+   "beat": "c3a",
+   "key": "i3",
+   "ch": 3,
+   "say": "The function looks the user up. If there's no such user, it raises a four zero four.",
+   "cap": "No such user? It raises a [404].",
+   "start": 174.423,
+   "end": 180.129,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 174.373,
+     "end": 174.493
+    },
+    {
+     "w": "function",
+     "start": 174.493,
+     "end": 174.853
+    },
+    {
+     "w": "looks",
+     "start": 174.853,
+     "end": 175.153
+    },
+    {
+     "w": "the",
+     "start": 175.153,
+     "end": 175.373
+    },
+    {
+     "w": "user",
+     "start": 175.373,
+     "end": 175.653
+    },
+    {
+     "w": "up.",
+     "start": 175.653,
+     "end": 175.893
+    },
+    {
+     "w": "If",
+     "start": 176.573,
+     "end": 176.593
+    },
+    {
+     "w": "there's",
+     "start": 176.593,
+     "end": 176.853
+    },
+    {
+     "w": "no",
+     "start": 176.853,
+     "end": 177.033
+    },
+    {
+     "w": "such",
+     "start": 177.033,
+     "end": 177.273
+    },
+    {
+     "w": "user,",
+     "start": 177.273,
+     "end": 177.653
+    },
+    {
+     "w": "it",
+     "start": 178.113,
+     "end": 178.173
+    },
+    {
+     "w": "raises",
+     "start": 178.173,
+     "end": 178.533
+    },
+    {
+     "w": "a",
+     "start": 178.533,
+     "end": 178.833
+    },
+    {
+     "w": "404.",
+     "start": 178.833,
+     "end": 179.533
+    }
+   ],
+   "heard": "The function looks the user up. If there's no such user, it raises a 404."
+  },
+  {
+   "beat": "c3a",
+   "key": "i4",
+   "ch": 3,
+   "say": "And because user id is typed as an integer, FastAPI rejects anything else before your code even runs.",
+   "cap": "Typed as an [int]: bad input is rejected [before] your code runs.",
+   "start": 180.369,
+   "end": 188.027,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "And",
+     "start": 180.319,
+     "end": 180.439
+    },
+    {
+     "w": "because",
+     "start": 180.439,
+     "end": 180.619
+    },
+    {
+     "w": "User",
+     "start": 180.619,
+     "end": 181.059
+    },
+    {
+     "w": "ID",
+     "start": 181.059,
+     "end": 181.479
+    },
+    {
+     "w": "is",
+     "start": 181.479,
+     "end": 181.979
+    },
+    {
+     "w": "typed",
+     "start": 181.979,
+     "end": 182.179
+    },
+    {
+     "w": "as",
+     "start": 182.179,
+     "end": 182.499
+    },
+    {
+     "w": "an",
+     "start": 182.499,
+     "end": 182.559
+    },
+    {
+     "w": "integer,",
+     "start": 182.559,
+     "end": 182.899
+    },
+    {
+     "w": "fast",
+     "start": 183.659,
+     "end": 183.839
+    },
+    {
+     "w": "API",
+     "start": 183.839,
+     "end": 184.299
+    },
+    {
+     "w": "rejects",
+     "start": 184.299,
+     "end": 185.319
+    },
+    {
+     "w": "anything",
+     "start": 185.319,
+     "end": 185.659
+    },
+    {
+     "w": "else",
+     "start": 185.659,
+     "end": 186.059
+    },
+    {
+     "w": "before",
+     "start": 186.059,
+     "end": 186.319
+    },
+    {
+     "w": "your",
+     "start": 186.319,
+     "end": 186.559
+    },
+    {
+     "w": "code",
+     "start": 186.559,
+     "end": 186.839
+    },
+    {
+     "w": "even",
+     "start": 186.839,
+     "end": 187.279
+    },
+    {
+     "w": "runs.",
+     "start": 187.279,
+     "end": 187.599
+    }
+   ],
+   "heard": "And because User ID is typed as an integer, fast API rejects anything else before your code even runs."
+  },
+  {
+   "beat": "c3b",
+   "key": "j1",
+   "ch": 3,
+   "say": "Run it, and ask for user forty-two.",
+   "cap": "Run it. Ask for user [42].",
+   "start": 188.477,
+   "end": 190.682,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Run",
+     "start": 188.427,
+     "end": 188.647
+    },
+    {
+     "w": "it",
+     "start": 188.647,
+     "end": 188.847
+    },
+    {
+     "w": "and",
+     "start": 188.847,
+     "end": 189.047
+    },
+    {
+     "w": "ask",
+     "start": 189.047,
+     "end": 189.327
+    },
+    {
+     "w": "for",
+     "start": 189.327,
+     "end": 189.587
+    },
+    {
+     "w": "user",
+     "start": 189.587,
+     "end": 189.847
+    },
+    {
+     "w": "42.",
+     "start": 189.847,
+     "end": 190.407
+    }
+   ],
+   "heard": "Run it and ask for user 42."
+  },
+  {
+   "beat": "c3b",
+   "key": "j2",
+   "ch": 3,
+   "say": "You get the status line, the headers, and the JSON.",
+   "cap": "[Status line], [headers], [JSON].",
+   "start": 190.922,
+   "end": 193.946,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "You",
+     "start": 190.872,
+     "end": 190.992
+    },
+    {
+     "w": "get",
+     "start": 190.992,
+     "end": 191.132
+    },
+    {
+     "w": "the",
+     "start": 191.132,
+     "end": 191.252
+    },
+    {
+     "w": "status",
+     "start": 191.252,
+     "end": 191.532
+    },
+    {
+     "w": "line,",
+     "start": 191.532,
+     "end": 191.952
+    },
+    {
+     "w": "the",
+     "start": 192.092,
+     "end": 192.212
+    },
+    {
+     "w": "headers,",
+     "start": 192.212,
+     "end": 192.432
+    },
+    {
+     "w": "and",
+     "start": 192.952,
+     "end": 193.072
+    },
+    {
+     "w": "the",
+     "start": 193.072,
+     "end": 193.152
+    },
+    {
+     "w": "JSON.",
+     "start": 193.152,
+     "end": 193.412
+    }
+   ],
+   "heard": "You get the status line, the headers, and the JSON."
+  },
+  {
+   "beat": "c3b",
+   "key": "j3",
+   "ch": 3,
+   "say": "Ask for a user that doesn't exist, and you get a four zero four. Ask for the word banana, and you get a four twenty two.",
+   "cap": "Missing user: [404]. The word banana: [422].",
+   "start": 194.186,
+   "end": 201.964,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Ask",
+     "start": 194.136,
+     "end": 194.436
+    },
+    {
+     "w": "for",
+     "start": 194.436,
+     "end": 194.656
+    },
+    {
+     "w": "a",
+     "start": 194.656,
+     "end": 194.756
+    },
+    {
+     "w": "user",
+     "start": 194.756,
+     "end": 194.996
+    },
+    {
+     "w": "that",
+     "start": 194.996,
+     "end": 195.296
+    },
+    {
+     "w": "doesn't",
+     "start": 195.296,
+     "end": 195.596
+    },
+    {
+     "w": "exist",
+     "start": 195.596,
+     "end": 195.916
+    },
+    {
+     "w": "and",
+     "start": 195.916,
+     "end": 196.596
+    },
+    {
+     "w": "you",
+     "start": 196.596,
+     "end": 196.716
+    },
+    {
+     "w": "get",
+     "start": 196.716,
+     "end": 196.876
+    },
+    {
+     "w": "a",
+     "start": 196.876,
+     "end": 196.956
+    },
+    {
+     "w": "404.",
+     "start": 196.956,
+     "end": 197.396
+    },
+    {
+     "w": "Ask",
+     "start": 198.876,
+     "end": 199.056
+    },
+    {
+     "w": "for",
+     "start": 199.056,
+     "end": 199.276
+    },
+    {
+     "w": "the",
+     "start": 199.276,
+     "end": 199.376
+    },
+    {
+     "w": "word",
+     "start": 199.376,
+     "end": 199.596
+    },
+    {
+     "w": "banana",
+     "start": 199.596,
+     "end": 199.956
+    },
+    {
+     "w": "and",
+     "start": 199.956,
+     "end": 200.596
+    },
+    {
+     "w": "you",
+     "start": 200.596,
+     "end": 200.716
+    },
+    {
+     "w": "get",
+     "start": 200.716,
+     "end": 200.876
+    },
+    {
+     "w": "a",
+     "start": 200.876,
+     "end": 200.936
+    },
+    {
+     "w": "422.",
+     "start": 200.936,
+     "end": 201.456
+    }
+   ],
+   "heard": "Ask for a user that doesn't exist and you get a 404. Ask for the word banana and you get a 422."
+  },
+  {
+   "beat": "c3c",
+   "key": "k1",
+   "ch": 3,
+   "say": "Today that dictionary is fake. Next week it could be Post gress Q L, or a call to another service.",
+   "cap": "Today a fake [dictionary]. Next week [PostgreSQL].",
+   "start": 202.414,
+   "end": 209.095,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Today",
+     "start": 202.364,
+     "end": 202.624
+    },
+    {
+     "w": "that",
+     "start": 202.624,
+     "end": 202.884
+    },
+    {
+     "w": "dictionary",
+     "start": 202.884,
+     "end": 203.284
+    },
+    {
+     "w": "is",
+     "start": 203.284,
+     "end": 203.704
+    },
+    {
+     "w": "fake.",
+     "start": 203.704,
+     "end": 203.924
+    },
+    {
+     "w": "Next",
+     "start": 204.724,
+     "end": 204.764
+    },
+    {
+     "w": "week",
+     "start": 204.764,
+     "end": 205.124
+    },
+    {
+     "w": "it",
+     "start": 205.124,
+     "end": 205.344
+    },
+    {
+     "w": "could",
+     "start": 205.344,
+     "end": 205.444
+    },
+    {
+     "w": "be",
+     "start": 205.444,
+     "end": 205.564
+    },
+    {
+     "w": "post",
+     "start": 205.564,
+     "end": 205.784
+    },
+    {
+     "w": "GrisqL",
+     "start": 205.784,
+     "end": 206.724
+    },
+    {
+     "w": "or",
+     "start": 206.724,
+     "end": 207.444
+    },
+    {
+     "w": "a",
+     "start": 207.444,
+     "end": 207.544
+    },
+    {
+     "w": "call",
+     "start": 207.544,
+     "end": 207.804
+    },
+    {
+     "w": "to",
+     "start": 207.804,
+     "end": 208.084
+    },
+    {
+     "w": "another",
+     "start": 208.084,
+     "end": 208.344
+    },
+    {
+     "w": "service.",
+     "start": 208.344,
+     "end": 208.724
+    }
+   ],
+   "heard": "Today that dictionary is fake. Next week it could be post GrisqL or a call to another service."
+  },
+  {
+   "beat": "c3c",
+   "key": "k2",
+   "ch": 3,
+   "say": "Not one line the client depends on changes. Same URL, same JSON shape, same status codes.",
+   "cap": "Same [URL], same [JSON shape], same [status codes].",
+   "start": 209.335,
+   "end": 216.593,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Not",
+     "start": 209.285,
+     "end": 209.505
+    },
+    {
+     "w": "one",
+     "start": 209.505,
+     "end": 209.705
+    },
+    {
+     "w": "line",
+     "start": 209.705,
+     "end": 210.005
+    },
+    {
+     "w": "the",
+     "start": 210.005,
+     "end": 210.245
+    },
+    {
+     "w": "client",
+     "start": 210.245,
+     "end": 210.525
+    },
+    {
+     "w": "depends",
+     "start": 210.525,
+     "end": 210.745
+    },
+    {
+     "w": "on",
+     "start": 210.745,
+     "end": 211.065
+    },
+    {
+     "w": "changes.",
+     "start": 211.065,
+     "end": 211.325
+    },
+    {
+     "w": "Same",
+     "start": 212.565,
+     "end": 212.565
+    },
+    {
+     "w": "URL,",
+     "start": 212.565,
+     "end": 212.845
+    },
+    {
+     "w": "same",
+     "start": 213.705,
+     "end": 213.845
+    },
+    {
+     "w": "JSON",
+     "start": 213.845,
+     "end": 214.225
+    },
+    {
+     "w": "shape,",
+     "start": 214.225,
+     "end": 214.865
+    },
+    {
+     "w": "same",
+     "start": 215.105,
+     "end": 215.425
+    },
+    {
+     "w": "status",
+     "start": 215.425,
+     "end": 215.745
+    },
+    {
+     "w": "codes.",
+     "start": 215.745,
+     "end": 216.185
+    }
+   ],
+   "heard": "Not one line the client depends on changes. Same URL, same JSON shape, same status codes."
+  },
+  {
+   "beat": "c3c",
+   "key": "k3",
+   "ch": 3,
+   "say": "That is the contract doing its job.",
+   "cap": "That is the [contract] doing its job.",
+   "start": 216.833,
+   "end": 218.902,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "That",
+     "start": 216.783,
+     "end": 216.963
+    },
+    {
+     "w": "is",
+     "start": 216.963,
+     "end": 217.063
+    },
+    {
+     "w": "the",
+     "start": 217.063,
+     "end": 217.203
+    },
+    {
+     "w": "contract",
+     "start": 217.203,
+     "end": 217.563
+    },
+    {
+     "w": "doing",
+     "start": 217.563,
+     "end": 217.983
+    },
+    {
+     "w": "its",
+     "start": 217.983,
+     "end": 218.223
+    },
+    {
+     "w": "job.",
+     "start": 218.223,
+     "end": 218.603
+    }
+   ],
+   "heard": "That is the contract doing its job."
+  },
+  {
+   "beat": "c4a",
+   "key": "l1",
+   "ch": 4,
+   "say": "Who calls APIs? More than you think.",
+   "cap": "So who calls APIs? [More] than you think.",
+   "start": 220.902,
+   "end": 223.361,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "who",
+     "start": 220.852,
+     "end": 220.972
+    },
+    {
+     "w": "calls",
+     "start": 220.972,
+     "end": 221.292
+    },
+    {
+     "w": "APIs",
+     "start": 221.292,
+     "end": 221.572
+    },
+    {
+     "w": "more",
+     "start": 221.572,
+     "end": 222.552
+    },
+    {
+     "w": "than",
+     "start": 222.552,
+     "end": 222.732
+    },
+    {
+     "w": "you",
+     "start": 222.732,
+     "end": 222.852
+    },
+    {
+     "w": "think.",
+     "start": 222.852,
+     "end": 223.112
+    }
+   ],
+   "heard": "who calls APIs more than you think."
+  },
+  {
+   "beat": "c4a",
+   "key": "l2",
+   "ch": 4,
+   "say": "Your weather app. The sign in with Google button. A payment form. Another backend service.",
+   "cap": "Weather app. Sign in with Google. Payments. Other [services].",
+   "start": 223.601,
+   "end": 229.353,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Your",
+     "start": 223.551,
+     "end": 223.711
+    },
+    {
+     "w": "Weather",
+     "start": 223.711,
+     "end": 223.891
+    },
+    {
+     "w": "app,",
+     "start": 223.891,
+     "end": 224.251
+    },
+    {
+     "w": "the",
+     "start": 224.771,
+     "end": 224.911
+    },
+    {
+     "w": "sign",
+     "start": 224.911,
+     "end": 225.151
+    },
+    {
+     "w": "in",
+     "start": 225.151,
+     "end": 225.511
+    },
+    {
+     "w": "with",
+     "start": 225.511,
+     "end": 225.631
+    },
+    {
+     "w": "Google",
+     "start": 225.631,
+     "end": 225.891
+    },
+    {
+     "w": "button,",
+     "start": 225.891,
+     "end": 226.371
+    },
+    {
+     "w": "a",
+     "start": 226.631,
+     "end": 226.751
+    },
+    {
+     "w": "payment",
+     "start": 226.751,
+     "end": 227.051
+    },
+    {
+     "w": "form,",
+     "start": 227.051,
+     "end": 227.511
+    },
+    {
+     "w": "another",
+     "start": 227.851,
+     "end": 228.051
+    },
+    {
+     "w": "backend",
+     "start": 228.051,
+     "end": 228.351
+    },
+    {
+     "w": "service.",
+     "start": 228.351,
+     "end": 229.011
+    }
+   ],
+   "heard": "Your Weather app, the sign in with Google button, a payment form, another backend service."
+  },
+  {
+   "beat": "c4a",
+   "key": "l3",
+   "ch": 4,
+   "say": "And now, AI. Every call to a language model through code is a web API: a POST request with a JSON body, and JSON coming back.",
+   "cap": "A language model call is a [POST] with a [JSON] body.",
+   "start": 229.593,
+   "end": 240.12,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "And",
+     "start": 229.543,
+     "end": 229.683
+    },
+    {
+     "w": "now",
+     "start": 229.683,
+     "end": 229.943
+    },
+    {
+     "w": "AI.",
+     "start": 229.943,
+     "end": 230.443
+    },
+    {
+     "w": "Every",
+     "start": 231.663,
+     "end": 231.663
+    },
+    {
+     "w": "call",
+     "start": 231.663,
+     "end": 231.963
+    },
+    {
+     "w": "to",
+     "start": 231.963,
+     "end": 232.203
+    },
+    {
+     "w": "a",
+     "start": 232.203,
+     "end": 232.323
+    },
+    {
+     "w": "language",
+     "start": 232.323,
+     "end": 232.583
+    },
+    {
+     "w": "model",
+     "start": 232.583,
+     "end": 233.103
+    },
+    {
+     "w": "through",
+     "start": 233.103,
+     "end": 233.423
+    },
+    {
+     "w": "code",
+     "start": 233.423,
+     "end": 233.763
+    },
+    {
+     "w": "is",
+     "start": 233.763,
+     "end": 234.063
+    },
+    {
+     "w": "a",
+     "start": 234.063,
+     "end": 234.163
+    },
+    {
+     "w": "web",
+     "start": 234.163,
+     "end": 234.343
+    },
+    {
+     "w": "API,",
+     "start": 234.343,
+     "end": 234.843
+    },
+    {
+     "w": "a",
+     "start": 235.703,
+     "end": 235.783
+    },
+    {
+     "w": "post",
+     "start": 235.783,
+     "end": 236.003
+    },
+    {
+     "w": "request",
+     "start": 236.003,
+     "end": 236.363
+    },
+    {
+     "w": "with",
+     "start": 236.363,
+     "end": 236.843
+    },
+    {
+     "w": "a",
+     "start": 236.843,
+     "end": 236.943
+    },
+    {
+     "w": "JSON",
+     "start": 236.943,
+     "end": 237.283
+    },
+    {
+     "w": "body",
+     "start": 237.283,
+     "end": 237.903
+    },
+    {
+     "w": "and",
+     "start": 237.903,
+     "end": 238.503
+    },
+    {
+     "w": "JSON",
+     "start": 238.503,
+     "end": 238.823
+    },
+    {
+     "w": "coming",
+     "start": 238.823,
+     "end": 239.523
+    },
+    {
+     "w": "back.",
+     "start": 239.523,
+     "end": 239.883
+    }
+   ],
+   "heard": "And now AI. Every call to a language model through code is a web API, a post request with a JSON body and JSON coming back."
+  },
+  {
+   "beat": "c4b",
+   "key": "m1",
+   "ch": 4,
+   "say": "Same contract. The kitchen is just a very large model you will never see inside.",
+   "cap": "Same contract. The kitchen is a [model] you never see.",
+   "start": 240.57,
+   "end": 246.019,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Same",
+     "start": 240.52,
+     "end": 240.78
+    },
+    {
+     "w": "contract.",
+     "start": 240.78,
+     "end": 241.22
+    },
+    {
+     "w": "The",
+     "start": 242.1,
+     "end": 242.16
+    },
+    {
+     "w": "kitchen",
+     "start": 242.16,
+     "end": 242.4
+    },
+    {
+     "w": "is",
+     "start": 242.4,
+     "end": 242.74
+    },
+    {
+     "w": "just",
+     "start": 242.74,
+     "end": 243.0
+    },
+    {
+     "w": "a",
+     "start": 243.0,
+     "end": 243.16
+    },
+    {
+     "w": "very",
+     "start": 243.16,
+     "end": 243.42
+    },
+    {
+     "w": "large",
+     "start": 243.42,
+     "end": 243.8
+    },
+    {
+     "w": "model",
+     "start": 243.8,
+     "end": 244.34
+    },
+    {
+     "w": "you",
+     "start": 244.34,
+     "end": 244.6
+    },
+    {
+     "w": "will",
+     "start": 244.6,
+     "end": 244.72
+    },
+    {
+     "w": "never",
+     "start": 244.72,
+     "end": 244.96
+    },
+    {
+     "w": "see",
+     "start": 244.96,
+     "end": 245.2
+    },
+    {
+     "w": "inside.",
+     "start": 245.2,
+     "end": 245.52
+    }
+   ],
+   "heard": "Same contract. The kitchen is just a very large model you will never see inside."
+  },
+  {
+   "beat": "c4b",
+   "key": "m2",
+   "ch": 4,
+   "say": "Postman's twenty twenty-five survey of over fifty-seven hundred developers found that eighty-nine percent use generative AI.",
+   "cap": "Postman's 2025 survey: [89%] use generative AI.",
+   "start": 246.259,
+   "end": 254.911,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Postman's",
+     "start": 246.209,
+     "end": 246.769
+    },
+    {
+     "w": "2025",
+     "start": 246.769,
+     "end": 247.269
+    },
+    {
+     "w": "survey",
+     "start": 247.269,
+     "end": 248.109
+    },
+    {
+     "w": "of",
+     "start": 248.109,
+     "end": 248.469
+    },
+    {
+     "w": "over",
+     "start": 248.469,
+     "end": 248.649
+    },
+    {
+     "w": "5700",
+     "start": 248.649,
+     "end": 249.949
+    },
+    {
+     "w": "developers",
+     "start": 249.949,
+     "end": 250.529
+    },
+    {
+     "w": "found",
+     "start": 250.529,
+     "end": 251.409
+    },
+    {
+     "w": "that",
+     "start": 251.409,
+     "end": 251.649
+    },
+    {
+     "w": "89",
+     "start": 251.649,
+     "end": 252.109
+    },
+    {
+     "w": "%",
+     "start": 252.109,
+     "end": 252.869
+    },
+    {
+     "w": "use",
+     "start": 252.869,
+     "end": 253.249
+    },
+    {
+     "w": "generative",
+     "start": 253.249,
+     "end": 254.089
+    },
+    {
+     "w": "AI.",
+     "start": 254.089,
+     "end": 254.449
+    }
+   ],
+   "heard": "Postman's 2025 survey of over 5700 developers found that 89 % use generative AI."
+  },
+  {
+   "beat": "c4b",
+   "key": "m3",
+   "ch": 4,
+   "say": "But only twenty-four percent design their APIs with AI agents in mind.",
+   "cap": "Only [24%] design APIs with AI agents in mind.",
+   "start": 255.151,
+   "end": 260.388,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "but",
+     "start": 255.101,
+     "end": 255.221
+    },
+    {
+     "w": "only",
+     "start": 255.221,
+     "end": 255.361
+    },
+    {
+     "w": "24",
+     "start": 255.361,
+     "end": 255.861
+    },
+    {
+     "w": "%",
+     "start": 255.861,
+     "end": 256.721
+    },
+    {
+     "w": "designed",
+     "start": 256.721,
+     "end": 257.021
+    },
+    {
+     "w": "their",
+     "start": 257.021,
+     "end": 257.421
+    },
+    {
+     "w": "APIs",
+     "start": 257.421,
+     "end": 257.861
+    },
+    {
+     "w": "with",
+     "start": 257.861,
+     "end": 258.641
+    },
+    {
+     "w": "AI",
+     "start": 258.641,
+     "end": 258.921
+    },
+    {
+     "w": "agents",
+     "start": 258.921,
+     "end": 259.521
+    },
+    {
+     "w": "in",
+     "start": 259.521,
+     "end": 259.761
+    },
+    {
+     "w": "mind.",
+     "start": 259.761,
+     "end": 260.081
+    }
+   ],
+   "heard": "but only 24 % designed their APIs with AI agents in mind."
+  },
+  {
+   "beat": "c4b",
+   "key": "m4",
+   "ch": 4,
+   "say": "The same survey found sixty-five percent of organizations earn revenue from their APIs. Contracts are products.",
+   "cap": "[65%] of organizations earn revenue from APIs.",
+   "start": 260.628,
+   "end": 268.361,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "The",
+     "start": 260.578,
+     "end": 260.698
+    },
+    {
+     "w": "same",
+     "start": 260.698,
+     "end": 260.878
+    },
+    {
+     "w": "survey",
+     "start": 260.878,
+     "end": 261.358
+    },
+    {
+     "w": "found",
+     "start": 261.358,
+     "end": 261.638
+    },
+    {
+     "w": "65",
+     "start": 261.638,
+     "end": 262.238
+    },
+    {
+     "w": "%",
+     "start": 262.238,
+     "end": 263.018
+    },
+    {
+     "w": "of",
+     "start": 263.018,
+     "end": 263.158
+    },
+    {
+     "w": "organizations",
+     "start": 263.158,
+     "end": 263.598
+    },
+    {
+     "w": "earn",
+     "start": 263.598,
+     "end": 264.378
+    },
+    {
+     "w": "revenue",
+     "start": 264.378,
+     "end": 264.798
+    },
+    {
+     "w": "from",
+     "start": 264.798,
+     "end": 265.178
+    },
+    {
+     "w": "their",
+     "start": 265.178,
+     "end": 265.358
+    },
+    {
+     "w": "APIs.",
+     "start": 265.358,
+     "end": 265.838
+    },
+    {
+     "w": "Contracts",
+     "start": 266.898,
+     "end": 267.118
+    },
+    {
+     "w": "are",
+     "start": 267.118,
+     "end": 267.598
+    },
+    {
+     "w": "products.",
+     "start": 267.598,
+     "end": 267.938
+    }
+   ],
+   "heard": "The same survey found 65 % of organizations earn revenue from their APIs. Contracts are products."
+  },
+  {
+   "beat": "m1",
+   "key": "x1",
+   "ch": 5,
+   "say": "Mistake one. Saying API when you mean REST API. APIs also include function signatures and operating system calls. REST is one architectural style for web APIs.",
+   "cap": "Mistake 1: API [is not] REST API.",
+   "start": 270.361,
+   "end": 284.194,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 270.311,
+     "end": 270.731
+    },
+    {
+     "w": "1.",
+     "start": 270.731,
+     "end": 270.991
+    },
+    {
+     "w": "Saying",
+     "start": 271.851,
+     "end": 271.851
+    },
+    {
+     "w": "API",
+     "start": 271.851,
+     "end": 272.351
+    },
+    {
+     "w": "when",
+     "start": 272.351,
+     "end": 272.971
+    },
+    {
+     "w": "you",
+     "start": 272.971,
+     "end": 273.111
+    },
+    {
+     "w": "mean",
+     "start": 273.111,
+     "end": 273.311
+    },
+    {
+     "w": "REST",
+     "start": 273.311,
+     "end": 273.571
+    },
+    {
+     "w": "API.",
+     "start": 273.571,
+     "end": 274.051
+    },
+    {
+     "w": "APIs",
+     "start": 275.551,
+     "end": 275.551
+    },
+    {
+     "w": "also",
+     "start": 275.551,
+     "end": 276.211
+    },
+    {
+     "w": "include",
+     "start": 276.211,
+     "end": 276.691
+    },
+    {
+     "w": "function",
+     "start": 276.691,
+     "end": 277.191
+    },
+    {
+     "w": "signatures",
+     "start": 277.191,
+     "end": 277.851
+    },
+    {
+     "w": "and",
+     "start": 277.851,
+     "end": 278.271
+    },
+    {
+     "w": "operating",
+     "start": 278.271,
+     "end": 278.651
+    },
+    {
+     "w": "system",
+     "start": 278.651,
+     "end": 279.151
+    },
+    {
+     "w": "calls.",
+     "start": 279.151,
+     "end": 279.511
+    },
+    {
+     "w": "REST",
+     "start": 280.371,
+     "end": 280.531
+    },
+    {
+     "w": "is",
+     "start": 280.531,
+     "end": 280.911
+    },
+    {
+     "w": "one",
+     "start": 280.911,
+     "end": 281.191
+    },
+    {
+     "w": "architectural",
+     "start": 281.191,
+     "end": 281.731
+    },
+    {
+     "w": "style",
+     "start": 281.731,
+     "end": 282.431
+    },
+    {
+     "w": "for",
+     "start": 282.431,
+     "end": 282.751
+    },
+    {
+     "w": "web",
+     "start": 282.751,
+     "end": 282.931
+    },
+    {
+     "w": "APIs.",
+     "start": 282.931,
+     "end": 283.431
+    }
+   ],
+   "heard": "Mistake 1. Saying API when you mean REST API. APIs also include function signatures and operating system calls. REST is one architectural style for web APIs."
+  },
+  {
+   "beat": "m2",
+   "key": "x2",
+   "ch": 5,
+   "say": "Mistake two. Copying your database columns straight into your responses. Rename a column, and every client breaks. Design the contract first, then the code behind it.",
+   "cap": "Mistake 2: mirroring your [database] in responses.",
+   "start": 284.644,
+   "end": 295.991,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 284.594,
+     "end": 285.014
+    },
+    {
+     "w": "2.",
+     "start": 285.014,
+     "end": 285.314
+    },
+    {
+     "w": "Copying",
+     "start": 286.234,
+     "end": 286.434
+    },
+    {
+     "w": "your",
+     "start": 286.434,
+     "end": 286.594
+    },
+    {
+     "w": "database",
+     "start": 286.594,
+     "end": 287.014
+    },
+    {
+     "w": "columns",
+     "start": 287.014,
+     "end": 287.494
+    },
+    {
+     "w": "straight",
+     "start": 287.494,
+     "end": 287.974
+    },
+    {
+     "w": "into",
+     "start": 287.974,
+     "end": 288.274
+    },
+    {
+     "w": "your",
+     "start": 288.274,
+     "end": 288.494
+    },
+    {
+     "w": "responses.",
+     "start": 288.494,
+     "end": 288.894
+    },
+    {
+     "w": "Rename",
+     "start": 289.874,
+     "end": 290.034
+    },
+    {
+     "w": "a",
+     "start": 290.034,
+     "end": 290.194
+    },
+    {
+     "w": "column",
+     "start": 290.194,
+     "end": 290.694
+    },
+    {
+     "w": "and",
+     "start": 290.694,
+     "end": 290.974
+    },
+    {
+     "w": "every",
+     "start": 290.974,
+     "end": 291.194
+    },
+    {
+     "w": "client",
+     "start": 291.194,
+     "end": 291.674
+    },
+    {
+     "w": "breaks.",
+     "start": 291.674,
+     "end": 292.014
+    },
+    {
+     "w": "Design",
+     "start": 293.034,
+     "end": 293.034
+    },
+    {
+     "w": "the",
+     "start": 293.034,
+     "end": 293.314
+    },
+    {
+     "w": "contract",
+     "start": 293.314,
+     "end": 293.554
+    },
+    {
+     "w": "first,",
+     "start": 293.554,
+     "end": 294.154
+    },
+    {
+     "w": "then",
+     "start": 294.754,
+     "end": 294.754
+    },
+    {
+     "w": "the",
+     "start": 294.754,
+     "end": 294.894
+    },
+    {
+     "w": "code",
+     "start": 294.894,
+     "end": 295.114
+    },
+    {
+     "w": "behind",
+     "start": 295.114,
+     "end": 295.574
+    },
+    {
+     "w": "it.",
+     "start": 295.574,
+     "end": 295.914
+    }
+   ],
+   "heard": "Mistake 2. Copying your database columns straight into your responses. Rename a column and every client breaks. Design the contract first, then the code behind it."
+  },
+  {
+   "beat": "m3",
+   "key": "x3",
+   "ch": 5,
+   "say": "Mistake three. Returning two hundred OK for everything, even errors. The status code is part of the contract. Use it.",
+   "cap": "Mistake 3: [200 OK] for everything, even errors.",
+   "start": 296.441,
+   "end": 304.508,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 296.391,
+     "end": 296.811
+    },
+    {
+     "w": "3,",
+     "start": 296.811,
+     "end": 297.191
+    },
+    {
+     "w": "returning",
+     "start": 297.631,
+     "end": 298.111
+    },
+    {
+     "w": "200",
+     "start": 298.111,
+     "end": 298.471
+    },
+    {
+     "w": "OK",
+     "start": 298.471,
+     "end": 298.931
+    },
+    {
+     "w": "for",
+     "start": 298.931,
+     "end": 299.411
+    },
+    {
+     "w": "everything",
+     "start": 299.411,
+     "end": 299.931
+    },
+    {
+     "w": "even",
+     "start": 299.931,
+     "end": 300.311
+    },
+    {
+     "w": "errors.",
+     "start": 300.311,
+     "end": 300.691
+    },
+    {
+     "w": "The",
+     "start": 301.451,
+     "end": 301.471
+    },
+    {
+     "w": "status",
+     "start": 301.471,
+     "end": 301.711
+    },
+    {
+     "w": "code",
+     "start": 301.711,
+     "end": 302.151
+    },
+    {
+     "w": "is",
+     "start": 302.151,
+     "end": 302.471
+    },
+    {
+     "w": "part",
+     "start": 302.471,
+     "end": 302.651
+    },
+    {
+     "w": "of",
+     "start": 302.651,
+     "end": 302.831
+    },
+    {
+     "w": "the",
+     "start": 302.831,
+     "end": 302.911
+    },
+    {
+     "w": "contract.",
+     "start": 302.911,
+     "end": 303.411
+    },
+    {
+     "w": "Use",
+     "start": 303.911,
+     "end": 304.131
+    },
+    {
+     "w": "it.",
+     "start": 304.131,
+     "end": 304.431
+    }
+   ],
+   "heard": "Mistake 3, returning 200 OK for everything even errors. The status code is part of the contract. Use it."
+  },
+  {
+   "beat": "m4",
+   "key": "x4",
+   "ch": 5,
+   "say": "Mistake four. Confusing the API with the whole system, or with the user interface. A UI consumes an API. One API can serve a website and a mobile app.",
+   "cap": "Mistake 4: the API is not the [system] or the [UI].",
+   "start": 304.958,
+   "end": 317.151,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 304.908,
+     "end": 305.328
+    },
+    {
+     "w": "4.",
+     "start": 305.328,
+     "end": 305.608
+    },
+    {
+     "w": "Confusing",
+     "start": 306.368,
+     "end": 306.768
+    },
+    {
+     "w": "the",
+     "start": 306.768,
+     "end": 306.908
+    },
+    {
+     "w": "API",
+     "start": 306.908,
+     "end": 307.148
+    },
+    {
+     "w": "with",
+     "start": 307.148,
+     "end": 307.868
+    },
+    {
+     "w": "the",
+     "start": 307.868,
+     "end": 307.988
+    },
+    {
+     "w": "whole",
+     "start": 307.988,
+     "end": 308.148
+    },
+    {
+     "w": "system",
+     "start": 308.148,
+     "end": 308.628
+    },
+    {
+     "w": "or",
+     "start": 308.628,
+     "end": 309.088
+    },
+    {
+     "w": "with",
+     "start": 309.088,
+     "end": 309.468
+    },
+    {
+     "w": "the",
+     "start": 309.468,
+     "end": 309.608
+    },
+    {
+     "w": "user",
+     "start": 309.608,
+     "end": 309.808
+    },
+    {
+     "w": "interface.",
+     "start": 309.808,
+     "end": 310.348
+    },
+    {
+     "w": "A",
+     "start": 311.188,
+     "end": 311.208
+    },
+    {
+     "w": "UI",
+     "start": 311.208,
+     "end": 311.528
+    },
+    {
+     "w": "consumes",
+     "start": 311.528,
+     "end": 312.088
+    },
+    {
+     "w": "an",
+     "start": 312.088,
+     "end": 312.428
+    },
+    {
+     "w": "API.",
+     "start": 312.428,
+     "end": 312.708
+    },
+    {
+     "w": "One",
+     "start": 313.928,
+     "end": 313.988
+    },
+    {
+     "w": "API",
+     "start": 313.988,
+     "end": 314.508
+    },
+    {
+     "w": "can",
+     "start": 314.508,
+     "end": 315.108
+    },
+    {
+     "w": "serve",
+     "start": 315.108,
+     "end": 315.388
+    },
+    {
+     "w": "a",
+     "start": 315.388,
+     "end": 315.528
+    },
+    {
+     "w": "website",
+     "start": 315.528,
+     "end": 315.828
+    },
+    {
+     "w": "and",
+     "start": 315.828,
+     "end": 316.208
+    },
+    {
+     "w": "a",
+     "start": 316.208,
+     "end": 316.288
+    },
+    {
+     "w": "mobile",
+     "start": 316.288,
+     "end": 316.488
+    },
+    {
+     "w": "app.",
+     "start": 316.488,
+     "end": 316.928
+    }
+   ],
+   "heard": "Mistake 4. Confusing the API with the whole system or with the user interface. A UI consumes an API. One API can serve a website and a mobile app."
+  },
+  {
+   "beat": "m5",
+   "key": "x5",
+   "ch": 5,
+   "say": "And mistake five. Leaving the contract undocumented. If callers have to reverse engineer your behavior, it's not a contract. Part three of the handbook covers OpenAPI for exactly this.",
+   "cap": "Mistake 5: an [undocumented] contract.",
+   "start": 317.601,
+   "end": 331.24,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "and",
+     "start": 317.551,
+     "end": 317.691
+    },
+    {
+     "w": "mistake",
+     "start": 317.691,
+     "end": 317.951
+    },
+    {
+     "w": "five,",
+     "start": 317.951,
+     "end": 318.491
+    },
+    {
+     "w": "leaving",
+     "start": 319.071,
+     "end": 319.431
+    },
+    {
+     "w": "the",
+     "start": 319.431,
+     "end": 319.651
+    },
+    {
+     "w": "contract",
+     "start": 319.651,
+     "end": 320.131
+    },
+    {
+     "w": "undocumented.",
+     "start": 320.131,
+     "end": 320.811
+    },
+    {
+     "w": "If",
+     "start": 321.911,
+     "end": 321.951
+    },
+    {
+     "w": "callers",
+     "start": 321.951,
+     "end": 322.451
+    },
+    {
+     "w": "have",
+     "start": 322.451,
+     "end": 322.631
+    },
+    {
+     "w": "to",
+     "start": 322.631,
+     "end": 322.791
+    },
+    {
+     "w": "reverse",
+     "start": 322.791,
+     "end": 323.131
+    },
+    {
+     "w": "engineer",
+     "start": 323.131,
+     "end": 323.731
+    },
+    {
+     "w": "your",
+     "start": 323.731,
+     "end": 324.151
+    },
+    {
+     "w": "behavior,",
+     "start": 324.151,
+     "end": 324.531
+    },
+    {
+     "w": "it's",
+     "start": 325.151,
+     "end": 325.311
+    },
+    {
+     "w": "not",
+     "start": 325.311,
+     "end": 325.491
+    },
+    {
+     "w": "a",
+     "start": 325.491,
+     "end": 325.591
+    },
+    {
+     "w": "contract.",
+     "start": 325.591,
+     "end": 325.931
+    },
+    {
+     "w": "Part",
+     "start": 326.991,
+     "end": 327.051
+    },
+    {
+     "w": "three",
+     "start": 327.051,
+     "end": 327.451
+    },
+    {
+     "w": "of",
+     "start": 327.451,
+     "end": 327.611
+    },
+    {
+     "w": "the",
+     "start": 327.611,
+     "end": 327.731
+    },
+    {
+     "w": "handbook",
+     "start": 327.731,
+     "end": 328.211
+    },
+    {
+     "w": "covers",
+     "start": 328.211,
+     "end": 328.651
+    },
+    {
+     "w": "open",
+     "start": 328.651,
+     "end": 329.011
+    },
+    {
+     "w": "API",
+     "start": 329.011,
+     "end": 329.391
+    },
+    {
+     "w": "for",
+     "start": 329.391,
+     "end": 330.191
+    },
+    {
+     "w": "exactly",
+     "start": 330.191,
+     "end": 330.411
+    },
+    {
+     "w": "this.",
+     "start": 330.411,
+     "end": 330.951
+    }
+   ],
+   "heard": "and mistake five, leaving the contract undocumented. If callers have to reverse engineer your behavior, it's not a contract. Part three of the handbook covers open API for exactly this."
+  },
+  {
+   "beat": "rec",
+   "key": "n1",
+   "ch": 6,
+   "say": "Let's recap.",
+   "cap": "Let's [recap].",
+   "start": 333.24,
+   "end": 334.208,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Let's",
+     "start": 333.19,
+     "end": 333.55
+    },
+    {
+     "w": "recap.",
+     "start": 333.55,
+     "end": 333.85
+    }
+   ],
+   "heard": "Let's recap."
+  },
+  {
+   "beat": "rec",
+   "key": "n2",
+   "ch": 6,
+   "say": "An API is a contract between two programs.",
+   "cap": "An API is a [contract] between two programs.",
+   "start": 334.448,
+   "end": 337.759,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "An",
+     "start": 334.398,
+     "end": 334.538
+    },
+    {
+     "w": "API",
+     "start": 334.538,
+     "end": 334.798
+    },
+    {
+     "w": "is",
+     "start": 334.798,
+     "end": 335.738
+    },
+    {
+     "w": "a",
+     "start": 335.738,
+     "end": 335.818
+    },
+    {
+     "w": "contract",
+     "start": 335.818,
+     "end": 336.198
+    },
+    {
+     "w": "between",
+     "start": 336.198,
+     "end": 336.558
+    },
+    {
+     "w": "two",
+     "start": 336.558,
+     "end": 336.918
+    },
+    {
+     "w": "programs.",
+     "start": 336.918,
+     "end": 337.258
+    }
+   ],
+   "heard": "An API is a contract between two programs."
+  },
+  {
+   "beat": "rec",
+   "key": "n3",
+   "ch": 6,
+   "say": "A web API is an HTTP request and a response.",
+   "cap": "A web API is a [request] and a [response].",
+   "start": 337.999,
+   "end": 342.196,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "A",
+     "start": 337.949,
+     "end": 338.069
+    },
+    {
+     "w": "web",
+     "start": 338.069,
+     "end": 338.229
+    },
+    {
+     "w": "API",
+     "start": 338.229,
+     "end": 338.689
+    },
+    {
+     "w": "is",
+     "start": 338.689,
+     "end": 339.189
+    },
+    {
+     "w": "an",
+     "start": 339.189,
+     "end": 339.289
+    },
+    {
+     "w": "HTTP",
+     "start": 339.289,
+     "end": 339.809
+    },
+    {
+     "w": "request",
+     "start": 339.809,
+     "end": 340.629
+    },
+    {
+     "w": "and",
+     "start": 340.629,
+     "end": 341.309
+    },
+    {
+     "w": "a",
+     "start": 341.309,
+     "end": 341.409
+    },
+    {
+     "w": "response.",
+     "start": 341.409,
+     "end": 341.689
+    }
+   ],
+   "heard": "A web API is an HTTP request and a response."
+  },
+  {
+   "beat": "rec",
+   "key": "n4",
+   "ch": 6,
+   "say": "The server behind it is free to change.",
+   "cap": "The server behind it is free to [change].",
+   "start": 342.436,
+   "end": 344.602,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 342.386,
+     "end": 342.506
+    },
+    {
+     "w": "server",
+     "start": 342.506,
+     "end": 342.726
+    },
+    {
+     "w": "behind",
+     "start": 342.726,
+     "end": 343.166
+    },
+    {
+     "w": "it",
+     "start": 343.166,
+     "end": 343.386
+    },
+    {
+     "w": "is",
+     "start": 343.386,
+     "end": 343.546
+    },
+    {
+     "w": "free",
+     "start": 343.546,
+     "end": 343.726
+    },
+    {
+     "w": "to",
+     "start": 343.726,
+     "end": 343.906
+    },
+    {
+     "w": "change.",
+     "start": 343.906,
+     "end": 344.226
+    }
+   ],
+   "heard": "The server behind it is free to change."
+  },
+  {
+   "beat": "rec",
+   "key": "n5",
+   "ch": 6,
+   "say": "Anyone can be the caller, even an AI model.",
+   "cap": "Anyone can call it, even an [AI model].",
+   "start": 344.842,
+   "end": 347.901,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Anyone",
+     "start": 344.792,
+     "end": 345.072
+    },
+    {
+     "w": "can",
+     "start": 345.072,
+     "end": 345.372
+    },
+    {
+     "w": "be",
+     "start": 345.372,
+     "end": 345.512
+    },
+    {
+     "w": "the",
+     "start": 345.512,
+     "end": 345.632
+    },
+    {
+     "w": "caller,",
+     "start": 345.632,
+     "end": 345.932
+    },
+    {
+     "w": "even",
+     "start": 346.552,
+     "end": 346.752
+    },
+    {
+     "w": "an",
+     "start": 346.752,
+     "end": 346.872
+    },
+    {
+     "w": "AI",
+     "start": 346.872,
+     "end": 347.152
+    },
+    {
+     "w": "model.",
+     "start": 347.152,
+     "end": 347.692
+    }
+   ],
+   "heard": "Anyone can be the caller, even an AI model."
+  },
+  {
+   "beat": "rec",
+   "key": "n6",
+   "ch": 6,
+   "say": "And your job is to protect the contract.",
+   "cap": "Your job: [protect] the contract.",
+   "start": 348.141,
+   "end": 350.597,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "and",
+     "start": 348.091,
+     "end": 348.231
+    },
+    {
+     "w": "your",
+     "start": 348.231,
+     "end": 348.351
+    },
+    {
+     "w": "job",
+     "start": 348.351,
+     "end": 348.691
+    },
+    {
+     "w": "is",
+     "start": 348.691,
+     "end": 349.131
+    },
+    {
+     "w": "to",
+     "start": 349.131,
+     "end": 349.271
+    },
+    {
+     "w": "protect",
+     "start": 349.271,
+     "end": 349.531
+    },
+    {
+     "w": "the",
+     "start": 349.531,
+     "end": 349.771
+    },
+    {
+     "w": "contract.",
+     "start": 349.771,
+     "end": 350.111
+    }
+   ],
+   "heard": "and your job is to protect the contract."
+  },
+  {
+   "beat": "out",
+   "key": "o1",
+   "ch": 6,
+   "say": "Next up, Part one of the handbook: how the internet actually works.",
+   "cap": "Next: how the [internet] actually works.",
+   "start": 351.047,
+   "end": 355.125,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Next",
+     "start": 350.997,
+     "end": 351.217
+    },
+    {
+     "w": "up,",
+     "start": 351.217,
+     "end": 351.477
+    },
+    {
+     "w": "part",
+     "start": 351.597,
+     "end": 351.777
+    },
+    {
+     "w": "one",
+     "start": 351.777,
+     "end": 352.077
+    },
+    {
+     "w": "of",
+     "start": 352.077,
+     "end": 352.157
+    },
+    {
+     "w": "the",
+     "start": 352.157,
+     "end": 352.257
+    },
+    {
+     "w": "handbook,",
+     "start": 352.257,
+     "end": 352.757
+    },
+    {
+     "w": "how",
+     "start": 353.237,
+     "end": 353.337
+    },
+    {
+     "w": "the",
+     "start": 353.337,
+     "end": 353.497
+    },
+    {
+     "w": "internet",
+     "start": 353.497,
+     "end": 353.837
+    },
+    {
+     "w": "actually",
+     "start": 353.837,
+     "end": 354.377
+    },
+    {
+     "w": "works.",
+     "start": 354.377,
+     "end": 354.777
+    }
+   ],
+   "heard": "Next up, part one of the handbook, how the internet actually works."
+  },
+  {
+   "beat": "out",
+   "key": "o2",
+   "ch": 6,
+   "say": "Before you go, try the chapter's exercise: add a GET slash users endpoint, and decide what it should return when the database is empty.",
+   "cap": "Try it: a [GET /users] endpoint. What if the database is [empty]?",
+   "start": 355.365,
+   "end": 364.434,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Before",
+     "start": 355.315,
+     "end": 355.515
+    },
+    {
+     "w": "you",
+     "start": 355.515,
+     "end": 355.715
+    },
+    {
+     "w": "go,",
+     "start": 355.715,
+     "end": 355.935
+    },
+    {
+     "w": "try",
+     "start": 356.295,
+     "end": 356.595
+    },
+    {
+     "w": "the",
+     "start": 356.595,
+     "end": 356.795
+    },
+    {
+     "w": "chapter's",
+     "start": 356.795,
+     "end": 357.295
+    },
+    {
+     "w": "exercise.",
+     "start": 357.295,
+     "end": 357.955
+    },
+    {
+     "w": "Add",
+     "start": 358.795,
+     "end": 358.855
+    },
+    {
+     "w": "a",
+     "start": 358.855,
+     "end": 358.955
+    },
+    {
+     "w": "get",
+     "start": 358.955,
+     "end": 359.095
+    },
+    {
+     "w": "slash",
+     "start": 359.095,
+     "end": 359.375
+    },
+    {
+     "w": "users",
+     "start": 359.375,
+     "end": 359.975
+    },
+    {
+     "w": "endpoint",
+     "start": 359.975,
+     "end": 360.335
+    },
+    {
+     "w": "and",
+     "start": 360.335,
+     "end": 361.295
+    },
+    {
+     "w": "decide",
+     "start": 361.295,
+     "end": 361.575
+    },
+    {
+     "w": "what",
+     "start": 361.575,
+     "end": 361.935
+    },
+    {
+     "w": "it",
+     "start": 361.935,
+     "end": 362.035
+    },
+    {
+     "w": "should",
+     "start": 362.035,
+     "end": 362.175
+    },
+    {
+     "w": "return",
+     "start": 362.175,
+     "end": 362.535
+    },
+    {
+     "w": "when",
+     "start": 362.535,
+     "end": 362.915
+    },
+    {
+     "w": "the",
+     "start": 362.915,
+     "end": 363.015
+    },
+    {
+     "w": "database",
+     "start": 363.015,
+     "end": 363.335
+    },
+    {
+     "w": "is",
+     "start": 363.335,
+     "end": 363.775
+    },
+    {
+     "w": "empty.",
+     "start": 363.775,
+     "end": 364.135
+    }
+   ],
+   "heard": "Before you go, try the chapter's exercise. Add a get slash users endpoint and decide what it should return when the database is empty."
+  },
+  {
+   "beat": "out",
+   "key": "o3",
+   "ch": 6,
+   "say": "Subscribe, and I'll see you in the next one.",
+   "cap": "[Subscribe], and see you in the next one.",
+   "start": 364.674,
+   "end": 367.01,
+   "gap": 0.6,
+   "words": [
+    {
+     "w": "Subscribe",
+     "start": 364.624,
+     "end": 365.084
+    },
+    {
+     "w": "and",
+     "start": 365.084,
+     "end": 365.624
+    },
+    {
+     "w": "I'll",
+     "start": 365.624,
+     "end": 365.824
+    },
+    {
+     "w": "see",
+     "start": 365.824,
+     "end": 366.024
+    },
+    {
+     "w": "you",
+     "start": 366.024,
+     "end": 366.224
+    },
+    {
+     "w": "in",
+     "start": 366.224,
+     "end": 366.304
+    },
+    {
+     "w": "the",
+     "start": 366.304,
+     "end": 366.384
+    },
+    {
+     "w": "next",
+     "start": 366.384,
+     "end": 366.584
+    },
+    {
+     "w": "one.",
+     "start": 366.584,
+     "end": 366.864
+    }
+   ],
+   "heard": "Subscribe and I'll see you in the next one."
+  }
+ ]
+}

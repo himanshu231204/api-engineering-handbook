@@ -1,0 +1,419 @@
+1
+00:00:00,250 --> 00:00:02,465
+Your app talks to a server you'll never
+see.
+
+2
+00:00:02,705 --> 00:00:07,051
+What exactly is it saying? And why do you
+never need to know how that server
+
+3
+00:00:07,051 --> 00:00:07,394
+works?
+
+4
+00:00:07,634 --> 00:00:12,672
+That's an API. By the end of this video,
+you'll read one, run one, and spot the
+
+5
+00:00:12,672 --> 00:00:14,266
+mistakes that break them.
+
+6
+00:00:14,716 --> 00:00:16,573
+Here's the plan, in five parts.
+
+7
+00:00:16,813 --> 00:00:21,476
+One, the contract. Two, a request, line by
+line. Three, the server side.
+
+8
+00:00:21,716 --> 00:00:25,863
+Four, who calls APIs. And five, the
+mistakes that break them.
+
+9
+00:00:27,863 --> 00:00:33,426
+API stands for Application Programming
+Interface. Strip away the acronym, and
+
+10
+00:00:33,426 --> 00:00:34,582
+it's a contract.
+
+11
+00:00:34,822 --> 00:00:39,743
+One program asks another program to do
+something, without knowing how it gets
+
+12
+00:00:39,743 --> 00:00:40,510
+done inside.
+
+13
+00:00:40,750 --> 00:00:45,755
+The handbook's glossary puts it the same
+way: a defined contract, with no need
+
+14
+00:00:45,755 --> 00:00:47,488
+to know the implementation.
+
+15
+00:00:47,938 --> 00:00:52,595
+Think of a wall socket. You plug in a
+lamp, and you know nothing about the power
+
+16
+00:00:52,595 --> 00:00:53,061
+station.
+
+17
+00:00:53,301 --> 00:00:55,464
+The shape of the socket is the promise.
+
+18
+00:00:55,914 --> 00:01:00,275
+Or think of a restaurant. You read the
+menu, you tell the waiter what you want,
+
+19
+00:01:00,275 --> 00:01:01,655
+and the kitchen cooks it.
+
+20
+00:01:01,895 --> 00:01:07,021
+You never see the kitchen. It can swap
+chefs, change the stove, even rewrite the
+
+21
+00:01:07,021 --> 00:01:07,469
+recipe.
+
+22
+00:01:07,709 --> 00:01:11,135
+As long as the dish matches the menu, you
+never notice.
+
+23
+00:01:11,375 --> 00:01:17,227
+That's the whole value of an API. Both
+sides can change independently, as long
+
+24
+00:01:17,227 --> 00:01:18,878
+as the contract holds.
+
+25
+00:01:20,878 --> 00:01:27,560
+This handbook focuses on web APIs. A
+client sends an HTTP request, and a server
+
+26
+00:01:27,560 --> 00:01:29,421
+sends back a response.
+
+27
+00:01:29,661 --> 00:01:34,686
+The client is anything that starts the
+conversation. A browser, a phone app,
+
+28
+00:01:34,686 --> 00:01:36,405
+another service, a script.
+
+29
+00:01:36,645 --> 00:01:42,182
+MDN puts it plainly: the client always
+initiates. The server never does.
+
+30
+00:01:42,632 --> 00:01:46,722
+Here's a real request. GET /users/42.
+
+31
+00:01:46,962 --> 00:01:51,711
+GET is the method. It says what you want
+to do. The path says which thing you
+
+32
+00:01:51,711 --> 00:01:52,019
+want.
+
+33
+00:01:52,259 --> 00:01:58,129
+Headers add context. Accept says you want
+JSON. Authorization says who you are.
+
+34
+00:01:58,579 --> 00:02:02,738
+The server answers with a status code. 200
+means OK.
+
+35
+00:02:02,978 --> 00:02:09,621
+Status codes come in families. 200s mean
+success. 4xx mean the caller made a
+
+36
+00:02:09,621 --> 00:02:12,505
+mistake. 5xx mean the server did.
+
+37
+00:02:12,745 --> 00:02:16,803
+Then comes the body, in JSON. An id, a
+name, an email.
+
+38
+00:02:17,043 --> 00:02:22,886
+Nothing in this response says whether the
+data came from PostgreSQL, MongoDB, or
+
+39
+00:02:22,886 --> 00:02:25,588
+a plain dictionary. That's the point.
+
+40
+00:02:26,038 --> 00:02:31,882
+One more thing from MDN. HTTP is
+stateless. Every request stands alone, so the
+
+41
+00:02:31,882 --> 00:02:37,726
+server doesn't remember the last one
+unless you send something that identifies
+
+42
+00:02:37,726 --> 00:02:38,026
+you.
+
+43
+00:02:40,026 --> 00:02:45,711
+Now the other side. This is a complete API
+endpoint, written in FastAPI, the
+
+44
+00:02:45,711 --> 00:02:48,404
+framework this handbook builds with.
+
+45
+00:02:48,644 --> 00:02:54,183
+One decorator maps GET /users/{user_id} to
+a Python function.
+
+46
+00:02:54,423 --> 00:03:00,129
+The function looks the user up. If there's
+no such user, it raises a 404.
+
+47
+00:03:00,369 --> 00:03:06,495
+And because user id is typed as an
+integer, FastAPI rejects anything else before
+
+48
+00:03:06,495 --> 00:03:08,027
+your code even runs.
+
+49
+00:03:08,477 --> 00:03:10,682
+Run it, and ask for user 42.
+
+50
+00:03:10,922 --> 00:03:13,946
+You get the status line, the headers, and
+the JSON.
+
+51
+00:03:14,186 --> 00:03:20,506
+Ask for a user that doesn't exist, and you
+get a 404. Ask for the word banana,
+
+52
+00:03:20,506 --> 00:03:21,964
+and you get a 422.
+
+53
+00:03:22,414 --> 00:03:27,946
+Today that dictionary is fake. Next week
+it could be PostgreSQL, or a call to
+
+54
+00:03:27,946 --> 00:03:29,095
+another service.
+
+55
+00:03:29,335 --> 00:03:35,521
+Not one line the client depends on
+changes. Same URL, same JSON shape, same
+
+56
+00:03:35,521 --> 00:03:36,593
+status codes.
+
+57
+00:03:36,833 --> 00:03:38,902
+That is the contract doing its job.
+
+58
+00:03:40,902 --> 00:03:43,361
+Who calls APIs? More than you think.
+
+59
+00:03:43,601 --> 00:03:48,319
+Your weather app. The sign in with Google
+button. A payment form. Another
+
+60
+00:03:48,319 --> 00:03:49,353
+backend service.
+
+61
+00:03:49,593 --> 00:03:56,130
+And now, AI. Every call to a language
+model through code is a web API: a POST
+
+62
+00:03:56,130 --> 00:04:00,120
+request with a JSON body, and JSON coming
+back.
+
+63
+00:04:00,570 --> 00:04:06,019
+Same contract. The kitchen is just a very
+large model you will never see inside.
+
+64
+00:04:06,259 --> 00:04:11,886
+Postman's twenty twenty-five survey of
+over fifty-seven hundred developers found
+
+65
+00:04:11,886 --> 00:04:14,911
+that eighty-nine percent use generative
+AI.
+
+66
+00:04:15,151 --> 00:04:20,388
+But only twenty-four percent design their
+APIs with AI agents in mind.
+
+67
+00:04:20,628 --> 00:04:25,900
+The same survey found sixty-five percent
+of organizations earn revenue from
+
+68
+00:04:25,900 --> 00:04:28,361
+their APIs. Contracts are products.
+
+69
+00:04:30,361 --> 00:04:36,881
+Mistake one. Saying API when you mean REST
+API. APIs also include function
+
+70
+00:04:36,881 --> 00:04:43,753
+signatures and operating system calls.
+REST is one architectural style for web
+
+71
+00:04:43,753 --> 00:04:44,194
+APIs.
+
+72
+00:04:44,644 --> 00:04:50,110
+Mistake two. Copying your database columns
+straight into your responses. Rename
+
+73
+00:04:50,110 --> 00:04:55,299
+a column, and every client breaks. Design
+the contract first, then the code
+
+74
+00:04:55,299 --> 00:04:55,991
+behind it.
+
+75
+00:04:56,441 --> 00:05:02,342
+Mistake three. Returning 200 OK for
+everything, even errors. The status code is
+
+76
+00:05:02,342 --> 00:05:04,508
+part of the contract. Use it.
+
+77
+00:05:04,958 --> 00:05:10,768
+Mistake four. Confusing the API with the
+whole system, or with the user
+
+78
+00:05:10,768 --> 00:05:17,151
+interface. A UI consumes an API. One API
+can serve a website and a mobile app.
+
+79
+00:05:17,601 --> 00:05:23,521
+And mistake five. Leaving the contract
+undocumented. If callers have to reverse
+
+80
+00:05:23,521 --> 00:05:29,367
+engineer your behavior, it's not a
+contract. Part three of the handbook covers
+
+81
+00:05:29,367 --> 00:05:31,240
+OpenAPI for exactly this.
+
+82
+00:05:33,240 --> 00:05:34,208
+Let's recap.
+
+83
+00:05:34,448 --> 00:05:37,759
+An API is a contract between two programs.
+
+84
+00:05:37,999 --> 00:05:42,196
+A web API is an HTTP request and a
+response.
+
+85
+00:05:42,436 --> 00:05:44,602
+The server behind it is free to change.
+
+86
+00:05:44,842 --> 00:05:47,901
+Anyone can be the caller, even an AI
+model.
+
+87
+00:05:48,141 --> 00:05:50,597
+And your job is to protect the contract.
+
+88
+00:05:51,047 --> 00:05:55,125
+Next up, Part one of the handbook: how the
+internet actually works.
+
+89
+00:05:55,365 --> 00:06:00,989
+Before you go, try the chapter's exercise:
+add a GET /users endpoint, and decide
+
+90
+00:06:00,989 --> 00:06:04,434
+what it should return when the database is
+empty.
+
+91
+00:06:04,674 --> 00:06:07,010
+Subscribe, and I'll see you in the next
+one.
+

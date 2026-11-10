@@ -16,7 +16,7 @@ Next up: **JWT Deeply Explained** (pilot, Part 5 — Authentication & Authorizat
 
 | Part | Published | Rendered | Scripted | Planned | Total |
 |---|---|---|---|---|---|
-| Part 0 — Introduction | 0 | 0 | 0 | 3 | 3 |
+| Part 0 — Introduction | 0 | 1 | 0 | 2 | 3 |
 | Part 1 — API Foundations | 0 | 1 | 0 | 10 | 11 |
 | Part 2 — REST API Design | 0 | 0 | 0 | 11 | 11 |
 | Part 3 — Building APIs | 0 | 0 | 0 | 10 | 10 |
@@ -42,7 +42,7 @@ Next up: **JWT Deeply Explained** (pilot, Part 5 — Authentication & Authorizat
 
 | # | Topic | Status | Video |
 |---|---|---|---|
-| 1 | [What Is an API?](../docs/00-introduction/what-is-an-api.md) | ⬜ Planned | — |
+| 1 | [What Is an API?](../docs/00-introduction/what-is-an-api.md) | 🎬 Rendered | — |
 | 2 | [API Architecture at a Glance](../docs/00-introduction/api-architecture.md) | ⬜ Planned | — |
 | 3 | [Learning Roadmap](../docs/00-introduction/learning-roadmap.md) | ⬜ Planned | — |
 
