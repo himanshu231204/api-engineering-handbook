@@ -1,5 +1,12 @@
 # Timeouts
 
+> [!TIP]
+> **In one line:** Put an explicit time limit on every network call, and split one overall deadline across the whole call chain so a single slow dependency cannot hang your service.
+>
+> **In plain English:** Before you ring a company, decide you'll hang up after two minutes. Without that rule you could wait forever while other work piles up behind you. A timeout is that rule, and a budget makes sure the many calls in a chain add up to the time you were actually given.
+>
+> **You'll be able to:** set separate connect, read, write and pool timeouts in `httpx` · divide an end-to-end deadline across hops and pass the remaining time downstream · explain why a client timeout does not mean the server did nothing
+
 ## Why This Matters
 
 Every network call your API makes — to a database, to another microservice, to a third-party payment processor, to an LLM provider — can fail in two very different ways: it can come back with an error quickly, or it can simply never come back. The first case is easy to handle: catch the exception, return a 502, move on. The second case is the dangerous one. Without a timeout, a single slow dependency can hang a request thread indefinitely, and if enough requests pile up waiting on the same dead dependency, they can exhaust your server's connection pool, thread pool, or memory — turning one slow downstream call into a full outage of your own service. A timeout is the single cheapest, highest-leverage reliability primitive you can add to any network call, and it's also one of the most commonly forgotten.
@@ -48,6 +55,8 @@ sequenceDiagram
     Client->>Client: Abort socket, raise TimeoutError
     Client->>Client: Handle failure (retry / fallback / error response)
 ```
+
+![A 6-second end-to-end deadline shrinking across the call chain: the gateway spends 0.3 s leaving 5.7 s, Service A 0.5 s leaving 5.2 s, Service B 0.7 s leaving 4.5 s, and the database call is given a 2 s timeout inside what remains; each hop passes the remaining budget downstream](../assets/diagrams/06-timeout-budget.svg)
 
 ## Request / Response Example
 
@@ -175,6 +184,29 @@ LLM API calls are one of the worst-behaved timeout cases you'll deal with: a cha
 - A client-side timeout does not mean the server-side operation didn't happen — this has direct implications for [Retries](retries.md) and idempotency.
 - Timeout budgets must be allocated across a multi-hop call chain, not duplicated generously at every layer.
 - Never ship a network call without an explicit timeout — it is the cheapest reliability improvement available to you.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Name the four kinds of timeout and what each one limits.</summary>
+
+Connect (establishing the TCP/TLS connection), read (waiting for response data once the request is sent), write (sending the request body), and total (the end-to-end cap on the whole operation, including any retries). Pool timeout, for acquiring a connection from the client's pool, is a fifth you should also set.
+
+</details>
+
+<details markdown="1">
+<summary>2. A POST times out on the client. Did the server do nothing?</summary>
+
+Not necessarily. The timeout is a client-side decision: the server may have received the request and even committed the write, and you simply stopped waiting for the reply. That is why retrying a timed-out write needs idempotency.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your API has a 6-second SLA and calls Service A, then B, then a database, each with a 5-second timeout. What goes wrong, and what should you do?</summary>
+
+The chain's worst case is far above 6 seconds, so users wait too long and resources stay tied up even though no single timeout looks wrong. Allocate one deadline across the hops, set each hop's timeout below the time remaining, and pass the remaining budget downstream so later hops can fail fast.
+
+</details>
 
 See also: [Retries](retries.md), [Exponential Backoff](exponential-backoff.md), [Circuit Breakers](circuit-breakers.md), and the [glossary](../../resources/glossary.md).
 

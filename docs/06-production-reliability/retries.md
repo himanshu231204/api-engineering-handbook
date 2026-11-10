@@ -1,5 +1,12 @@
 # Retries
 
+> [!TIP]
+> **In one line:** Retry only transient failures and only when repeating the request is safe (idempotent method or idempotency key), with a capped count and growing delay.
+>
+> **In plain English:** If a text message shows "not delivered", resending is fine when it's a question but not when it says "transfer $500" — you might send the money twice. Before retrying, ask "is this failure temporary?" and "is repeating this harmless?" Both answers must be yes.
+>
+> **You'll be able to:** tell retryable errors (network, 408, 429, 5xx) from permanent 4xx errors · attach an `Idempotency-Key` so a POST can be retried safely · cap attempts, honour `Retry-After` and budget retries inside your timeout
+
 ## Why This Matters
 
 Networks drop packets, servers restart mid-deploy, load balancers occasionally route a request to an instance that's already shutting down. Most of these failures are transient — the exact same request, sent a moment later, would succeed. A system with no retry logic treats every transient blip as a permanent user-facing failure, which is both a worse experience and a waste of a perfectly recoverable situation. But retries are not free or automatically safe: retrying the wrong kind of operation can duplicate a payment, double-send an email, or create two identical database rows. Knowing *when* to retry, matters at least as much as knowing *how*.
@@ -215,6 +222,29 @@ LLM API calls fail for reasons that map cleanly onto this chapter's categories, 
 - Always enforce a maximum retry count, and factor retries into your overall timeout budget.
 - Prefer a server-provided `Retry-After` over your own computed delay when present.
 - Pair retries with exponential backoff, not immediate re-attempts, to avoid contributing to retry storms.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which failures are worth retrying, and which are not?</summary>
+
+Retry network-level failures, 408, 429 (respecting Retry-After) and 5xx responses, since they are usually transient. Do not retry other 4xx errors such as 400, 404 or 422: the request itself is wrong and will fail identically every time.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why can retrying a POST /payments after a timeout charge a customer twice?</summary>
+
+The timeout only means the response was lost; the first request may have succeeded. Without an idempotency key the server treats the retry as a new payment. With a key, the server recognises the duplicate and returns the original result.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your client retries failed calls with no maximum and no delay while a dependency is down for maintenance. What happens?</summary>
+
+Every client hammers the struggling service continuously, adding load while it tries to recover, and the loops outlast the outage — a retry storm. Cap the attempts, back off between them, honour Retry-After, and keep the total inside your timeout budget.
+
+</details>
 
 See also: [Timeouts](timeouts.md), [Exponential Backoff](exponential-backoff.md), [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md), and the [glossary](../../resources/glossary.md).
 

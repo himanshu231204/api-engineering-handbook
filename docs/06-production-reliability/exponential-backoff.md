@@ -1,5 +1,12 @@
 # Exponential Backoff
 
+> [!TIP]
+> **In one line:** Wait longer after each failed attempt — `base × 2^(attempt−1)`, capped — and add random jitter so clients that failed together don't retry together.
+>
+> **In plain English:** If a friend doesn't pick up the phone, you don't redial every second — you try again in a minute, then five, then an hour. Backoff is that habit for software. Jitter adds a little randomness so a thousand callers don't all redial at the exact same moment.
+>
+> **You'll be able to:** compute capped exponential backoff delays by hand and in code · explain why jitter, not backoff alone, breaks up retry storms · tune base, multiplier, cap and attempts to fit a timeout budget
+
 ## Why This Matters
 
 Retrying a failed request is a good instinct — but *how* you space out those retries determines whether your retry logic helps a struggling service recover or actively makes things worse. If every client that just failed a request immediately retries with no delay, and the failure was caused by the downstream service being overloaded, you've just added another wave of load at the exact moment the service is least able to handle it. Worse, if many clients failed at roughly the same moment (which is common — a deploy, a brief network blip, a GC pause), they all retry in near-perfect synchrony, creating a sharp, repeating spike of traffic. This pattern is called a **retry storm**, and it's one of the more common ways a brief, minor hiccup turns into an extended outage. Exponential backoff is the standard fix: space retries out with a rapidly growing delay, so retry traffic thins out over time instead of piling up.
@@ -75,6 +82,8 @@ sequenceDiagram
     C2->>S: Retry after ~0.9s
     Note over S: Load arrives spread out over time,<br/>not as a single synchronized wave
 ```
+
+![Three clients that failed together, retrying on a time axis: with a fixed 2-second delay they retry in seven synchronized spikes; with exponential backoff they still retry in lockstep at 1, 3, 7 and 15 seconds; with exponential backoff plus full jitter their retries are scattered across time](../assets/diagrams/06-backoff-jitter.svg)
 
 ## Request / Response Example
 
@@ -199,6 +208,29 @@ LLM providers are a textbook case for exponential backoff, because their `429` r
 - Backoff alone does not fully solve synchronized retries from many clients that failed at once — that requires jitter, covered in its own upcoming chapter.
 - A multiplier of 2 is a solid, widely-used default, but should be tuned to the failure characteristics of the specific dependency.
 - Most production HTTP/LLM SDKs implement backoff internally — know your defaults rather than assuming they're appropriate for your SLA.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. With base_delay = 0.5s, multiplier = 2 and max_delay = 10s, what are the delays before retries 1 to 6?</summary>
+
+0.5s, 1s, 2s, 4s, 8s, then 10s — attempt 6 would be 16s raw, but the cap clamps it to 10s. The formula is min(base × multiplier^(attempt−1), max_delay).
+
+</details>
+
+<details markdown="1">
+<summary>2. 1,000 clients fail at the same instant and all use deterministic exponential backoff with no jitter. What happens?</summary>
+
+They all retry at exactly the same moments, just with longer gaps between waves, so the server still gets hit by synchronized spikes of 1,000 requests. Jitter (e.g. sleeping a random value between 0 and the computed delay) spreads those retries across time.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user-facing endpoint has a 5-second SLA, but its backoff is configured with max_delay = 10s. What goes wrong, and what should you change?</summary>
+
+A single capped retry can wait longer than the entire budget, so the request blows its SLA even if the dependency recovers. Choose max_delay (and the attempt count) so the total worst-case wait fits inside the timeout budget, and honour a server's Retry-After when one is sent.
+
+</details>
 
 See also: [Retries](retries.md), [Timeouts](timeouts.md), [Rate Limiting](rate-limiting.md), and the [glossary](../../resources/glossary.md). The jitter chapter (`jitter.md`, planned) builds directly on the formula introduced here.
 
