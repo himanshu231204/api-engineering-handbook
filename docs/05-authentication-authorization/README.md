@@ -19,10 +19,10 @@ Who a caller is (authentication) and what they're allowed to do (authorization):
 | 5 | [JWT Deeply Explained](jwt-deeply-explained.md) | ✅ Written |
 | 6 | [Access vs Refresh Tokens](access-vs-refresh-tokens.md) | ✅ Written |
 | 7 | [OAuth 2.0](oauth2.md) | ✅ Written |
-| 8 | OpenID Connect | 🚧 Planned |
+| 8 | [OpenID Connect](openid-connect.md) | ✅ Written |
 | 9 | [RBAC](rbac.md) | ✅ Written |
-| 10 | ABAC | 🚧 Planned |
-| 11 | Multi-Tenant Authorization | 🚧 Planned |
+| 10 | [ABAC](abac.md) | ✅ Written |
+| 11 | [Multi-Tenant Authorization](multi-tenant-authorization.md) | ✅ Written |
 
 ## Related Example
 

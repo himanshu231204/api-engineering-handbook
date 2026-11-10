@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="488" viewBox="0 0 880 488" role="img" aria-labelledby="t d">
+  <title id="t">Layers that keep tenants apart</title>
+  <desc id="d">Four layers each narrow access to one tenant. Layer 1: the tenant id comes from a verified token claim, never from request input. Layer 2: it is stored in the request context. Layer 3: every query is scoped with a tenant filter. Layer 4: PostgreSQL row-level security enforces the same rule inside the database, so a missed filter in code returns zero rows instead of another tenant's data. A worked example shows tenant acme reading an invoice that belongs to globex and receiving 404.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="487" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Tenant isolation is layered, not a single check</text>
+  <text x="32" y="66" class="sub">Each layer assumes the one before it might have a bug. The tenant id travels down, never in from the client.</text>
+
+  <!-- layer 1 -->
+  <rect x="32" y="90" width="184" height="150" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="114" r="12" fill="#1c7c54"/>
+  <text x="56" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="76" y="119" class="lbl" fill="#2563eb">Token claim</text>
+  <text x="48" y="146" class="note">Verified JWT carries</text>
+  <text x="48" y="168" class="code">tenant_id=acme</text>
+  <text x="48" y="194" class="note">Signature checked first.</text>
+  <text x="48" y="212" class="note">Not from URL, body or</text>
+  <text x="48" y="228" class="note">X-Tenant header.</text>
+
+  <line x1="216" y1="165" x2="240" y2="165" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- layer 2 -->
+  <rect x="244" y="90" width="184" height="150" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="268" cy="114" r="12" fill="#1c7c54"/>
+  <text x="268" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="288" y="119" class="lbl" fill="#475569">Request context</text>
+  <text x="260" y="146" class="note">One dependency builds</text>
+  <text x="260" y="168" class="code">TenantContext</text>
+  <text x="260" y="194" class="note">Handlers receive it as an</text>
+  <text x="260" y="212" class="note">argument. They cannot</text>
+  <text x="260" y="228" class="note">pick another tenant.</text>
+
+  <line x1="428" y1="165" x2="452" y2="165" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- layer 3 -->
+  <rect x="456" y="90" width="184" height="150" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="480" cy="114" r="12" fill="#1c7c54"/>
+  <text x="480" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="500" y="119" class="lbl" fill="#1c7c54">Scoped queries</text>
+  <text x="472" y="146" class="note">Every statement filters</text>
+  <text x="472" y="168" class="code">WHERE tenant_id = :t</text>
+  <text x="472" y="194" class="note">Cache keys and queue</text>
+  <text x="472" y="212" class="note">messages carry the tenant</text>
+  <text x="472" y="228" class="note">too.</text>
+
+  <line x1="640" y1="165" x2="664" y2="165" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- layer 4 -->
+  <rect x="668" y="90" width="180" height="150" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <circle cx="692" cy="114" r="12" fill="#1c7c54"/>
+  <text x="692" y="118" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="712" y="119" class="lbl" fill="#7e22ce">Row-level security</text>
+  <text x="684" y="146" class="note">Postgres policy applies</text>
+  <text x="684" y="168" class="code">tenant_id =</text>
+  <text x="684" y="186" class="code">current_setting(..)</text>
+  <text x="684" y="212" class="note">Last line of defence if</text>
+  <text x="684" y="228" class="note">step 3 is forgotten.</text>
+
+  <!-- worked example -->
+  <text x="32" y="276" class="h">Worked example: tenant acme asks for a globex invoice</text>
+  <rect x="32" y="290" width="252" height="76" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="54" cy="312" r="12" fill="#1c7c54"/>
+  <text x="54" y="316" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">A</text>
+  <text x="74" y="316" class="lbl" fill="#475569">Request</text>
+  <text x="48" y="338" class="code">GET /invoices/9001</text>
+  <text x="48" y="356" class="note">token says tenant_id=acme</text>
+  <line x1="284" y1="328" x2="310" y2="328" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="314" y="290" width="252" height="76" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="336" cy="312" r="12" fill="#1c7c54"/>
+  <text x="336" y="316" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">B</text>
+  <text x="356" y="316" class="lbl" fill="#1c7c54">Query</text>
+  <text x="330" y="338" class="code">id=9001 AND tenant=acme</text>
+  <text x="330" y="356" class="note">invoice 9001 is globex's</text>
+  <line x1="566" y1="328" x2="592" y2="328" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="596" y="290" width="252" height="76" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="618" cy="312" r="12" fill="#1c7c54"/>
+  <text x="618" y="316" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">C</text>
+  <text x="638" y="316" class="lbl" fill="#b91c1c">Result</text>
+  <text x="612" y="338" class="code">0 rows, 404 Not Found</text>
+  <text x="612" y="356" class="note">existence is not revealed</text>
+
+  <!-- failure note -->
+  <rect x="32" y="392" width="816" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="52" y="416" class="lbl" fill="#b45309">If a developer forgets the filter in layer 3</text>
+  <text x="52" y="438" class="note">Layer 4 still filters inside the database, so the query returns zero rows instead of globex's data.</text>
+  <text x="52" y="456" class="note">Layers 1 and 2 are what make layers 3 and 4 correct: they fix which tenant id is used.</text>
+</svg>

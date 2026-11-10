@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="488" viewBox="0 0 880 488" role="img" aria-labelledby="t d">
+  <title id="t">OpenID Connect: id_token versus access_token</title>
+  <desc id="d">A client app sends the user to the identity provider with scope openid. After login the app exchanges a code at the token endpoint and receives two tokens. The id_token is a JWT whose audience is the client app; it proves who logged in and is verified and read by the app only. The access_token has the API as its audience, proves what the app may do, and is sent to the API as a Bearer token. The app must verify the id_token signature using the provider JWKS, plus iss, aud, exp and nonce.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="487" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">OpenID Connect: two tokens, two audiences</text>
+  <text x="32" y="66" class="sub">Login returns an id_token for the app and an access_token for the API. They are not interchangeable.</text>
+
+  <!-- actors -->
+  <rect x="32" y="84" width="160" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="112" y="106" text-anchor="middle" class="lbl" fill="#2563eb">Client app</text>
+  <text x="112" y="124" text-anchor="middle" class="note">relying party (RP)</text>
+  <rect x="360" y="84" width="160" height="52" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <text x="440" y="106" text-anchor="middle" class="lbl" fill="#7e22ce">Identity provider</text>
+  <text x="440" y="124" text-anchor="middle" class="note">OpenID provider (OP)</text>
+  <rect x="688" y="84" width="160" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="768" y="106" text-anchor="middle" class="lbl" fill="#475569">Your API</text>
+  <text x="768" y="124" text-anchor="middle" class="note">resource server</text>
+
+  <!-- step 1 -->
+  <text x="276" y="94" text-anchor="middle" class="note">login, scope=openid</text>
+  <line x1="192" y1="110" x2="358" y2="110" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="276" cy="110" r="12" fill="#1c7c54"/>
+  <text x="276" y="114" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="276" y="134" text-anchor="middle" class="note">+ nonce, state</text>
+
+  <!-- step 2 split -->
+  <path d="M440 136 L440 164 L232 164 L232 196" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <path d="M440 164 L648 164 L648 196" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="440" cy="164" r="12" fill="#1c7c54"/>
+  <text x="440" y="168" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="460" y="152" class="note">code exchanged at /token</text>
+  <text x="460" y="184" class="note">both tokens returned</text>
+
+  <!-- id_token card -->
+  <rect x="32" y="196" width="400" height="178" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="220" r="12" fill="#1c7c54"/>
+  <text x="56" y="224" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="76" y="225" class="lbl" fill="#2563eb">id_token (always a signed JWT)</text>
+  <text x="52" y="252" class="note">Audience: the client app (aud = client_id)</text>
+  <text x="52" y="272" class="note">Proves: who logged in, how and when</text>
+  <text x="52" y="298" class="code">iss  sub  aud  exp  iat  nonce</text>
+  <text x="52" y="318" class="code">email  name   (if scopes asked)</text>
+  <text x="52" y="346" class="lbl" fill="#2563eb">App verifies it and reads it</text>
+  <text x="52" y="364" class="note">Never send it to your API as a credential</text>
+
+  <!-- access_token card -->
+  <rect x="448" y="196" width="400" height="178" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="472" cy="220" r="12" fill="#1c7c54"/>
+  <text x="472" y="224" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="492" y="225" class="lbl" fill="#1c7c54">access_token (JWT or opaque)</text>
+  <text x="468" y="252" class="note">Audience: your API (aud = the API)</text>
+  <text x="468" y="272" class="note">Proves: what the app may do for the user</text>
+  <text x="468" y="298" class="code">scope=orders:read  sub  aud  exp</text>
+  <text x="468" y="318" class="code">format is the API's concern</text>
+  <text x="468" y="346" class="lbl" fill="#1c7c54">App sends it as a Bearer token</text>
+  <text x="468" y="364" class="note">The app does not rely on reading it</text>
+
+  <!-- arrow card -> API -->
+  <line x1="768" y1="196" x2="768" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="780" y="172" class="note">Bearer</text>
+
+  <!-- validation strip -->
+  <rect x="32" y="394" width="816" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="52" y="418" class="lbl" fill="#b45309">Before trusting the id_token, the app checks</text>
+  <text x="52" y="440" class="note">signature (provider keys from the JWKS)  ·  iss = the provider  ·  aud contains my client_id</text>
+  <text x="52" y="458" class="note">exp is in the future  ·  nonce equals the value sent in step 1</text>
+</svg>
