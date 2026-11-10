@@ -1,7 +1,7 @@
 # URLs
 
 > [!TIP]
-> **In one line:** A URL has six parts — scheme, host, port, path, query string, fragment — and only the path and query reach the server; the fragment never leaves the client.
+> **In one line:** A URL has six parts; the path and query form the request target, the host goes in the Host header, and the fragment never leaves the client.
 >
 > **In plain English:** A URL is like a file path on your computer with a sticky note of options attached. One part says how to connect, one says which machine, one says which item, and the sticky note says how you want it. Special characters must be encoded so they aren't mistaken for punctuation.
 >

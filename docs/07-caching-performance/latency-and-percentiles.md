@@ -220,7 +220,7 @@ The distribution becomes bimodal: most requests are fast hits, but the tail is m
 <details markdown="1">
 <summary>3. Your endpoint calls five backends in parallel and waits for all of them; each is slow 1% of the time. Roughly how often is the user request slow?</summary>
 
-About 1 - 0.99^5, which is roughly 4.9%, nearly five times the per-service rate. That is why per-service P99 targets must be tighter than the user-facing target.
+About 1 - 0.99^5, which is roughly 4.9%, nearly five times the per-service rate (assuming the five slowdowns are independent; if they always happened together it would be 1%). That is why per-service P99 targets must be tighter than the user-facing target.
 
 </details>
 

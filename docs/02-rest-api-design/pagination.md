@@ -1,7 +1,7 @@
 # Pagination
 
 > [!TIP]
-> **In one line:** Pagination returns big collections a page at a time; offset is simple but skips or repeats items when data changes, while cursor stays fast and correct at any depth.
+> **In one line:** Pagination serves collections a page at a time; offset is simple but skips or repeats items when data changes, while cursor stays fast and, with a stable sort key, correct.
 >
 > **In plain English:** Search results with numbered pages are offset pagination: easy to jump around, but new results shift everything along. A social feed's "load more" button is cursor pagination: it remembers the last post you saw and gives you what comes after it, however much was added at the top.
 >

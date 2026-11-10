@@ -1,7 +1,7 @@
 # Request & Response Bodies
 
 > [!TIP]
-> **In one line:** The body carries the real payload, and the receiver learns where it ends either from `Content-Length` (size known upfront) or chunked transfer (streamed, size unknown) — never both.
+> **In one line:** The body carries the real payload; in HTTP/1.1 its end is marked by `Content-Length` (size known) or chunked transfer (size unknown), never both, while HTTP/2 and HTTP/3 frame it themselves.
 >
 > **In plain English:** Compare downloading a film with watching a live broadcast. The download tells you its total size before it starts; the live stream just keeps sending pieces until it says "that's the end". HTTP bodies can work either way, and the streaming way is how chat apps show AI answers word by word.
 >
@@ -199,7 +199,7 @@ The body is where the real content of an AI API call lives: your prompt/messages
 <details markdown="1">
 <summary>1. Which two headers can tell the receiver where a body ends, and how do they differ?</summary>
 
-`Content-Length` gives the exact size in bytes before the body starts. `Transfer-Encoding: chunked` sends size-labelled chunks and ends with a zero-length chunk, so the sender never needs to know the total.
+In HTTP/1.1, `Content-Length` gives the exact size in bytes before the body starts. `Transfer-Encoding: chunked` sends size-labelled chunks and ends with a zero-length chunk, so the sender never needs to know the total.
 
 </details>
 

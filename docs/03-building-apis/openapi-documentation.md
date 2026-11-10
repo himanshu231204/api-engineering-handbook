@@ -1,7 +1,7 @@
 # API Documentation with OpenAPI
 
 > [!TIP]
-> **In one line:** FastAPI generates an always-accurate OpenAPI schema from your type hints and models, and serves it as interactive docs, a machine-readable contract, and input for tooling.
+> **In one line:** FastAPI generates an OpenAPI schema from your type hints and models, served as interactive docs and a machine-readable contract; it is a starting point, so document errors and test it.
 >
 > **In plain English:** Hand-written API docs go stale as soon as someone adds a field. FastAPI builds the docs from the real code, like a restaurant menu printed straight from the kitchen's actual recipes, so it cannot list a dish that does not exist.
 >
@@ -282,7 +282,7 @@ FastAPI cannot infer documented responses from `HTTPException` calls inside your
 <details markdown="1">
 <summary>3. An internal-only admin API has /docs and /openapi.json publicly reachable. What is the risk, and what are your options?</summary>
 
-Anyone can read the full list of internal endpoints and data shapes. Disable the docs with `docs_url=None, redoc_url=None`, or put them behind authentication.
+Anyone can read the full list of internal endpoints and data shapes. Disable the docs and the schema itself with `docs_url=None, redoc_url=None, openapi_url=None` (setting only the first two leaves `/openapi.json` readable), or put them behind authentication.
 
 </details>
 

@@ -1,7 +1,7 @@
 # HTTP
 
 > [!TIP]
-> **In one line:** HTTP is a stateless text protocol where every request and response has the same shape — start line, headers, blank line, optional body — whichever HTTP version carries it.
+> **In one line:** HTTP is a stateless request-response protocol; HTTP/1.1 messages are plain text — start line, headers, blank line, optional body — and HTTP/2 and HTTP/3 carry the same meaning in binary frames.
 >
 > **In plain English:** HTTP is like a drive-through with a fixed script: say what you want and where, add a few details, then hand over anything extra. The window answers in the same format. The window also doesn't remember you, so you repeat who you are on every visit.
 >
@@ -182,7 +182,7 @@ LLM chat APIs are ordinary HTTP under the hood: a `POST` request with a JSON bod
 <details markdown="1">
 <summary>1. What are the parts of an HTTP message, in order?</summary>
 
-A start line (the request line or the status line), headers, a blank line, then an optional body. Requests and responses share this exact shape.
+In HTTP/1.1: a start line (the request line or the status line), headers, a blank line, then an optional body. Requests and responses share this exact shape. HTTP/2 and HTTP/3 carry the same information in binary frames instead of text.
 
 </details>
 

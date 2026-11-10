@@ -81,7 +81,7 @@ Two additions sit *around* the template — they don't add or reorder `##` secti
    ```
 
    GitHub renders `> [!TIP]` natively; `scripts/mkdocs_hooks.py` converts it to a styled "TL;DR" box on the Pages site.
-2. **Check Yourself quiz** — a `## Check Yourself` H3 at the end of `## Key Takeaways` (end of file for Part 19) with 3 questions (recall, why/what-if, applied scenario), each as `<details markdown="1"><summary>N. Question</summary>` + blank line + answer + blank line + `</details>`. Blank lines and `markdown="1"` are required.
+2. **Check Yourself quiz** — a `### Check Yourself` H3 at the end of `## Key Takeaways` (end of file for Part 19) with 3 questions (recall, why/what-if, applied scenario), each as `<details markdown="1"><summary>N. Question</summary>` + blank line + answer + blank line + `</details>`. Blank lines and `markdown="1"` are required.
 
 ## SVG concept diagrams
 

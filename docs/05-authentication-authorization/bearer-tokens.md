@@ -192,7 +192,7 @@ Possession is proof: whoever presents ("bears") the token is treated as authoriz
 <details markdown="1">
 <summary>2. You must be able to kick a compromised user out immediately. Why does that favour stateful (opaque) tokens over long-lived JWTs?</summary>
 
-An opaque token is looked up on every request, so deleting its row revokes it at once. A JWT is verified by signature alone and stays valid until exp, so instant revocation needs extra machinery — or a short-lived JWT paired with a revocable refresh token.
+An opaque token is looked up on every request, so deleting its row revokes it at once. A JWT is verified by signature alone and stays valid until exp, so instant revocation needs a server-side check on each request (a denylist or session lookup). A short-lived JWT paired with a revocable refresh token only bounds the delay to the token's remaining lifetime.
 
 </details>
 

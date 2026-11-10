@@ -268,7 +268,7 @@ It prints as `**********` in logs, `repr()`, and error messages, so credentials 
 <details markdown="1">
 <summary>3. A production deploy has APP_ENV=produciton (a typo). What could go wrong without validation, and how does this chapter prevent it?</summary>
 
-The app could silently fall back to development defaults such as `debug=True` in production. A `field_validator` on `app_env` that only allows `development`, `staging`, and `production` makes startup fail immediately with a clear error.
+The app could silently fall back to development defaults such as `debug=True` in production. A `field_validator` on `app_env` that only allows `development`, `staging`, and `production` rejects the typo with a clear error. It fails at startup when `Settings()` is built at import time (or in the app's lifespan); if `get_settings()` is only reached through `Depends`, the error appears on the first request that uses it, so call it once at startup.
 
 </details>
 

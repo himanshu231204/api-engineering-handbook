@@ -270,7 +270,7 @@ The access token is sent as a bearer token on every ordinary API request. The re
 <details markdown="1">
 <summary>2. Why is presenting an already-rotated refresh token treated as evidence of theft?</summary>
 
-With rotation, each refresh token is single-use, so a legitimate client never re-sends one it has already exchanged. If a retired token appears, someone else almost certainly holds a copy, so the server revokes the whole token family and forces a fresh login.
+With rotation, each refresh token is single-use, so a legitimate client never re-sends one it has already exchanged. If a retired token appears, someone else probably holds a copy, so the server revokes the whole token family and forces a fresh login. Legitimate clients can trigger this too (two requests refreshing at once, or a lost refresh response), so clients should refresh single-flight, one request at a time, and servers may allow a short grace window for an immediate retry.
 
 </details>
 

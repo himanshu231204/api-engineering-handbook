@@ -11,7 +11,8 @@
   }
 
   function init() {
-    var box = document.querySelector(".hb-progress");
+    // Only the progress page carries data-total; part pages have a static bar.
+    var box = document.querySelector(".hb-progress[data-total]");
     if (!box) return;
     var state = load();
     var items = document.querySelectorAll(".md-typeset .task-list-item");

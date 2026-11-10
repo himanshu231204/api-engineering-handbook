@@ -147,7 +147,7 @@ with mkdocs_gen_files.open("diagrams/index.md", "w") as f:
         f.write(f"- [{title}]({dest.removeprefix('diagrams/')})\n")
 
 # ---------------------------------------------------------------- progress tracker
-total = sum(len(ch) for *_, ch in PARTS)
+total = sum(len(ch) for number, _, _, ch in PARTS if number != 20)
 with mkdocs_gen_files.open("progress.md", "w") as f:
     f.write("# Progress Tracker\n\n")
     f.write(
