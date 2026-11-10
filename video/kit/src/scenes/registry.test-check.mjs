@@ -30,6 +30,10 @@ if (!existsSync(registryPath)) {
 }
 
 const stepsDir = path.join(kit, "diagram_steps");
+// Diagrams used by produced videos must have a step sidecar.
+for (const stem of ["01-dns-resolution"]) {
+  if (!existsSync(path.join(stepsDir, `${stem}.json`))) problems.push(`missing diagram_steps/${stem}.json`);
+}
 if (existsSync(stepsDir)) {
   for (const file of readdirSync(stepsDir).filter((f) => f.endsWith(".json"))) {
     const data = JSON.parse(readFileSync(path.join(stepsDir, file), "utf8"));

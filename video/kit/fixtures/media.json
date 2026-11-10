@@ -1,0 +1,12 @@
+{"timeline": {"fps": 30, "width": 1920, "height": 1080, "title": "DNS", "part": 1, "index": 5, "totalFrames": 720,
+ "beats": [
+  {"name": "How It Works", "startFrame": 0, "frames": 420, "audio": null,
+   "cues": [{"scene": "DiagramWalk", "args": {"svg": "01-dns-resolution.svg", "steps": "1-7"}, "startFrame": 0, "frames": 420}],
+   "captions": [{"startFrame": 0, "endFrame": 420, "text": "The resolver asks root, then TLD, then authoritative."}]},
+  {"name": "Demo", "startFrame": 420, "frames": 150, "audio": null,
+   "cues": [{"scene": "Terminal", "args": {"title": "dig", "lines": "$ dig api.example.com|api.example.com.  300  IN  A  93.184.216.34"}, "startFrame": 420, "frames": 150}],
+   "captions": []},
+  {"name": "Demo", "startFrame": 570, "frames": 150, "audio": null,
+   "cues": [{"scene": "CodeReveal", "args": {"lang": "python", "lines": "import socket|# resolve a name|ip = socket.gethostbyname(name)"}, "startFrame": 570, "frames": 150}],
+   "captions": []}
+ ]}}

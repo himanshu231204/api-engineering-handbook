@@ -1,0 +1,13 @@
+{
+  "width": 880,
+  "height": 500,
+  "steps": [
+    { "n": 1, "label": "Your device checks its own cache", "x": 26, "y": 164, "w": 188, "h": 122 },
+    { "n": 2, "label": "It asks the resolver", "x": 200, "y": 164, "w": 276, "h": 122 },
+    { "n": 3, "label": "The resolver asks a root server", "x": 464, "y": 90, "w": 390, "h": 110 },
+    { "n": 4, "label": "Then the .com TLD server", "x": 464, "y": 180, "w": 390, "h": 82 },
+    { "n": 5, "label": "Then the authoritative nameserver", "x": 464, "y": 248, "w": 390, "h": 104 },
+    { "n": 6, "label": "The IP address comes back", "x": 200, "y": 232, "w": 108, "h": 58 },
+    { "n": 7, "label": "Every answer is cached for its TTL", "x": 26, "y": 366, "w": 828, "h": 106 }
+  ]
+}
