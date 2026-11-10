@@ -20,7 +20,7 @@ import sys
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 CODE_FENCE_RE = re.compile(r"```.*?```", re.S)
 INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
-SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", ".cache"}
+SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv"}
 
 
 def find_markdown_files(root: str) -> list[str]:
