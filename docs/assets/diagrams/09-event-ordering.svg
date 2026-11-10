@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Per-entity version check for out-of-order events</title>
+  <desc id="d">A producer sends versions v1, v2, v3 for one entity, but the network delivers v1, v3, v2 and then a duplicate v2. The consumer compares each event version with the entity current version. v1 equals current plus 1 so it is applied, current becomes 1. v3 is greater than current plus 1 so it is buffered. v2 is applied and then the buffered v3 is drained, current becomes 3. The second v2 is not above current so it is dropped as stale.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Out-of-order events: check the version, then decide</text>
+  <text x="32" y="66" class="sub">One entity (order ord_7). The consumer remembers the last version it applied.</text>
+  <text x="32" y="106" class="lbl" fill="#475569">Sent</text>
+  <rect x="120" y="86" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="148" y="106" text-anchor="middle" class="code">v1</text>
+  <rect x="186" y="86" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="214" y="106" text-anchor="middle" class="code">v2</text>
+  <rect x="252" y="86" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="280" y="106" text-anchor="middle" class="code">v3</text>
+  <text x="340" y="106" class="note">producer numbers events per entity, no gaps</text>
+  <text x="32" y="152" class="lbl" fill="#475569">Arrives</text>
+  <rect x="120" y="132" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="148" y="152" text-anchor="middle" class="code">v1</text>
+  <rect x="186" y="132" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="214" y="152" text-anchor="middle" class="code">v3</text>
+  <rect x="252" y="132" width="56" height="30" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="280" y="152" text-anchor="middle" class="code">v2</text>
+  <rect x="318" y="132" width="56" height="30" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/><text x="346" y="152" text-anchor="middle" class="code">v2</text>
+  <text x="400" y="152" class="note">network swapped v2 and v3, then a retry repeated v2</text>
+  <rect x="32" y="196" width="192" height="168" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <circle cx="56" cy="222" r="12" fill="#1c7c54"/><text x="56" y="226" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="227" class="lbl" fill="#111827">v1 arrives</text>
+  <text x="48" y="262" class="note">current version: 0</text>
+  <rect x="48" y="276" width="160" height="34" rx="17" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/><text x="128" y="298" text-anchor="middle" class="lbl" fill="#1c7c54">apply</text>
+  <text x="48" y="338" class="note">current becomes 1</text>
+  <rect x="240" y="196" width="192" height="168" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <circle cx="264" cy="222" r="12" fill="#1c7c54"/><text x="264" y="226" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="286" y="227" class="lbl" fill="#111827">v3 arrives</text>
+  <text x="256" y="262" class="note">current version: 1</text>
+  <rect x="256" y="276" width="160" height="34" rx="17" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="336" y="298" text-anchor="middle" class="lbl" fill="#b45309">buffer v3 (gap)</text>
+  <text x="256" y="338" class="note">current stays 1</text>
+  <rect x="448" y="196" width="192" height="168" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <circle cx="472" cy="222" r="12" fill="#1c7c54"/><text x="472" y="226" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="494" y="227" class="lbl" fill="#111827">v2 arrives</text>
+  <text x="464" y="262" class="note">current version: 1</text>
+  <rect x="464" y="276" width="160" height="34" rx="17" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/><text x="544" y="298" text-anchor="middle" class="lbl" fill="#1c7c54">apply, drain v3</text>
+  <text x="464" y="338" class="note">current becomes 3</text>
+  <rect x="656" y="196" width="192" height="168" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <circle cx="680" cy="222" r="12" fill="#1c7c54"/><text x="680" y="226" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="702" y="227" class="lbl" fill="#111827">v2 arrives again</text>
+  <text x="672" y="262" class="note">current version: 3</text>
+  <rect x="672" y="276" width="160" height="34" rx="17" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/><text x="752" y="298" text-anchor="middle" class="lbl" fill="#b91c1c">drop (stale)</text>
+  <text x="672" y="338" class="note">current stays 3</text>
+  <rect x="32" y="388" width="816" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="412" class="lbl" fill="#475569">Rule per entity</text>
+  <text x="48" y="432" class="note">version = current + 1: apply and drain buffer   ·   version above current + 1: buffer   ·   version at or below current: drop</text>
+</svg>

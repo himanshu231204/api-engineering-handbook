@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">Long polling versus short polling timeline</title>
+  <desc id="d">Timeline of 30 seconds. An event happens at 12 seconds. A short-polling client asking every 10 seconds only learns about it at its 20 second request, 8 seconds late. A long-polling client has a request held open since 0 seconds; the server answers the moment event 42 arrives at 12 seconds, and the client immediately re-polls with after equals 42 and is held again.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Long polling: the request waits for the event</text>
+  <text x="32" y="66" class="sub">Same 30 seconds, same event at t = 12 s. Short polling learns late; long polling learns at once.</text>
+  <line x1="120" y1="98" x2="840" y2="98" stroke="#475569" stroke-width="1.5"/>
+  <line x1="120" y1="92" x2="120" y2="104" stroke="#475569" stroke-width="1.5"/><text x="120" y="86" text-anchor="middle" class="note">0 s</text>
+  <line x1="360" y1="92" x2="360" y2="104" stroke="#475569" stroke-width="1.5"/><text x="360" y="86" text-anchor="middle" class="note">10 s</text>
+  <line x1="600" y1="92" x2="600" y2="104" stroke="#475569" stroke-width="1.5"/><text x="600" y="86" text-anchor="middle" class="note">20 s</text>
+  <line x1="840" y1="92" x2="840" y2="104" stroke="#475569" stroke-width="1.5"/><text x="840" y="86" text-anchor="middle" class="note">30 s</text>
+  <line x1="408" y1="108" x2="408" y2="330" stroke="#b45309" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <rect x="318" y="108" width="180" height="24" rx="12" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="408" y="125" text-anchor="middle" class="lbl" fill="#b45309">event 42 happens</text>
+  <rect x="32" y="144" width="816" height="96" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="168" class="lbl" fill="#2563eb">Short polling (every 10 s)</text>
+  <circle cx="120" cy="186" r="8" fill="#2563eb"/>
+  <text x="120" y="212" text-anchor="middle" class="note">empty</text>
+  <circle cx="360" cy="186" r="8" fill="#2563eb"/>
+  <text x="360" y="212" text-anchor="middle" class="note">empty</text>
+  <circle cx="600" cy="186" r="8" fill="#1c7c54"/>
+  <text x="600" y="212" text-anchor="middle" class="note">gets 42</text>
+  <circle cx="840" cy="186" r="8" fill="#2563eb"/>
+  <line x1="408" y1="226" x2="600" y2="226" stroke="#b91c1c" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="504" y="220" text-anchor="middle" class="lbl" fill="#b91c1c">8 s late</text>
+  <rect x="32" y="248" width="816" height="108" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="268" class="lbl" fill="#1c7c54">Long polling (held until news)</text>
+  <rect x="120" y="278" width="288" height="34" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/><text x="132" y="300" class="code">GET after=41 (held)</text>
+  <rect x="408" y="278" width="432" height="34" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="420" y="300" class="code">GET after=42 (held again)</text>
+  <circle cx="408" cy="295" r="6" fill="#b45309"/>
+  <text x="418" y="338" class="lbl" fill="#1c7c54">answered at 12 s: delay about one round trip</text>
+  <line x1="408" y1="316" x2="408" y2="326" stroke="#1c7c54" stroke-width="1.75"/>
+  <text x="32" y="394" class="h">Step by step</text>
+  <rect x="32" y="408" width="252" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="54" cy="434" r="12" fill="#1c7c54"/><text x="54" y="438" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="76" y="430" class="lbl" fill="#475569">Request held</text><text x="76" y="448" class="note">server parks it, no empty reply</text>
+  <line x1="284" y1="434" x2="314" y2="434" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="314" y="408" width="252" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="336" cy="434" r="12" fill="#1c7c54"/><text x="336" y="438" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="358" y="430" class="lbl" fill="#475569">Event arrives</text><text x="358" y="448" class="note">server answers with seq 42</text>
+  <line x1="566" y1="434" x2="596" y2="434" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="596" y="408" width="252" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="618" cy="434" r="12" fill="#1c7c54"/><text x="618" y="438" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="640" y="430" class="lbl" fill="#475569">Client re-polls</text><text x="640" y="448" class="note">sends after=42, nothing is lost</text>
+</svg>
