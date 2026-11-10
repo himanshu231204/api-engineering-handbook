@@ -23,18 +23,25 @@ FENCE_CASES = [
     ("unclosed tilde fence", "~~~\nx\n", True),
     ("tilde marker does not close a backtick fence", "```\nx\n~~~\n", True),
     ("indented opener left unclosed", " ```py\nx\n", True),
+    ("tab-indented literal marker inside a top-level fence", "```py\n\t```\n```\n", False),
 ]
 
 
 class FenceParser(unittest.TestCase):
+    """Table-driven cases for has_unclosed_fence."""
+
     def test_cases(self):
+        """Each case must report unclosed or balanced exactly as listed in FENCE_CASES."""
         for name, text, unclosed in FENCE_CASES:
             with self.subTest(name):
                 self.assertIs(cc.has_unclosed_fence(text), unclosed)
 
 
 class QuizCheck(unittest.TestCase):
+    """The quiz must be judged by its own section only."""
+
     def check(self, text: str) -> list[str]:
+        """Write text as a chapter in a temp part directory and return its errors."""
         d = Path(tempfile.mkdtemp()) / "06-x"
         d.mkdir()
         path = d / "c.md"
@@ -42,6 +49,7 @@ class QuizCheck(unittest.TestCase):
         return cc.check(path)[0]
 
     def test_details_elsewhere_do_not_count_as_a_quiz(self):
+        """Three <details> blocks before the heading must not satisfy the quiz check."""
         three = "".join(f'<details markdown="1">\n<summary>{i}. q</summary>\n\na\n\n</details>\n\n' for i in (1, 2, 3))
         text = "# T\n\n> [!TIP]\n> **In one line:** x\n>\n> **In plain English:** y\n>\n> **You'll be able to:** z\n\n" + three + "### Check Yourself\n\nnothing\n"
         self.assertTrue(any("Check Yourself" in e for e in self.check(text)))

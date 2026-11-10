@@ -226,10 +226,12 @@ async def approve(expense_id: int, subject: dict = Depends(current_subject)):
     return {"status": "approved", "expense_id": expense_id}
 ```
 
-Test the deny rules directly, since the engine is a pure function (pytest style; run it next to the module above):
+Test the deny rules directly, since the engine is a pure function (pytest style). Save the module above as `abac_example.py` and put this file next to it:
 
 ```python
 from datetime import datetime, timezone
+
+from abac_example import DecisionRequest, engine  # the module defined above
 
 NOW = datetime(2026, 11, 10, 10, 0, tzinfo=timezone.utc)  # a Tuesday, inside business hours
 APPROVER = {"id": "u_42", "tenant_id": "acme", "roles": [], "department": "eng", "approval_limit": 5000}

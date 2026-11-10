@@ -47,7 +47,8 @@ def has_unclosed_fence(text: str) -> bool:
         if not m:
             continue
         marker, rest = m.group(1), m.group(2)
-        indent = len(line) - len(line.lstrip())
+        expanded = line.expandtabs(4)  # CommonMark counts a tab as advancing to the next 4-column stop
+        indent = len(expanded) - len(expanded.lstrip())
         if opener is None:
             if marker[0] == "`" and "`" in rest:
                 continue  # an info string cannot contain a backtick, so this is inline code
