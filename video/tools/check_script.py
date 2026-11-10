@@ -75,6 +75,7 @@ def check_script(path: Path, repo_root: Path) -> list[str]:
     if not 300 <= seconds <= 600:
         err(f"estimated length {seconds:.0f}s is outside 300-600s")
 
+    corpus = chapter_text + "\n" + _read_texts(repo_root / "examples")
     kit = repo_root / "video" / "kit"
     scene_names = set(json.loads((kit / "scene_names.json").read_text(encoding="utf-8")))
     diagrams = repo_root / "docs" / "assets" / "diagrams"
@@ -83,6 +84,11 @@ def check_script(path: Path, repo_root: Path) -> list[str]:
             if cue.scene not in scene_names:
                 err(f"unknown scene '{cue.scene}'", cue.line)
                 continue
+            if cue.scene in ("Terminal", "CodeReveal"):
+                for segment in cue.args.get("lines", "").split("|"):
+                    code = segment.strip()
+                    if code and code not in corpus:
+                        err(f"{cue.scene} line not found in chapter or examples: '{code}'", cue.line)
             if cue.scene != "DiagramWalk":
                 continue
             svg = cue.args.get("svg")
@@ -106,7 +112,6 @@ def check_script(path: Path, repo_root: Path) -> list[str]:
             if hi > count or int(match.group(1)) < 1:
                 err(f"steps {steps} exceed the {count} steps defined for '{svg}'", cue.line)
 
-    corpus = chapter_text + "\n" + _read_texts(repo_root / "examples")
     for beat in script.beats:
         if beat.name != "Demo":
             continue

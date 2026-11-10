@@ -115,6 +115,15 @@ class CheckScriptTests(Base):
         body = filler(110) + "\n```python\nsocket.gethostbyname(name)\n```\n"
         self.assertEqual(self.run_check(build(bodies={"Demo": body})), [])
 
+    def test_terminal_cue_lines_not_in_chapter_fails(self):
+        body = filler(110) + '\n[scene: Terminal lines="dig example.com|made up output 1.2.3.4"]\n'
+        errs = self.run_check(build(bodies={"Demo": body}))
+        self.assertTrue(any("made up output" in e for e in errs), errs)
+
+    def test_terminal_cue_lines_from_chapter_pass(self):
+        body = filler(110) + '\n[scene: Terminal lines="dig example.com"]\n[scene: CodeReveal lang=python lines="socket.gethostbyname(name)"]\n'
+        self.assertEqual(self.run_check(build(bodies={"Demo": body})), [])
+
     def test_todo_placeholder_fails(self):
         errs = self.run_check(build(bodies={"Hook": filler(110) + " TODO fix"}))
         self.assertTrue(any("TODO" in e for e in errs), errs)
