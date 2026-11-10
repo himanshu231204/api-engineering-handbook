@@ -1,5 +1,12 @@
 # Function Calling
 
+> [!TIP]
+> **In one line:** With function calling the model only requests a function and its arguments; your application validates, authorizes and decides whether to actually execute it.
+>
+> **In plain English:** You show the model a list of things your app can do, and it can answer 'please run this one with these inputs' instead of writing text. It never presses the button itself — like a diner pointing at a menu item while the kitchen decides whether to cook it.
+>
+> **You'll be able to:** Describe functions with names, descriptions and JSON Schema parameters · Treat a model's function-call request as untrusted input to validate and authorize · Scope the function menu per user role to cut cost and risk
+
 ## Why This Matters
 
 Structured output (previous two chapters) solves "get the model to produce data in a shape I can use." **Function calling** solves a related but distinct problem: "let the model decide, based on the conversation, *which* capability to invoke and with *what* arguments" — without you hardcoding that decision in your application logic. This is the mechanism that turns an LLM from "a thing that writes text" into "a thing that can look up a customer's order, check today's weather, query a database, or trigger a workflow," and it's the conceptual foundation for everything in [Tool Calling](tool-calling.md) and agentic systems in [Part 17](../17-ai-agents-and-mcp/README.md). Understanding it precisely — including the terminology confusion around "function calling" vs. "tool calling" — matters because getting the mental model wrong leads to either over-trusting the model's decisions (executing whatever it "calls" without validation) or under-using the capability (hardcoding logic that the model could have handled more flexibly).
@@ -202,3 +209,26 @@ Function calling is the mechanism by which an LLM stops being a text generator a
 - Every function-call request is untrusted input: validate arguments against a schema and enforce authorization before executing anything, regardless of how the request was generated.
 - Function menus cost tokens on every call and should be scoped to what's actually relevant and permitted for the current context.
 - This mechanism is the atomic building block of agent loops (Part 17) and agentic retrieval patterns (Part 16) — understanding it precisely here pays off directly in both.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Does the model execute the function when it 'calls' one?</summary>
+
+No. It only returns a structured request — the function name plus JSON arguments. Your application code decides whether to run it and then feeds the result back.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must you re-check authorization even though the model chose to call the function?</summary>
+
+The model knows nothing about your authorization rules, and its output can be steered by user or injected content. A function-call request is untrusted input, so the model's decision grants no extra trust.
+
+</details>
+
+<details markdown="1">
+<summary>3. A guest user's conversation includes an admin-only delete_account function in the menu, and the model requests it. What design mistakes allowed this and how do you prevent it?</summary>
+
+The menu was global instead of scoped per role, and execution relied on the model's choice. Send only the functions the caller is permitted to use, and still enforce authorization server-side before executing any call.
+
+</details>

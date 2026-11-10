@@ -1,5 +1,12 @@
 # Streaming LLM Responses
 
+> [!TIP]
+> **In one line:** Streaming sends tokens over SSE as they are generated, slashing time-to-first-token without changing total time or cost — but structured output must be buffered until complete.
+>
+> **In plain English:** Instead of waiting for the whole answer and sending it in one go, the server passes each small piece along the moment the model writes it. It is like watching a live sports score update instead of reading the final result in tomorrow's paper — the game takes just as long either way.
+>
+> **You'll be able to:** Relay a provider's SSE stream through a FastAPI endpoint · Buffer tool-call argument fragments and parse once at completion · Avoid proxy buffering, handle disconnects, and take usage from the final event
+
 ## Why This Matters
 
 You already established in [LLM APIs](llm-apis.md) that generation latency scales with output length, because tokens are produced one at a time, autoregressively. A non-streamed response to a 500-token answer means your user (or your downstream service) waits for the *entire* generation to finish before seeing a single character — potentially many seconds of a blank loading spinner. **Streaming** exposes those tokens as they're generated, instead of buffering the whole response server-side and delivering it in one shot. This isn't a cosmetic UX nicety — it's often the difference between a chat product that feels responsive and one that feels broken, and it introduces real engineering complexity: partial JSON that isn't yet parseable, partial tool-call arguments, connection handling, and backpressure, all of which this chapter covers concretely.
@@ -48,6 +55,8 @@ sequenceDiagram
     API-->>Browser: data: {"type": "done", "usage": {...}}
     API-->>Browser: (close connection)
 ```
+
+![Time axis comparing a non-streaming response that arrives all at once with streamed SSE chunks that start almost immediately](../assets/diagrams/14-streaming-tokens.svg)
 
 Your backend here acts as a **relay**, translating the provider's stream into your own SSE event format for the browser — this indirection is deliberate: it lets you normalize event shapes across providers, inject your own events (progress updates during a tool-calling loop, for instance), and avoid exposing raw provider payloads (and API keys) directly to the client.
 
@@ -212,3 +221,26 @@ Streaming interacts with nearly every other chapter in this part: with [Tool Cal
 - Infrastructure (reverse proxies, load balancers) can silently buffer streaming responses unless explicitly configured not to — verify streaming works end-to-end in your real deployment, not just locally.
 - Handle client disconnects by cancelling the upstream provider call, and use the terminal event's authoritative usage data for billing.
 - Streaming is foundational UX infrastructure for agent loops and RAG systems in Parts 16–17, where multi-step latency makes responsive, incremental feedback especially important.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which latency does streaming improve, and which does it leave unchanged?</summary>
+
+It sharply lowers first-token latency — the time until the user sees anything. Total completion latency and token cost stay the same, because the model generates at the same speed either way.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you call json.loads on each streamed chunk of a tool call's arguments?</summary>
+
+It fails on every chunk except the last, because the arguments arrive as fragments of one JSON string that is only valid once complete. Buffer all fragments and parse and validate once, when the 'tool call complete' event arrives.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your streaming endpoint works locally, but in production users still see the whole answer appear at once. What is the likely cause?</summary>
+
+A reverse proxy, load balancer or CDN is buffering the SSE response. Disable buffering at every layer (for example X-Accel-Buffering: no for nginx) and verify streaming end-to-end in the real deployment topology.
+
+</details>

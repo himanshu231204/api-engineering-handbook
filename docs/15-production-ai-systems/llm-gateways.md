@@ -1,5 +1,12 @@
 # LLM Gateways
 
+> [!TIP]
+> **In one line:** An LLM gateway is one internal API every service calls instead of providers directly, centralizing auth, routing, fallback, limits, caching, cost and logging.
+>
+> **In plain English:** Rather than every team wiring up its own connection to an AI provider, all requests go through one shared front door. That door handles keys, retries, budgets and records — like an airport's single check-in and security area that checks every passenger, sends them to the right gate, and logs who flew where.
+>
+> **You'll be able to:** Explain what a gateway centralizes and why it pays off · Design a normalized, provider-agnostic generate request and response · Run the gateway as a tier-0 service with internal auth and streaming support
+
 ## Why This Matters
 
 The first time a team ships one feature that calls an LLM provider directly from application code, it works fine. The second and third features do the same thing, each with their own copy-pasted API key handling, retry logic, and error parsing. By the fifth feature, nobody can answer basic questions that matter to the business: how much did we spend on AI last month? Which team is burning the budget? What happens when the provider has an outage? Is anyone logging prompts for debugging, or did that only happen in the one service the original author still maintains?
@@ -235,3 +242,26 @@ In a RAG pipeline (see [Part 16 — RAG APIs](../16-rag-apis/README.md)), the ga
 - It centralizes abstraction, routing, resilience, rate/token limiting, cost accounting, caching, and observability — problems that are expensive to solve correctly once but disastrous to solve inconsistently across many services.
 - The gateway becomes a critical-path, tier-0 service and must be engineered (and monitored) accordingly.
 - Every other chapter in this part is a component that plugs into the gateway described here.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Name at least four responsibilities an LLM gateway centralizes.</summary>
+
+Provider abstraction, routing, resilience (retries and fallback), rate and token limiting, cost accounting, caching, and observability. Solving them once in one place avoids N inconsistent copies across services.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should callers request a capability tier like 'balanced' rather than a raw model name?</summary>
+
+A tier decouples callers from specific models, so the gateway can change routing, swap providers or adopt a new model without every caller redeploying. Raw model names couple business code to vendor details.
+
+</details>
+
+<details markdown="1">
+<summary>3. A team argues the gateway needs no authentication because it is only reachable inside the network. What is the risk?</summary>
+
+'Internal-only' is a network assumption, not a security control. A compromised or misbehaving internal service could exhaust your provider spend or read others' traffic, so the gateway must authenticate callers with service-to-service auth.
+
+</details>

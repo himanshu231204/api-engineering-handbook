@@ -1,5 +1,12 @@
 # Vector Database APIs
 
+> [!TIP]
+> **In one line:** A vector database stores embeddings with metadata and finds the nearest ones fast using approximate indexes like HNSW, via upsert, query and delete.
+>
+> **In plain English:** Comparing a question against every one of millions of stored vectors would be far too slow. A vector database builds a shortcut map so it jumps straight to the right neighborhood, accepting that it may occasionally miss the single best match. It is like a dating app suggesting good matches near you instead of checking every person on Earth.
+>
+> **You'll be able to:** Explain why approximate nearest-neighbor search trades a little recall for big speed · Use upsert, top-k query with metadata filters, and delete-by-document · Isolate tenants with namespaces and avoid stale or orphaned vectors
+
 ## Why This Matters
 
 Once you have embeddings (see [Embedding APIs](embedding-apis.md)) for millions of chunks, you face a problem a regular relational database was never built to solve efficiently: "find the K vectors closest to this query vector" across millions of high-dimensional points, in milliseconds, repeatedly, under load. A naive approach — compute cosine similarity between the query and *every* stored vector, then sort — is `O(n)` per query and becomes untenable well before you reach a million vectors. Vector databases exist specifically to make this operation fast at scale using approximate nearest-neighbor indexing, and understanding what they provide beyond "a table with a vector column" is essential to designing a RAG system that stays fast as your document corpus grows from thousands to millions of chunks.
@@ -239,6 +246,29 @@ The vector database's `top_k` and filter parameters are effectively parameters a
 - HNSW-style indexes navigate a multi-layer graph to narrow toward nearest neighbors in roughly logarithmic time, trading a small amount of recall for large speed gains.
 - The core API surface — upsert, query, delete — is consistent across vendors; abstract it behind an interface for portability.
 - Index build lag, deletion hygiene, and tenant isolation are the operational details that separate a working demo from a safe production system.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three core operations nearly every vector database API exposes?</summary>
+
+Upsert (insert or update a vector with its ID and metadata), query (find the top-K nearest vectors, optionally filtered by metadata), and delete (remove vectors by ID or by a metadata filter).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why do vector databases use approximate rather than exact nearest-neighbor search?</summary>
+
+Exact search compares the query against every stored vector, which is O(n) and too slow at millions of vectors. Indexes like HNSW navigate a layered graph in roughly logarithmic time, occasionally missing the true best match in exchange for orders-of-magnitude speed.
+
+</details>
+
+<details markdown="1">
+<summary>3. A customer updates a document and now search returns both the old and new versions of a policy. What did your pipeline forget?</summary>
+
+To delete the old chunk vectors (for example, delete by `document_id` filter) before or while upserting the reprocessed ones. Orphaned vectors keep surfacing in retrieval indefinitely, so deletion hygiene is part of every update path.
+
+</details>
 
 ---
 **Previous**: [Embedding APIs](embedding-apis.md) · **Next**: [Retrieval](retrieval.md)

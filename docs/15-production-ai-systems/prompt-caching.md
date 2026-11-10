@@ -1,5 +1,12 @@
 # Prompt Caching
 
+> [!TIP]
+> **In one line:** Prompt caching lets the provider reuse work on an identical prompt prefix for a short time, cutting cost and latency — if stable content comes first and never changes byte-for-byte.
+>
+> **In plain English:** Many requests start with the same long instructions or document, and the provider can remember the work it already did on that opening part. It is like a print shop that keeps the same letterhead plate on the press and only sets a fresh address line for each letter — change the letterhead and it starts over.
+>
+> **You'll be able to:** Structure prompts as stable prefix then variable suffix · Spot hidden cache-breakers like timestamps and request IDs · Track cache-hit ratio and price cached tokens correctly
+
 ## Why This Matters
 
 Many production LLM prompts repeat a large, unchanging block of context on every single call: a long system prompt, a set of few-shot examples, a large document being repeatedly questioned, or an entire tool/API schema definition. Without caching, the provider re-processes that entire unchanging prefix from scratch on every request — paying (and charging you) full price and full latency for work that produced an identical result last time and the time before that. Prompt caching is a provider-level feature that recognizes a repeated prefix and skips re-processing it, cutting both cost and latency for exactly this common pattern.
@@ -173,3 +180,26 @@ RAG pipelines (see [Part 16 — RAG APIs](../16-rag-apis/README.md)) are close t
 - It requires strict prefix stability — stable content first, variable content last, byte-for-byte identical across calls — or the cache never hits.
 - Caches are short-TTL performance optimizations for near-term repeated traffic, not a durable store — that's what [Semantic Caching](semantic-caching.md) is for.
 - Cache-hit ratio should be tracked as a first-class metric and reflected accurately in cost calculations.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What three constraints shape whether a prompt-cache hit happens?</summary>
+
+The cached part must be a prefix at the start of the input, it must be byte-for-byte identical across calls, and the repeat must arrive within the provider's short TTL (commonly minutes).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does prepending a request ID to the system prompt destroy caching even though it looks harmless?</summary>
+
+It makes the prefix unique on every call, so no two requests share an identical prefix and the hit rate drops to zero. Per-request data belongs in the variable suffix at the end.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your support bot sends an 8,000-token knowledge base on every request, but the usage field always shows cached_input_tokens of 0. What should you check?</summary>
+
+Check that the stable content comes first and is built identically every time — no timestamps, IDs, reordered keys or formatting changes — and whether this provider needs explicit cache breakpoints. Also check traffic timing: requests spaced farther apart than the TTL will never hit.
+
+</details>

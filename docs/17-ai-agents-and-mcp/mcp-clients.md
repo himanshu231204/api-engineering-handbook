@@ -1,5 +1,12 @@
 # MCP Clients
 
+> [!TIP]
+> **In one line:** An MCP client lives inside the host, holds one server connection, discovers that server's tools at runtime, and routes the model's tool calls to it.
+>
+> **In plain English:** The client is the go-between that connects an AI app to one MCP server. When it connects, it asks the server what it offers and hands that list to the model as ordinary tools, so nobody has to hardcode them. It is like a phone that asks a new Bluetooth speaker what it supports when they pair, rather than shipping with every speaker pre-programmed.
+>
+> **You'll be able to:** Walk through connect, initialize, discover, translate and invoke · Cache discovery and refresh it on listChanged notifications · Namespace tools, time out calls and isolate failures across multiple servers
+
 ## Why This Matters
 
 An MCP server ([MCP Servers](mcp-servers.md)) is useless on its own — something has to connect to it, discover what it offers, and translate the model's intentions into protocol calls. That's the client's job. Understanding the client side matters even if you never build one yourself (most engineers will consume MCP servers through an existing host application rather than writing a client from scratch), because it clarifies exactly how a model "decides" to use a tool it has never seen before, at runtime, without anyone hardcoding that tool into the application.
@@ -196,3 +203,26 @@ The client is what turns "a server exists" into "the model can actually use it,"
 - The host's agent loop treats MCP-backed tools identically to natively-implemented ones — the dispatch just routes through a client/session instead of a local function.
 - Cache discovery, isolate per-server failures, namespace tool names across multiple servers, and apply client-side timeouts.
 - MCP shifts "what tools does this agent have" from a code-time decision to a connection-time, configurable one.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How many MCP clients does a host run when it connects to a filesystem server, a Postgres server and a Slack server?</summary>
+
+Three. Each client owns exactly one server connection and session, so a host runs one client per connected server.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a client cache tools/list results, and when must it refresh them?</summary>
+
+Re-running discovery on every agent-loop iteration adds needless latency, so results are cached. The client must refresh when the server sends a `listChanged` notification or after a reconnect, since the available tools may have changed.
+
+</details>
+
+<details markdown="1">
+<summary>3. Two connected servers both expose a tool called "search," and the model keeps hitting the wrong one. How should the host fix this?</summary>
+
+Namespace tools by server before presenting them to the model (for example `wiki.search` vs `github.search`). This removes the collision and also records which server handled each call for logging and trust decisions.
+
+</details>

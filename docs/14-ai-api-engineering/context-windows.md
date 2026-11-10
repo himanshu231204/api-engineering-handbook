@@ -1,5 +1,12 @@
 # Context Windows
 
+> [!TIP]
+> **In one line:** The context window is one fixed token budget shared by input and output — reserve room for the answer, manage the rest, and always check the stop reason.
+>
+> **In plain English:** Everything you send plus everything the model writes back must fit in a fixed number of tokens. It is like a suitcase with a weight limit: if your packed clothes use it all, there is no room for the souvenirs you planned to bring home.
+>
+> **You'll be able to:** Compute an input budget as context window minus max_tokens minus a margin · Choose between truncation, sliding window, summarization and retrieval memory · Detect silently cut-off answers via stop_reason
+
 ## Why This Matters
 
 Every LLM has a hard limit on how many tokens it can process in a single call — the **context window**. Unlike a REST API where sending "too much data" usually just means a slower response, exceeding an LLM's context window is a hard failure: the request is rejected, or in some architectures, silently truncated in ways you don't control. As conversations grow, as you inject retrieved documents (RAG), or as agent loops accumulate tool-call history, you will eventually hit this ceiling — often in production, under exactly the workloads that matter most (your power users, your longest sessions). Understanding context windows as a *budget you manage*, not a limit you occasionally bump into, is essential to building anything beyond a single-turn chatbot.
@@ -42,6 +49,8 @@ flowchart TB
     end
     SYS --- TOOLS --- HIST --- RET --- OUT
 ```
+
+![A fixed context window bar filled by system prompt, tool schemas, history, retrieved documents, user message and reserved output, with overflow and the fix of trimming history](../assets/diagrams/14-context-window.svg)
 
 The engineering task is allocating this fixed-size budget across competing consumers — system prompt and tool schemas are usually near-fixed cost, `max_tokens` for output must be reserved up front, and history/retrieved content are the variable pieces you actively manage.
 
@@ -190,3 +199,26 @@ Context window management is the central design constraint of [RAG APIs](../16-r
 - Truncation, sliding windows, summarization, and retrieval-based memory are the four main strategies for managing growing conversations within a fixed window.
 - Always check the stop reason on every response — an HTTP 200 does not guarantee a complete answer.
 - Context budgeting is the foundational constraint behind RAG chunking/retrieval design and agent memory strategies in Parts 16–17.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Is the context window a limit on input only, on output only, or on both?</summary>
+
+Both — it is a single shared budget. If input uses almost all of it, there is little room left for output no matter what max_tokens you request.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is a 200 OK response with stop_reason max_tokens more dangerous than a 400 error?</summary>
+
+A 400 is loud and obvious, but a 200 with a cut-off answer looks like success at the HTTP level. Unless your code checks the stop reason, you will ship incomplete answers to users as if they were final.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your support bot works in demos but fails for power users after long sessions, and it keeps re-asking for their account ID. What is happening and what should you change?</summary>
+
+The ever-growing history crossed the context budget, and naive truncation dropped the oldest message where the account ID lived. Enforce a token budget before each call, use summarization or a sliding window, and pin critical facts in a memory block near the system prompt so they survive pruning.
+
+</details>

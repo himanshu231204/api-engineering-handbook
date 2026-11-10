@@ -1,5 +1,12 @@
 # Async Document Processing
 
+> [!TIP]
+> **In one line:** Process documents as a queue-driven pipeline of separate, idempotent, retryable stages (parse, chunk, embed, index) so failures resume instead of starting over.
+>
+> **In plain English:** Turning a big PDF into searchable chunks is many steps, and any one of them can fail. Instead of one giant function, each step is its own job in a queue, and each can be retried safely without creating duplicates. It is like a relay race: if one runner stumbles, only that leg is rerun, not the whole race from the starting line.
+>
+> **You'll be able to:** Decompose ingestion into stages connected by queue messages · Make reprocessing safe with deterministic chunk IDs (document_id + chunk_index) · Fan out large documents, back off on retries, and alert on dead-letter queues
+
 ## Why This Matters
 
 Every stage between "file uploaded" and "chunk is queryable" — parsing, chunking, embedding, indexing (see [Chunking Pipelines](chunking-pipelines.md), [Embedding APIs](embedding-apis.md), [Vector Database APIs](vector-database-apis.md)) — can take anywhere from milliseconds (a short text file) to many minutes (a 500-page scanned PDF requiring OCR, split into hundreds of chunks, each needing an embedding API call). None of that belongs inside an HTTP request/response cycle, as established in [Document Ingestion APIs](document-ingestion-apis.md). But saying "do it asynchronously" is the easy part — the hard part is building that async pipeline so it survives worker crashes, handles documents ten times larger than you tested with, retries transient failures without duplicating work, and can be safely re-run when you change your chunking or embedding strategy. This is where RAG ingestion becomes a genuine distributed systems problem, not just a background thread.
@@ -212,6 +219,29 @@ The reliability of async document processing directly gates what an [AI agent](.
 - Idempotency — deterministic chunk/vector IDs — is what makes retries and reprocessing safe rather than duplicative.
 - Large documents need to fan out into many bounded-size jobs; track progress at the chunk-batch level to support partial resume after failure.
 - Dead-letter queues with alerting, and rate-limited backoff on retries, are what keep a struggling downstream dependency from becoming a cascading outage.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How does deterministic chunk ID generation make reprocessing safe?</summary>
+
+IDs derived from `document_id + chunk_index` come out the same every time a document is re-chunked, so upserting into the vector database overwrites existing vectors instead of adding duplicates. Random IDs per attempt would pile up duplicates on every retry.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if a job keeps failing and there is no dead-letter queue or alert?</summary>
+
+It either retries forever, hammering a struggling dependency, or the document sits silently "processing" with nobody aware. Exhausted retries should go to a dead-letter queue that is wired to alerting, because a stuck document is a customer-visible failure.
+
+</details>
+
+<details markdown="1">
+<summary>3. A 1,000-chunk document fails while embedding chunk 900, and your worker restarts the whole document from parsing. What should the design be instead?</summary>
+
+Fan out embedding into many bounded batches (for example 50-100 chunks each) and track progress at the batch level (`chunks_embedded`). Only the failed batch is retried, saving time and embedding cost, and earlier stages are never re-run.
+
+</details>
 
 ---
 **Previous**: [Streaming RAG](streaming-rag.md) · **Back to**: [Part 16 Overview](README.md) · **Next Part**: [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README.md)

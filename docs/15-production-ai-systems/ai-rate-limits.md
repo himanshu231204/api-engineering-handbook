@@ -1,5 +1,12 @@
 # AI Rate Limits
 
+> [!TIP]
+> **In one line:** Providers cap requests per minute and concurrency for your whole account, so the gateway needs one shared, replica-wide limiter that absorbs 429s instead of passing them on.
+>
+> **In plain English:** An AI provider only lets your company send so many requests per minute, no matter how many of your services are asking. The gateway keeps count for everyone and slows or redirects traffic before the provider says no — like a single reservations desk that stops overbooking a popular restaurant.
+>
+> **You'll be able to:** Explain RPM, concurrency and tier-based limits and how 429 and Retry-After work · Implement a token-bucket request limiter with bounded waiting · Share limiter state across replicas and fail fast instead of queuing forever
+
 ## Why This Matters
 
 Every LLM provider caps how many requests you can send them in a given window — separate from, and in addition to, the token-based limits covered in [Token Rate Limits](token-rate-limits.md). Hit that cap and the provider stops accepting new requests with an HTTP 429, often for the rest of the current minute. If your gateway just forwards that failure straight to whichever internal service happened to be calling it, you get cascading errors across every feature that shares that provider — even features that individually sent very few requests. This chapter is about the general concept of provider-imposed **rate limits** (as opposed to token-volume limits) and how to build a gateway that absorbs 429s instead of propagating them.
@@ -204,3 +211,26 @@ Agent loops (see [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README.md
 - A shared, provider-wide limiter (not per-caller) is required because internal callers don't coordinate with each other by default.
 - Fail fast on exhausted capacity rather than queuing unboundedly; let callers decide how to react.
 - Rate-limit state must be shared across gateway replicas in any horizontally scaled deployment, or your effective limit silently multiplies with replica count.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What kinds of request-based limits do LLM providers typically enforce?</summary>
+
+Requests per minute (RPM), concurrent in-flight request limits, and tier-based limits that grow with account tier or spend. Exceeding any of them returns 429 Too Many Requests, usually with a Retry-After header.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does a per-caller limiter fail when many internal services share one provider account?</summary>
+
+The provider sees one client with one shared limit. Each service can believe it has room while their combined traffic exceeds the cap, so they all get 429s at once. Only a shared, provider-wide limiter in the gateway can coordinate them.
+
+</details>
+
+<details markdown="1">
+<summary>3. You scaled your gateway from 2 to 8 replicas and 429s from the provider suddenly quadrupled, though traffic barely changed. Why?</summary>
+
+Each replica keeps its own in-memory bucket and believes it has the full quota, so the effective limit multiplied by the replica count. Move rate-limit state to a shared store such as Redis.
+
+</details>

@@ -1,5 +1,12 @@
 # Agent Architecture
 
+> [!TIP]
+> **In one line:** An agent is a loop around an LLM call: decide the next action, run a tool, feed the result back, and repeat until done or a hard limit stops it.
+>
+> **In plain English:** A normal LLM call answers once and stops. An agent keeps going: it picks a tool, looks at what came back, and decides what to do next, over and over. It is like following a recipe while tasting as you go, adjusting each step until the dish is right, with a timer so you do not cook forever.
+>
+> **You'll be able to:** Trace the perceive, plan, act, observe, repeat loop in code · Enforce max-iteration and token/cost budgets with a clear stop reason · Decide when a single tool call or fixed pipeline beats a full agent
+
 ## Why This Matters
 
 Everything you learned in [Part 14](../14-ai-api-engineering/README.md) — chat completions, tool calling, structured outputs — gives you a model that can respond to a single prompt with a single answer, possibly requesting a tool call along the way. That's powerful, but it's still fundamentally a *one-shot* interaction: the caller sends a request, the model does one round of thinking, and control returns to the caller.
@@ -197,3 +204,26 @@ The agent loop is the single most important mental model in this entire part —
 - Always enforce a hard maximum iteration count and a cost/token budget — unbounded loops are the most common and most expensive agent bug.
 - Not every task needs an agent; a single tool call or a fixed pipeline is often simpler, cheaper, and more reliable.
 - See [Agent APIs](agent-apis.md) next for how to expose this loop as an HTTP endpoint, and [Tool Execution](tool-execution.md) for how the "Act" step is actually implemented safely.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What makes an agent different from a single tool-calling request?</summary>
+
+In an agent, the tool's result is fed back into another model call so the model can react and choose the next action, repeatedly. A single tool-calling request/response is just a function call; the loop is what makes it an agent.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why do agent runs get more expensive with every iteration, even if each step is small?</summary>
+
+The LLM API is stateless, so the entire conversation history, including every previous tool call and result, is re-sent on every iteration. Context grows each step, so cost is roughly iterations times a growing context size.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user reports that an agent ran for 40 minutes and produced a huge bill while retrying a failing tool. What two guards were missing?</summary>
+
+A hard maximum iteration count and a separate token/cost budget, stopping on whichever is hit first. The run should also return a structured stop reason such as `max_iterations` so callers know it was cut off rather than completed.
+
+</details>

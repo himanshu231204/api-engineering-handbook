@@ -1,5 +1,12 @@
 # Document Ingestion APIs
 
+> [!TIP]
+> **In one line:** Ingestion is two phases: accept the document fast and return a trackable ID with 202, then parse, chunk, embed and index it in the background.
+>
+> **In plain English:** Turning a document into something searchable can take minutes, far longer than an HTTP request should stay open. So the API does only quick checks, saves the file, and hands back a ticket number. It is like dropping film at a photo lab: you get a receipt now and come back (or get a text) when the prints are ready.
+>
+> **You'll be able to:** Design a POST /documents endpoint that returns 202 with a document_id · Expose per-stage status (parsing, chunking, embedding, indexing) callers can poll · Prevent duplicate documents on retries with idempotency keys
+
 ## Why This Matters
 
 Every RAG system starts with a mundane-looking problem that is actually the hardest part of the whole pipeline to get right in production: getting documents *into* the system safely, reliably, and with the caller able to track progress. It's tempting to treat ingestion as an afterthought — "just an upload endpoint" — but a document ingestion API is where most real-world RAG outages and data-quality problems originate: a 200MB PDF that times out the request, a malformed file that crashes your parser mid-batch, a re-upload that silently duplicates every chunk in your vector store. If retrieval and generation are the "smart" parts of RAG, ingestion is the plumbing — and plumbing failures are the ones that wake people up at 3 a.m. Designing the ingestion API surface deliberately, as a first-class API contract rather than a side effect of a file upload form, is what separates a RAG demo from a RAG product.
@@ -214,6 +221,29 @@ Ingestion status directly affects downstream agent reliability. If an [AI agent]
 - Return `202 Accepted` with a trackable `document_id`, not `200 OK` with no way to verify completion.
 - Expose per-stage status so callers (humans and agents) know precisely when a document is safe to retrieve.
 - Idempotency and multi-tenancy metadata must be designed into the ingestion contract from day one, not retrofitted later.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which HTTP status code should a document ingestion endpoint return when it accepts a file for background processing, and why?</summary>
+
+`202 Accepted`, because it means "received, not finished yet." `200 OK` or `201 Created` imply the work is done, while the document is not queryable until the async pipeline finishes indexing it.
+
+</details>
+
+<details markdown="1">
+<summary>2. What goes wrong if you parse, chunk and embed the document inside the upload request itself?</summary>
+
+Large files take seconds to minutes to process, so clients and load balancers time out, API workers are tied up, and client retries can trigger duplicate processing. Only fast, cheap validation belongs in the request; the heavy work belongs in a queued background job.
+
+</details>
+
+<details markdown="1">
+<summary>3. An AI agent uploads a 300-page PDF with a tool call and immediately searches it, getting no results. What should your API offer so this does not happen?</summary>
+
+A first-class, agent-readable status (for example a status endpoint showing `indexing` vs `ready`) so the agent can wait, poll, or tell the user the document is still processing. "Uploaded" and "queryable" are different states, and the API must make that difference visible.
+
+</details>
 
 ---
 **Previous**: [Part 16 Overview](README.md) · **Next**: [File Upload Architecture](file-upload-architecture.md)

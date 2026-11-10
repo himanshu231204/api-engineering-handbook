@@ -1,5 +1,12 @@
 # MCP Architecture
 
+> [!TIP]
+> **In one line:** MCP is an open JSON-RPC protocol that lets any AI host app plug into any tool or data server, so integrations are built once and reused everywhere.
+>
+> **In plain English:** Without a standard, every AI app writes its own connector for Slack, GitHub or your database. MCP defines one common way for an AI app to discover and call what a server offers. It is like standard shipping containers: any container fits any ship, crane or truck, so cargo never needs repacking at each port.
+>
+> **You'll be able to:** Tell apart the host, client and server roles · Walk through initialize, capability negotiation, discovery and tools/call · Decide when to build an MCP server versus a plain in-process tool
+
 ## Why This Matters
 
 By the time you've built two or three tool-using agents (see [Agent Architecture](agent-architecture.md) and [Tool Execution](tool-execution.md)), a pattern becomes obvious and annoying: every agent application re-implements the same glue code to connect an LLM to external systems — a Slack integration here, a database connector there, a filesystem tool somewhere else — and none of it is reusable across applications. If you build a "search our internal docs" tool for one agent, and someone else wants the same capability in a different agent (a different codebase, maybe a different company entirely), they have to write it again from scratch, hand-rolling the schema, the execution, the error handling.
@@ -173,3 +180,26 @@ Compare MCP explicitly to the "custom tool integration" approach from [Part 14](
 - Capability negotiation at `initialize` time lets clients and servers evolve independently, similar in spirit to API versioning.
 - MCP standardizes the interface, not the safety of what's behind it — the tool-execution safeguards from [Tool Execution](tool-execution.md) still apply inside every server.
 - Reach for MCP when a tool/data capability needs to be reused across multiple AI applications; a simple in-process tool is still the right choice for something specific to a single agent.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In MCP, what is the difference between the host and the client?</summary>
+
+The host is the AI application the user interacts with; it embeds the LLM and decides which servers to connect to. A client is a component inside the host that holds a 1:1 connection to a single MCP server and speaks the protocol, so a host with three servers runs three clients.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does the initialize handshake include capability negotiation instead of assuming what the server supports?</summary>
+
+Servers implement different subsets (one may offer only tools, not resources or prompts) and protocol versions evolve. Negotiating `protocolVersion` and capabilities at connection time lets hosts and servers evolve independently and keeps clients from calling unsupported features.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate says "we can connect any public MCP server safely because MCP is a standard protocol." What is wrong with that reasoning?</summary>
+
+MCP standardizes the interface, not the trustworthiness or safety of a server's implementation. Connecting a third-party server is like adding a dependency with runtime capabilities, so you review its tools and credential scope, and validation, timeouts and least privilege still apply inside it.
+
+</details>

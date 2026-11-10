@@ -1,5 +1,12 @@
 # Chunking Pipelines
 
+> [!TIP]
+> **In one line:** Chunking splits documents into retrievable pieces small enough to be precise but large enough to keep their meaning, with overlap and metadata on every chunk.
+>
+> **In plain English:** Search works best on short, focused passages rather than whole documents. But if you cut text carelessly, a key sentence gets chopped in half and loses its meaning. Chunking is like slicing a pizza: slices must be small enough to hold, yet each one still needs its share of toppings to be worth eating.
+>
+> **You'll be able to:** Choose between fixed-size, recursive and semantic chunking · Apply overlap so facts at chunk boundaries survive · Attach provenance metadata (document, page, section, tenant, strategy version) to every chunk
+
 ## Why This Matters
 
 You cannot hand an LLM an entire 200-page PDF and a query and expect efficient, accurate retrieval — not because the model couldn't theoretically read it (large context windows exist, see [Context Windows](../14-ai-api-engineering/context-windows.md)), but because retrieval is fundamentally a *search* problem, and search needs addressable, comparably-sized units to rank against each other. If your smallest retrievable unit is "the whole document," retrieval can only ever tell you "this whole document is relevant," which is both computationally wasteful (embedding and re-processing huge blocks of mostly-irrelevant text) and useless for precision (the model gets buried in the 95% of the document that doesn't answer the question). Chunking — splitting documents into smaller, retrievable pieces — is the decision that most directly determines whether your RAG system returns precise, relevant context or noisy, diluted context. Get chunking wrong and no amount of clever retrieval or reranking downstream can fully compensate.
@@ -216,6 +223,29 @@ Chunking strategy has an outsized, often underestimated effect on downstream age
 - Recursive splitting on structural separators (paragraph → line → sentence → char) is the practical default; semantic chunking trades ingestion cost for topical coherence.
 - Overlap prevents facts at chunk boundaries from being lost entirely.
 - Rich per-chunk metadata (document, section, page, tenant) is what makes retrieval filtering and source citation possible later.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the two failure modes chunk size has to balance?</summary>
+
+Chunks that are too large cover several topics, so their embedding is a blurry average and they waste context budget. Chunks that are too small lose the surrounding context needed to make sense on their own, such as which policy a "$500 limit" belongs to.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens to a fact that straddles a chunk boundary if you chunk with no overlap?</summary>
+
+It is split between two chunks and neither contains it whole, so retrieval may never surface it intact. Overlap (typically 10-20% of chunk size) repeats the end of one chunk at the start of the next so the sentence appears complete in at least one chunk.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your team switches from fixed-size to recursive chunking. What must you plan for, and what metadata makes it manageable?</summary>
+
+Changing strategy is a migration: the whole corpus has to be re-chunked, re-embedded and re-indexed. Storing the chunking strategy and version on each chunk lets you see which chunks came from which pipeline and re-process documents selectively.
+
+</details>
 
 ---
 **Previous**: [File Upload Architecture](file-upload-architecture.md) · **Next**: [Embedding APIs](embedding-apis.md)

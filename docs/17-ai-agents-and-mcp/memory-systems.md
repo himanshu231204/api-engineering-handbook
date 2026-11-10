@@ -1,5 +1,12 @@
 # Memory Systems
 
+> [!TIP]
+> **In one line:** LLMs remember nothing between calls, so your app manages memory: a bounded in-context message list, plus long-term facts stored outside and retrieved when relevant.
+>
+> **In plain English:** Each call to an LLM starts fresh, so anything the agent should remember must be saved and re-sent by your code. Recent messages travel along with every call, older ones get summarized, and long-lasting facts live in a database and are fetched only when they matter. It is like a doctor who reads your chart before each visit instead of remembering every past appointment.
+>
+> **You'll be able to:** Bound short-term memory with pruning and rolling summaries · Store and retrieve long-term memories as a RAG problem · Handle staleness, write policies and user privacy for stored memories
+
 ## Why This Matters
 
 LLM APIs are stateless. Every call to a chat completion endpoint receives exactly what you send it — nothing more. If you want an agent to "remember" that a user mentioned their name three turns ago, or that a task it started yesterday is still in progress, that memory has to live somewhere in *your* system, not the model's. The model has no persistence of its own between API calls.
@@ -190,3 +197,26 @@ The most useful reframe in this chapter: **long-term agent memory is a RAG syste
 - Long-term memory requires external storage and selective retrieval — and once you're searching a memory store for relevance, you're building a RAG system (see [Part 16](../16-rag-apis/README.md)).
 - Summarization trades fidelity for boundedness — decide deliberately what's safe to compress and what must be preserved verbatim.
 - Persisted memory about users is a real privacy surface with retention, correction, and deletion obligations (see [Part 10](../10-api-security/README.md)).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between short-term and long-term memory in an agent?</summary>
+
+Short-term memory is the message history sent with each LLM call and lives inside the context window. Long-term memory persists across sessions in an external store (structured facts or a vector store) and is selectively retrieved into the prompt when relevant.
+
+</details>
+
+<details markdown="1">
+<summary>2. What is the trade-off when you summarize older conversation turns?</summary>
+
+Summarization keeps context size bounded, but it is lossy and can silently drop critical details like amounts, dates or IDs. Turns containing hard facts are often worth preserving verbatim.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user upgraded from Basic to Pro last week, but the agent keeps telling them they are on Basic. What memory problem is this, and how do you fix it?</summary>
+
+Staleness: a long-term fact went out of date. Give stored facts a TTL, invalidate them on the relevant event (the plan change), or bias retrieval toward recent memories.
+
+</details>

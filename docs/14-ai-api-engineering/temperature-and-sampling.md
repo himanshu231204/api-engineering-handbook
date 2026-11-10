@@ -1,5 +1,12 @@
 # Temperature and Sampling
 
+> [!TIP]
+> **In one line:** Temperature, top-p and top-k control how randomly the next token is picked — low for extraction and tool calls, higher for creative work — but never improve truthfulness.
+>
+> **In plain English:** At every step the model ranks every possible next word by likelihood, then picks one. Temperature decides how adventurous that pick is: like a cook who either always uses the recipe's spices or sometimes reaches for something unusual.
+>
+> **You'll be able to:** Explain what temperature, top-p and top-k do to the probability distribution · Pick sensible sampling settings per task · Avoid tests and logic that assume temperature 0 is perfectly deterministic
+
 ## Why This Matters
 
 You'll frequently see `temperature: 0.7` in example code with no explanation, and it's tempting to leave it at whatever the default is and move on. But sampling parameters are the single biggest lever you have over *how* an LLM generates text — and getting them wrong produces two very different, very real production failure modes: outputs that are boringly repetitive and unhelpful (temperature too low for a creative task), or outputs that are inconsistent, hallucination-prone, and fail structured-output validation unpredictably (temperature too high for a task requiring precision). Understanding what's actually happening mechanically when you set these parameters — not just "higher means more random" — lets you tune them deliberately instead of by trial and error.
@@ -42,6 +49,8 @@ flowchart LR
     F --> G
     G --> H["Append token,\nrepeat for next position"]
 ```
+
+![Next-token probability bars at low temperature (sharp) versus high temperature (flat)](../assets/diagrams/14-temperature.svg)
 
 This loop runs once per output token — sampling parameters affect every single token generated, not just an overall "style" choice made once per request.
 
@@ -165,3 +174,26 @@ Sampling parameters interact directly with the other systems covered in this han
 - Temperature does not improve factual accuracy — it controls sampling variance, not truthfulness.
 - Match sampling settings to the task: near-zero for extraction/classification/tool-calling, moderate-to-high for open-ended or creative generation.
 - Well-built multi-step AI systems (RAG, agents) often use different sampling settings per internal step, not one global temperature for the whole pipeline.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does temperature do mechanically before a token is sampled?</summary>
+
+The model's raw scores (logits) are divided by the temperature before softmax. A small temperature exaggerates the differences so the top tokens dominate; a large one flattens them so unlikely tokens get picked more often.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why will lowering temperature not fix a model that gives a wrong fact?</summary>
+
+Temperature controls sampling variance, not correctness. Low temperature makes the model choose its most probable continuation more consistently — if that continuation is wrong, you just get the wrong answer more reliably.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your JSON-extraction endpoint runs at temperature 1.0 and about 1 in 10 responses fails schema validation. What should you change first?</summary>
+
+Drop the temperature to 0 (or near it) for this task, because high sampling variance increases malformed structured output. Keep schema validation and retries anyway — low temperature reduces failures but never eliminates them.
+
+</details>

@@ -1,5 +1,12 @@
 # Chat Completion Architecture
 
+> [!TIP]
+> **In one line:** A chat completion request is an ordered list of role-tagged messages (system, user, assistant, tool); the model returns exactly one new assistant message.
+>
+> **In plain English:** You hand the model the whole conversation so far, with each line labelled by who said it, and it writes the next reply. It is like forwarding an entire email thread every time you want a single answer, because the reader never keeps a copy.
+>
+> **You'll be able to:** Name the four message roles and what each is for · Build and resend a messages array from stored history · Keep a provider-agnostic conversation model so switching vendors is a mapping job
+
 ## Why This Matters
 
 Almost every LLM API you'll integrate with — regardless of provider — exposes some version of the same shape: a "chat completion" endpoint that takes a list of messages and returns a new message. If you understand this shape deeply, you can move between providers, debug malformed prompts, and reason about why a model "ignored" an instruction, in minutes instead of hours. If you don't, you'll copy-paste example code from documentation without understanding why the `role` field matters, why system instructions go where they go, or why a "conversation" is really just an array you rebuild and resend every time. This chapter is the schema-level foundation for every other chapter in Part 14.
@@ -183,3 +190,26 @@ The messages array is the substrate that every higher-level AI pattern in this h
 - Role and order carry real semantic weight to the model; misattributing roles degrades quality and can create security issues.
 - Building a provider-agnostic internal conversation representation pays off when supporting multiple providers or migrating between them.
 - This messages-array shape is the foundation for tool calling, RAG context injection, and agent traces covered later in this part and in Parts 16–17.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four roles in a chat completion request, and which one does the model produce?</summary>
+
+system (behavior and rules), user (the requester's input), assistant (the model's earlier replies), and tool (results of tool calls fed back in). The model generates a single new assistant message per call.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is putting important rules in a user message weaker than putting them in the system message?</summary>
+
+Models treat system content as configuration for the whole conversation, while user content is just one turn — a later user message or injected text can easily override or contradict it. The system role carries more weight and is where stable instructions belong.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your app stores a retrieved web page under role user, and the model starts following instructions hidden in that page. What went wrong?</summary>
+
+Role misattribution: untrusted external content was labelled as if the human said it, so the model treated it as trusted input. Put tool output in tool messages or clearly delimited context and keep trusted instructions separate, which is a core prompt-injection defense.
+
+</details>

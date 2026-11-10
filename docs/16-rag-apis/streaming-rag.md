@@ -1,5 +1,12 @@
 # Streaming RAG
 
+> [!TIP]
+> **In one line:** Streaming RAG sends one SSE stream with retrieval progress events, then generated tokens, then final citations, so users never stare at a silent wait.
+>
+> **In plain English:** A RAG answer has a silent search step before the model can write anything. Streaming shows the user what is happening ("Searching documents...") and then reveals the answer word by word as it is written. It is like a delivery app that shows "order being prepared" and the driver on the map instead of a blank screen until the doorbell rings.
+>
+> **You'll be able to:** Design a multi-event SSE stream (progress, token, citation, done) · Measure end-to-end time-to-first-token including retrieval · Avoid proxy buffering and cancel generation when clients disconnect
+
 ## Why This Matters
 
 RAG pipelines are inherently slow compared to a plain chat completion — before the LLM can generate a single token, you've already paid the latency cost of retrieval, possibly reranking, and context assembly (see [Retrieval](retrieval.md), [Reranking](reranking.md), and [Context Construction](context-construction.md)). If a user has to wait for retrieval *and* the full generation to complete before seeing anything, a RAG answer can feel dramatically slower than a plain chat response, even when the actual token generation speed is identical. Streaming — a technique already covered for plain LLM calls in [Streaming LLM Responses](../14-ai-api-engineering/streaming-llm-responses.md) — becomes even more important in RAG specifically because there's extra non-streamable latency stacked in front of generation, and the UX has to account for both stages, not just one.
@@ -197,6 +204,29 @@ Streaming RAG interacts directly with agent design in [Part 17](../17-ai-agents-
 - A single multi-event SSE stream (progress events + token events + a final metadata event) is the standard pattern for streaming RAG.
 - Streaming reduces perceived latency, not actual retrieval or token cost — don't conflate the two when reasoning about performance.
 - Reverse proxy buffering is a common, easy-to-miss way streaming silently breaks in production.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which part of a RAG pipeline can be streamed token by token, and which cannot?</summary>
+
+Generation can stream token by token once the LLM call starts. Retrieval, reranking and context construction are discrete blocking steps that either finish or do not, so you can only surface their progress with events.
+
+</details>
+
+<details markdown="1">
+<summary>2. Does adding streaming make your RAG pipeline cheaper or faster overall?</summary>
+
+No. Streaming reduces perceived latency, but total retrieval time, reranking time and tokens generated are unchanged. Real latency and cost still need separate optimization.
+
+</details>
+
+<details markdown="1">
+<summary>3. Streaming works on your laptop, but in production the whole answer arrives at once after 8 seconds. What is the likely cause?</summary>
+
+A reverse proxy, load balancer, CDN or gateway is buffering the response, defeating SSE. Disable buffering on every layer between server and client (for nginx, for example, `X-Accel-Buffering: no`).
+
+</details>
 
 ---
 **Previous**: [Context Construction](context-construction.md) · **Next**: [Async Document Processing](async-document-processing.md)

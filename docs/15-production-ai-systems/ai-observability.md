@@ -1,5 +1,12 @@
 # AI Observability
 
+> [!TIP]
+> **In one line:** AI observability adds what HTTP metrics miss — end-to-end traces through cache, routing and fallback, redacted prompt logs, ongoing quality evaluation — and reviews cost, latency and quality together.
+>
+> **In plain English:** An AI call can succeed technically and still give a bad answer, so 'it returned 200' is not enough. You also record which model answered, what it cost, and regularly grade a sample of answers — like a restaurant that checks not only that plates left the kitchen on time but that diners actually liked the food.
+>
+> **You'll be able to:** Propagate one trace ID through gateway, cache, router and provider spans · Redact PII before prompts and responses reach logs · Run sampled, ongoing evaluation and track quality beside cost and latency
+
 ## Why This Matters
 
 Traditional observability (see [Part 12 — Observability](../12-observability/README.md)) answers questions like "was this request successful, how long did it take, and what did the logs say happened." Those questions still matter for AI systems, but they're not sufficient: a chat completion can return `200 OK` in 400ms and still be a bad answer — hallucinated, off-topic, or subtly wrong in a way no HTTP status code captures. AI observability extends standard observability with the AI-specific dimensions that determine whether a system is actually working: what was the exact prompt, what did the model actually say, how much did it cost, which provider/model served it, and — the hardest and most distinctive part — was the output actually *good*. Without this, teams find out a feature has been quietly producing poor answers only when a customer complains, weeks after a prompt change or provider switch introduced the regression.
@@ -234,3 +241,26 @@ In agent loops (see [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README
 - HTTP success does not imply output quality — evaluation is the dimension with no equivalent in traditional API observability and can't be skipped.
 - Redact sensitive content before storage, not after, and treat prompt/response logs as a security-sensitive surface from the start.
 - Cost, latency, and quality should be reviewed together — optimizing one in isolation frequently trades away another without anyone noticing until later.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which observability dimension is new for AI systems and has no real equivalent in traditional API monitoring?</summary>
+
+Evaluation, or quality monitoring — checking whether the output is actually good, not just whether the call succeeded. A fast 200 OK can still carry a hallucinated or off-topic answer.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should prompts be redacted before they are written to logs rather than cleaned up later?</summary>
+
+Once raw PII lands in a shared log aggregator with broad access and long retention, removing it means a hard retroactive cleanup and the exposure has already happened. Redacting at write time prevents it, with a separate audit-controlled short-retention path for full content when an incident truly needs it.
+
+</details>
+
+<details markdown="1">
+<summary>3. A routing change cut AI cost by 40% and the team calls it a win. What should you check before agreeing?</summary>
+
+Check quality scores for the affected feature and model on the same dashboard — the chapter warns a cost cut can quietly come with a quality drop. Cost, latency and quality must be reviewed together, sliced by feature, model and provider.
+
+</details>

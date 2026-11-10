@@ -1,5 +1,12 @@
 # Context Construction
 
+> [!TIP]
+> **In one line:** Context construction turns ranked chunks into the actual prompt: deduplicate, fit a token budget, order sensibly, and label every chunk with a citable source.
+>
+> **In plain English:** A pile of search results is not yet something you can hand to an LLM. You remove repeats, keep only what fits in the model's limited memory while leaving room for its answer, and tag each passage with where it came from. It is like packing a carry-on bag: you pick the essentials, leave out duplicates, and label everything.
+>
+> **You'll be able to:** Deduplicate overlapping chunks before spending token budget · Greedily fill a budget with whole chunks while reserving room for the response · Format chunks with source markers so answers can cite pages and sections
+
 ## Why This Matters
 
 Retrieval and reranking (see [Retrieval](retrieval.md) and [Reranking](reranking.md)) hand you a ranked list of chunks — but a ranked list is not a prompt. Between "here are the 5 most relevant chunks" and "here is what we send to the LLM" sits a step that's easy to underestimate: deciding what order to present chunks in, removing near-duplicate content, deciding how much of your model's [context window](../14-ai-api-engineering/context-windows.md) to actually spend on retrieved context versus system instructions and conversation history, and structuring everything so the model can both use the information *and* tell the user where it came from. Get context construction wrong and you can have perfect retrieval and still get a bad answer — a context window stuffed with redundant, unordered, or unattributed chunks confuses the model just as much as irrelevant chunks do.
@@ -203,6 +210,29 @@ Context construction is where retrieval quality and generation quality actually 
 - Never truncate a chunk mid-sentence to fit a budget; drop whole chunks that don't fit instead.
 - Reserve context-window budget for the model's response, not just the retrieved input.
 - Citation markers threaded through from chunk metadata are what make source attribution possible in the final answer.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four concerns context construction manages?</summary>
+
+Token budget management, ordering of chunks, deduplication of overlapping or near-identical chunks, and source attribution (threading chunk metadata into citation markers).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why drop a whole chunk that does not fit rather than truncating it mid-sentence?</summary>
+
+A chunk cut mid-sentence becomes garbled, half-formed context that can mislead the model. Dropping the whole lower-priority chunk keeps every included passage coherent.
+
+</details>
+
+<details markdown="1">
+<summary>3. You fill the entire context window with retrieved chunks and answers start getting cut off. What went wrong?</summary>
+
+The context window is shared between prompt and response, and no budget was reserved for the output. Reserve a fixed portion for the model's answer and never let retrieved context encroach on it.
+
+</details>
 
 ---
 **Previous**: [Reranking](reranking.md) · **Next**: [Streaming RAG](streaming-rag.md)

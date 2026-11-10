@@ -1,5 +1,12 @@
 # Model Routing
 
+> [!TIP]
+> **In one line:** Model routing picks which provider and model serves each request — by capability tier, cost, latency and health — and logs why; fallback only handles what happens after it fails.
+>
+> **In plain English:** Not every question needs your most expensive model. A router sends easy work to cheap, fast models and hard work to strong ones, skipping any provider that is currently struggling. Think of choosing between a bicycle courier, a van and a freight truck depending on the size and urgency of the parcel.
+>
+> **You'll be able to:** Build a cost-ordered, per-tier routing table · Skip unhealthy providers using rolling health signals · Keep routing separate from fallback and log every decision
+
 ## Why This Matters
 
 Once you have more than one provider or model behind your gateway (see [Multi-Provider Architecture](multi-provider-architecture.md)), someone — or something — has to decide, for every single request, which model actually handles it. Do it wrong and you either overpay (sending simple classification requests to your most expensive reasoning model) or underdeliver (sending a complex multi-step reasoning task to a cheap, fast model that gets it wrong). Model routing is the decision layer that makes this choice automatically, based on policy rather than whatever model name a developer happened to hardcode into a prompt file eighteen months ago.
@@ -204,3 +211,26 @@ In an [agent loop](../17-ai-agents-and-mcp/README.md), individual steps often ha
 - Routing is distinct from fallback: routing picks the first choice; fallback handles what happens when that choice fails.
 - Static, capability-tier-based routing is a safer starting point than fully dynamic routing, which requires trustworthy real-time signals to avoid making things worse.
 - Every routing decision should be logged — it's essential data for cost attribution, quality debugging, and incident response.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What signals does a model router typically combine to pick a provider and model?</summary>
+
+Cost, task complexity (the capability tier), latency requirements, and current provider health — plus optional dynamic signals like rolling p95 latency or remaining tenant budget.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is automatic capability inference risky compared with an explicit tier from the caller?</summary>
+
+If a complex request is misclassified as fast, the cheap model may return a wrong or weak answer with no error raised. The failure is silent unless you are actively evaluating output quality.
+
+</details>
+
+<details markdown="1">
+<summary>3. Costs jumped last week and nobody can tell why. What routing practice would have made this easy to diagnose?</summary>
+
+Logging every routing decision per request — the requested capability, chosen provider and model, and candidates skipped with reasons. That shows when and why a feature started going to a different, pricier model.
+
+</details>

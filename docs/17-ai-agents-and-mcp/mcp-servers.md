@@ -1,5 +1,12 @@
 # MCP Servers
 
+> [!TIP]
+> **In one line:** An MCP server owns the credentials and execution for a capability, describes its tools to any client, and runs over stdio locally or hardened HTTP remotely.
+>
+> **In plain English:** An MCP server is a small program that wraps something useful, like a database or a wiki, and tells AI apps what it can do. It runs either on your own machine, talking through standard input and output, or as a shared web service that needs proper security. It is like a restaurant menu plus kitchen: the menu (tool descriptions) tells diners what they can order, and the kitchen does the real work out of sight.
+>
+> **You'll be able to:** Choose between stdio and HTTP transports · Write precise tool descriptions and schemas a model can act on · Apply validation, timeouts, least privilege, auth and logging inside the server
+
 ## Why This Matters
 
 An MCP server is the half of the protocol that does actual work: it's the process that owns a database connection, a filesystem, an API key for a third-party service, or any other capability worth exposing to an AI application (see [MCP Architecture](mcp-architecture.md) for the client-host-server model this fits into). If you want your internal systems — a ticketing system, an internal search index, a deployment pipeline — usable by an AI agent in a standardized, reusable way, you build an MCP server for it once, and any MCP-compatible host can connect.
@@ -211,3 +218,26 @@ An MCP server is the reusable unit of AI tooling: build one well, and it becomes
 - Tool and resource descriptions are read and acted on by the model — write them with the same care as public API documentation.
 - Every tool handler still needs the full tool-execution discipline (validation, timeouts, sandboxing, least privilege) — MCP standardizes the interface, not the safety of the implementation behind it.
 - Use the official MCP SDK rather than hand-rolling JSON-RPC framing.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. When should an MCP server use the stdio transport, and when HTTP?</summary>
+
+Use stdio for a local server that the host spawns as a subprocess, with no network exposure (for example filesystem or git tools). Use HTTP (with SSE for streaming) for a remote server shared across hosts or users, which then needs auth, TLS and rate limiting like any production API.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why do vague tool descriptions cause real bugs?</summary>
+
+The model decides whether and how to call a tool based entirely on its name, description and schema. A description like "does stuff with the database" gives it no signal, so it calls the wrong tool or passes malformed arguments.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your server skips input validation because "the client already validated the arguments." Why is this a mistake?</summary>
+
+The server is the actual security boundary and owns the credentials; it cannot assume any client validated correctly (or is not malicious). Every tool handler must validate its own input, bound execution time and use least-privilege credentials.
+
+</details>
