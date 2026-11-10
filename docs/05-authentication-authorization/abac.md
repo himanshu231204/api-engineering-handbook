@@ -190,10 +190,11 @@ POLICIES = [
                      and r.environment.get("mfa") is True
                      and business_hours(r)),
     # Deny rule: nobody approves their own expense, whatever else permits it.
-    # Fail closed: if the submitter is unknown we cannot prove the approver is
-    # someone else, so this rule matches and the approval is denied.
+    # Fail closed: if the approver or the submitter is unknown (missing or null) we cannot
+    # show they are two different people, so this rule matches and approval is denied.
     Policy("no-self-approval", "deny", frozenset({"expense:approve"}),
-           lambda r: r.resource.get("submitter_id") in (None, r.subject["id"])),
+           lambda r: r.subject.get("id") is None
+                     or r.resource.get("submitter_id") in (None, r.subject["id"])),
 ]
 engine = PolicyEngine(POLICIES, version="2026-11-05.3")
 
@@ -223,6 +224,40 @@ async def approve(expense_id: int, subject: dict = Depends(current_subject)):
     if not engine.decide(req):
         raise HTTPException(403, "access_denied")
     return {"status": "approved", "expense_id": expense_id}
+```
+
+Test the deny rules directly, since the engine is a pure function (pytest style; run it next to the module above):
+
+```python
+from datetime import datetime, timezone
+
+NOW = datetime(2026, 11, 10, 10, 0, tzinfo=timezone.utc)  # a Tuesday, inside business hours
+APPROVER = {"id": "u_42", "tenant_id": "acme", "roles": [], "department": "eng", "approval_limit": 5000}
+EXPENSE = {"id": 1, "tenant_id": "acme", "department": "eng", "amount": 100, "submitter_id": "u_7"}
+
+
+def can_approve(subject: dict, resource: dict) -> bool:
+    req = DecisionRequest(subject, resource, "expense:approve", {"now": NOW, "mfa": True})
+    return engine.decide(req)
+
+
+def test_normal_approval_is_permitted():
+    assert can_approve(APPROVER, EXPENSE) is True
+
+
+def test_self_approval_is_denied():
+    assert can_approve(APPROVER, {**EXPENSE, "submitter_id": "u_42"}) is False
+
+
+def test_unknown_submitter_is_denied():
+    no_submitter = {k: v for k, v in EXPENSE.items() if k != "submitter_id"}
+    assert can_approve(APPROVER, no_submitter) is False
+    assert can_approve(APPROVER, {**EXPENSE, "submitter_id": None}) is False
+
+
+def test_missing_or_null_approver_id_is_denied():
+    assert can_approve({k: v for k, v in APPROVER.items() if k != "id"}, EXPENSE) is False
+    assert can_approve({**APPROVER, "id": None}, EXPENSE) is False
 ```
 
 Behaviours to notice: the engine is a pure function of its inputs (easy to unit test), it logs the policy version with every decision, and the enforcement point runs the resource load first so it can decide on *real* attributes. This example evaluates every applicable policy; at large scale you would index policies by action and resource type.
