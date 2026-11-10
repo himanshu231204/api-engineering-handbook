@@ -12,6 +12,7 @@ here = os.path.dirname(os.path.abspath(__file__))
 MERMAID_CLI = "@mermaid-js/mermaid-cli@12.2.0"   # pinned: the post-processing below depends on its SVG output
 ap = argparse.ArgumentParser(description=__doc__.splitlines()[1])
 ap.add_argument("src"); ap.add_argument("dst"); ap.add_argument("uid", nargs="?")
+ap.add_argument("--extra-config", help="JSON file deep-merged over mermaid-neon-theme.json (e.g. mermaid-sequence-compact.json for tall sequence diagrams)")
 a = ap.parse_args()
 src, dst = a.src, a.dst
 uid = a.uid or "mm-" + re.sub(r"[^a-z0-9]+", "-", os.path.splitext(os.path.basename(dst))[0].lower())
@@ -22,10 +23,20 @@ if chrome:
 with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
     json.dump(pp, f)
     ppath = f.name
+cfg = json.load(open(here + "/mermaid-neon-theme.json"))
+if a.extra_config:
+    def merge(d, u):
+        for k, v in u.items():
+            d[k] = merge(d.get(k, {}), v) if isinstance(v, dict) and isinstance(d.get(k), dict) else v
+        return d
+    merge(cfg, json.load(open(a.extra_config)))
+with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+    json.dump(cfg, f)
+    cpath = f.name
 try:
-    subprocess.run(["npx", "-y", MERMAID_CLI, "-i", src, "-o", dst, "-p", ppath, "-c", here + "/mermaid-neon-theme.json", "-b", "transparent"], check=True)
+    subprocess.run(["npx", "-y", MERMAID_CLI, "-i", src, "-o", dst, "-p", ppath, "-c", cpath, "-b", "transparent"], check=True)
 finally:
-    os.unlink(ppath)
+    os.unlink(ppath); os.unlink(cpath)
 svg = open(dst).read()
 svg = svg.replace("my-svg", uid)
 vb = re.search(r'viewBox="([\-\d\.]+) ([\-\d\.]+) ([\d\.]+) ([\d\.]+)"', svg)
