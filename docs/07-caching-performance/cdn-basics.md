@@ -243,13 +243,13 @@ Edge caching of model output is only defensible for deterministic, shared, non-p
 
 **Intermediate**
 
-1. Extend the example so `/products` (a list) also carries surrogate keys for every product it includes, and write the purge call logic your service would run when product 42 is updated.
-2. Write a test that requests `/me` with two different bearer tokens through a caching proxy (even a local one) and asserts that the second user never receives the first user's body.
+3. Extend the example so `/products` (a list) also carries surrogate keys for every product it includes, and write the purge call logic your service would run when product 42 is updated.
+4. Write a test that requests `/me` with two different bearer tokens through a caching proxy (even a local one) and asserts that the second user never receives the first user's body.
 
 **Advanced**
 
-1. Your hit ratio dropped from 92 to 40 percent after a release. List five header or key-related causes you would check, in order of likelihood, and how you would confirm each from logs.
-2. Design the caching headers and purge strategy for a pricing API where prices may change at any time but a stale price for more than 60 seconds is unacceptable, and a rollout of a new price must reach all users within about 10 seconds. Explain what you guarantee and what you do not.
+5. Your hit ratio dropped from 92 to 40 percent after a release. List five header or key-related causes you would check, in order of likelihood, and how you would confirm each from logs.
+6. Design the caching headers and purge strategy for a pricing API where prices may change at any time but a stale price for more than 60 seconds is unacceptable, and a rollout of a new price must reach all users within about 10 seconds. Explain what you guarantee and what you do not.
 
 ## Key Takeaways
 

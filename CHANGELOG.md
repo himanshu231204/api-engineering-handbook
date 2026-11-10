@@ -5,6 +5,7 @@ All notable changes to this project are documented here. Format loosely follows 
 ## [Unreleased]
 
 ### Added
+
 - **The last 50 chapters** — every 🚧 Planned chapter in Parts 5–13 and 18 is now written, so all 20 parts (192 chapters) are complete: OpenID Connect, ABAC and multi-tenant authorization (Part 5); jitter, idempotency in practice, bulkheads, graceful degradation, health checks and probes (Part 6); write-through caching, TTL, distributed caching, CDN basics and performance bottlenecks (Part 7); job queues, workers, RabbitMQ, Kafka, event-driven architecture and eventual consistency (Part 8); long polling, streaming APIs, event ordering and duplicate events (Part 9); CSRF, XSS, abuse protection and webhook security (Part 10); service discovery, load balancing, service-to-service auth, Protocol Buffers, distributed transactions and event-driven microservices (Part 11); structured logging, tracing, request IDs, OpenTelemetry, error monitoring and debugging production APIs (Part 12); end-to-end, contract, stress and chaos testing, API mocking, test databases and CI/CD pipelines (Part 13); security, observability and cost management in production (Part 18). Each has a TL;DR, a Check Yourself quiz and a Mermaid diagram; 20 new SVG diagrams.
 - Older chapters that called these topics "planned" or "upcoming" now link to them.
 - **Readability pass:** every written chapter now opens with a TL;DR callout ("In one line" / "In plain English" / "You'll be able to") and ends with a 3-question **Check Yourself** quiz with hidden answers.

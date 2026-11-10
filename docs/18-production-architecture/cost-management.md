@@ -229,12 +229,12 @@ Finally, treat quality as the constraint that cost optimization must not violate
 2. List the five cost categories for your own system and write one measurable driver for each.
 
 **Intermediate**
-1. A tenant on a $20 per month plan sends 800 chats per month. Using the example's average token counts, compute margin on tokens alone for the large model, the small model, and a 50/50 split.
-2. Extend the budget guard to apply a soft limit at 80% that downgrades to the small model, and a hard limit at 100% that returns 429.
+3. A tenant on a $20 per month plan sends 800 chats per month. Using the example's average token counts, compute margin on tokens alone for the large model, the small model, and a 50/50 split.
+4. Extend the budget guard to apply a soft limit at 80% that downgrades to the small model, and a hard limit at 100% that returns 429.
 
 **Advanced**
-1. Design an experiment to introduce model routing safely: how you would build the evaluation set, what quality metric gates the rollout, and what rate and cost alerts you would watch during a staged ramp.
-2. A support agent averages 8 tool-calling steps with a context that starts at 3,000 tokens and grows by 1,200 tokens per step. Estimate input tokens per task, show how it grows with step count, and propose three changes that bend the curve.
+5. Design an experiment to introduce model routing safely: how you would build the evaluation set, what quality metric gates the rollout, and what rate and cost alerts you would watch during a staged ramp.
+6. A support agent averages 8 tool-calling steps with a context that starts at 3,000 tokens and grows by 1,200 tokens per step. Estimate input tokens per task, show how it grows with step count, and propose three changes that bend the curve.
 
 ## Key Takeaways
 

@@ -241,12 +241,12 @@ RabbitMQ is a good fit for the "fan-out then fan-in" shapes common in LLM system
 2. Explain the difference between two consumers on one queue and two queues each with one consumer, in terms of who receives a given message.
 
 **Intermediate**
-1. Design the topology for delayed retry: a main queue, a 30-second wait queue with a DLX back to the main exchange, and a final dead-letter queue after three attempts. What header would you inspect to count attempts?
-2. A queue shows `messages_unacknowledged = 500` and `consumers = 2` with prefetch 250. Explain what is happening and what you would change.
+3. Design the topology for delayed retry: a main queue, a 30-second wait queue with a DLX back to the main exchange, and a final dead-letter queue after three attempts. What header would you inspect to count attempts?
+4. A queue shows `messages_unacknowledged = 500` and `consumers = 2` with prefetch 250. Explain what is happening and what you would change.
 
 **Advanced**
-1. Describe every point in the publish, store and consume path where a message can be lost or duplicated, and which setting (confirms, persistence, quorum queues, manual acks, idempotency) closes each gap. State what remains possible after all are applied.
-2. You need strict per-customer ordering with 20 workers. Compare a consistent-hash exchange with one queue per shard to a log-based design, including what happens when a worker crashes mid-message.
+5. Describe every point in the publish, store and consume path where a message can be lost or duplicated, and which setting (confirms, persistence, quorum queues, manual acks, idempotency) closes each gap. State what remains possible after all are applied.
+6. You need strict per-customer ordering with 20 workers. Compare a consistent-hash exchange with one queue per shard to a log-based design, including what happens when a worker crashes mid-message.
 
 ## Key Takeaways
 

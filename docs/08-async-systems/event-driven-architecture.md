@@ -251,12 +251,12 @@ Events are how AI features stay decoupled from the core product. A `DocumentUplo
 2. Draw the choreography for "order placed" involving billing, inventory and email. Who knows whether the whole order succeeded?
 
 **Intermediate**
-1. A producer needs to rename `total` to `total_cents` in `order.placed`. Write the rollout plan using only additive and versioned changes, and say when the old field may be removed.
-2. Add an inbox table to a consumer so redelivered events are ignored, in the same transaction as the effect. What do you key the inbox on, and how do you prevent unbounded growth?
+3. A producer needs to rename `total` to `total_cents` in `order.placed`. Write the rollout plan using only additive and versioned changes, and say when the old field may be removed.
+4. Add an inbox table to a consumer so redelivered events are ignored, in the same transaction as the effect. What do you key the inbox on, and how do you prevent unbounded growth?
 
 **Advanced**
-1. The relay publishes an event and crashes before marking the row. Walk through exactly what each consumer sees, and describe how the system behaves with 3 relay instances and per-customer ordering requirements.
-2. Convert a six-service choreographed order flow into an orchestrated saga. Which failure modes become easier to handle, and which new single points of failure appear?
+5. The relay publishes an event and crashes before marking the row. Walk through exactly what each consumer sees, and describe how the system behaves with 3 relay instances and per-customer ordering requirements.
+6. Convert a six-service choreographed order flow into an orchestrated saga. Which failure modes become easier to handle, and which new single points of failure appear?
 
 ## Key Takeaways
 

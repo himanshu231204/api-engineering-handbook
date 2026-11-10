@@ -232,12 +232,12 @@ Kafka fits the data plane of AI systems better than their task plane. LLM intera
 2. Events `A1`, `A2` (key A) and `B1`, `B2` (key B) are produced in the order `A1, B1, A2, B2`. Which orderings can a consumer observe, and which cannot be guaranteed?
 
 **Intermediate**
-1. Write the commit logic for at-least-once consumption with batch commits every 100 records. What is the maximum number of records that may be reprocessed after a crash?
-2. Design a retry-topic scheme with three delay tiers and a dead-letter topic. What happens to ordering for retried records, and is that acceptable for an order lifecycle?
+3. Write the commit logic for at-least-once consumption with batch commits every 100 records. What is the maximum number of records that may be reprocessed after a crash?
+4. Design a retry-topic scheme with three delay tiers and a dead-letter topic. What happens to ordering for retried records, and is that acceptable for an order lifecycle?
 
 **Advanced**
-1. Explain precisely why Kafka transactions give exactly-once for a topic-to-topic pipeline but not for a handler that updates PostgreSQL. Then design the effectively-once alternative, including how you handle dedupe-table growth.
-2. A tenant generates 60% of traffic and its partition lags by hours. Evaluate three remedies (key salting, a dedicated topic, more partitions) with the ordering trade-offs of each.
+5. Explain precisely why Kafka transactions give exactly-once for a topic-to-topic pipeline but not for a handler that updates PostgreSQL. Then design the effectively-once alternative, including how you handle dedupe-table growth.
+6. A tenant generates 60% of traffic and its partition lags by hours. Evaluate three remedies (key salting, a dedicated topic, more partitions) with the ordering trade-offs of each.
 
 ## Key Takeaways
 

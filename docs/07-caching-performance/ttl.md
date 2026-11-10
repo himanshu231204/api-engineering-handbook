@@ -214,13 +214,13 @@ Stale-while-revalidate is particularly attractive for expensive generations: ser
 
 **Intermediate**
 
-1. Add a sliding TTL with an absolute ceiling using `GETEX`: each read extends the key by 10 minutes, but never beyond 2 hours after creation (store the creation time in the value).
-2. Write a script that loads 10,000 keys with a fixed TTL, then again with 20 percent jitter, and plot how many keys expire per second in each case.
+3. Add a sliding TTL with an absolute ceiling using `GETEX`: each read extends the key by 10 minutes, but never beyond 2 hours after creation (store the creation time in the value).
+4. Write a script that loads 10,000 keys with a fixed TTL, then again with 20 percent jitter, and plot how many keys expire per second in each case.
 
 **Advanced**
 
-1. Extend the example so a cold miss is single-flight too: concurrent requests for the same absent key wait briefly for the winner and then read the freshly stored value. Define what they do if the winner fails or is slow.
-2. Design TTLs for an e-commerce API with product pages, inventory counts, user carts, and search suggestions. For each, state the staleness budget, the TTL, whether it needs explicit invalidation, and what happens when the database is down.
+5. Extend the example so a cold miss is single-flight too: concurrent requests for the same absent key wait briefly for the winner and then read the freshly stored value. Define what they do if the winner fails or is slow.
+6. Design TTLs for an e-commerce API with product pages, inventory counts, user carts, and search suggestions. For each, state the staleness budget, the TTL, whether it needs explicit invalidation, and what happens when the database is down.
 
 ## Key Takeaways
 

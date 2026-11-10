@@ -124,6 +124,7 @@ Request-scoped context with structured logs, RED metrics using the `prometheus_c
 import contextvars
 import json
 import logging
+import re
 import time
 import uuid
 
@@ -159,7 +160,9 @@ app.mount("/metrics", make_asgi_app())  # scrape endpoint; keep it off the publi
 
 @app.middleware("http")
 async def observe(request: Request, call_next):
-    rid = request.headers.get("x-request-id") or str(uuid.uuid4())
+    # Inbound IDs are untrusted: accept only a short, safe format, else generate one.
+    raw = request.headers.get("x-request-id", "")
+    rid = raw if re.fullmatch(r"[A-Za-z0-9._-]{8,64}", raw) else str(uuid.uuid4())
     request_id_var.set(rid)
     start = time.perf_counter()
     status = 500  # if call_next raises, we still record a 500
@@ -237,12 +240,12 @@ Fourth, **quality**. Classic SLOs cannot see a model that answers fluently and w
 2. Convert a 99.9% monthly SLO into an error budget in minutes of full outage (30 days) and in failed requests for 10 million requests.
 
 **Intermediate**
-1. Add the request-ID middleware to a FastAPI app, then verify that one request produces the same ID in the response header and in every log line it triggers, including a log from inside a background task.
-2. Design the burn-rate alert pair for a 99.5% SLO. Compute the error ratios that trigger the 14.4x and 6x pages.
+3. Add the request-ID middleware to a FastAPI app, then verify that one request produces the same ID in the response header and in every log line it triggers, including a log from inside a background task.
+4. Design the burn-rate alert pair for a 99.5% SLO. Compute the error ratios that trigger the 14.4x and 6x pages.
 
 **Advanced**
-1. Propagate trace context through a queue: the producer injects it into the message, the worker extracts it, and the worker span links to the producer span. Describe what happens to the trace if the job is retried three times.
-2. Design the AI-specific dashboard and three alerts (TTFT, cost per request, fallback rate) for the chat endpoint, including how you would detect a quality regression after a prompt change with limited labelled data.
+5. Propagate trace context through a queue: the producer injects it into the message, the worker extracts it, and the worker span links to the producer span. Describe what happens to the trace if the job is retried three times.
+6. Design the AI-specific dashboard and three alerts (TTFT, cost per request, fallback rate) for the chat endpoint, including how you would detect a quality regression after a prompt change with limited labelled data.
 
 ## Key Takeaways
 

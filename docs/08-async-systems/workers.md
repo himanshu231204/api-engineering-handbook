@@ -248,12 +248,12 @@ LLM workers have unusual economics. A single job may call a model for 30 to 120 
 2. A worker has `CONCURRENCY = 10` and jobs average 4 seconds. Roughly how many jobs per second can one worker complete, and how many workers do you need for 25 jobs per second?
 
 **Intermediate**
-1. Modify the example so retries use exponential backoff instead of relying on the visibility window: on failure, ack the original and re-add a copy with a `not_before` field, skipping messages whose time has not arrived. Discuss the failure window between the ack and the re-add and how to close it.
-2. Add a Prometheus-style gauge for in-flight jobs and a histogram for job duration. Decide which labels are safe (and which would explode cardinality).
+3. Modify the example so retries use exponential backoff instead of relying on the visibility window: on failure, ack the original and re-add a copy with a `not_before` field, skipping messages whose time has not arrived. Discuss the failure window between the ack and the re-add and how to close it.
+4. Add a Prometheus-style gauge for in-flight jobs and a histogram for job duration. Decide which labels are safe (and which would explode cardinality).
 
 **Advanced**
-1. Design a worker for a job that takes 20 minutes and must survive deployments. Describe checkpointing, lease extension (heartbeat), and what idempotency means for each checkpoint.
-2. A poison message crashes the process with an out-of-memory kill before it can log anything. Explain how the delivery counter still isolates it, and what extra signal you would add to attribute the crash to a job ID.
+5. Design a worker for a job that takes 20 minutes and must survive deployments. Describe checkpointing, lease extension (heartbeat), and what idempotency means for each checkpoint.
+6. A poison message crashes the process with an out-of-memory kill before it can log anything. Explain how the delivery counter still isolates it, and what extra signal you would add to attribute the crash to a job ID.
 
 ## Key Takeaways
 

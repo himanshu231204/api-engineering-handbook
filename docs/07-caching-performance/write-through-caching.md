@@ -278,13 +278,13 @@ Write-back is a natural fit for the *telemetry* around LLM calls, such as token 
 
 **Intermediate**
 
-1. Extend the example so `PUT` honors `If-Match`: reject with `412 Precondition Failed` when the supplied version does not match the row, using a `WHERE version = :expected` clause.
-2. Write a test that simulates two concurrent updates committing in order 5, 6 but writing the cache in order 6, 5, and assert the cache ends at version 6.
+3. Extend the example so `PUT` honors `If-Match`: reject with `412 Precondition Failed` when the supplied version does not match the row, using a `WHERE version = :expected` clause.
+4. Write a test that simulates two concurrent updates committing in order 5, 6 but writing the cache in order 6, 5, and assert the cache ends at version 6.
 
 **Advanced**
 
-1. Design a write-back counter for API usage: increments go to a Redis hash, a worker flushes deltas to PostgreSQL every 5 seconds. Describe how you avoid double-counting if the worker crashes mid-flush, and how much data a Redis failover can lose.
-2. Replace the best-effort delete with a transactional outbox: store a "refresh cache for key X" row in the same database transaction as the update, and have a worker apply it. What new failure modes does this remove, and what does it add?
+5. Design a write-back counter for API usage: increments go to a Redis hash, a worker flushes deltas to PostgreSQL every 5 seconds. Describe how you avoid double-counting if the worker crashes mid-flush, and how much data a Redis failover can lose.
+6. Replace the best-effort delete with a transactional outbox: store a "refresh cache for key X" row in the same database transaction as the update, and have a worker apply it. What new failure modes does this remove, and what does it add?
 
 ## Key Takeaways
 

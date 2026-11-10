@@ -274,12 +274,12 @@ AI systems are full of eventually consistent copies. A vector index lags the sou
 2. Classify as safe or unsafe for eventual consistency and explain: a product's view count, an account balance check before a withdrawal, a search index of blog posts, a "user is banned" flag.
 
 **Intermediate**
-1. Two events for the same user arrive out of order at a consumer: version 5, then version 4. Show the table state and the SQL that ensures the final state is version 5, and show what happens on a redelivery of version 5.
-2. Implement read-your-writes using a cookie that stores the last-write version rather than the WAL position. What does the read path compare, and what is the downside versus the LSN approach?
+3. Two events for the same user arrive out of order at a consumer: version 5, then version 4. Show the table state and the SQL that ensures the final state is version 5, and show what happens on a redelivery of version 5.
+4. Implement read-your-writes using a cookie that stores the last-write version rather than the WAL position. What does the read path compare, and what is the downside versus the LSN approach?
 
 **Advanced**
-1. Design conflict handling for a shopping cart editable from two devices offline. Compare last-writer-wins, an add-wins set CRDT and a user-facing merge, including what happens to a removed item that the other device re-adds.
-2. Your checkout reads stock from a search index updated by events and decrements it in the order service. Describe three distinct failure scenarios (oversell, phantom out-of-stock, lost update) and redesign the flow so the decision uses authoritative data.
+5. Design conflict handling for a shopping cart editable from two devices offline. Compare last-writer-wins, an add-wins set CRDT and a user-facing merge, including what happens to a removed item that the other device re-adds.
+6. Your checkout reads stock from a search index updated by events and decrements it in the order service. Describe three distinct failure scenarios (oversell, phantom out-of-stock, lost update) and redesign the flow so the decision uses authoritative data.
 
 ## Key Takeaways
 

@@ -214,13 +214,13 @@ Measure the AI-specific stages separately: embedding time, vector search, rerank
 
 **Intermediate**
 
-1. Write an endpoint that loads 50 authors and their books with an N+1, record the query count and latency, then fix it with `selectinload` and compare the numbers. Add a test asserting the query count stays constant as the number of authors grows.
-2. An API handles 300 requests per second and each request holds a database connection for 40 ms on average. Estimate the average number of busy connections with Little's law, and explain what happens if the pool size is 8.
+3. Write an endpoint that loads 50 authors and their books with an N+1, record the query count and latency, then fix it with `selectinload` and compare the numbers. Add a test asserting the query count stays constant as the number of authors grows.
+4. An API handles 300 requests per second and each request holds a database connection for 40 ms on average. Estimate the average number of busy connections with Little's law, and explain what happens if the pool size is 8.
 
 **Advanced**
 
-1. Profile a CPU-bound endpoint (for example, one returning 5,000 Pydantic models) with `py-spy`, read the flame graph, and propose and measure three changes. Report the Amdahl-predicted versus actual speedup of each.
-2. Design a load test that reveals the knee of an endpoint's latency curve, and show how you would tell whether the saturating resource is CPU, the connection pool, or a row lock. What metrics would you collect from each layer?
+5. Profile a CPU-bound endpoint (for example, one returning 5,000 Pydantic models) with `py-spy`, read the flame graph, and propose and measure three changes. Report the Amdahl-predicted versus actual speedup of each.
+6. Design a load test that reveals the knee of an endpoint's latency curve, and show how you would tell whether the saturating resource is CPU, the connection pool, or a row lock. What metrics would you collect from each layer?
 
 ## Key Takeaways
 

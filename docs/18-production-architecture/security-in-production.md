@@ -230,12 +230,12 @@ AI features do not replace the controls above; they add three failure modes, eac
 2. List five secrets your system needs (database password, signing key, provider API key, and so on) and state where each should live and how it would be rotated.
 
 **Intermediate**
-1. Take an endpoint you have written and write three tests where user A attempts to read, update and delete user B's object. Make the tests fail first, then fix the endpoint.
-2. Add `extra="forbid"` to a request model and write a test that proves a client cannot set `tenant_id` or `is_admin` through the body.
+3. Take an endpoint you have written and write three tests where user A attempts to read, update and delete user B's object. Make the tests fail first, then fix the endpoint.
+4. Add `extra="forbid"` to a request model and write a test that proves a client cannot set `tenant_id` or `is_admin` through the body.
 
 **Advanced**
-1. Design a least-privilege scheme for the database: separate roles for runtime services, workers and migrations, with the exact grants each needs. Add row-level security for a tenant column and show how a missing application filter would be caught.
-2. Threat-model an agent that can search internal documents and send email. Identify the injection path, the exfiltration path and the two controls (permission scoping, confirmation, egress allow-list) that you would add first, justifying the order.
+5. Design a least-privilege scheme for the database: separate roles for runtime services, workers and migrations, with the exact grants each needs. Add row-level security for a tenant column and show how a missing application filter would be caught.
+6. Threat-model an agent that can search internal documents and send email. Identify the injection path, the exfiltration path and the two controls (permission scoping, confirmation, egress allow-list) that you would add first, justifying the order.
 
 ## Key Takeaways
 

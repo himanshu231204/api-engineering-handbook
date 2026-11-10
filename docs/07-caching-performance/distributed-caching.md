@@ -264,13 +264,13 @@ Vector search is a different workload, and it is usually served by a purpose-bui
 
 **Intermediate**
 
-1. Run `moved_fraction()` from the example. Then change `vnodes` to 1 and to 500 and compare the moved fraction and, by counting keys per node, the balance of the distribution.
-2. Create a local Redis Cluster (for example with the official Docker image or `redis-cli --cluster create`). Use `CLUSTER KEYSLOT` to find which keys share a slot, and show a cross-slot `MGET` failing and a hash-tagged one succeeding.
+3. Run `moved_fraction()` from the example. Then change `vnodes` to 1 and to 500 and compare the moved fraction and, by counting keys per node, the balance of the distribution.
+4. Create a local Redis Cluster (for example with the official Docker image or `redis-cli --cluster create`). Use `CLUSTER KEYSLOT` to find which keys share a slot, and show a cross-slot `MGET` failing and a hash-tagged one succeeding.
 
 **Advanced**
 
-1. Implement key splitting for a hot key: write to `k` suffixed copies, read a random copy, and measure per-shard load before and after under a synthetic load. What invariants break when a write to one copy fails?
-2. Design the invalidation path for the L1/L2 cache so that a product price change is visible on every API instance within one second, without Pub/Sub being a single point of failure. State exactly what bound you guarantee and what you do not.
+5. Implement key splitting for a hot key: write to `k` suffixed copies, read a random copy, and measure per-shard load before and after under a synthetic load. What invariants break when a write to one copy fails?
+6. Design the invalidation path for the L1/L2 cache so that a product price change is visible on every API instance within one second, without Pub/Sub being a single point of failure. State exactly what bound you guarantee and what you do not.
 
 ## Key Takeaways
 

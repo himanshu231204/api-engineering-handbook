@@ -283,12 +283,12 @@ LLM workloads are natural job-queue citizens: batch embedding of a document corp
 2. Write the `POST` and `GET` HTTP exchanges for a "generate invoice PDF" job, including the status codes and headers.
 
 **Intermediate**
-1. Extend the example so that `BadReportRequest` jobs are never retried and every job that ends dead is inserted into a `dead_jobs` table with its arguments and error. Explain what happens if the insert itself fails.
-2. Add two queues, `urgent` and `bulk`, with separate worker processes. Show how you would prevent a flood of bulk jobs from delaying urgent ones.
+3. Extend the example so that `BadReportRequest` jobs are never retried and every job that ends dead is inserted into a `dead_jobs` table with its arguments and error. Explain what happens if the insert itself fails.
+4. Add two queues, `urgent` and `bulk`, with separate worker processes. Show how you would prevent a flood of bulk jobs from delaying urgent ones.
 
 **Advanced**
-1. Design a job that charges a card and then sends a receipt, so that a crash between the two steps cannot double-charge or skip the receipt. State exactly which operations need idempotency keys.
-2. Your oldest-job age alert fires at 02:00 and queue depth is climbing while workers look healthy. List the metrics and log queries you would use to distinguish "downstream dependency slow," "poison job looping" and "not enough workers."
+5. Design a job that charges a card and then sends a receipt, so that a crash between the two steps cannot double-charge or skip the receipt. State exactly which operations need idempotency keys.
+6. Your oldest-job age alert fires at 02:00 and queue depth is climbing while workers look healthy. List the metrics and log queries you would use to distinguish "downstream dependency slow," "poison job looping" and "not enough workers."
 
 ## Key Takeaways
 
