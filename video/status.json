@@ -1,0 +1,10 @@
+{
+  "pilots": [
+    "docs/01-api-foundations/dns.md",
+    "docs/05-authentication-authorization/jwt-deeply-explained.md",
+    "docs/16-rag-apis/retrieval.md"
+  ],
+  "videos": {
+    "docs/01-api-foundations/dns.md": { "status": "rendered" }
+  }
+}

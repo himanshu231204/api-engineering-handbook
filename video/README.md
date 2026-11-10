@@ -32,6 +32,19 @@ script. Design: `specs/2026-11-10-video-series-design.md`. Build plan:
 
    Output: `video/out/<name>.mp4` and `video/out/<name>.srt` (gitignored).
 
+6. **Track it.** Videos are not committed to git (about 20 MB each). Upload the mp4 to
+   YouTube (use `<name>.seo.md`, `<name>.chapters.txt` and the thumbnail), then record it in
+   `video/status.json`: `"rendered"` once the video is made, `"published"` plus the `youtube`
+   link once it is live. Regenerate the tracker:
+
+   ```bash
+   python3 video/tools/gen_roadmap.py          # rewrites video/ROADMAP.md
+   python3 video/tools/gen_roadmap.py --check  # fails if ROADMAP.md is stale or status.json is invalid
+   ```
+
+   `ROADMAP.md` lists every handbook topic (read from the part READMEs) with its status.
+   A script file under `video/scripts/` automatically marks a topic as Scripted.
+
 First run in a fresh checkout: `cd video/kit && npm ci`.
 
 ## Narration
@@ -81,6 +94,7 @@ cd video/kit && npm run typecheck && npm run check-registry
 ## Layout
 
 - `scripts/<NN-slug>/<chapter>.md`: one reviewed script per video
+- `ROADMAP.md` / `status.json`: which topic has a video (generated; edit `status.json`)
 - `templates/script.md`: blank script with all eight beats
 - `tools/`: validator, drafting, captions, narration, timeline, `render.sh`
 - `kit/`: the Remotion project; scene names live in `kit/scene_names.json`,
