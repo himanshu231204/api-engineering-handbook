@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">Kafka topic partitions and consumer group</title>
+  <desc id="d">A topic named orders is split into three partitions P0, P1 and P2. Each partition is an append-only log whose records have increasing offsets. The producer hashes the message key to choose a partition, so all events with the same key land in the same partition. A consumer group named billing has two consumers: consumer 1 reads partitions P0 and P1, consumer 2 reads P2. Each partition is read by only one consumer in the group. Ordering is guaranteed only within a single partition, not across partitions.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Kafka: a topic is split into partition logs</text>
+  <text x="32" y="66" class="sub">Records are appended with increasing offsets. Order holds inside one partition only.</text>
+  <rect x="32" y="112" width="104" height="236" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="84" y="214" text-anchor="middle" class="lbl" fill="#2563eb">Producer</text>
+  <text x="84" y="234" text-anchor="middle" class="note">key = customer</text>
+  <text x="84" y="250" text-anchor="middle" class="note">hash(key) picks</text>
+  <text x="84" y="266" text-anchor="middle" class="note">the partition</text>
+  <text x="176" y="98" class="h">Topic: orders</text>
+  <text x="690" y="98" class="h">Group: billing</text>
+
+  <line x1="136" y1="128" x2="176" y2="128" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="178" y="112" width="48" height="34" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="202" y="134" text-anchor="middle" class="lbl" fill="#475569">P0</text>
+  <rect x="236" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="259" y="134" text-anchor="middle" class="lbl" fill="#b45309">A1</text>
+  <text x="259" y="162" text-anchor="middle" class="note">0</text>
+  <rect x="288" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="311" y="134" text-anchor="middle" class="lbl" fill="#b45309">A2</text>
+  <text x="311" y="162" text-anchor="middle" class="note">1</text>
+  <rect x="340" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="363" y="134" text-anchor="middle" class="lbl" fill="#b45309">A3</text>
+  <text x="363" y="162" text-anchor="middle" class="note">2</text>
+  <rect x="392" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="415" y="134" text-anchor="middle" class="lbl" fill="#b45309">A4</text>
+  <text x="415" y="162" text-anchor="middle" class="note">3</text>
+  <rect x="444" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="467" y="134" text-anchor="middle" class="lbl" fill="#b45309">A5</text>
+  <text x="467" y="162" text-anchor="middle" class="note">4</text>
+  <rect x="496" y="112" width="46" height="34" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="519" y="134" text-anchor="middle" class="lbl" fill="#b45309">A6</text>
+  <text x="519" y="162" text-anchor="middle" class="note">5</text>
+  <rect x="548" y="112" width="46" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="571" y="134" text-anchor="middle" class="note">next</text>
+  <line x1="136" y1="208" x2="176" y2="208" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="178" y="192" width="48" height="34" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="202" y="214" text-anchor="middle" class="lbl" fill="#475569">P1</text>
+  <rect x="236" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="259" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B1</text>
+  <text x="259" y="242" text-anchor="middle" class="note">0</text>
+  <rect x="288" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="311" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B2</text>
+  <text x="311" y="242" text-anchor="middle" class="note">1</text>
+  <rect x="340" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="363" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B3</text>
+  <text x="363" y="242" text-anchor="middle" class="note">2</text>
+  <rect x="392" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="415" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B4</text>
+  <text x="415" y="242" text-anchor="middle" class="note">3</text>
+  <rect x="444" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="467" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B5</text>
+  <text x="467" y="242" text-anchor="middle" class="note">4</text>
+  <rect x="496" y="192" width="46" height="34" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="519" y="214" text-anchor="middle" class="lbl" fill="#2563eb">B6</text>
+  <text x="519" y="242" text-anchor="middle" class="note">5</text>
+  <rect x="548" y="192" width="46" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="571" y="214" text-anchor="middle" class="note">next</text>
+  <line x1="136" y1="288" x2="176" y2="288" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="178" y="272" width="48" height="34" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="202" y="294" text-anchor="middle" class="lbl" fill="#475569">P2</text>
+  <rect x="236" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="259" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C1</text>
+  <text x="259" y="322" text-anchor="middle" class="note">0</text>
+  <rect x="288" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="311" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C2</text>
+  <text x="311" y="322" text-anchor="middle" class="note">1</text>
+  <rect x="340" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="363" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C3</text>
+  <text x="363" y="322" text-anchor="middle" class="note">2</text>
+  <rect x="392" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="415" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C4</text>
+  <text x="415" y="322" text-anchor="middle" class="note">3</text>
+  <rect x="444" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="467" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C5</text>
+  <text x="467" y="322" text-anchor="middle" class="note">4</text>
+  <rect x="496" y="272" width="46" height="34" rx="6" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="519" y="294" text-anchor="middle" class="lbl" fill="#7c3aed">C6</text>
+  <text x="519" y="322" text-anchor="middle" class="note">5</text>
+  <rect x="548" y="272" width="46" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="571" y="294" text-anchor="middle" class="note">next</text>
+  <rect x="672" y="106" width="176" height="244" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <rect x="688" y="120" width="144" height="100" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="760" y="146" text-anchor="middle" class="lbl" fill="#1c7c54">Consumer 1</text>
+  <text x="760" y="168" text-anchor="middle" class="note">reads P0 and P1</text>
+  <text x="760" y="186" text-anchor="middle" class="note">commits one offset</text>
+  <text x="760" y="202" text-anchor="middle" class="note">per partition</text>
+  <rect x="688" y="238" width="144" height="94" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="760" y="264" text-anchor="middle" class="lbl" fill="#1c7c54">Consumer 2</text>
+  <text x="760" y="286" text-anchor="middle" class="note">reads P2</text>
+  <text x="760" y="304" text-anchor="middle" class="note">add a 3rd consumer to</text>
+  <text x="760" y="320" text-anchor="middle" class="note">split P0 and P1</text>
+  <path d="M594 129 C634 129 640 150 686 150" fill="none" stroke="#1c7c54" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <path d="M594 209 C634 209 640 190 686 190" fill="none" stroke="#1c7c54" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <path d="M594 289 C634 289 640 285 686 285" fill="none" stroke="#1c7c54" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="392" width="261" height="80" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="418" r="12" fill="#1c7c54"/>
+  <text x="56" y="422" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="422" class="lbl" fill="#475569">Same key, same partition</text>
+  <text x="48" y="444" class="note">hash(key) picks the partition;</text>
+  <text x="48" y="460" class="note">a customer's events stay together</text>
+  <rect x="309.5" y="392" width="261" height="80" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="333.5" cy="418" r="12" fill="#1c7c54"/>
+  <text x="333.5" y="422" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="355.5" y="422" class="lbl" fill="#475569">Order only within a partition</text>
+  <text x="325.5" y="444" class="note">P0 keeps A1, A2, A3 in order;</text>
+  <text x="325.5" y="460" class="note">no order promised across P0, P1</text>
+  <rect x="587" y="392" width="261" height="80" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="611" cy="418" r="12" fill="#1c7c54"/>
+  <text x="611" y="422" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="633" y="422" class="lbl" fill="#475569">One reader per partition</text>
+  <text x="603" y="444" class="note">a group gives each partition to</text>
+  <text x="603" y="460" class="note">one consumer; offsets = progress</text>
+</svg>
