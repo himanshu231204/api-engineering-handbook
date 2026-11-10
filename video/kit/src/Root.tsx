@@ -1,5 +1,6 @@
-import { Composition, type CalculateMetadataFunction } from "remotion";
+import { Composition, Still, type CalculateMetadataFunction } from "remotion";
 import { Episode } from "./Episode";
+import { Thumbnail, type ThumbnailProps } from "./Thumbnail";
 import type { EpisodeProps, Timeline } from "./types";
 
 const placeholder: Timeline = {
@@ -29,7 +30,11 @@ const calculateMetadata: CalculateMetadataFunction<EpisodeProps> = ({ props }) =
   height: props.timeline.height,
 });
 
+const thumbDefaults: ThumbnailProps = { headline: "DNS", sub: "How a name becomes an IP", kicker: "API ENGINEERING HANDBOOK" };
+
 export const RemotionRoot: React.FC = () => (
+  <>
+  <Still id="Thumbnail" component={Thumbnail} width={1280} height={720} defaultProps={thumbDefaults} />
   <Composition
     id="Episode"
     component={Episode}
@@ -40,4 +45,5 @@ export const RemotionRoot: React.FC = () => (
     defaultProps={{ timeline: placeholder }}
     calculateMetadata={calculateMetadata}
   />
+  </>
 );

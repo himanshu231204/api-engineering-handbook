@@ -50,6 +50,19 @@ class TTSTests(unittest.TestCase):
         }
         self.assertTrue(hasattr(get_provider(env), "synthesize"))
 
+    def test_kokoro_provider_builds_without_loading_model(self):
+        provider = get_provider({"VIDEO_TTS_PROVIDER": "kokoro"})
+        self.assertTrue(hasattr(provider, "synthesize"))
+
+    def test_kokoro_missing_model_raises_clear_error(self):
+        provider = get_provider(
+            {"VIDEO_TTS_PROVIDER": "kokoro", "VIDEO_KOKORO_DIR": "/nonexistent/models"}
+        )
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(FileNotFoundError) as cm:
+                provider.synthesize("hello", Path(d) / "x.mp3")
+        self.assertIn("kokoro-v1.0.onnx", str(cm.exception))
+
     def test_estimate_seconds_matches_150wpm(self):
         self.assertAlmostEqual(estimate_seconds("w " * 150), 60.0)
 

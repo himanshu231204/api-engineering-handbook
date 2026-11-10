@@ -5,6 +5,8 @@ index: 5
 title: DNS
 target_seconds: 450
 reviewed: true
+thumbnail_text: DNS
+thumbnail_sub: How a name becomes an IP
 ---
 
 ## Hook

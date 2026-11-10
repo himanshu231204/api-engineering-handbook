@@ -5,7 +5,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from script_model import BEAT_NAMES, parse_script  # noqa: E402
-from timeline import build_timeline  # noqa: E402
+from timeline import build_chapters, build_timeline  # noqa: E402
 
 
 def make(bodies=None):
@@ -75,6 +75,39 @@ class TimelineTests(unittest.TestCase):
                 self.assertGreaterEqual(c["startFrame"], beat["startFrame"])
                 self.assertLessEqual(c["endFrame"], end)
                 self.assertLess(c["startFrame"], c["endFrame"])
+
+
+
+class ChapterTests(unittest.TestCase):
+    def test_chapters_start_at_zero_and_use_friendly_labels(self):
+        tl = build_timeline(make(), {n: 20.0 for n in BEAT_NAMES})
+        lines = build_chapters(tl).splitlines()
+        self.assertEqual(lines[0], "00:00 Intro")
+        self.assertEqual(lines[1], "00:20 Why it matters")
+
+    def test_short_beat_is_merged_into_previous_chapter(self):
+        durations = {n: 20.0 for n in BEAT_NAMES} | {"Next": 6.0}
+        text = build_chapters(build_timeline(make(), durations))
+        self.assertNotIn("What's next", text)
+        self.assertEqual(len(text.splitlines()), 7)
+
+    def test_every_chapter_is_at_least_ten_seconds(self):
+        durations = {n: 8.0 for n in BEAT_NAMES} | {"Concept": 30.0}
+        text = build_chapters(build_timeline(make(), durations))
+        stamps = [int(l[:2]) * 60 + int(l[3:5]) for l in text.splitlines()]
+        total = 8 * 7 + 30 - 8 + 8  # sum of durations
+        bounds = stamps + [round(sum(durations.values()))]
+        for a, b in zip(bounds, bounds[1:]):
+            self.assertGreaterEqual(b - a, 10)
+
+    def test_hour_long_timestamps_use_h_mm_ss(self):
+        durations = {n: 600.0 for n in BEAT_NAMES}
+        text = build_chapters(build_timeline(make(), durations))
+        self.assertIn("1:00:00", text)
+
+    def test_at_least_three_chapters_or_empty(self):
+        tl = build_timeline(make(), {n: 11.0 for n in BEAT_NAMES} | {"Hook": 5.0})
+        self.assertGreaterEqual(len(build_chapters(tl).splitlines()), 3)
 
 
 if __name__ == "__main__":

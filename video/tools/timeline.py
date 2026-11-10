@@ -85,3 +85,47 @@ def build_timeline(
         "beats": beats,
         "totalFrames": position,
     }
+
+
+_CHAPTER_LABELS = {
+    "Hook": "Intro",
+    "Why It Matters": "Why it matters",
+    "Concept": "The core concept",
+    "How It Works": "How it works",
+    "Demo": "Demo",
+    "Mistakes": "Common mistakes",
+    "Recap": "Recap and quiz",
+    "Next": "What's next",
+}
+_MIN_CHAPTER_SECONDS = 10
+
+
+def _stamp(seconds: float) -> str:
+    total = round(seconds)
+    hours, rest = divmod(total, 3600)
+    minutes, secs = divmod(rest, 60)
+    return f"{hours}:{minutes:02d}:{secs:02d}" if hours else f"{minutes:02d}:{secs:02d}"
+
+
+def build_chapters(timeline: dict) -> str:
+    """YouTube chapter lines. Starts at 00:00, every chapter >= 10 s, else empty.
+
+    Beats shorter than 10 s are folded into the following beat; a short final
+    remainder is folded into the previous chapter. Fewer than 3 chapters gives "".
+    """
+    fps = timeline["fps"]
+    chapters: list[list] = []  # [start_seconds, label, duration_seconds]
+    carry = None
+    for beat in timeline["beats"]:
+        duration = beat["frames"] / fps
+        if carry is None:
+            carry = [beat["startFrame"] / fps, _CHAPTER_LABELS.get(beat["name"], beat["name"]), 0.0]
+        carry[2] += duration
+        if carry[2] >= _MIN_CHAPTER_SECONDS:
+            chapters.append(carry)
+            carry = None
+    if carry is not None and chapters:
+        chapters[-1][2] += carry[2]
+    if len(chapters) < 3:
+        return ""
+    return "\n".join(f"{_stamp(start)} {label}" for start, label, _ in chapters) + "\n"

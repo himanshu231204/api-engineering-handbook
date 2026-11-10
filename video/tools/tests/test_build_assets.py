@@ -33,6 +33,16 @@ class BuildAssetsTests(unittest.TestCase):
                     self.assertLessEqual(len(line), 42)
             self.assertEqual(list((out / "audio").glob("*.mp3")) if (out / "audio").exists() else [], [])
 
+    def test_writes_chapters_starting_at_zero(self):
+        with tempfile.TemporaryDirectory() as d:
+            script = Path(d) / "s.md"
+            script.write_text(script_text())
+            out = Path(d) / "out"
+            build_assets(script, out, {})
+            lines = (out / "chapters.txt").read_text().splitlines()
+            self.assertEqual(lines[0], "00:00 Intro")
+            self.assertGreaterEqual(len(lines), 3)
+
 
 if __name__ == "__main__":
     unittest.main()

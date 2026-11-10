@@ -50,6 +50,27 @@ BROWSER="${REMOTION_BROWSER:-/opt/pw-browsers/chromium}"
     --props="$WORK/timeline.json" --codec=h264 --log=warn "${BROWSER_FLAG[@]}"
 )
 
+# With narration, normalise loudness to about -14 LUFS (video stream is copied).
+if [ -d "$KIT/public/audio" ]; then
+  NORM_MP4="$WORK/$SLUG.norm.mp4"
+  trap 'rm -f "$TMP_MP4" "$NORM_MP4"' EXIT
+  ffmpeg -loglevel error -y -i "$TMP_MP4" -c:v copy \
+    -af loudnorm=I=-14:TP=-1.5:LRA=7 -c:a aac -b:a 192k -movflags +faststart "$NORM_MP4"
+  mv "$NORM_MP4" "$TMP_MP4"
+fi
+
 mv "$TMP_MP4" "$VIDEO/out/$SLUG.mp4"
 cp "$WORK/captions.srt" "$VIDEO/out/$SLUG.srt"
+cp "$WORK/chapters.txt" "$VIDEO/out/$SLUG.chapters.txt"
+
+# Optional thumbnail from frontmatter keys thumbnail_text / thumbnail_sub.
+THUMB_TEXT="$(sed -n 's/^thumbnail_text:[[:space:]]*//p' "$SCRIPT" | head -1 | tr -d '\r')"
+THUMB_SUB="$(sed -n 's/^thumbnail_sub:[[:space:]]*//p' "$SCRIPT" | head -1 | tr -d '\r')"
+if [ -n "$THUMB_TEXT" ]; then
+  PROPS="$(THUMB_TEXT="$THUMB_TEXT" THUMB_SUB="$THUMB_SUB" python3 -c \
+    'import json,os; print(json.dumps({"headline": os.environ["THUMB_TEXT"], "sub": os.environ["THUMB_SUB"], "kicker": "API ENGINEERING HANDBOOK"}))')"
+  (cd "$KIT" && npx remotion still src/index.ts Thumbnail "$VIDEO/out/$SLUG.thumbnail.png" \
+    --props="$PROPS" --log=warn "${BROWSER_FLAG[@]}")
+fi
+
 echo "rendered $VIDEO/out/$SLUG.mp4"

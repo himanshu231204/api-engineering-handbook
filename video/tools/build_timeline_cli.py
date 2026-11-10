@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from captions import Caption, build_srt  # noqa: E402
 from script_model import parse_script  # noqa: E402
-from timeline import build_timeline  # noqa: E402
+from timeline import build_chapters, build_timeline  # noqa: E402
 from tts import audio_name, beat_durations, get_provider  # noqa: E402
 
 
@@ -35,6 +35,7 @@ def build_assets(script_path: Path, out_dir: Path, env: Mapping[str, str]) -> di
     ]
     (out_dir / "timeline.json").write_text(json.dumps({"timeline": timeline}, ensure_ascii=False, indent=1), encoding="utf-8")
     (out_dir / "captions.srt").write_text(build_srt(captions), encoding="utf-8")
+    (out_dir / "chapters.txt").write_text(build_chapters(timeline), encoding="utf-8")
     return timeline
 
 
