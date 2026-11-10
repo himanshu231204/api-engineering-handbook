@@ -1,0 +1,79 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="c4b" data-width="1920" data-height="1080">
+<div id="c4b-stage" class="stage">
+<div id="c4b-e1" class="el box" style="left:300px;top:200px;width:520px;height:200px;border:5px dashed #9D4EFF;background:rgba(157,78,255,0.09);box-shadow:0 0 28px rgba(157,78,255,0.3);"><div class="bt" style="font-size:44px;color:#fff">A model</div><div class="bs">the kitchen you never see</div></div>
+<div id="c4b-e2" class="el " style="left:260px;top:470px;width:1400px;font-size:84px;font-weight:900;color:#fff;text-align:left;line-height:1.12;">Same contract.</div>
+<div id="c4b-e3" class="el shot" style="left:100px;top:160px;width:1000px;height:383px"><div class="bar" style="height:46px"><span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span><span class="url">postman.com/state-of-api/2025</span></div><div class="vp" style="top:46px;height:337px"><img id="c4b-e3-i" src="assets/shots/postman_crop.png" style="width:1000px;height:337px"/></div></div>
+<svg id="c4b-e4" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><rect id="c4b-e4-r" x="106" y="409" width="560" height="50" rx="18" fill="none" stroke="#FFE500" stroke-width="6" stroke-dasharray="1220" stroke-dashoffset="1220" stroke-linecap="round"/></svg>
+<div id="c4b-e5" class="el chip" style="left:100px;top:100px;background:#FFE500;color:#0E0622;font-size:30px;">Postman says</div>
+<div id="c4b-e6" class="el" style="left:1180px;top:90px;width:640px"><div id="c4b-e6-n" class="num" style="font-size:150px;color:#00F0FF">89%</div><div class="lab">use generative AI</div></div>
+<div id="c4b-e7" class="el" style="left:1180px;top:320px;width:640px"><div id="c4b-e7-n" class="num" style="font-size:150px;color:#FF2E88">24%</div><div class="lab">design APIs for AI agents</div></div>
+<div id="c4b-e8" class="el" style="left:1180px;top:550px;width:640px"><div id="c4b-e8-n" class="num" style="font-size:150px;color:#39FF88">65%</div><div class="lab">earn revenue from APIs</div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#c4b-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("c4b-e1","pop",1.62,5.619);
+A("c4b-e2","fade",0.24,5.619);
+A("c4b-e3","fade",5.669,null);
+tl.fromTo("#c4b-e3-i",{scale:1.0},{scale:1.08,duration:16,ease:"none"},5.669);
+RING("c4b-e4",6.869,1220,null);
+A("c4b-e5","pop",5.669,null);
+STAT("c4b-e6",11.449,89,"%");
+STAT("c4b-e7",14.722,24,"%");
+STAT("c4b-e8",20.999,65,"%");
+tl.fromTo("#c4b-stage",{opacity:1},{opacity:0,duration:.2,immediateRender:false},27.902);
+window.__timelines = window.__timelines || {};
+window.__timelines["c4b"] = tl;
+</script>
+</div>
+</template>

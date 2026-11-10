@@ -1,0 +1,13 @@
+Client                          Server
+  │                                │
+  │──── HTTP Request ────────────▶│
+  │     (method, URL, headers,    │
+  │      body)                    │
+  │                                │  server processes the
+  │                                │  request: validates input,
+  │                                │  runs business logic,
+  │                                │  talks to a database, etc.
+  │                                │
+  │◀──── HTTP Response ────────────│
+  │     (status code, headers,    │
+  │      body)                    │

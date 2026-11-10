@@ -1,0 +1,15 @@
+tts/
+models/
+node_modules/
+renders/
+*.mp4
+*.wav
+.cache/
+.hyperframes/
+fa/
+build/cache/
+*.log
+tts_ready.txt
+timing_raw.json
+snap_times.txt
+recheck.py

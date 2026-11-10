@@ -1,0 +1,24 @@
+=== users/42
+HTTP/1.1 200 OK
+date: Tue, 10 Nov 2026 11:55:01 GMT
+server: uvicorn
+content-length: 59
+content-type: application/json
+
+{"id":42,"name":"Priya Sharma","email":"priya@example.com"}
+=== users/7
+HTTP/1.1 404 Not Found
+date: Tue, 10 Nov 2026 11:55:01 GMT
+server: uvicorn
+content-length: 27
+content-type: application/json
+
+{"detail":"User not found"}
+=== users/banana
+HTTP/1.1 422 Unprocessable Content
+date: Tue, 10 Nov 2026 11:55:01 GMT
+server: uvicorn
+content-length: 155
+content-type: application/json
+
+{"detail":[{"type":"int_parsing","loc":["path","user_id"],"msg":"Input should be a valid integer, unable to parse string as an integer","input":"banana"}]}

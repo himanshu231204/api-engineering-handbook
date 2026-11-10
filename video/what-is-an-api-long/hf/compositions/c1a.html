@@ -1,0 +1,82 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="c1a" data-width="1920" data-height="1080">
+<div id="c1a-stage" class="stage">
+<div id="c1a-e1" class="el chip" style="left:150px;top:150px;width:520px;background:#00F0FF;color:#0E0622;font-size:54px;">Application</div>
+<div id="c1a-e2" class="el chip" style="left:710px;top:150px;width:520px;background:#39FF88;color:#0E0622;font-size:54px;">Programming</div>
+<div id="c1a-e3" class="el chip" style="left:1270px;top:150px;width:520px;background:#FF2E88;color:#0E0622;font-size:54px;">Interface</div>
+<div id="c1a-e4" class="el " style="left:160px;top:320px;width:1600px;font-size:170px;font-weight:900;color:#fff;text-align:center;line-height:1.12;">= a <span style="color:#FFE500">contract</span></div>
+<div id="c1a-e5" class="el box" style="left:180px;top:160px;width:520px;height:190px;border:5px solid #00F0FF;background:rgba(0,240,255,0.09);box-shadow:0 0 28px rgba(0,240,255,0.3);"><div class="bt" style="font-size:44px;color:#fff">Program A</div><div class="bs">asks</div></div>
+<div id="c1a-e6" class="el box" style="left:1220px;top:160px;width:520px;height:190px;border:5px dashed #7C8DA6;background:rgba(124,141,166,0.09);box-shadow:0 0 28px rgba(124,141,166,0.3);"><div class="bt" style="font-size:44px;color:#fff">Program B</div><div class="bs">how it works inside: unknown</div></div>
+<svg id="c1a-e7" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c1a-e7-l" x1="710" y1="255" x2="1188.0" y2="255.0" stroke="#A0A0B0" stroke-width="6" stroke-linecap="round" stroke-dasharray="500.0" /><polygon id="c1a-e7-h" points="1210,255 1190.190163748241,264.5692417504471 1190.190163748241,245.43075824955292" fill="#A0A0B0"/></svg>
+<div id="c1a-e8" class="el " style="left:690px;top:211.0px;width:540px;font-size:32px;font-weight:700;color:#fff;text-align:center;line-height:1.12;">asks for something</div>
+<div id="c1a-e9" class="el" style="left:260px;top:430px;width:1400px;border:2px solid #39FF88;border-radius:26px;padding:34px 44px;background:rgba(57,255,136,0.07);box-shadow:0 0 30px rgba(57,255,136,0.25);box-sizing:border-box"><div style="font-size:28px;font-weight:900;color:#39FF88;letter-spacing:.08em">FROM THE HANDBOOK GLOSSARY</div><div style="font-size:48px;font-weight:700;line-height:1.28;margin-top:14px">“A <span style="color:#FFE500">defined contract</span> that lets one piece of software request functionality or data from another, <span style="color:#FFE500">without needing to know its internal implementation</span>.”</div></div>
+<div id="c1a-e10" class="pillwrap"><div class="pill" id="c1a-e10-p">API = a contract</div></div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#c1a-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("c1a-e1","pop",1.36,6.939);
+A("c1a-e2","pop",1.96,6.939);
+A("c1a-e3","pop",2.54,6.939);
+A("c1a-e4","slam",5.9,6.939);
+A("c1a-e5","pop",6.989,null);
+A("c1a-e6","pop",7.979,null);
+D("c1a-e7",7.579,500.0,true,null);
+A("c1a-e8","fade",7.729,null);
+A("c1a-e9","fade",12.917,null);
+PILL("c1a-e10",5.9);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["c1a"] = tl;
+</script>
+</div>
+</template>

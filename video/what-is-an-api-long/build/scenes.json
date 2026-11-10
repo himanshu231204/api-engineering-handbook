@@ -1,0 +1,412 @@
+[
+ {
+  "id": "hook",
+  "start": 0.0,
+  "dur": 14.636,
+  "kind": "logo_reveal",
+  "chapter": 0,
+  "keys": [
+   "h1",
+   "h2",
+   "h3"
+  ],
+  "assets": [
+   "svg/emblem"
+  ],
+  "pill": null
+ },
+ {
+  "id": "road",
+  "start": 14.636,
+  "dur": 11.477,
+  "kind": "roadmap",
+  "chapter": 0,
+  "keys": [
+   "r1",
+   "r2",
+   "r3"
+  ],
+  "assets": [],
+  "pill": "5 parts"
+ },
+ {
+  "id": "card1",
+  "start": 26.113,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 1,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "c1a",
+  "start": 27.783,
+  "dur": 20.075,
+  "kind": "svg_diagram",
+  "chapter": 1,
+  "keys": [
+   "a1",
+   "a2",
+   "a3"
+  ],
+  "assets": [],
+  "pill": "API = a contract"
+ },
+ {
+  "id": "c1b",
+  "start": 47.858,
+  "dur": 7.976,
+  "kind": "svg_flow",
+  "chapter": 1,
+  "keys": [
+   "b1",
+   "b2"
+  ],
+  "assets": [],
+  "pill": "the shape of the socket is the promise"
+ },
+ {
+  "id": "c1c",
+  "start": 55.834,
+  "dur": 23.294,
+  "kind": "svg_analogy",
+  "chapter": 1,
+  "keys": [
+   "c1",
+   "c2",
+   "c3",
+   "c4"
+  ],
+  "assets": [
+   "repo/svg/00-what-is-an-api.svg"
+  ],
+  "pill": "change the kitchen, keep the menu"
+ },
+ {
+  "id": "card2",
+  "start": 79.128,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 2,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "c2a",
+  "start": 80.798,
+  "dur": 21.754,
+  "kind": "svg_flow",
+  "chapter": 2,
+  "keys": [
+   "d1",
+   "d2",
+   "d3"
+  ],
+  "assets": [
+   "shots/mdn_crop.png"
+  ],
+  "pill": "the client always starts it"
+ },
+ {
+  "id": "c2b",
+  "start": 102.552,
+  "dur": 15.947,
+  "kind": "code_card",
+  "chapter": 2,
+  "keys": [
+   "e1",
+   "e2",
+   "e3"
+  ],
+  "assets": [],
+  "pill": "GET /users/42"
+ },
+ {
+  "id": "c2b2",
+  "start": 118.499,
+  "dur": 9.267,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "e4"
+  ],
+  "assets": [
+   "repo/svg/01-http-request-anatomy.svg"
+  ],
+  "pill": "same four-part shape, both ways"
+ },
+ {
+  "id": "c2c",
+  "start": 127.766,
+  "dur": 17.691,
+  "kind": "code_card",
+  "chapter": 2,
+  "keys": [
+   "f1",
+   "f3",
+   "f4"
+  ],
+  "assets": [],
+  "pill": "status first, then the body"
+ },
+ {
+  "id": "c2e",
+  "start": 145.457,
+  "dur": 9.978,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "f2"
+  ],
+  "assets": [
+   "repo/svg/01-status-code-families.svg"
+  ],
+  "pill": "the first digit tells you whose move it is"
+ },
+ {
+  "id": "c2d",
+  "start": 155.435,
+  "dur": 12.319,
+  "kind": "svg_flow",
+  "chapter": 2,
+  "keys": [
+   "g1"
+  ],
+  "assets": [],
+  "pill": "stateless: say who you are every time"
+ },
+ {
+  "id": "card3",
+  "start": 167.754,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 3,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "c3m",
+  "start": 169.424,
+  "dur": 23.558,
+  "kind": "svg_flow",
+  "chapter": 3,
+  "keys": [
+   "q1",
+   "q2",
+   "q3",
+   "q4"
+  ],
+  "assets": [
+   "repo/mermaid/what-is-an-api-sequence.svg"
+  ],
+  "pill": "the whole trip, in one diagram"
+ },
+ {
+  "id": "c3a",
+  "start": 192.982,
+  "dur": 28.45,
+  "kind": "code_card",
+  "chapter": 3,
+  "keys": [
+   "i1",
+   "i2",
+   "i3",
+   "i4"
+  ],
+  "assets": [
+   "demo/main.py"
+  ],
+  "pill": "the route is the contract"
+ },
+ {
+  "id": "c3b",
+  "start": 221.432,
+  "dur": 13.937,
+  "kind": "terminal_clip",
+  "chapter": 3,
+  "keys": [
+   "j1",
+   "j2",
+   "j3"
+  ],
+  "assets": [
+   "demo/real_output_8000.txt"
+  ],
+  "pill": "real run: 200, 404, 422"
+ },
+ {
+  "id": "c3c",
+  "start": 235.369,
+  "dur": 16.818,
+  "kind": "svg_compare",
+  "chapter": 3,
+  "keys": [
+   "k1",
+   "k2",
+   "k3"
+  ],
+  "assets": [],
+  "pill": "swap the backend, keep the contract"
+ },
+ {
+  "id": "card4",
+  "start": 252.187,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 4,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "c4a",
+  "start": 253.857,
+  "dur": 19.668,
+  "kind": "svg_icons",
+  "chapter": 4,
+  "keys": [
+   "l1",
+   "l2",
+   "l3"
+  ],
+  "assets": [],
+  "pill": "web, apps, services, AI: all callers"
+ },
+ {
+  "id": "c4b",
+  "start": 273.525,
+  "dur": 28.122,
+  "kind": "stat_drop",
+  "chapter": 4,
+  "keys": [
+   "m1",
+   "m2",
+   "m3",
+   "m4"
+  ],
+  "assets": [
+   "shots/postman_crop.png"
+  ],
+  "pill": "Postman 2025 \u00b7 a vendor survey"
+ },
+ {
+  "id": "card5",
+  "start": 301.647,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 5,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "m1",
+  "start": 303.317,
+  "dur": 14.283,
+  "kind": "svg_diagram",
+  "chapter": 5,
+  "keys": [
+   "x1"
+  ],
+  "assets": [],
+  "pill": "API \u2283 web API \u2283 REST"
+ },
+ {
+  "id": "m2",
+  "start": 317.6,
+  "dur": 11.796,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x2"
+  ],
+  "assets": [],
+  "pill": "design the contract first, then the code"
+ },
+ {
+  "id": "m3",
+  "start": 329.396,
+  "dur": 8.517,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x3"
+  ],
+  "assets": [],
+  "pill": "the status code is part of the contract"
+ },
+ {
+  "id": "m4",
+  "start": 337.913,
+  "dur": 12.643,
+  "kind": "svg_flow",
+  "chapter": 5,
+  "keys": [
+   "x4"
+  ],
+  "assets": [],
+  "pill": "a UI consumes an API"
+ },
+ {
+  "id": "m5",
+  "start": 350.556,
+  "dur": 13.969,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x5"
+  ],
+  "assets": [],
+  "pill": "document the contract"
+ },
+ {
+  "id": "card6",
+  "start": 364.525,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 6,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "rec",
+  "start": 366.195,
+  "dur": 17.807,
+  "kind": "recap_grid",
+  "chapter": 6,
+  "keys": [
+   "n1",
+   "n2",
+   "n3",
+   "n4",
+   "n5",
+   "n6"
+  ],
+  "assets": [],
+  "pill": "one contract, many callers"
+ },
+ {
+  "id": "out",
+  "start": 384.002,
+  "dur": 16.665,
+  "kind": "end_screen",
+  "chapter": 6,
+  "keys": [
+   "o1",
+   "o2",
+   "o3"
+  ],
+  "assets": [],
+  "pill": null
+ }
+]

@@ -1,0 +1,5 @@
+You're calling every API a REST API. That one mistake is why your integrations break the day another team renames a database column.
+You use APIs 100 times a day, yet you can't explain one. Why does your weather app know the forecast without ever touching a weather station?
+You're copying your database columns straight into API responses. Rename one column and every app that calls you breaks. Why does that keep happening?
+Your app talks to a server you'll never see. What exactly is it saying, and why do you never need to know how that server works?
+You think an API is just a URL. It's actually a promise, and breaking it costs you every app that depends on you. What's the promise?
