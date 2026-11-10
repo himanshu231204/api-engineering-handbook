@@ -37,16 +37,39 @@ First run in a fresh checkout: `cd video/kit && npm ci`.
 ## Narration
 
 With no provider configured the render is captioned and silent, and the narration
-text is the script itself, so you can record your own voiceover. To generate
-speech, set these environment variables (never commit them):
+text is the script itself, so you can record your own voiceover. Two providers exist:
+
+**Kokoro (local, free, used for the DNS pilot).** One-time setup, from the repo root:
+
+```bash
+python3 -m venv video/.cache/tts && video/.cache/tts/bin/pip install kokoro-onnx soundfile numpy
+mkdir -p video/.cache/models && cd video/.cache/models
+curl -sSLO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.onnx
+curl -sSLO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+```
+
+Then render with `VIDEO_TTS_PROVIDER=kokoro bash video/tools/render.sh <script.md>`.
+Optional: `VIDEO_TTS_VOICE` (default `am_michael`), `VIDEO_KOKORO_SPEED` (default `1.03`),
+`VIDEO_KOKORO_DIR`, `VIDEO_KOKORO_PYTHON`. Keep the same voice across the series.
+
+**OpenAI-compatible speech API.** Set these environment variables (never commit them):
 
 | Variable | Meaning |
 |---|---|
-| `VIDEO_TTS_PROVIDER` | `openai-compatible` (or unset/`none` for silent) |
+| `VIDEO_TTS_PROVIDER` | `openai-compatible` |
 | `VIDEO_TTS_BASE_URL` | API base URL, for example `https://api.example.com/v1` |
 | `VIDEO_TTS_API_KEY` | API key |
 | `VIDEO_TTS_MODEL` | speech model name |
-| `VIDEO_TTS_VOICE` | voice name (keep it the same across the series) |
+| `VIDEO_TTS_VOICE` | voice name |
+
+When narrated, `render.sh` also normalises loudness to about -14 LUFS.
+
+## Upload extras
+
+`render.sh` also writes `video/out/<name>.chapters.txt` (YouTube chapters from the
+timeline) and, when the script frontmatter has `thumbnail_text` and `thumbnail_sub`,
+`video/out/<name>.thumbnail.png`. Title, description and tags live next to the script
+as `<name>.seo.md` (see `scripts/01-api-foundations/dns.seo.md`).
 
 ## Checks
 

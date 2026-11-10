@@ -37,7 +37,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({ headline, sub, kicker }) =
       style={{
         position: "absolute",
         right: 72,
-        bottom: 56,
+        bottom: 24,
         fontFamily: fonts.mono,
         fontSize: 40,
         color: colors.slate,
