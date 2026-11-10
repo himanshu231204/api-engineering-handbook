@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Cache write strategies compared</title>
+  <desc id="d">Three columns compare cache-aside, write-through and write-back. Cache-aside writes the database, deletes the cache key, and the next read reloads it; if the delete fails the cache is stale until the TTL expires. Write-through writes the database, then sets the cache, then replies; if the cache write fails the cache is stale until retried or deleted. Write-back writes the cache and replies, queues the key, and flushes to the database later; if the cache dies before the flush, acknowledged writes are lost.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Three ways to handle a write: where does it go first, and what can break?</text>
+  <text x="32" y="66" class="sub">Steps run top to bottom. The red box is the failure that matters most for each strategy.</text>
+
+  <rect x="32" y="84" width="264" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="106" class="lbl" fill="#2563eb" style="font-size:15px">Cache-aside</text>
+  <text x="48" y="124" class="note">App owns the cache</text>
+  <rect x="32" y="152" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="177" r="12" fill="#1c7c54"/>
+  <text x="56" y="181" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="174" class="lbl" fill="#475569">Write the row to the database</text>
+  <text x="78" y="191" class="note">commit = source of truth</text>
+  <line x1="164" y1="202" x2="164" y2="214" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="214" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="239" r="12" fill="#1c7c54"/>
+  <text x="56" y="243" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="78" y="236" class="lbl" fill="#475569">DELETE the cache key</text>
+  <text x="78" y="253" class="note">invalidate, do not update</text>
+  <line x1="164" y1="264" x2="164" y2="276" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="276" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="301" r="12" fill="#1c7c54"/>
+  <text x="56" y="305" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="78" y="298" class="lbl" fill="#475569">Next read misses</text>
+  <text x="78" y="315" class="note">reloads from DB, re-caches</text>
+  <rect x="32" y="344" width="264" height="64" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="366" class="lbl" fill="#b91c1c">Failure point: step 2 fails</text>
+  <text x="48" y="386" class="note">Stale value stays until TTL expires</text>
+  <text x="48" y="438" class="lbl" fill="#2563eb">Best for: read-heavy data</text>
+  <rect x="308" y="84" width="264" height="52" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="324" y="106" class="lbl" fill="#1c7c54" style="font-size:15px">Write-through</text>
+  <text x="324" y="124" class="note">Cache updated in the write path</text>
+  <rect x="308" y="152" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="332" cy="177" r="12" fill="#1c7c54"/>
+  <text x="332" y="181" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="354" y="174" class="lbl" fill="#475569">Write the row to the database</text>
+  <text x="354" y="191" class="note">commit first, then cache</text>
+  <line x1="440" y1="202" x2="440" y2="214" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="308" y="214" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="332" cy="239" r="12" fill="#1c7c54"/>
+  <text x="332" y="243" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="354" y="236" class="lbl" fill="#475569">SET the new value in cache</text>
+  <text x="354" y="253" class="note">same request, same code path</text>
+  <line x1="440" y1="264" x2="440" y2="276" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="308" y="276" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="332" cy="301" r="12" fill="#1c7c54"/>
+  <text x="332" y="305" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="354" y="298" class="lbl" fill="#475569">Reply 200 to the client</text>
+  <text x="354" y="315" class="note">after both writes returned</text>
+  <rect x="308" y="344" width="264" height="64" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="324" y="366" class="lbl" fill="#b91c1c">Failure point: step 2 fails</text>
+  <text x="324" y="386" class="note">DB is new, cache is old: retry or DELETE</text>
+  <text x="324" y="438" class="lbl" fill="#1c7c54">Best for: read-after-write</text>
+  <rect x="584" y="84" width="264" height="52" rx="10" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="600" y="106" class="lbl" fill="#7c3aed" style="font-size:15px">Write-back</text>
+  <text x="600" y="124" class="note">Cache first, DB later</text>
+  <rect x="584" y="152" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="608" cy="177" r="12" fill="#1c7c54"/>
+  <text x="608" y="181" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="630" y="174" class="lbl" fill="#475569">Write to cache, reply 200</text>
+  <text x="630" y="191" class="note">fast ack, DB not touched</text>
+  <line x1="716" y1="202" x2="716" y2="214" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="584" y="214" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="608" cy="239" r="12" fill="#1c7c54"/>
+  <text x="608" y="243" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="630" y="236" class="lbl" fill="#475569">Mark key dirty / queue it</text>
+  <text x="630" y="253" class="note">durable only if queue is</text>
+  <line x1="716" y1="264" x2="716" y2="276" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="584" y="276" width="264" height="50" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="608" cy="301" r="12" fill="#1c7c54"/>
+  <text x="608" y="305" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="630" y="298" class="lbl" fill="#475569">Flush to DB in batches</text>
+  <text x="630" y="315" class="note">async, seconds later</text>
+  <rect x="584" y="344" width="264" height="64" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="600" y="366" class="lbl" fill="#b91c1c">Failure point: cache lost pre-flush</text>
+  <text x="600" y="386" class="note">Acknowledged writes are lost</text>
+  <text x="600" y="438" class="lbl" fill="#7c3aed">Best for: absorbing write bursts</text>
+</svg>
