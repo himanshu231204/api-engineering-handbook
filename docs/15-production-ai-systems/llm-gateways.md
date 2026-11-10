@@ -75,6 +75,8 @@ flowchart LR
     ROUTE --> P3[Self-hosted Model Server]
 ```
 
+![Apps call one LLM gateway that handles auth, rate limits, caching, routing, cost tracking and logging before calling providers A, B or C](../assets/diagrams/15-llm-gateway.svg)
+
 The important structural detail: application services only ever talk to the box labeled "LLM Gateway." Every provider integration, every credential, every routing decision lives behind that single boundary.
 
 ## Request / Response Example

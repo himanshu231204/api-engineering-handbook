@@ -69,6 +69,8 @@ flowchart TD
     M -->|No| O[Discard after session ends]
 ```
 
+![Short-term context-window memory, long-term vector memory and a structured profile store, all assembled into the prompt for each LLM call](../assets/diagrams/17-memory-types.svg)
+
 ## Request / Response Example
 
 A memory-augmented agent call typically involves an internal retrieval step before the LLM call. Here's what the retrieved memory injection can look like as it's assembled into the prompt sent to the model:

@@ -72,6 +72,8 @@ flowchart TD
 
 The loop is simple to draw but the engineering complexity lives in the edges: what happens when a tool errors, what happens when the model calls a tool with bad arguments, what happens when the loop runs 40 iterations without converging. Those are covered in the next few chapters.
 
+![The agent loop: think (LLM picks an action), act (run a tool), observe (add the result to history), repeat, with a guard that stops the run at a step or budget limit](../assets/diagrams/17-agent-loop.svg)
+
 ## Request / Response Example
 
 Agents are usually exposed behind a single HTTP endpoint, even though internally they make several LLM calls. From the caller's perspective it can look as simple as this (see [Agent APIs](agent-apis.md) for streaming and async variants):

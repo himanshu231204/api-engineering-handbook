@@ -60,6 +60,8 @@ sequenceDiagram
     GW-->>GW: log fallback event (P1 failed -> P2 served)
 ```
 
+![Fallback chain: primary model, then another provider, then a cheaper model, then a cached or graceful response, with a circuit breaker skipping failing providers](../assets/diagrams/15-fallback-chain.svg)
+
 ## Request / Response Example
 
 A 429 from the primary provider, and the gateway's internal decision log entry showing the fallback that followed — this is the kind of record that should exist for every fallback event:

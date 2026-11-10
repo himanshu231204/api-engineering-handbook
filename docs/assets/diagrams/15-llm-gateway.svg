@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="t d">
+  <title id="t">One gateway between your apps and every AI provider</title>
+  <desc id="d">Three applications (chat service, RAG pipeline, agent worker) all send requests to one LLM gateway. Inside the gateway, requests pass through auth, rate limits, cache, routing, cost tracking and logging. The gateway then calls provider A, provider B or provider C.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="439" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">One front door for every AI call</text>
+  <text x="32" y="66" class="sub">Apps never talk to providers directly. The gateway handles the hard, repetitive parts once.</text>
+
+  <!-- apps -->
+  <text x="32" y="102" class="h">Your apps</text>
+  <rect x="32" y="116" width="170" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="117" y="138" class="lbl" fill="#2563eb" text-anchor="middle">Chat service</text>
+  <text x="117" y="156" class="note" text-anchor="middle">one request shape</text>
+  <rect x="32" y="188" width="170" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="117" y="210" class="lbl" fill="#2563eb" text-anchor="middle">RAG pipeline</text>
+  <text x="117" y="228" class="note" text-anchor="middle">embed + generate</text>
+  <rect x="32" y="260" width="170" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="117" y="282" class="lbl" fill="#2563eb" text-anchor="middle">Agent worker</text>
+  <text x="117" y="300" class="note" text-anchor="middle">many calls per task</text>
+
+  <!-- arrows apps -> gateway -->
+  <line x1="204" y1="142" x2="268" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="204" y1="214" x2="268" y2="214" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="204" y1="286" x2="268" y2="232" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- gateway -->
+  <rect x="272" y="92" width="336" height="316" rx="12" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="440" y="118" class="h" text-anchor="middle">LLM Gateway</text>
+  <g>
+    <circle cx="300" cy="148" r="12" fill="#1c7c54"/><text x="300" y="152" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+    <text x="324" y="153" class="lbl" fill="#1f2937">Auth</text><text x="400" y="153" class="note">who is calling?</text>
+    <circle cx="300" cy="186" r="12" fill="#1c7c54"/><text x="300" y="190" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="324" y="191" class="lbl" fill="#1f2937">Rate limits</text><text x="420" y="191" class="note">requests and tokens</text>
+    <circle cx="300" cy="224" r="12" fill="#1c7c54"/><text x="300" y="228" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="324" y="229" class="lbl" fill="#1f2937">Caching</text><text x="400" y="229" class="note">skip the call if answered</text>
+    <circle cx="300" cy="262" r="12" fill="#1c7c54"/><text x="300" y="266" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="324" y="267" class="lbl" fill="#1f2937">Routing</text><text x="400" y="267" class="note">pick model, fall back</text>
+    <circle cx="300" cy="300" r="12" fill="#1c7c54"/><text x="300" y="304" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="324" y="305" class="lbl" fill="#1f2937">Cost tracking</text><text x="430" y="305" class="note">tokens → dollars</text>
+    <circle cx="300" cy="338" r="12" fill="#1c7c54"/><text x="300" y="342" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+    <text x="324" y="343" class="lbl" fill="#1f2937">Logging</text><text x="400" y="343" class="note">traces and quality</text>
+  </g>
+  <text x="440" y="388" class="note" text-anchor="middle">keys, retries and format translation live here too</text>
+
+  <!-- arrows gateway -> providers -->
+  <line x1="610" y1="180" x2="672" y2="142" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="610" y1="250" x2="672" y2="250" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="610" y1="320" x2="672" y2="358" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- providers -->
+  <text x="678" y="102" class="h">Providers</text>
+  <rect x="678" y="116" width="170" height="52" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="763" y="138" class="lbl" fill="#6d28d9" text-anchor="middle">Provider A</text>
+  <text x="763" y="156" class="note" text-anchor="middle">OpenAI-style API</text>
+  <rect x="678" y="224" width="170" height="52" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="763" y="246" class="lbl" fill="#6d28d9" text-anchor="middle">Provider B</text>
+  <text x="763" y="264" class="note" text-anchor="middle">Anthropic-style API</text>
+  <rect x="678" y="332" width="170" height="52" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="763" y="354" class="lbl" fill="#6d28d9" text-anchor="middle">Provider C</text>
+  <text x="763" y="372" class="note" text-anchor="middle">self-hosted model</text>
+
+  <text x="32" y="352" class="note">Without it: every team re-builds</text>
+  <text x="32" y="370" class="note">keys, retries and logging, and</text>
+  <text x="32" y="388" class="note">nobody knows what AI costs.</text>
+</svg>

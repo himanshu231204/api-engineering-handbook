@@ -45,6 +45,8 @@ flowchart LR
     F --> G[Context Construction]
 ```
 
+![Fast vector search returns the top 50 candidates, a cross-encoder reranker scores each against the query, and only the best 5 go into the prompt](../assets/diagrams/16-reranking.svg)
+
 ## Request / Response Example
 
 ```http

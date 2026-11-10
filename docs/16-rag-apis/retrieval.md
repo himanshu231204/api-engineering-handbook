@@ -55,6 +55,8 @@ flowchart TD
     J --> K[Reranking - optional]
 ```
 
+![The full RAG pipeline in two rows: ingest (upload, parse, chunk, embed, store in a vector database) and query (embed the question, retrieve top-k, rerank, build the prompt, call the LLM, answer with citations)](../assets/diagrams/16-rag-pipeline.svg)
+
 ## Request / Response Example
 
 ```http

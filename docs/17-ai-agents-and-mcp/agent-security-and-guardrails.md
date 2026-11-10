@@ -63,6 +63,8 @@ flowchart TD
     K -->|No| M[Force stop:\nbudget exceeded]
 ```
 
+![Input checks, the agent, a permission gate with low-risk, human-approval and blocked paths, a sandboxed tool, and output checks, with prompt-injection entry points marked in red](../assets/diagrams/17-guardrails.svg)
+
 ## Request / Response Example
 
 A human-in-the-loop pause, surfaced through the agent API (see [Agent APIs](agent-apis.md)) as an explicit run status the client must resolve before the run continues:

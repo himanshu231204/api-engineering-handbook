@@ -49,6 +49,8 @@ flowchart LR
     I --> J[Top-K similar chunks]
 ```
 
+![Texts drawn as points in a 2D space: similar meanings cluster together, and a query point lands closest to the nearest-meaning texts by cosine similarity](../assets/diagrams/16-embeddings-space.svg)
+
 ## Request / Response Example
 
 **Batch embedding request:**

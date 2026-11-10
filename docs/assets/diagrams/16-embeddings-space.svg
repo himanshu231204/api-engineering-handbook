@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="504" viewBox="0 0 880 504" role="img" aria-labelledby="t d">
+  <title id="t">Embeddings as points in a vector space</title>
+  <desc id="d">Texts become points; texts with similar meaning point in similar directions from the origin and form clusters: opening hours, pets and finance. A query, when does the shop close, points almost the same way as store closes at 9pm, so cosine similarity is high and it is returned as a nearest neighbor, while stock prices rose points far away and scores low.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="503" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Embeddings: similar meaning, nearby direction</text>
+  <text x="32" y="66" class="sub">Drawn in 2D for intuition. Real embeddings have hundreds or thousands of dimensions.</text>
+  <rect x="32" y="88" width="532" height="392" rx="10" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <line x1="72" y1="448" x2="548" y2="448" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="72" y1="448" x2="72" y2="104" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="66" y="468" class="note">origin</text>
+  <ellipse cx="428" cy="360" rx="128" ry="52" transform="rotate(-12 428 360)" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <ellipse cx="410" cy="224" rx="132" ry="50" transform="rotate(-10 410 224)" fill="#fef3c7" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <ellipse cx="190" cy="170" rx="100" ry="52" transform="rotate(0 190 170)" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="330" y="300" class="lbl" style="fill: #1c7c54;">opening hours</text>
+  <text x="300" y="170" class="lbl" style="fill: #b45309;">pets</text>
+  <text x="98" y="114" class="lbl" style="fill: #6d28d9;">finance</text>
+  <line x1="72" y1="448" x2="410" y2="384" stroke="#1c7c54" stroke-width="1.75"/>
+  <line x1="72" y1="448" x2="150" y2="160" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <line x1="72" y1="448" x2="300" y2="392" stroke="#2563eb" stroke-width="1.75"/>
+  <circle cx="410" cy="384" r="6" fill="#1c7c54"/>
+  <circle cx="440" cy="336" r="6" fill="#1c7c54"/>
+  <circle cx="350" cy="242" r="6" fill="#b45309"/>
+  <circle cx="420" cy="204" r="6" fill="#b45309"/>
+  <circle cx="150" cy="160" r="6" fill="#6d28d9"/>
+  <circle cx="168" cy="198" r="6" fill="#6d28d9"/>
+  <text x="420" y="402" class="note">“store closes at 9pm”</text>
+  <text x="320" y="324" class="note">“business hours end at nine”</text>
+  <text x="360" y="246" class="note">“the cat sat on the mat”</text>
+  <text x="340" y="192" class="note">“a feline rested on the rug”</text>
+  <text x="160" y="150" class="note">“stock prices rose”</text>
+  <text x="178" y="202" class="note">“the market fell”</text>
+  <rect x="292" y="384" width="16" height="16" transform="rotate(45 300 392)" fill="#2563eb"/>
+  <text x="150" y="366" class="lbl" style="fill: #2563eb;">Q: “when does the shop close?”</text>
+  <path d="M140.0,431.3 A70,70 0 0 0 90.3,380.4" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="114" y="330" class="note" style="fill: #b91c1c;">big angle → low score</text>
+  <rect x="584" y="88" width="264" height="84" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="608" cy="112" r="12" fill="#1c7c54"/>
+  <text x="608" y="116" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="628" y="117" class="lbl" style="fill: #6d28d9;">Text → list of numbers</text>
+  <text x="600" y="142" class="code">[0.012, -0.045, …]</text>
+  <text x="600" y="161" class="note">same length for every text</text>
+  <rect x="584" y="184" width="264" height="84" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="608" cy="208" r="12" fill="#1c7c54"/>
+  <text x="608" y="212" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="628" y="213" class="lbl" style="fill: #b45309;">Meaning → direction</text>
+  <text x="600" y="238" class="note">similar meaning points the same</text>
+  <text x="600" y="257" class="note">way, even with no shared words</text>
+  <rect x="584" y="280" width="264" height="84" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="608" cy="304" r="12" fill="#1c7c54"/>
+  <text x="608" y="308" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="628" y="309" class="lbl" style="fill: #2563eb;">Search = smallest angle</text>
+  <text x="600" y="334" class="note">cosine similarity: 1 = same</text>
+  <text x="600" y="353" class="note">direction, 0 = unrelated</text>
+  <rect x="584" y="376" width="264" height="104" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="600" y="400" class="lbl" style="fill: #1c7c54;">Top matches for Q</text>
+  <text x="600" y="424" class="code">0.91 store closes at 9pm</text>
+  <text x="600" y="446" class="code">0.88 business hours end…</text>
+  <text x="600" y="468" class="code" style="fill: #b91c1c;">0.12 stock prices rose</text>
+</svg>

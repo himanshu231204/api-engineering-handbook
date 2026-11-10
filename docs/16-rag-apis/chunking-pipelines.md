@@ -52,6 +52,8 @@ flowchart TD
     H --> I[Embedding API]
 ```
 
+![The same text split by fixed size, which cuts words in half, versus by section with overlap, which keeps topics together and repeats the boundary sentence in the next chunk](../assets/diagrams/16-chunking.svg)
+
 ## Request / Response Example
 
 Internally, a chunking service typically exposes (or is called as) a function rather than a public HTTP endpoint, but if wrapped as an internal microservice API it looks like this:

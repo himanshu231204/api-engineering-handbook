@@ -68,6 +68,8 @@ sequenceDiagram
     Server-->>Client: result (content) or isError
 ```
 
+![A host app with one MCP client per server, each talking JSON-RPC over stdio or HTTP to an MCP server that exposes tools, resources and prompts for an underlying system](../assets/diagrams/17-mcp-architecture.svg)
+
 ## Request / Response Example
 
 MCP messages are JSON-RPC 2.0. Here's the initialization handshake, framed exactly as it appears on the wire:

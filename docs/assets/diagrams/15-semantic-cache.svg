@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="t d">
+  <title id="t">How a semantic cache decides hit or miss</title>
+  <desc id="d">A new query is turned into an embedding vector, then the cache is searched for the most similar stored query. If similarity is at or above the threshold, the cached answer is returned without calling the LLM. Otherwise the LLM is called and the new query and answer are stored in the cache.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="439" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Semantic cache: match on meaning, not exact words</text>
+  <text x="32" y="66" class="sub">Different wording, same question → reuse the earlier answer and skip a paid LLM call.</text>
+
+  <!-- step 1 query -->
+  <rect x="32" y="96" width="232" height="64" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="120" r="12" fill="#1c7c54"/><text x="56" y="124" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="76" y="125" class="lbl" fill="#2563eb">New query</text>
+  <text x="48" y="147" class="code">"Change my password?"</text>
+
+  <line x1="266" y1="128" x2="310" y2="128" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- step 2 embed -->
+  <rect x="314" y="96" width="232" height="64" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="338" cy="120" r="12" fill="#1c7c54"/><text x="338" y="124" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="358" y="125" class="lbl" fill="#6d28d9">Embed the query</text>
+  <text x="330" y="147" class="code">[0.12, -0.80, 0.33, …]</text>
+
+  <line x1="548" y1="128" x2="592" y2="128" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- step 3 search -->
+  <rect x="596" y="96" width="252" height="64" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="620" cy="120" r="12" fill="#1c7c54"/><text x="620" y="124" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="640" y="125" class="lbl" fill="#475569">Search the cache</text>
+  <text x="612" y="147" class="note">most similar stored query?</text>
+
+  <!-- stored example -->
+  <rect x="596" y="176" width="252" height="52" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="612" y="198" class="note">stored: "What's the process to</text>
+  <text x="612" y="216" class="note">reset my password?"  similarity 0.95</text>
+
+  <!-- decision -->
+  <path d="M722,230 L722,244 L440,244 L440,258" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="300" y="262" width="280" height="44" rx="10" fill="#ffffff" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="324" cy="284" r="12" fill="#1c7c54"/><text x="324" y="288" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+  <text x="344" y="289" class="lbl" fill="#1f2937">similarity ≥ threshold (0.93)?</text>
+
+  <!-- HIT -->
+  <line x1="360" y1="308" x2="300" y2="338" stroke="#1c7c54" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="322" y="314" text-anchor="end" class="lbl" fill="#1c7c54">yes</text>
+  <rect x="32" y="342" width="388" height="78" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="366" class="h">HIT: return the cached answer</text>
+  <text x="48" y="388" class="note">No LLM call: about $0 and a few milliseconds.</text>
+  <text x="48" y="406" class="note">Tag it cache: hit and log the similarity score.</text>
+
+  <!-- MISS -->
+  <line x1="520" y1="308" x2="580" y2="338" stroke="#b91c1c" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="562" y="314" class="lbl" fill="#b91c1c">no</text>
+  <rect x="448" y="342" width="400" height="78" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="464" y="366" class="h">MISS: call the LLM, then store</text>
+  <text x="464" y="388" class="note">Save query embedding + answer with a TTL so it expires.</text>
+  <text x="464" y="406" class="note">Never cache personal or time-sensitive questions.</text>
+
+  <text x="32" y="262" class="lbl" fill="#475569">The threshold is the dial</text>
+  <text x="32" y="282" class="note">Too low → confidently wrong answers.</text>
+  <text x="32" y="300" class="note">Too high → almost never hits.</text>
+</svg>

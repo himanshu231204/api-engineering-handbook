@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">Three kinds of agent memory</title>
+  <desc id="d">Short-term memory is the message list inside the context window, with a rolling summary of older turns. Long-term vector memory stores past snippets outside the window and retrieves only the relevant ones by similarity. A structured profile store holds exact facts like language and plan. Before each LLM call, the app assembles the prompt from all three.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Agent memory: what is in the prompt vs. what is on disk</text>
+  <text x="32" y="66" class="sub">The LLM remembers nothing between calls. Your app decides what to load into each prompt.</text>
+  <rect x="32" y="92" width="400" height="116" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="118" class="lbl" style="fill: #b45309;">1 · Short-term (context window)</text>
+  <text x="48" y="138" class="note">recent turns verbatim + summary of older ones</text>
+  <text x="48" y="160" class="code">summary: asked about upgrading…</text>
+  <text x="48" y="178" class="code">user: what does my plan include?</text>
+  <text x="48" y="196" class="code">assistant: Pro includes API access</text>
+  <text x="416" y="118" class="lbl" text-anchor="end" style="fill: #b45309;">always loaded</text>
+  <rect x="32" y="220" width="400" height="100" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="48" y="246" class="lbl" style="fill: #6d28d9;">2 · Long-term vector memory</text>
+  <text x="48" y="266" class="note">snippets embedded, searched by meaning</text>
+  <text x="48" y="288" class="code">“billing issue resolved 07-02”</text>
+  <text x="48" y="306" class="code">“prefers email over phone”</text>
+  <text x="416" y="246" class="lbl" text-anchor="end" style="fill: #6d28d9;">retrieved on demand</text>
+  <rect x="32" y="332" width="400" height="124" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="358" class="lbl" style="fill: #475569;">3 · Structured profile store</text>
+  <text x="48" y="378" class="note">exact key → value facts</text>
+  <text x="48" y="400" class="code">plan: pro</text>
+  <text x="48" y="418" class="code">language: fr</text>
+  <text x="48" y="436" class="code">timezone: Europe/Paris</text>
+  <text x="416" y="358" class="lbl" text-anchor="end" style="fill: #475569;">looked up by user id</text>
+  <rect x="520" y="96" width="328" height="360" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="536" y="122" class="lbl" style="fill: #1c7c54;">Prompt for this LLM call</text>
+  <text x="536" y="142" class="note">bounded size, however long the history</text>
+  <rect x="536" y="158" width="296" height="40" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="548" y="175" class="lbl" style="fill: #1c7c54;">System instructions</text>
+  <text x="548" y="191" class="note">fixed text</text>
+  <rect x="536" y="208" width="296" height="40" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="548" y="225" class="lbl" style="fill: #1c7c54;">Summary + recent turns</text>
+  <text x="548" y="241" class="note">from store 1</text>
+  <rect x="536" y="258" width="296" height="40" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="548" y="275" class="lbl" style="fill: #1c7c54;">Relevant memories</text>
+  <text x="548" y="291" class="note">top-k from store 2</text>
+  <rect x="536" y="308" width="296" height="40" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="548" y="325" class="lbl" style="fill: #1c7c54;">Profile facts</text>
+  <text x="548" y="341" class="note">from store 3</text>
+  <rect x="536" y="358" width="296" height="40" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="548" y="375" class="lbl" style="fill: #1c7c54;">New user question</text>
+  <text x="536" y="438" class="lbl" style="fill: #1c7c54;">→ send to LLM</text>
+  <line x1="436" y1="150" x2="516" y2="228" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="436" y1="270" x2="516" y2="278" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="436" y1="394" x2="516" y2="328" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="32" y="484" class="note">After the reply, the app writes back: appends the turn, summarizes when long, saves durable facts.</text>
+</svg>

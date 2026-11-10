@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="476" viewBox="0 0 880 476" role="img" aria-labelledby="t d">
+  <title id="t">Streaming versus non-streaming LLM responses</title>
+  <desc id="d">On a time axis from 0 to 6 seconds, a non-streaming call shows nothing until the whole answer arrives at about 5 seconds. A streaming call sends small chunks over Server-Sent Events starting at about 0.4 seconds, so time to first token is much shorter while total time and cost stay the same. Below, the SSE wire format shows data lines carrying text fragments and a final done event with usage.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="475" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Streaming: same total time, much faster first word</text>
+  <text x="32" y="66" class="sub">The model writes one token at a time either way. Streaming just hands each piece over as soon as it exists.</text>
+
+  <!-- markers (behind rows) -->
+  <line x1="242" y1="96" x2="242" y2="232" stroke="#1c7c54" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="727" y1="96" x2="727" y2="232" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5 4"/>
+
+  <!-- row 1: non-streaming -->
+  <text x="32" y="122" class="lbl" fill="#1f2937">Without streaming</text>
+  <text x="32" y="140" class="note">one JSON body at the end</text>
+  <rect x="200" y="108" width="523" height="36" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="461" y="131" class="note" text-anchor="middle">model is generating… user stares at a spinner</text>
+  <rect x="731" y="108" width="101" height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="781" y="131" class="lbl" fill="#2563eb" text-anchor="middle">full answer</text>
+
+  <!-- row 2: streaming -->
+  <text x="32" y="186" class="lbl" fill="#1f2937">With streaming (SSE)</text>
+  <text x="32" y="204" class="note">small chunks as they're made</text>
+  <g>
+    <rect x="246" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="273" y="195" class="note" text-anchor="middle">The</text>
+    <rect x="309" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="336" y="195" class="note" text-anchor="middle">weather</text>
+    <rect x="372" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="399" y="195" class="note" text-anchor="middle">is</text>
+    <rect x="435" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="462" y="195" class="note" text-anchor="middle">sunny</text>
+    <rect x="498" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="525" y="195" class="note" text-anchor="middle">and</text>
+    <rect x="561" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="588" y="195" class="note" text-anchor="middle">warm</text>
+    <rect x="624" y="172" width="55" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="651" y="195" class="note" text-anchor="middle">all</text>
+    <rect x="687" y="172" width="36" height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="705" y="195" class="note" text-anchor="middle">day</text>
+    <rect x="731" y="172" width="101" height="36" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+    <text x="781" y="195" class="note" text-anchor="middle">done + usage</text>
+  </g>
+
+  <!-- time axis -->
+  <line x1="200" y1="236" x2="836" y2="236" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <g>
+    <line x1="200" y1="232" x2="200" y2="240" stroke="#475569"/><text x="200" y="254" class="note" text-anchor="middle">0 s</text>
+    <line x1="305" y1="232" x2="305" y2="240" stroke="#475569"/><text x="305" y="254" class="note" text-anchor="middle">1 s</text>
+    <line x1="411" y1="232" x2="411" y2="240" stroke="#475569"/><text x="411" y="254" class="note" text-anchor="middle">2 s</text>
+    <line x1="516" y1="232" x2="516" y2="240" stroke="#475569"/><text x="516" y="254" class="note" text-anchor="middle">3 s</text>
+    <line x1="621" y1="232" x2="621" y2="240" stroke="#475569"/><text x="621" y="254" class="note" text-anchor="middle">4 s</text>
+    <line x1="727" y1="232" x2="727" y2="240" stroke="#475569"/><text x="727" y="254" class="note" text-anchor="middle">5 s</text>
+  </g>
+  <text x="156" y="241" class="note">time</text>
+
+  <!-- marker labels -->
+  <text x="242" y="282" class="lbl" fill="#1c7c54">Streaming: first words at ~0.4 s</text>
+  <text x="242" y="298" class="note">(time to first token)</text>
+  <text x="832" y="282" class="lbl" fill="#b91c1c" text-anchor="end">Without: first words at ~5 s</text>
+  <text x="832" y="298" class="note" text-anchor="end">total time is the same for both</text>
+
+  <!-- wire format -->
+  <rect x="32" y="318" width="440" height="138" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="344" class="h">On the wire: Server-Sent Events</text>
+  <text x="48" y="372" class="code">data: {"text": "The"}</text>
+  <text x="48" y="394" class="code">data: {"text": " weather"}</text>
+  <text x="48" y="416" class="code">…</text>
+  <text x="48" y="438" class="code">data: {"type": "done", "usage": {…}}</text>
+
+  <!-- keep in mind -->
+  <rect x="488" y="318" width="360" height="138" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="504" y="344" class="h">Keep in mind</text>
+  <text x="504" y="370" class="note">• Same total generation time and token cost</text>
+  <text x="504" y="392" class="note">• Tool-call JSON: buffer chunks, parse once at end</text>
+  <text x="504" y="414" class="note">• Turn off proxy buffering (e.g. nginx)</text>
+  <text x="504" y="436" class="note">• Token usage arrives in the final event</text>
+</svg>

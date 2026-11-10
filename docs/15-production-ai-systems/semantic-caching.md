@@ -49,6 +49,8 @@ flowchart TD
     STORE --> RETURN[Return fresh response\ntag as cache_miss]
 ```
 
+![Semantic cache flow: embed the query, search for a similar cached query, return the cached answer above the threshold or call the LLM and store the result](../assets/diagrams/15-semantic-cache.svg)
+
 ## Request / Response Example
 
 Gateway response for a semantic cache hit — note it looks identical in shape to a fresh response, but with cache metadata making the source explicit for observability and cost tracking:
