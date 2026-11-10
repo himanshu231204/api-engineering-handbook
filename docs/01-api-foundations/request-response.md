@@ -1,5 +1,12 @@
 # Request & Response Bodies
 
+> [!TIP]
+> **In one line:** The body carries the real payload, and the receiver learns where it ends either from `Content-Length` (size known upfront) or chunked transfer (streamed, size unknown) — never both.
+>
+> **In plain English:** Compare downloading a film with watching a live broadcast. The download tells you its total size before it starts; the live stream just keeps sending pieces until it says "that's the end". HTTP bodies can work either way, and the streaming way is how chat apps show AI answers word by word.
+>
+> **You'll be able to:** Explain how a receiver knows where a body ends · Pick the right body format — JSON, form or multipart — for a job · Read a streamed response piece by piece instead of all at once
+
 ## Why This Matters
 
 Headers and the start line tell you *what kind* of message you have; the **body** is where the actual payload lives — the JSON object you're sending to create a resource, the file you're uploading, the data the server sends back. Understanding how HTTP knows where a body starts, how big it is, and when bodies are and aren't allowed at all is what lets you debug problems like "the server says my request is empty" or "the client can't tell when my streamed response is finished."
@@ -186,3 +193,26 @@ The body is where the real content of an AI API call lives: your prompt/messages
 - Bodies are conventional on `POST`/`PUT`/`PATCH` requests and most success responses, but explicitly absent on `204 No Content` and `HEAD` responses.
 - Chunked transfer is the underlying mechanism that makes streaming responses — including streamed LLM output — possible.
 - Always enforce body size limits in production, and let your HTTP library manage the low-level framing rather than hand-rolling it.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which two headers can tell the receiver where a body ends, and how do they differ?</summary>
+
+`Content-Length` gives the exact size in bytes before the body starts. `Transfer-Encoding: chunked` sends size-labelled chunks and ends with a zero-length chunk, so the sender never needs to know the total.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does calling response.json() on a 204 response fail?</summary>
+
+`204 No Content` has no body by definition, so there's nothing to parse and the JSON parser raises an error. Check the status code — or whether a body exists — first.
+
+</details>
+
+<details markdown="1">
+<summary>3. You need to accept 2 GB video uploads. Why not base64-encode the video inside a JSON body?</summary>
+
+Base64 makes the data about a third bigger, and a giant JSON body usually has to sit in memory all at once. Use `multipart/form-data` or a dedicated streamed upload flow, and enforce a size limit at the edge.
+
+</details>

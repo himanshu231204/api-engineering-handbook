@@ -1,5 +1,12 @@
 # JSON and Serialization
 
+> [!TIP]
+> **In one line:** JSON has exactly six types — string, number, boolean, null, object, array — so dates, big integers, binary data and null-versus-missing all need deliberate, documented conventions.
+>
+> **In plain English:** JSON is like a recipe written in plain text: any cook in any country can read it, but there's no special box for "a date" or "a photo". You write those as text in an agreed style. Serializing turns your data into that text; deserializing reads it back in.
+>
+> **You'll be able to:** Spot invalid JSON such as single quotes, trailing commas or `True` · Handle dates, large IDs and binary data safely · Treat null, empty and missing fields as three different things in PATCH requests
+
 ## Why This Matters
 
 Your Python program has objects, dictionaries, lists, and typed values living in memory. The client on the other end of an HTTP request has its own completely different in-memory representation, possibly in a different programming language entirely. **Serialization** is the process that bridges this gap — turning an in-memory data structure into bytes that can travel over the network, and **deserialization** turns those bytes back into a usable data structure on the other side. JSON is the format almost every modern API uses to do this, and understanding exactly what it can and can't represent precisely is what prevents an entire category of subtle bugs: numbers that silently lose precision, dates that get parsed inconsistently across languages, and fields that mean something different than you assumed.
@@ -199,3 +206,26 @@ JSON is the backbone of LLM API interaction in two distinct ways: it's the forma
 - `null`, an empty value, and an omitted field are three distinct concepts that a well-designed API must treat deliberately, especially for `PATCH` semantics.
 - Large integers and dates need deliberate, documented conventions (strings for large IDs, ISO 8601 for dates) because JSON itself doesn't enforce either.
 - LLM structured outputs and tool/function calling are built directly on JSON serialization — validate model-generated JSON with the same rigor as any untrusted client input.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which six data types does JSON support, and which common types are missing?</summary>
+
+String, number, boolean, null, object and array. There's no date type, no separate integer and float, and no binary type.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why might a large database ID sent as a JSON number arrive wrong in a JavaScript client?</summary>
+
+JavaScript numbers are IEEE 754 doubles and can't hold integers above 2^53 exactly, so the ID silently loses precision. Send large IDs as strings.
+
+</details>
+
+<details markdown="1">
+<summary>3. One PATCH body sets email to null and another leaves email out. Should they do the same thing?</summary>
+
+No. Leaving a field out usually means "don't change it"; an explicit `null` usually means "clear it". Document which is which and tell them apart in code (Pydantic's `exclude_unset` does this).
+
+</details>

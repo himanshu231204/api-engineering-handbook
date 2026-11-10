@@ -1,5 +1,12 @@
 # HTTP
 
+> [!TIP]
+> **In one line:** HTTP is a stateless text protocol where every request and response has the same shape — start line, headers, blank line, optional body — whichever HTTP version carries it.
+>
+> **In plain English:** HTTP is like a drive-through with a fixed script: say what you want and where, add a few details, then hand over anything extra. The window answers in the same format. The window also doesn't remember you, so you repeat who you are on every visit.
+>
+> **You'll be able to:** Point out the start line, headers, blank line and body in a raw HTTP message · Explain what "stateless" means and how tokens work around it · Compare HTTP/1.1, HTTP/2 and HTTP/3 at a high level
+
 ## Why This Matters
 
 HTTP (**HyperText Transfer Protocol**) is the language almost every API in this handbook speaks. Whether you're calling a REST API, sending a webhook, or streaming tokens from an LLM, you're formatting your intent as an HTTP request and parsing an HTTP response. Frameworks like FastAPI hide most of the raw text from you, but when something goes wrong — a malformed request, an unexpected status code, a client that can't parse your response — you're debugging at the HTTP level whether you like it or not. Knowing what's actually on the wire turns "the API is broken" into "the server sent a 400 because the JSON body was empty."
@@ -167,3 +174,26 @@ LLM chat APIs are ordinary HTTP under the hood: a `POST` request with a JSON bod
 - HTTP is stateless by design; anything resembling "memory" between requests (sessions, tokens) is built on top of it, not part of the protocol itself.
 - HTTP/1.1, HTTP/2, and HTTP/3 share the same request/response semantics but differ in transport-level efficiency (multiplexing, underlying transport protocol).
 - Streaming LLM responses are ordinary HTTP responses delivered incrementally — the same protocol you already know, applied to a longer-lived exchange.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the parts of an HTTP message, in order?</summary>
+
+A start line (the request line or the status line), headers, a blank line, then an optional body. Requests and responses share this exact shape.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does the blank line after the headers matter?</summary>
+
+It's how a parser knows the headers have ended and the body begins. Leave it out of hand-built HTTP and the receiver misreads the message or waits forever.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your service opens a brand-new connection for every outbound HTTP call and is slow. What does the chapter recommend?</summary>
+
+Reuse connections through a shared, pooled client (for example one `httpx.Client`). Keep-alive and HTTP/2 multiplexing avoid paying for a new TCP and TLS handshake on every request.
+
+</details>

@@ -1,5 +1,12 @@
 # API Naming Conventions
 
+> [!TIP]
+> **In one line:** Pick one naming style — plural, lowercase, hyphenated URLs, one JSON casing, explicit units, shallow nesting — and apply it everywhere with zero exceptions.
+>
+> **In plain English:** Street signs in a city all use the same font, colour and layout, so you can read a new one at a glance. API names work the same way: once developers learn the pattern, they can guess endpoints and fields without opening the docs. Every exception makes them stop and check.
+>
+> **You'll be able to:** Write consistent URLs and JSON field names for a new API · Name IDs, money and timestamps so they can't be misread · Fix deep nesting by promoting resources to the top level
+
 ## Why This Matters
 
 Naming is the part of API design with the least "correct" technical answer and the highest cost of inconsistency. A URL structure or field name, once shipped and consumed by clients, is expensive to change — every rename is a breaking change for someone. Establishing and enforcing naming conventions early, before your API surface grows, is one of the cheapest investments you can make in an API's long-term usability.
@@ -142,3 +149,26 @@ Naming conventions matter even more in AI APIs because field names often get par
 - Be explicit about units and formats in field names — it prevents ambiguity bugs and helps both human developers and LLMs consuming your API via tool calls.
 
 See also: [Resources and Endpoints](resources-and-endpoints.md), [CRUD Design](crud-design.md), [API Contracts](api-contracts.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. When should a field be called id, and when order_id?</summary>
+
+Use `id` for a resource's own identifier inside its own representation. Use `order_id` only when a different resource refers to an order — for example, inside a shipment.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is a field simply called price risky, and what's better?</summary>
+
+Nobody can tell whether it's dollars or cents, which causes a whole class of bugs. Put the unit in the name, like `unit_price_cents`, and use suffixes such as `_at` for timestamps.
+
+</details>
+
+<details markdown="1">
+<summary>3. You're about to add /customers/91/orders/482/items/17/reviews/3. What should you do instead?</summary>
+
+That's past the 2–3 level limit — fragile and painful for clients to build. Make reviews addressable on their own, like `/reviews/3`, or filter them with `/reviews?item_id=17`.
+
+</details>

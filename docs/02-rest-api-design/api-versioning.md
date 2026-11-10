@@ -1,5 +1,12 @@
 # API Versioning
 
+> [!TIP]
+> **In one line:** Versioning runs old and new API contracts side by side so clients migrate on their schedule; bump only for breaking changes and retire old versions with sunset dates.
+>
+> **In plain English:** When a city renames a street, it often puts up both the old and new signs for a while and announces when the old one comes down. Versioning does that for an API: the new shape arrives, the old one keeps working, and everyone gets a clear deadline to switch.
+>
+> **You'll be able to:** Compare URL, header and media-type versioning · Tell a breaking change from a backward-compatible one · Plan a deprecation with `Deprecation`/`Sunset` headers and real traffic data
+
 ## Why This Matters
 
 Every API changes over time — fields get added, response shapes get restructured, business logic evolves. The problem is that once real clients depend on your API's current behavior, any change that breaks their assumptions breaks their production systems, often without warning. Versioning is how you evolve an API without silently breaking everyone who's already integrated with it — it's the mechanism that lets you say "here's the new way, but the old way still works until you're ready to migrate."
@@ -168,3 +175,26 @@ LLM provider APIs version aggressively and visibly, which makes this chapter's t
 - Always pair deprecation with a concrete sunset date and machine-readable headers, not just a documentation note.
 
 See also: [API Contracts](api-contracts.md), [Naming Conventions](naming-conventions.md), [Part 15 — Production AI Systems](../15-production-ai-systems/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three places you can put an API version?</summary>
+
+The URL path (`/v2/orders`), a request header (`API-Version: 2026-08-18`) or the media type in `Accept` (`application/vnd.example.v2+json`).
+
+</details>
+
+<details markdown="1">
+<summary>2. You use header versioning behind a cache and forget the Vary header. What happens?</summary>
+
+The cache keys only on the URL, so it can hand a v1 response to a client that asked for v2, or the other way round. Send `Vary: API-Version`.
+
+</details>
+
+<details markdown="1">
+<summary>3. You're adding a new optional field to the order response. Do you need a v2?</summary>
+
+No. An optional new field is backward compatible, so existing clients keep working. Save new versions for breaking changes such as removing, renaming or retyping a field.
+
+</details>

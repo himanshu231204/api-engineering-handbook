@@ -1,5 +1,12 @@
 # Learning Roadmap
 
+> [!TIP]
+> **In one line:** Pick one of three paths through the handbook based on what you already know, and prove each part stuck before moving on — depth beats speed.
+>
+> **In plain English:** This chapter is a trip plan. Just as you learn to drive before you enter a race, the AI parts (14–17) rely on the backend basics in Parts 1–13. Choose your route, keep a steady pace, and check yourself after each part.
+>
+> **You'll be able to:** Choose Path A, B or C for your starting point · Set a realistic weekly pace · Test whether you really learned a part before moving on
+
 ## Why This Matters
 
 190 chapters across 20 parts is a lot. Without a plan, it's easy to either burn out trying to read everything linearly in one sitting, or jump straight to the "exciting" AI chapters and hit a wall because you're missing prerequisites (rate limiting, caching, auth) that AI systems still depend on. This chapter gives you a concrete plan.
@@ -81,3 +88,26 @@ If you can't do at least the first two, re-read before moving on — later parts
 - Pick a path (A, B, or C) based on your starting point, not by comparing yourself to someone else's plan.
 - AI API engineering (Parts 14–17) is built on top of general backend engineering (Parts 1–13), not a separate discipline — don't skip the foundation entirely.
 - Depth beats speed: the exercises exist to prove you actually learned the chapter, not just read it.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three suggested paths?</summary>
+
+A: read Parts 1 to 20 in order. B: you know backend basics — skim 1–3, read 4–13 for gaps, slow down for 14–20. C: AI fast track — Part 0, skim Part 1, jump to 14–17, then come back for the fundamentals.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does Path C tell you to come back for Parts 5, 6, 7 and 10?</summary>
+
+Production AI systems fail in the same ways ordinary APIs do — bad auth, no rate limiting, no caching, no observability — plus a few new ways. Skip those parts and you learn them the hard way in production.
+
+</details>
+
+<details markdown="1">
+<summary>3. You finished Part 6, but you can't explain retries from memory or do its exercises without looking back. What now?</summary>
+
+Re-read before moving on. The chapter's test is to explain the core idea out loud without notes and do the exercises without peeking — later parts assume earlier ones stuck.
+
+</details>

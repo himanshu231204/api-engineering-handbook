@@ -1,5 +1,12 @@
 # Idempotency
 
+> [!TIP]
+> **In one line:** An operation is idempotent if doing it twice leaves the server in the same state as doing it once — and that decides whether a retry after a timeout is safe.
+>
+> **In plain English:** Pressing a lift's call button five times still brings one lift. Paying at a shop till twice takes your money twice. When a call times out the client has to try again, so the API must make the second try behave like the lift button, not the till.
+>
+> **You'll be able to:** Say which HTTP methods are idempotent, and why · Design PATCH bodies that are safe to retry · Explain why POST needs an idempotency key before it can be retried safely
+
 ## Why This Matters
 
 Networks fail. A client sends a request, the server processes it successfully, but the response never makes it back — a timeout, a dropped connection, a proxy hiccup. From the client's perspective, this is indistinguishable from "the request never arrived at all." The client's only reasonable move is to retry. Whether that retry is *safe* — whether it's guaranteed not to cause a second, duplicate effect (charging a customer twice, creating two identical orders) — depends entirely on whether the operation is idempotent. Understanding idempotency at the HTTP-method level is the foundation for building retry-safe, reliable APIs.
@@ -183,3 +190,26 @@ Idempotency semantics matter directly for AI APIs that trigger real-world side e
 - HTTP-level idempotency alone doesn't make `POST` safe to retry — that requires an application-level idempotency-key mechanism, covered in [Part 6 — Production Reliability](../06-production-reliability/README.md).
 
 See also: [CRUD Design](crud-design.md), [Part 6 — Production Reliability](../06-production-reliability/README.md) (idempotency key implementation), [Part 17 — AI Agents and MCP](../17-ai-agents-and-mcp/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. DELETE /orders/482 returns 204 the first time and 404 the second. Is it still idempotent?</summary>
+
+Yes. Idempotency is about server state, not identical responses — after one call or a hundred, the order is gone.
+
+</details>
+
+<details markdown="1">
+<summary>2. Is a PATCH whose body is increment_quantity_by 1 idempotent, and why does it matter?</summary>
+
+No — it's a relative change, so two calls add 2. A retry after a lost response doubles the effect. Prefer absolute values such as `{"status": "cancelled"}`, or give the relative operation its own POST endpoint.
+
+</details>
+
+<details markdown="1">
+<summary>3. A POST /payments response is lost and the client retries. What happens with no protection, and what fixes it?</summary>
+
+A naive server creates a second payment and charges the customer twice. The fix is an idempotency key: the client sends a unique key, the server stores the result under it and returns that saved result for any repeat (built in Part 6).
+
+</details>

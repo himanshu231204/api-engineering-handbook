@@ -1,5 +1,12 @@
 # Query Parameters
 
+> [!TIP]
+> **In one line:** Query parameters shape how a collection comes back — filter, sort, paginate, pick fields, search — so give each one a default, enforce bounds, and reject bad values with a 400.
+>
+> **In plain English:** A coffee order is the same drink with options attached: size, milk, an extra shot. Query parameters are those options for an API request. The resource stays the same; the options change what you get handed back.
+>
+> **You'll be able to:** Group parameters by job: filtering, sorting, pagination, field selection, search, expansion · Validate and cap values so clients can't request unbounded data · Handle missing and repeated parameters predictably
+
 ## Why This Matters
 
 Almost no real endpoint returns "just the resource" — clients need to filter, sort, paginate, search, and select fields. Query parameters are the standard, cacheable, bookmarkable way to express all of that without inventing new endpoints for every combination of options. An API with a clean, predictable query parameter design feels effortless to integrate with; one without it forces clients to over-fetch, under-fetch, or build brittle client-side workarounds.
@@ -160,3 +167,26 @@ Query parameters are how AI APIs expose optional behavior without bloating the U
 - Consistent naming and operator conventions across endpoints reduce integration friction dramatically.
 
 See also: [Path Parameters](path-parameters.md), [Filtering and Sorting](filtering-and-sorting.md), [Pagination](pagination.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What kinds of jobs do query parameters usually do?</summary>
+
+Filtering (`?status=shipped`), sorting (`?sort=-created_at`), pagination (`?page=2` or `?cursor=...`), field selection (`?fields=id,name`), search (`?q=blue+mug`) and expansion (`?expand=customer`).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is silently ignoring a misspelled parameter such as statuss=shipped harmful?</summary>
+
+The client gets unfiltered results and believes the filter worked. Rejecting unknown parameters with a 400 shows the typo immediately.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client sends limit=1000000. What should your API do?</summary>
+
+Never try to serve it. Enforce a documented maximum — return a 400, or cap the result and make the cap obvious in the response and the contract so the client isn't confused.
+
+</details>

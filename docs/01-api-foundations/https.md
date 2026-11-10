@@ -1,5 +1,12 @@
 # HTTPS
 
+> [!TIP]
+> **In one line:** HTTPS is ordinary HTTP sent through TLS, which encrypts the traffic, detects tampering, and proves the server's identity with a certificate signed by a trusted authority.
+>
+> **In plain English:** Imagine a phone call where you first check the other person's official badge, then you both switch to a secret language only the two of you know. Anyone listening in hears noise. HTTPS does this for every API call, so tokens and passwords can't be read on the way.
+>
+> **You'll be able to:** Name the three guarantees TLS adds: encryption, integrity and server authentication · Describe the TLS handshake step by step · Say what an eavesdropper can and cannot see on an HTTPS connection
+
 ## Why This Matters
 
 Plain HTTP sends everything — including passwords, API keys, and session tokens — as readable text over the network. Anyone positioned between the client and server (a coffee-shop Wi-Fi operator, a compromised router, an ISP) can read or even modify that traffic in transit. HTTPS is what makes it safe to send an `Authorization: Bearer <token>` header or a credit card number over the internet at all. Every production API you build or consume — REST, webhook, or LLM — runs over HTTPS, and understanding what it actually protects (and doesn't) is essential before you touch authentication in Part 5.
@@ -139,3 +146,26 @@ Every request you send to an LLM provider carries your API key in a header (`Aut
 - The TLS handshake happens once per connection, verifies the server's certificate against a trusted CA, and derives a session key used to encrypt all subsequent HTTP traffic.
 - HTTPS authenticates the server to the client, not the other way around — client authentication is a separate concern (Part 5).
 - Never disable certificate verification in code that could reach production; it silently defeats the protocol's core guarantee.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What three things does TLS add to HTTP?</summary>
+
+Encryption (eavesdroppers see scrambled bytes), integrity (tampered data fails a check) and server authentication (a certificate signed by a trusted CA proves who the server is). HTTP's methods, headers and status codes stay the same.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is turning off certificate verification "just to make it work" dangerous?</summary>
+
+The traffic is still encrypted, but you no longer know who you're talking to. An attacker can pose as the server and read everything — the core guarantee of HTTPS is gone.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate says that because the API uses HTTPS, putting the API key in the query string is fine. Is it?</summary>
+
+No. HTTPS protects the URL in transit, but full URLs end up in server and proxy logs and in browser history. Send the key in a header such as `Authorization` instead.
+
+</details>

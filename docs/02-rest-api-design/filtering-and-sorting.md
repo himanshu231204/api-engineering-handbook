@@ -1,5 +1,12 @@
 # Filtering and Sorting
 
+> [!TIP]
+> **In one line:** Filters and sorts are query parameters that should combine freely, use one consistent syntax, be checked against an allow-list, and run on indexed columns.
+>
+> **In plain English:** In an online shop you can tick "size M", "under $30" and "in stock", then choose "sort by price" — all at once, in any mix. Your collection endpoints should feel the same: each filter is an independent switch, and the sort is applied on top.
+>
+> **You'll be able to:** Design equality, range and search filters with one consistent naming style · Parse multi-field sorts such as `sort=-priority,created_at` · Block SQL injection with allow-lists and keep filters fast with indexes
+
 ## Why This Matters
 
 Almost no client wants an entire collection every time — they want "orders that are still pending," "users signed up this month," "products under $20 sorted by rating." Filtering and sorting are what turn a collection endpoint from a dump of everything into a genuinely useful query interface. Designed well, they compose cleanly and stay predictable as your API grows; designed poorly, they become an unmaintainable pile of endpoint-specific special cases.
@@ -187,3 +194,26 @@ Filtering and sorting map directly onto retrieval-adjacent AI APIs: a RAG docume
 - Index whatever you let clients filter or sort by, or the feature will silently become a production performance problem.
 
 See also: [Query Parameters](query-parameters.md), [Pagination](pagination.md), [Part 16 — RAG APIs](../16-rag-apis/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does sort=-priority,created_at mean?</summary>
+
+Sort by `priority` descending (the `-` prefix), then by `created_at` ascending to break ties.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must you never pass a client-supplied sort field straight into ORDER BY?</summary>
+
+It's a SQL injection risk. Check the field against an explicit allow-list of sortable fields and return a 400 for anything else.
+
+</details>
+
+<details markdown="1">
+<summary>3. Filtering by status is instant in development but takes seconds in production. What's the likely cause?</summary>
+
+The filtered or sorted column has no index, so once the table is big every query becomes a full table scan. Index every column you let clients filter or sort by.
+
+</details>

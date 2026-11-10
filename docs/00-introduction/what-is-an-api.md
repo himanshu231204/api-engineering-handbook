@@ -1,5 +1,12 @@
 # What Is an API?
 
+> [!TIP]
+> **In one line:** An API is a contract that lets one program ask another to do something without knowing how it works inside — so both sides can change independently.
+>
+> **In plain English:** Think of a wall socket: you plug in a lamp without knowing anything about the power station. The shape of the socket is the promise. A web API is the same kind of promise between two programs, sent over the internet using HTTP.
+>
+> **You'll be able to:** Explain what an API is (and isn't) in one sentence · Spot the client, the contract and the server in any app you use · Read a basic HTTP request and its JSON response
+
 ## Why This Matters
 
 Every piece of modern software you use — the weather app on your phone, the "Sign in with Google" button, the chatbot answering your support question — is talking to something else over an API. If you're going to build backend systems, AI applications, or anything that isn't a completely standalone script, you need a precise mental model of what an API is and isn't. "API" is one of the most-used and least-precisely-understood terms in software.
@@ -164,3 +171,26 @@ Tool calling and MCP (Part 17) extend this idea one layer further: instead of a 
 - This handbook focuses on **web APIs**: HTTP-based client/server request/response systems.
 - The value of an API is decoupling — the caller and the provider can change independently as long as the contract holds.
 - LLM APIs, RAG APIs, and agent/MCP systems are still APIs in exactly this sense — they just happen to have a language model as the "kitchen."
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three parts of this chapter's definition of an API?</summary>
+
+A defined way to ask (a contract), one piece of software asking another (a caller and a provider), and no need to know how the provider works inside. That last part is the whole value: it hides the internals.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is it a mistake to copy your database column names straight into API response fields?</summary>
+
+It ties the contract to the implementation. Rename a column or switch databases and the response changes, so clients break — you lose the decoupling that is the reason APIs exist.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your team moves user data from an in-memory dict to PostgreSQL. What must change for clients calling GET /users/42?</summary>
+
+Nothing, as long as the contract holds: same URL, same JSON shape, same status codes. Only the code behind the API boundary changes.
+
+</details>

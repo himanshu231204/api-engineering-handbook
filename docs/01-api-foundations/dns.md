@@ -1,5 +1,12 @@
 # DNS
 
+> [!TIP]
+> **In one line:** DNS turns a name like `api.example.com` into an IP address through a cached chain of servers — resolver, root, TLD, authoritative — and the TTL controls how long each answer is reused.
+>
+> **In plain English:** Computers find each other by number, but people use names. DNS is like a maps app turning a shop's name into a street address before you drive there. Answers are saved for a while (the TTL), so most lookups are instant — but a change can take time to reach everyone.
+>
+> **You'll be able to:** Walk through a lookup from your device's cache to the authoritative nameserver · Pick the right record type: A, AAAA, CNAME, TXT or NS · Plan TTL changes before a server migration
+
 ## Why This Matters
 
 You never type an IP address into your API client — you type `api.stripe.com` or `api.anthropic.com`. Somewhere between typing that hostname and your request actually leaving your machine, something has to translate a human-readable name into the numeric IP address that routing (from [How the Internet Works](how-the-internet-works.md)) actually understands. That translation is **DNS**, and it's a surprisingly common source of production incidents: "the API is down" is very often "DNS didn't resolve" or "DNS is returning a stale IP," not an application bug at all. As an API developer, you'll configure DNS records for your own services and need to reason about DNS-related failures in systems you consume.
@@ -149,3 +156,26 @@ Every call to an LLM provider's API starts with resolving a hostname like `api.a
 - Common record types (A, AAAA, CNAME, TXT, NS) each serve a distinct purpose you'll configure as an API owner.
 - TTL controls the caching/freshness trade-off — low TTLs mean faster propagation of changes but more frequent lookups.
 - DNS failures are a distinct, common class of production incident, separate from TCP or application-level failures, and worth ruling out first when debugging connectivity.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which server holds the real records for example.com, and which servers point the resolver towards it?</summary>
+
+The authoritative nameserver for example.com holds the real records. The root server points the resolver to the .com TLD server, which points it to the authoritative nameserver.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you move api.yourcompany.com to a new IP while its record has a 24-hour TTL?</summary>
+
+Resolvers and devices that cached the old answer keep using the old IP until their copy expires — for up to a day. Lower the TTL well before the move, then raise it again once the new setup is confirmed.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your Python client raises socket.gaierror when calling an API. Which layer failed, and what do you check first?</summary>
+
+DNS resolution failed — the hostname never became an IP, so no TCP connection was even tried. Check the name with `dig` or `nslookup` before digging through application logs.
+
+</details>

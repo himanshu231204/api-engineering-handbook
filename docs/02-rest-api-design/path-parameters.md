@@ -1,5 +1,12 @@
 # Path Parameters
 
+> [!TIP]
+> **In one line:** A path parameter like `482` in `/orders/482` says exactly which resource you mean — validate its type at the router and always check that nested IDs really belong together.
+>
+> **In plain English:** A concert ticket says "Row F, Seat 12" — it picks out exactly one seat. A path parameter does the same for one order or one user. And just as an usher checks that your seat is in this hall, the server must check that item 17 really belongs to order 482.
+>
+> **You'll be able to:** Decide whether a value belongs in the path or the query string · Validate path parameters so bad input gets a clean 404 or 422, not a 500 · Prevent IDOR bugs in nested routes
+
 ## Why This Matters
 
 Path parameters are how a URL points at *one specific thing* instead of a category of things. Nearly every non-trivial API operation — fetching a user, updating an order, deleting a comment — needs a way to say "this exact resource, not just resources of this type." Getting path parameter design right (types, validation, structure) prevents an entire class of bugs and security issues, from 404s that should be 400s to accidental data leaks across tenants.
@@ -150,3 +157,26 @@ Path parameters show up constantly in AI APIs: `/threads/{thread_id}/messages/{m
 - ID format (sequential vs UUID vs opaque prefixed string) is a real security and usability decision, not a cosmetic one.
 
 See also: [Resources and Endpoints](resources-and-endpoints.md), [Query Parameters](query-parameters.md), and [Part 10 — API Security](../10-api-security/README.md) for more on authorization checks.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What's the rule of thumb for path parameter versus query parameter?</summary>
+
+If removing the value would point at a different resource, it's a path parameter. If removing it would only change how the response looks — filtered, sorted, paged — it's a query parameter.
+
+</details>
+
+<details markdown="1">
+<summary>2. What goes wrong if GET /orders/{order_id}/items/{item_id} looks up the item by item_id alone?</summary>
+
+It's an IDOR (broken object-level authorization) bug: a caller can request an item from someone else's order and receive it. Always look up "item 17 where order_id = 482".
+
+</details>
+
+<details markdown="1">
+<summary>3. A client requests an item that exists but belongs to a different order. What should you return?</summary>
+
+`404 Not Found`. Within this order the item doesn't exist, and a 404 avoids confirming that the item exists somewhere else.
+
+</details>
