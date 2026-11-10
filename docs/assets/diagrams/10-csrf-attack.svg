@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="510" viewBox="0 0 880 510" role="img" aria-labelledby="t d">
+  <title id="t">CSRF attack and layered defences</title>
+  <desc id="d">Top lane: a victim logged in to the bank visits evil.example, whose hidden form makes the browser send a cross-site POST to the bank with the session cookie attached automatically, and the bank executes it. Bottom lane: the same forged request meets three defences in turn, SameSite=Lax withholds the cookie, the Origin and Sec-Fetch-Site check rejects a cross-site request, and a missing CSRF token is rejected, while a legitimate same-origin request with a valid token is accepted.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="509" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">CSRF: the browser attaches the cookie, defences check the request</text>
+  <text x="32" y="66" class="sub">The attacker never reads a response and never steals the cookie. They only need the browser to send the request.</text>
+
+  <!-- ===== Lane 1: undefended ===== -->
+  <text x="32" y="102" class="h">Undefended: cookie auth only</text>
+  <rect x="32" y="114" width="210" height="64" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="140" class="lbl" fill="#2563eb">Victim's browser</text>
+  <text x="48" y="160" class="note">logged in, holds session cookie</text>
+  <rect x="335" y="114" width="210" height="64" rx="10" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="351" y="140" class="lbl" fill="#7c3aed">evil.example</text>
+  <text x="351" y="160" class="note">hidden auto-submit form</text>
+  <rect x="638" y="114" width="210" height="64" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="654" y="140" class="lbl" fill="#b91c1c">bank.example API</text>
+  <text x="654" y="160" class="note">cookie valid: runs the action</text>
+  <line x1="242" y1="146" x2="333" y2="146" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="288" cy="130" r="12" fill="#1c7c54"/>
+  <text x="288" y="134" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <path d="M137 178 L137 214 L743 214 L743 180" fill="none" stroke="#b91c1c" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="190" cy="214" r="12" fill="#1c7c54"/>
+  <text x="190" y="218" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="440" y="208" text-anchor="middle" class="code">POST /transfer  Cookie: session=...</text>
+  <text x="440" y="236" text-anchor="middle" class="note">The browser adds the cookie by itself, because the destination is the bank.</text>
+
+  <!-- ===== Lane 2: defended ===== -->
+  <text x="32" y="268" class="h">Defended: three independent layers</text>
+  <rect x="32" y="288" width="140" height="84" rx="10" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="48" y="314" class="lbl" fill="#7c3aed">Forged request</text>
+  <text x="48" y="334" class="note">cross-site POST</text>
+  <text x="48" y="352" class="note">from evil.example</text>
+  <rect x="200" y="288" width="170" height="84" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="216" y="314" class="lbl" fill="#1c7c54">SameSite=Lax</text>
+  <text x="216" y="334" class="note">cookie withheld</text>
+  <text x="216" y="352" class="note">result: 401</text>
+  <rect x="396" y="288" width="170" height="84" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="412" y="314" class="lbl" fill="#1c7c54">Origin / Fetch Meta</text>
+  <text x="412" y="334" class="note">cross-site rejected</text>
+  <text x="412" y="352" class="note">result: 403</text>
+  <rect x="592" y="288" width="170" height="84" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="608" y="314" class="lbl" fill="#1c7c54">CSRF token</text>
+  <text x="608" y="334" class="note">header missing or wrong</text>
+  <text x="608" y="352" class="note">result: 403</text>
+  <rect x="788" y="288" width="60" height="84" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="818" y="334" text-anchor="middle" class="lbl" fill="#475569">API</text>
+  <text x="818" y="352" text-anchor="middle" class="note">handler</text>
+  <line x1="172" y1="330" x2="198" y2="330" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="370" y1="330" x2="394" y2="330" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="566" y1="330" x2="590" y2="330" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="762" y1="330" x2="786" y2="330" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="285" cy="288" r="12" fill="#1c7c54"/>
+  <text x="285" y="292" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <circle cx="481" cy="288" r="12" fill="#1c7c54"/>
+  <text x="481" y="292" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <circle cx="677" cy="288" r="12" fill="#1c7c54"/>
+  <text x="677" y="292" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="32" y="396" class="note">A forged request is stopped at the first layer it fails. Each layer covers gaps the others leave (old browsers, sibling subdomains).</text>
+
+  <!-- legit request -->
+  <rect x="32" y="414" width="816" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="440" class="lbl" fill="#b45309">Legitimate request from app.bank.example</text>
+  <text x="48" y="460" class="note">Origin is on the allowlist, Sec-Fetch-Site is not cross-site, X-CSRF-Token matches the session: 200 OK.</text>
+  <text x="48" y="476" class="note">The real page could read the token; evil.example could not.</text>
+</svg>
