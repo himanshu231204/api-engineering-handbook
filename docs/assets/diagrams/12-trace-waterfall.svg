@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-labelledby="t d">
+  <title id="t">Reading a trace waterfall</title>
+  <desc id="d">A waterfall of one POST /checkout request lasting 420 milliseconds. The root span has children for token verification, a database query, stock reservation, a charge_card client call and an email enqueue. The charge_card call contains a POST /charge span in the payments service, which contains a 40 millisecond fraud check and a 200 millisecond gateway.authorize span highlighted in red as the slowest leaf, about 48 percent of the whole request.</desc>
+  <defs>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="879" height="547" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Reading a trace waterfall: find the widest leaf</text>
+  <text x="32" y="66" class="sub">One request, 420 ms. Indentation is parent/child; bar position and width are start time and duration.</text>
+
+  <line x1="300.0" y1="100" x2="300.0" y2="398" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="300.0" y="94" text-anchor="middle" class="note">0 ms</text>
+  <line x1="430.5" y1="100" x2="430.5" y2="398" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="430.5" y="94" text-anchor="middle" class="note">100 ms</text>
+  <line x1="561.0" y1="100" x2="561.0" y2="398" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="561.0" y="94" text-anchor="middle" class="note">200 ms</text>
+  <line x1="691.4" y1="100" x2="691.4" y2="398" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="691.4" y="94" text-anchor="middle" class="note">300 ms</text>
+  <line x1="821.9" y1="100" x2="821.9" y2="398" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="821.9" y="94" text-anchor="middle" class="note">400 ms</text>
+  <text x="32" y="145" class="lbl" fill="#111827">POST /checkout</text>
+  <rect x="300.0" y="130" width="548.0" height="22" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="574.0" y="146" text-anchor="middle" class="lbl" fill="#1c7c54">420 ms</text>
+  <text x="48" y="175" class="code" >auth.verify_token</text>
+  <rect x="305.2" y="160" width="39.1" height="22" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="350.4" y="176" class="note">30 ms</text>
+  <text x="48" y="205" class="code" >SELECT cart (SQLAlchemy)</text>
+  <rect x="349.6" y="190" width="44.4" height="22" rx="5" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="399.9" y="206" class="note">34 ms</text>
+  <text x="48" y="235" class="code" >reserve_stock</text>
+  <rect x="399.2" y="220" width="65.2" height="22" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="470.4" y="236" class="note">50 ms</text>
+  <text x="48" y="265" class="code" >charge_card (client)</text>
+  <rect x="469.6" y="250" width="354.9" height="22" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="647.1" y="266" text-anchor="middle" class="lbl" fill="#1c7c54">272 ms</text>
+  <text x="64" y="295" class="code" >POST /charge (server)</text>
+  <rect x="480.1" y="280" width="339.2" height="22" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="649.7" y="296" text-anchor="middle" class="lbl" fill="#2563eb">260 ms</text>
+  <text x="80" y="325" class="code" >fraud_check</text>
+  <rect x="490.5" y="310" width="52.2" height="22" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="548.7" y="326" class="note">40 ms</text>
+  <text x="80" y="355" class="code" >gateway.authorize</text>
+  <rect x="550.5" y="340" width="261.0" height="22" rx="5" fill="#fee2e2" stroke="#b91c1c" stroke-width="2.5"/>
+  <text x="681.0" y="356" text-anchor="middle" class="lbl" fill="#b91c1c">200 ms</text>
+  <text x="48" y="385" class="code" >enqueue receipt email</text>
+  <rect x="829.7" y="370" width="15.7" height="22" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="823.7" y="386" text-anchor="end" class="note">12 ms</text>
+  <rect x="32" y="420" width="14" height="14" rx="3" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/><text x="52" y="432" class="note">orders-api</text>
+  <rect x="140" y="420" width="14" height="14" rx="3" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/><text x="160" y="432" class="note">payments-api</text>
+  <rect x="262" y="420" width="14" height="14" rx="3" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/><text x="282" y="432" class="note">database</text>
+  <rect x="362" y="420" width="14" height="14" rx="3" fill="#fee2e2" stroke="#b91c1c" stroke-width="2.5"/><text x="382" y="432" class="note">slowest leaf: where the time actually went</text>
+  <rect x="32" y="460" width="261" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="486" r="12" fill="#1c7c54"/>
+  <text x="56" y="490" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="482" class="lbl" fill="#475569">Check the root</text>
+  <text x="78" y="500" class="note">420 ms total vs your SLO</text>
+  <rect x="309.5" y="460" width="261" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="333.5" cy="486" r="12" fill="#1c7c54"/>
+  <text x="333.5" y="490" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="355.5" y="482" class="lbl" fill="#475569">Follow the widest child</text>
+  <text x="355.5" y="500" class="note">charge_card: 272 ms of 420</text>
+  <rect x="587" y="460" width="261" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="611" cy="486" r="12" fill="#1c7c54"/>
+  <text x="611" y="490" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="633" y="482" class="lbl" fill="#475569">Stop at a leaf</text>
+  <text x="633" y="500" class="note">gateway.authorize: 200 ms (48%)</text>
+</svg>
