@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-labelledby="t d">
+  <title id="t">Role-based access control: users, roles, permissions, resources</title>
+  <desc id="d">Users are assigned roles: Dan is a viewer, Alice a support_agent, Bob an admin. Roles bundle permissions: viewer has orders:read; support_agent has orders:read and refunds:create; admin has orders:read, orders:write, orders:delete and refunds:create. Permissions guard resources: orders and refunds. When Alice sends DELETE /orders/482 her effective permissions are the union of her roles, orders:delete is missing, so the API returns 403 Forbidden.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="547" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">RBAC: users → roles → permissions → resources</text>
+  <text x="32" y="66" class="sub">You never grant permissions to people directly — you give people roles, and roles carry permissions.</text>
+  <text x="32" y="100" class="h">Users</text>
+  <text x="32" y="118" class="note">who is calling</text>
+  <text x="232" y="100" class="h">Roles</text>
+  <text x="232" y="118" class="note">named bundles</text>
+  <text x="520" y="100" class="h">Permissions</text>
+  <text x="520" y="118" class="note">resource:action</text>
+  <text x="740" y="100" class="h">Resources</text>
+  <text x="740" y="118" class="note">what is guarded</text>
+  <rect x="32" y="136" width="150" height="44" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="163" class="lbl" fill="#2563eb">Dan</text>
+  <text x="170" y="163" text-anchor="end" class="note">user_789</text>
+  <rect x="232" y="136" width="170" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="317" y="163" text-anchor="middle" class="code">viewer</text>
+  <rect x="32" y="196" width="150" height="44" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="223" class="lbl" fill="#2563eb">Alice</text>
+  <text x="170" y="223" text-anchor="end" class="note">user_123</text>
+  <rect x="232" y="196" width="170" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="317" y="223" text-anchor="middle" class="code">support_agent</text>
+  <rect x="32" y="256" width="150" height="44" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="283" class="lbl" fill="#2563eb">Bob</text>
+  <text x="170" y="283" text-anchor="end" class="note">user_456</text>
+  <rect x="232" y="256" width="170" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="317" y="283" text-anchor="middle" class="code">admin</text>
+  <rect x="520" y="132" width="160" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="600" y="157" text-anchor="middle" class="code">orders:read</text>
+  <rect x="520" y="184" width="160" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="600" y="209" text-anchor="middle" class="code">orders:write</text>
+  <rect x="520" y="236" width="160" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="600" y="261" text-anchor="middle" class="code">orders:delete</text>
+  <rect x="520" y="288" width="160" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="600" y="313" text-anchor="middle" class="code">refunds:create</text>
+  <rect x="740" y="132" width="108" height="144" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="794" y="200" text-anchor="middle" class="lbl" fill="#475569">Orders</text>
+  <text x="794" y="218" text-anchor="middle" class="note">/orders/*</text>
+  <rect x="740" y="288" width="108" height="40" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="794" y="313" text-anchor="middle" class="lbl" fill="#475569">Refunds</text>
+  <line x1="182" y1="158" x2="228" y2="158" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="182" y1="218" x2="228" y2="218" stroke="#1c7c54" stroke-width="2.25" marker-end="url(#arrow)"/>
+  <line x1="182" y1="278" x2="228" y2="278" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="402" y1="158" x2="516" y2="152" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="402" y1="278" x2="516" y2="152" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="402" y1="278" x2="516" y2="204" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="402" y1="278" x2="516" y2="256" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="402" y1="278" x2="516" y2="308" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="402" y1="218" x2="516" y2="152" stroke="#1c7c54" stroke-width="2.25" marker-end="url(#arrow)"/>
+  <line x1="402" y1="218" x2="516" y2="308" stroke="#1c7c54" stroke-width="2.25" marker-end="url(#arrow)"/>
+  <line x1="680" y1="152" x2="736" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="680" y1="204" x2="736" y2="204" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="680" y1="256" x2="736" y2="256" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="680" y1="308" x2="736" y2="308" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="32" y1="346" x2="60" y2="346" stroke="#1c7c54" stroke-width="2.25"/>
+  <text x="68" y="350" class="note">Green lines = Alice's path. Her effective permissions are the union of all her roles.</text>
+  <text x="32" y="388" class="h">One request, checked</text>
+  <rect x="32" y="400" width="252" height="72" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="424" class="lbl" fill="#2563eb">Alice: DELETE /orders/482</text>
+  <text x="48" y="444" class="note">authenticated as user_123</text>
+  <text x="48" y="462" class="note">role: support_agent</text>
+  <line x1="284" y1="436" x2="310" y2="436" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="314" y="400" width="252" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="330" y="424" class="lbl" fill="#b45309">Effective permissions</text>
+  <text x="330" y="444" class="note">orders:read</text>
+  <text x="330" y="462" class="note">refunds:create</text>
+  <line x1="566" y1="436" x2="592" y2="436" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="596" y="400" width="252" height="72" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="612" y="424" class="lbl" fill="#b91c1c">orders:delete is missing</text>
+  <text x="612" y="444" class="note">authenticated, not allowed</text>
+  <text x="612" y="462" class="note">→ 403 Forbidden</text>
+  <g transform="translate(32,488)">
+    <rect width="816" height="40" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="25" class="lbl" fill="#1c7c54">Remember</text>
+    <text x="96" y="25" class="note">RBAC answers "what kind of thing can this role touch?" Add an ownership check for "which specific record?".</text>
+  </g>
+</svg>

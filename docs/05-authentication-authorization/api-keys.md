@@ -1,5 +1,12 @@
 # API Keys
 
+> [!TIP]
+> **In one line:** An API key is a long random secret that identifies a calling app or service — store only its hash, scope it narrowly, and make it easy to rotate and revoke.
+>
+> **In plain English:** An API key works like the PIN code on a gym's side door given to a delivery company. Whoever knows the code gets in, no questions asked, so you give each company its own code, let it open only the doors it needs, and change it the moment it leaks.
+>
+> **You'll be able to:** generate, hash and verify API keys with a recognisable prefix · attach scopes and return the right 401 vs 403 · design zero-downtime key rotation and keep provider keys out of client apps
+
 ## Why This Matters
 
 Not every caller of your API is a human sitting behind a browser with cookies. Backend services, CI pipelines, third-party integrations, and command-line tools all need a way to authenticate that doesn't involve a login form, a session, or a redirect flow. **API keys** are the simplest possible answer: a long, static secret string that identifies (and often authenticates) the caller. They're everywhere — every cloud provider, payment processor, and LLM provider issues them — but their simplicity is also their biggest risk: a leaked API key is often full account access, forever, until someone notices and rotates it.
@@ -213,3 +220,26 @@ API keys are the dominant authentication mechanism for LLM provider APIs — Ope
 - Scope every key to least privilege and support easy rotation and revocation — an unscoped, unrevocable key is a major liability if leaked.
 - API keys authenticate an application/service, not a human user — don't conflate the two.
 - LLM provider APIs rely heavily on API keys, making key hygiene (never client-side, always server-proxied) especially important in AI system architecture.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How should the server store an API key, and how many times is the full key shown to its owner?</summary>
+
+Only a hash (e.g. SHA-256) of the key is stored, never the plaintext; each request's key is hashed and compared. The full key is shown exactly once, at creation, and can never be retrieved again.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is plain SHA-256 acceptable for API keys when passwords need a slow hash like bcrypt or argon2?</summary>
+
+API keys are long, high-entropy random strings, so there is no practical offline brute-force attack to slow down. Passwords are short and human-chosen, which is exactly why they need deliberately slow hashing.
+
+</details>
+
+<details markdown="1">
+<summary>3. A mobile app ships with your LLM provider's API key embedded in the bundle. What goes wrong, and what should you do instead?</summary>
+
+Anyone can extract the key from the app binary and run up unlimited spend or access on your account. Keep the provider key server-side, route model calls through your own backend or LLM gateway, and issue your own scoped, revocable, rate-limited keys or tokens to clients.
+
+</details>

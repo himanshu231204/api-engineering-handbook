@@ -1,5 +1,12 @@
 # JWT Deeply Explained
 
+> [!TIP]
+> **In one line:** A JWT is signed JSON anyone can read but no one can alter undetected — verify it with a server-pinned algorithm and check `exp`, `iss`, `aud` before trusting it.
+>
+> **In plain English:** A JWT is like a printed concert wristband with your details written on it and a hologram sticker. Anyone can read what's printed, but only the venue can make the hologram, so staff trust the wristband without phoning the box office. The catch: once handed out, it stays valid until it expires.
+>
+> **You'll be able to:** decode a JWT and explain each of its three parts · verify tokens safely by pinning the algorithm and checking standard claims · choose between HS256 and RS256 and plan for revocation with short lifetimes
+
 ## Why This Matters
 
 JSON Web Tokens (JWTs) are everywhere in modern API authentication — they're the default access token format for OAuth 2.0, the standard output of Firebase Auth, Auth0, AWS Cognito, and most homegrown auth systems. They're also one of the most commonly *misimplemented* security mechanisms in the industry: a huge share of real-world JWT vulnerabilities come not from the format itself but from verification code that trusts fields it shouldn't. Understanding the format precisely — not just "it's a token with some JSON in it" — is what separates code that's actually secure from code that merely looks secure.
@@ -84,6 +91,8 @@ sequenceDiagram
         API-->>Client: 200 OK + resource
     end
 ```
+
+![A JWT split into its three colored parts — header, payload and signature — showing the decoded JSON of each, the four verification steps (pin the algorithm, check the signature, reject if wrong, check exp/iss/aud), and a warning that base64 is not encryption](../assets/diagrams/05-jwt-structure.svg)
 
 ## Request / Response Example
 
@@ -262,3 +271,26 @@ JWTs show up constantly in AI system backends: they're a natural way to pass a v
 - HS256 shares one secret across signer and verifier; RS256 separates a private signing key from a public verification key, which is safer for multi-service systems.
 - JWTs can't be revoked before their `exp` without extra machinery (denylists, key rotation) — keep access-token lifetimes short and pair with a revocable refresh token.
 - A valid signature proves authenticity, not permission — authorization logic must still be applied on top of the claims.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three parts of a JWT, and which of them can anyone read?</summary>
+
+Header, payload and signature, joined by dots. The header and payload are only base64url-encoded, so anyone holding the token can decode and read them; the signature only proves they were not altered and were issued by the key holder.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must the verifier take the algorithm from its own configuration instead of the token's alg header?</summary>
+
+The header is attacker-controlled. Trusting it enables "alg: none" tokens with no signature, or an RS256-to-HS256 confusion attack where the attacker signs with the public key as an HMAC secret. Pinning the expected algorithm server-side makes both attacks fail.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user is banned, but their 24-hour JWT keeps working for the rest of the day. What went wrong, and how do you fix it?</summary>
+
+JWTs are verified without a server lookup, so they stay valid until exp no matter what changes server-side. Shorten access-token lifetimes to minutes and pair them with a revocable refresh token; for immediate cut-off, check a jti denylist (or rotate the signing key for a mass compromise).
+
+</details>

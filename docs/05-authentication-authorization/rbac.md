@@ -1,5 +1,12 @@
 # RBAC
 
+> [!TIP]
+> **In one line:** RBAC gives users roles, roles bundle permissions, and every request checks that the caller's combined permissions include the one this action requires.
+>
+> **In plain English:** A restaurant doesn't keep a list of which staff member may use which machine. It says "chefs use the ovens, cashiers use the till," and gives each new hire a title. Change what chefs may do once, and every chef is updated.
+>
+> **You'll be able to:** model users, roles and permissions with junction tables · enforce a required permission per route with a reusable FastAPI dependency · recognise where RBAC stops and an ownership check must take over
+
 ## Why This Matters
 
 Once you've solved authentication — you know *who* is calling, per [Authentication vs Authorization](authentication-vs-authorization.md) — you still need a systematic way to decide *what* they're allowed to do. Checking `if user.email == "admin@company.com"` in scattered `if` statements across a codebase doesn't scale past a handful of routes and is a breeding ground for authorization bugs. **Role-Based Access Control (RBAC)** is the most widely used model for structuring that decision: instead of granting permissions to individuals one by one, you group permissions into **roles**, and assign users to roles. It's the model behind almost every admin panel, cloud IAM system, and multi-user SaaS product you've ever used.
@@ -25,6 +32,8 @@ Think of RBAC like **job titles at a company issuing building access badges**. Y
 3. **Assign roles to users** — typically many-to-many: a user can have multiple roles, and a role can be assigned to many users.
 4. **Enforce at request time** — on each request, resolve the authenticated user's roles, compute their effective permission set (the union across all their roles), and check whether the required permission for this action is present.
 5. **(Optional) Role hierarchy** — some RBAC systems let roles inherit from other roles (`admin` inherits everything `editor` has, plus more), reducing duplication in role definitions. This adds power but also complexity in reasoning about "what can this role actually do" — use it deliberately, not by default.
+
+![RBAC mapping: users Dan, Alice and Bob are assigned the roles viewer, support_agent and admin; each role links to its permissions (orders:read, orders:write, orders:delete, refunds:create), which guard the Orders and Refunds resources; a worked example shows Alice's DELETE /orders/482 being denied with 403 because orders:delete is not in her effective permissions](../assets/diagrams/05-rbac.svg)
 
 ### Modeling RBAC in a database
 
@@ -216,3 +225,26 @@ RBAC extends naturally, and importantly, to AI agents: an agent acting as a serv
 - Centralize enforcement in a single reusable mechanism rather than scattering role checks through business logic.
 - RBAC answers "what can this role do," not "which specific resource instance can this user touch" — pair it with ownership/scope checks for full authorization coverage.
 - Enforcing RBAC at the API/tool-call layer (not relying on model judgment) is an important guardrail for AI agent systems.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three building blocks of RBAC?</summary>
+
+Permissions (granular capabilities like orders:delete), roles (named bundles of permissions), and assignments (which users hold which roles). A user's effective permissions are the union of the permissions of every role they hold.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why do roles exist at all — why not grant permissions straight to each user?</summary>
+
+Indirection keeps it maintainable: when a feature needs a new permission you add it to a role once, and every current and future holder of that role gets it automatically. Per-user permission lists grow into an unmanageable, error-prone mess as users and features multiply.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your "customer" role has orders:read, and any customer can now read every other customer's orders. What is missing?</summary>
+
+RBAC only says what kind of resource a role may touch, not which specific record. You need an ownership check on top (does this order belong to the caller?) that returns 403 when it fails — otherwise you have a Broken Object Level Authorization bug.
+
+</details>

@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-labelledby="t d">
+  <title id="t">Structure of a JSON Web Token</title>
+  <desc id="d">A JWT is three base64url segments joined by dots: header, payload and signature. Decoding the header shows the algorithm, decoding the payload shows claims such as sub, role and exp, and the signature is an HMAC or RSA signature over header dot payload. The API verifies a token by pinning the algorithm from its own config, recomputing the signature, comparing, and checking exp, iss and aud. Base64 is not encryption, so anyone can read the payload.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="547" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Anatomy of a JWT: header.payload.signature</text>
+  <text x="32" y="66" class="sub">Three base64url pieces joined by dots. The first two are just encoded JSON; the third proves they weren't changed.</text>
+
+  <!-- ===== the raw token ===== -->
+  <text x="32" y="100" class="lbl" fill="#2563eb">HEADER</text>
+  <text x="292" y="100" class="lbl" fill="#b45309">PAYLOAD</text>
+  <text x="612" y="100" class="lbl" fill="#1c7c54">SIGNATURE</text>
+
+  <rect x="32" y="110" width="240" height="40" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="135" class="code">eyJhbGciOiJIUzI1NiIs…</text>
+  <text x="282" y="138" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#111827">.</text>
+  <rect x="292" y="110" width="300" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="308" y="135" class="code">eyJzdWIiOiJ1c2VyXzEyMyIs…</text>
+  <text x="602" y="138" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#111827">.</text>
+  <rect x="612" y="110" width="236" height="40" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="628" y="135" class="code">TJVA95OrM7E2cBab30RM…</text>
+
+  <!-- decode arrows -->
+  <line x1="152" y1="150" x2="152" y2="186" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="162" y="173" class="note">base64url-decode</text>
+  <line x1="442" y1="150" x2="442" y2="186" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="452" y="173" class="note">base64url-decode</text>
+  <line x1="730" y1="150" x2="730" y2="186" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="740" y="173" class="note">computed as</text>
+
+  <!-- ===== decoded ===== -->
+  <rect x="32" y="190" width="240" height="120" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="220" class="code">{"alg": "HS256",</text>
+  <text x="56" y="242" class="code">"typ": "JWT"}</text>
+  <text x="48" y="292" class="note">Which algorithm signed it</text>
+
+  <rect x="292" y="190" width="300" height="120" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="308" y="220" class="code">{"sub": "user_123",</text>
+  <text x="316" y="242" class="code">"role": "admin",</text>
+  <text x="316" y="264" class="code">"exp": 1720000100}</text>
+  <text x="308" y="292" class="note">Claims about the caller (plus iss, aud, iat)</text>
+
+  <rect x="612" y="190" width="236" height="120" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="628" y="220" class="code">HMACSHA256(</text>
+  <text x="644" y="242" class="code">header + "." +</text>
+  <text x="644" y="264" class="code">payload, KEY)</text>
+  <text x="628" y="292" class="note">Only the key holder can make it</text>
+
+  <!-- ===== verification ===== -->
+  <text x="32" y="344" class="h">How the API verifies a token (in this order)</text>
+
+  <rect x="32" y="356" width="190" height="96" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="54" cy="378" r="12" fill="#1c7c54"/>
+  <text x="54" y="382" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="74" y="383" class="lbl" fill="#1c7c54">Pin the algorithm</text>
+  <text x="46" y="414" class="note">from server config —</text>
+  <text x="46" y="434" class="note">never the token's own alg</text>
+  <line x1="222" y1="404" x2="240" y2="404" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <rect x="242" y="356" width="190" height="96" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="264" cy="378" r="12" fill="#1c7c54"/>
+  <text x="264" y="382" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="284" y="383" class="lbl" fill="#1c7c54">Check signature</text>
+  <text x="256" y="414" class="note">over header.payload,</text>
+  <text x="256" y="434" class="note">using your own key</text>
+  <line x1="432" y1="404" x2="450" y2="404" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <rect x="452" y="356" width="190" height="96" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="474" cy="378" r="12" fill="#1c7c54"/>
+  <text x="474" y="382" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="494" y="383" class="lbl" fill="#1c7c54">Reject if wrong</text>
+  <text x="466" y="414" class="note">no match = tampered</text>
+  <text x="466" y="434" class="note">or forged → 401</text>
+  <line x1="642" y1="404" x2="660" y2="404" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <rect x="662" y="356" width="186" height="96" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="684" cy="378" r="12" fill="#1c7c54"/>
+  <text x="684" y="382" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="704" y="383" class="lbl" fill="#1c7c54">Check claims</text>
+  <text x="676" y="414" class="note">exp, iss, aud all valid?</text>
+  <text x="676" y="434" class="note">only then trust them</text>
+
+  <!-- ===== warning ===== -->
+  <g transform="translate(32,474)">
+    <rect width="816" height="48" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+    <text x="16" y="29" class="lbl" fill="#b91c1c">base64 ≠ encrypted</text>
+    <text x="164" y="29" class="note">Anyone holding the token can decode the header and payload. Never put secrets or personal data in a JWT.</text>
+  </g>
+</svg>

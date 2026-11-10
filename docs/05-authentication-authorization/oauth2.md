@@ -1,5 +1,12 @@
 # OAuth 2.0
 
+> [!TIP]
+> **In one line:** OAuth 2.0 lets a user grant an app scoped, revocable access to their data on another service — use Authorization Code + PKCE, never share the password.
+>
+> **In plain English:** Instead of giving a babysitter your house keys, you ask a neighbour you trust to let them in to the kitchen only, just for tonight. The babysitter never learns your key, and you can call the neighbour to cancel at any time. OAuth is that trusted middle step for apps.
+>
+> **You'll be able to:** walk through the Authorization Code + PKCE flow step by step · explain what `state`, `code_verifier` and `code_challenge` each protect against · request minimal scopes and avoid deprecated flows like Implicit
+
 ## Why This Matters
 
 Every time you click "Sign in with Google" or grant a third-party app access to your calendar without ever typing your Google password into that app, you're using OAuth 2.0. It solves a problem that predates it caused real damage: before OAuth, the only way to let a third-party app act on your behalf was to **hand it your actual password**, giving it unlimited, unscoped, indefinite access — exactly what you'd never want to give a random calendar-sync tool. OAuth 2.0 is the industry-standard protocol for **delegated authorization**: letting a user grant a third-party application limited, revocable access to their resources on another service, without ever sharing credentials with that third party.
@@ -67,6 +74,8 @@ sequenceDiagram
     ResS->>AuthS: (optionally) validate token
     ResS-->>Client: 200 OK + calendar data
 ```
+
+![Numbered OAuth 2.0 Authorization Code + PKCE flow across four lanes — user, client app, authorization server, API: create verifier and challenge, redirect to /authorize, user logs in and consents, redirect back with a code, POST the code plus verifier to /token, server checks the hash, tokens returned, API called with the bearer token](../assets/diagrams/05-oauth2-auth-code-pkce.svg)
 
 ## Request / Response Example
 
@@ -246,3 +255,26 @@ OAuth 2.0 is increasingly central to AI agent architectures: when an [AI agent](
 - PKCE prevents a stolen authorization code from being redeemed by anyone other than the client that originated the flow, by requiring the original `code_verifier` at token exchange.
 - `state` validation prevents CSRF on the authorization redirect; strict `redirect_uri` validation prevents code leakage to attacker endpoints.
 - OAuth alone establishes authorization, not identity — identity requires OpenID Connect layered on top.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four roles in OAuth 2.0?</summary>
+
+The resource owner (the user who owns the data), the client (the app requesting access), the authorization server (logs the user in and issues tokens), and the resource server (the API that holds the data and accepts the access token).
+
+</details>
+
+<details markdown="1">
+<summary>2. An attacker intercepts the authorization code during the redirect. Why can't they redeem it when PKCE is used?</summary>
+
+Redeeming the code at /token requires the original code_verifier, and the authorization server checks that its SHA256 hash matches the code_challenge sent in the first redirect. The verifier never travelled through the browser, so the attacker doesn't have it and the exchange fails.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your callback handler accepts any incoming code without checking state. What can an attacker do?</summary>
+
+They can trick a victim's browser into completing a flow with the attacker's own authorization code (login CSRF), binding the victim's session to the attacker's account. Generate a random state per flow, store it, and reject the callback if the returned state is unknown or already used.
+
+</details>

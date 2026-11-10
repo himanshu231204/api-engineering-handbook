@@ -1,5 +1,12 @@
 # Sessions and Cookies
 
+> [!TIP]
+> **In one line:** The cookie carries only a random session ID; the real login state lives on the server, so it can be revoked instantly — protect it with `HttpOnly`, `Secure` and `SameSite`.
+>
+> **In plain English:** It's like a library card with just a number on it. The number means nothing by itself; the library's own records say who you are and what you've borrowed. Cancel the record and the card is useless, even if someone else is holding it.
+>
+> **You'll be able to:** implement cookie-based login, lookup and logout in FastAPI · set the cookie attributes that block XSS theft, sniffing and CSRF · prevent session fixation and decide when sessions beat tokens
+
 ## Why This Matters
 
 HTTP is stateless — every request is, in principle, independent of every other. But almost every real application needs to remember "this request belongs to the same logged-in user as the last one." Sessions and cookies were the original, and are still the most widely deployed, answer to that problem. Understanding them well matters for two reasons: first, they're still the right choice for classic server-rendered web apps and many first-party web dashboards; second, understanding *why* they work (and where they're fragile — session fixation, CSRF exposure, scaling stateful servers) is what lets you make an informed choice between sessions and token-based auth like [bearer tokens](bearer-tokens.md) and [JWTs](jwt-deeply-explained.md).
@@ -221,3 +228,26 @@ Cookie-based sessions are a poor fit for most AI-to-API traffic: LLM backends, a
 - `HttpOnly`, `Secure`, and `SameSite` are not optional extras — they are the core defenses against session theft via XSS, network sniffing, and CSRF respectively.
 - Always issue a fresh session ID at login to prevent session fixation; never trust a client-supplied session ID as pre-authenticated.
 - Sessions fit server-rendered, first-party web apps well; stateless tokens usually fit APIs, mobile clients, and service-to-service calls better.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is stored in the session cookie, and where does the actual session data live?</summary>
+
+The cookie holds only an opaque, random session ID. The real data (user ID, expiry, roles) lives server-side in a session store such as Redis or a database, looked up by that ID on every request.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must the server issue a brand-new session ID at login instead of keeping the one the browser already had?</summary>
+
+If an attacker planted that pre-login ID in the victim's browser, reusing it after login would hand the attacker an authenticated session — a session fixation attack. Rotating the ID at login (and on any privilege change) makes the planted ID worthless.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your app sets its session cookie without HttpOnly, and an XSS bug is found on one page. What can an attacker do, and what does the attribute change?</summary>
+
+Injected JavaScript can read document.cookie and send the session ID to the attacker, who can then act as the user until the session expires. With HttpOnly the script cannot read the cookie at all — though you still need to fix the XSS itself.
+
+</details>

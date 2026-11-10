@@ -1,5 +1,12 @@
 # Authentication vs Authorization
 
+> [!TIP]
+> **In one line:** Authentication proves who is calling; authorization decides whether that caller may do this specific thing — two separate checks, in that order, on every protected request.
+>
+> **In plain English:** Showing your ticket at a concert gate proves you have a ticket. Whether you can walk into the backstage area is a different question, checked by a different person. An API must ask both questions, every time.
+>
+> **You'll be able to:** tell authentication and authorization checks apart in real code · choose correctly between `401` and `403` · structure FastAPI dependencies so the per-resource permission check is never skipped
+
 ## Why This Matters
 
 Two words that sound similar, get abbreviated the same way in casual conversation ("auth"), and get confused constantly in real codebases — yet they answer completely different questions:
@@ -34,6 +41,8 @@ A typical protected request flows through both checks, in order:
 2. **Authenticate** — verify the credential is valid (signature check, session lookup, password hash comparison) and resolve it to a principal (a user ID, a service account, a client ID).
 3. **Authorize** — given the resolved principal, check whether it's permitted to perform *this* operation on *this* resource. This step needs both the principal's permissions (roles, scopes, attributes) and the resource's ownership/sensitivity.
 4. **Proceed or reject** — `401 Unauthorized` if authentication failed (we don't know who you are), `403 Forbidden` if authorization failed (we know who you are, and the answer is no).
+
+![Two gates on a protected request: the authentication gate asks "who are you?" and returns 401 on failure; the authorization gate asks "are you allowed?" and returns 403 on failure; only after both pass does the handler return 200 OK](../assets/diagrams/05-authn-vs-authz.svg)
 
 The 401 vs 403 distinction is the single most common signal that a team understands this split. Returning 401 for "you're logged in but not allowed" is a frequent, telling mistake — see [HTTP status codes](../01-api-foundations/status-codes.md) in Part 1 for the full picture.
 
@@ -210,3 +219,26 @@ For quick definitions of related terms used throughout this Part (principal, cla
 - Authorization must be checked per resource/action, not assumed from a general role check at the route level.
 - Never trust client-supplied identity or role data for authorization decisions — derive them from the verified credential.
 - This split becomes even more important in agentic AI systems, where a valid credential does not imply blanket permission for every tool call.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which question does authentication answer, and which does authorization answer?</summary>
+
+Authentication answers "who are you?" by verifying a credential and resolving it to a principal. Authorization answers "what are you allowed to do?" by checking that principal's permissions against the specific action and resource.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if your API returns 401 when a logged-in user simply lacks permission?</summary>
+
+Clients usually treat a 401 as "my credential is bad" and try to refresh the token or log in again — which can never fix a permissions problem, so they loop or show the wrong error. A 403 tells them correctly that the identity is known and the answer is no.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your endpoint checks that the caller has the "customer" role, then returns whatever order ID appears in the URL. What goes wrong, and what is the fix?</summary>
+
+Any customer can read any other customer's order by changing the ID — a Broken Object Level Authorization bug. The fix is a per-resource check (is this principal the order's owner, or an admin?) that returns 403 when it fails, using the identity from the verified token rather than anything the client sent.
+
+</details>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="528" viewBox="0 0 880 528" role="img" aria-labelledby="t d">
+  <title id="t">Access and refresh tokens over time, with rotation and reuse detection</title>
+  <desc id="d">A timeline shows short 15-minute access tokens AT1, AT2, AT3 issued one after another. Each time one expires the client gets a 401, calls the refresh endpoint with its current refresh token, and receives a new access token and a new refresh token while the old refresh token is retired. Below, if a retired refresh token is ever presented again, the server treats it as theft, revokes the whole token family and forces a fresh login.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="527" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Access + refresh tokens: a session over time</text>
+  <text x="32" y="66" class="sub">Short access tokens keep leaks small. A single-use refresh token quietly gets the next pair.</text>
+  <text x="32" y="116" class="lbl" fill="#1c7c54">Access token</text>
+  <text x="32" y="134" class="note">sent on every call</text>
+  <text x="32" y="166" class="lbl" fill="#b45309">Refresh token</text>
+  <text x="32" y="184" class="note">only to /token/refresh</text>
+  <line x1="400" y1="92" x2="400" y2="236" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="624" y1="92" x2="624" y2="236" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <rect x="178" y="98" width="218" height="40" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="287" y="123" text-anchor="middle" class="code">AT1 · 15 min</text>
+  <rect x="178" y="148" width="218" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="287" y="173" text-anchor="middle" class="code">RT1 · single use</text>
+  <rect x="404" y="98" width="216" height="40" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="512" y="123" text-anchor="middle" class="code">AT2 · 15 min</text>
+  <rect x="404" y="148" width="216" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="512" y="173" text-anchor="middle" class="code">RT2 · single use</text>
+  <rect x="628" y="98" width="218" height="40" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="737" y="123" text-anchor="middle" class="code">AT3 · 15 min</text>
+  <rect x="628" y="148" width="218" height="40" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="737" y="173" text-anchor="middle" class="code">RT3 · single use</text>
+  <line x1="176" y1="208" x2="848" y2="208" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="176" y1="202" x2="176" y2="214" stroke="#475569" stroke-width="1.75"/>
+  <text x="182" y="228" class="note">0 min</text>
+  <line x1="400" y1="202" x2="400" y2="214" stroke="#475569" stroke-width="1.75"/>
+  <text x="406" y="228" class="note">15 min</text>
+  <line x1="624" y1="202" x2="624" y2="214" stroke="#475569" stroke-width="1.75"/>
+  <text x="630" y="228" class="note">30 min</text>
+  <text x="848" y="228" text-anchor="end" class="note">time</text>
+  <rect x="32" y="244" width="232" height="74" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="54" cy="266" r="12" fill="#1c7c54"/>
+  <text x="54" y="270" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="74" y="271" class="lbl" fill="#2563eb">Login</text>
+  <text x="48" y="292" class="note">→ AT1 + RT1 issued</text>
+  <text x="48" y="310" class="note">RT1 stored hashed, family F</text>
+  <rect x="300" y="244" width="200" height="74" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="322" cy="266" r="12" fill="#1c7c54"/>
+  <text x="322" y="270" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="342" y="271" class="lbl" fill="#2563eb">AT1 expires → 401</text>
+  <text x="316" y="292" class="note">POST /token/refresh + RT1</text>
+  <text x="316" y="310" class="note">→ AT2 + RT2; RT1 retired</text>
+  <rect x="524" y="244" width="200" height="74" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="546" cy="266" r="12" fill="#1c7c54"/>
+  <text x="546" y="270" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="566" y="271" class="lbl" fill="#2563eb">AT2 expires → 401</text>
+  <text x="540" y="292" class="note">POST /token/refresh + RT2</text>
+  <text x="540" y="310" class="note">→ AT3 + RT3; RT2 retired</text>
+  <text x="740" y="272" class="note">…and so on until</text>
+  <text x="740" y="290" class="note">logout or the max</text>
+  <text x="740" y="308" class="note">session age</text>
+  <text x="32" y="354" class="h">Reuse detection: what if a retired refresh token shows up again?</text>
+  <rect x="32" y="366" width="186" height="72" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="390" class="lbl" fill="#b91c1c">Stolen RT1 replayed</text>
+  <text x="48" y="410" class="note">attacker (or a racing</text>
+  <text x="48" y="428" class="note">client) sends RT1 again</text>
+  <line x1="218" y1="402" x2="238" y2="402" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="242" y="366" width="186" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="258" y="390" class="lbl" fill="#b45309">Already used!</text>
+  <text x="258" y="410" class="note">a real client never</text>
+  <text x="258" y="428" class="note">re-sends a retired token</text>
+  <line x1="428" y1="402" x2="448" y2="402" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="452" y="366" width="186" height="72" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="468" y="390" class="lbl" fill="#b91c1c">Revoke the family</text>
+  <text x="468" y="410" class="note">RT1, RT2, RT3 … every</text>
+  <text x="468" y="428" class="note">token from login F dies</text>
+  <line x1="638" y1="402" x2="658" y2="402" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="662" y="366" width="186" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="678" y="390" class="lbl" fill="#475569">401 → log in again</text>
+  <text x="678" y="410" class="note">attacker locked out;</text>
+  <text x="678" y="428" class="note">user signs in fresh</text>
+  <g transform="translate(32,460)">
+    <rect width="816" height="44" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="27" class="lbl" fill="#1c7c54">Rules of thumb</text>
+    <text x="128" y="27" class="note">Access TTL 5–15 min · rotate the refresh token on every use · logout revokes it on the server</text>
+  </g>
+</svg>
