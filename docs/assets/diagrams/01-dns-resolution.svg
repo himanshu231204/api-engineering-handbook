@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">How a DNS lookup works</title>
+  <desc id="d">Six numbered steps: the device checks its cache, asks a resolver, which asks the root, TLD and authoritative servers in turn, then the IP address is returned and cached for its TTL.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">How DNS finds an IP address</text>
+  <text x="32" y="66" class="sub">Looking up api.example.com. Answers are cached, so most lookups skip steps 3 to 5.</text>
+  <rect x="32" y="170" width="176" height="110" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="52" cy="198" r="12" fill="#1c7c54"/>
+  <text x="52" y="202" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <text x="72" y="203" class="h">Your device</text>
+  <text x="48" y="232" class="note">Checks its own cache.</text>
+  <text x="48" y="252" class="note">Hit: done instantly.</text>
+  <rect x="300" y="170" width="170" height="110" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="316" y="203" class="h">Resolver</text>
+  <text x="316" y="232" class="note">ISP, 8.8.8.8, 1.1.1.1</text>
+  <text x="316" y="252" class="note">does the legwork</text>
+  <line x1="208" y1="215" x2="300" y2="215" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="254" cy="215" r="12" fill="#1c7c54"/>
+  <text x="254" y="219" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <line x1="300" y1="250" x2="208" y2="250" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="254" cy="250" r="12" fill="#1c7c54"/>
+  <text x="254" y="254" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">6</text>
+  <text x="254" y="276" class="note" text-anchor="middle">IP returned</text>
+  <rect x="590" y="96" width="258" height="70" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="606" y="124" class="h">Root server</text>
+  <text x="606" y="148" class="note">“ask the .com servers”</text>
+  <rect x="590" y="186" width="258" height="70" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="606" y="214" class="h">.com TLD server</text>
+  <text x="606" y="238" class="note">“ask example.com's nameserver”</text>
+  <rect x="590" y="276" width="258" height="70" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="606" y="304" class="h">Authoritative nameserver</text>
+  <text x="606" y="328" class="note">api.example.com = 93.184.216.34</text>
+  <line x1="470" y1="195" x2="590" y2="131" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <circle cx="530" cy="163" r="12" fill="#1c7c54"/>
+  <text x="530" y="167" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <line x1="470" y1="225" x2="590" y2="221" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <circle cx="530" cy="223" r="12" fill="#1c7c54"/>
+  <text x="530" y="227" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <line x1="470" y1="255" x2="590" y2="311" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <circle cx="530" cy="283" r="12" fill="#1c7c54"/>
+  <text x="530" y="287" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <rect x="32" y="372" width="816" height="94" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="398" class="h">Caching and TTL</text>
+  <text x="48" y="424" class="note">Every answer is cached for its TTL (for example 300 seconds) by the browser, the OS and the resolver.</text>
+  <text x="48" y="444" class="note">Lower the TTL before a migration; a high TTL means a record change can take hours to reach everyone.</text>
+</svg>

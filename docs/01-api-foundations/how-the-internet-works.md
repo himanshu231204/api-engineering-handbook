@@ -50,6 +50,8 @@ flowchart LR
     F -.TCP handshake + HTTP response.-> A
 ```
 
+![Diagram: a request needs a DNS lookup, a TCP and TLS connection, then many router hops, explained by a four-layer stack](../assets/diagrams/01-packet-journey.svg)
+
 Each arrow above is a hop where a router inspects the destination IP address of a packet and forwards it toward the next network. Your HTTP request doesn't travel as one unit down this whole path — it's split into packets at your machine, reassembled in order at the server thanks to TCP, and the response makes the same kind of trip back.
 
 ## Request / Response Example

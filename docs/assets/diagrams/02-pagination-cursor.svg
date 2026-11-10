@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="546" viewBox="0 0 880 546" role="img" aria-labelledby="t d">
+  <title id="t">Offset versus cursor pagination</title>
+  <desc id="d">Page 1 shows items 9, 8, 7. A new item 10 is inserted. With offset pagination page 2 repeats item 7. With cursor pagination page 2 correctly starts at item 6.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="545" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Why cursor pagination stays correct</text>
+  <text x="32" y="66" class="sub">Same list, same page size of 3. A new item arrives between page 1 and page 2.</text>
+  <rect x="32" y="82" width="400" height="372" rx="10" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="108" class="h" style="fill:#b91c1c">Offset pagination</text>
+  <text x="48" y="130" class="code">GET /posts?offset=3&amp;limit=3</text>
+  <text x="48" y="172" class="note">1. page 1</text>
+  <rect x="162" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="190" y="175" class="lbl" text-anchor="middle">9</text>
+  <rect x="228" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="256" y="175" class="lbl" text-anchor="middle">8</text>
+  <rect x="294" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="322" y="175" class="lbl" text-anchor="middle">7</text>
+  <text x="48" y="226" class="note">2. new post</text>
+  <rect x="162" y="204" width="56" height="34" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="190" y="227" class="lbl" text-anchor="middle">10</text>
+  <text x="230" y="226" class="note">inserted at the top</text>
+  <text x="48" y="266" class="note">list is now: 10 9 8 7 6 5 4 ...</text>
+  <text x="48" y="284" class="note" style="fill:#b91c1c">skip 3 rows: starts at 7</text>
+  <text x="48" y="328" class="note">3. page 2</text>
+  <rect x="162" y="308" width="56" height="34" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="2.5"/>
+  <text x="190" y="331" class="lbl" text-anchor="middle">7</text>
+  <rect x="228" y="308" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="256" y="331" class="lbl" text-anchor="middle">6</text>
+  <rect x="294" y="308" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="322" y="331" class="lbl" text-anchor="middle">5</text>
+  <text x="162" y="362" class="note" style="fill:#b91c1c">duplicate of page 1</text>
+  <rect x="48" y="378" width="368" height="62" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="64" y="402" class="lbl" style="fill:#b91c1c">Item 7 shown twice.</text>
+  <text x="64" y="420" class="note">Deep OFFSET scans and discards every skipped row.</text>
+  <rect x="448" y="82" width="400" height="372" rx="10" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="464" y="108" class="h" style="fill:#1c7c54">Cursor pagination</text>
+  <text x="464" y="130" class="code">GET /posts?after=7&amp;limit=3</text>
+  <text x="464" y="172" class="note">1. page 1</text>
+  <rect x="578" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="606" y="175" class="lbl" text-anchor="middle">9</text>
+  <rect x="644" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="672" y="175" class="lbl" text-anchor="middle">8</text>
+  <rect x="710" y="152" width="56" height="34" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="738" y="175" class="lbl" text-anchor="middle">7</text>
+  <text x="464" y="226" class="note">2. new post</text>
+  <rect x="578" y="204" width="56" height="34" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="606" y="227" class="lbl" text-anchor="middle">10</text>
+  <text x="646" y="226" class="note">inserted at the top</text>
+  <text x="464" y="266" class="note">list is now: 10 9 8 7 6 5 4 ...</text>
+  <text x="464" y="284" class="note" style="fill:#1c7c54">WHERE id &lt; 7: starts at 6</text>
+  <text x="464" y="328" class="note">3. page 2</text>
+  <rect x="578" y="308" width="56" height="34" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="606" y="331" class="lbl" text-anchor="middle">6</text>
+  <rect x="644" y="308" width="56" height="34" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="672" y="331" class="lbl" text-anchor="middle">5</text>
+  <rect x="710" y="308" width="56" height="34" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="738" y="331" class="lbl" text-anchor="middle">4</text>
+  <rect x="464" y="378" width="368" height="62" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="480" y="402" class="lbl" style="fill:#1c7c54">No duplicates, nothing skipped.</text>
+  <text x="480" y="420" class="note">An index seek: just as fast on page 10,000.</text>
+  <rect x="32" y="470" width="816" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="494" class="note">Trade-off: offset can jump straight to page 50; a cursor only moves next or previous.</text>
+  <text x="48" y="512" class="note">Treat the cursor as an opaque token the server hands out, never one the client builds.</text>
+</svg>

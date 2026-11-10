@@ -57,6 +57,8 @@ sequenceDiagram
     S-->>C: Encrypted HTTP response
 ```
 
+![Diagram: the TLS handshake between client and server, and what an eavesdropper can and cannot see](../assets/diagrams/01-tls-handshake.svg)
+
 ## Request / Response Example
 
 At the application layer, the HTTP itself looks identical to plain HTTP — the difference is invisible at this level because it's happening one layer down:

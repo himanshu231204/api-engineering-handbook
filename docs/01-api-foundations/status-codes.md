@@ -74,6 +74,8 @@ flowchart TD
     CE2 -->|429| RL[Rate limited — check Retry-After]
 ```
 
+![Diagram: the five status code families 1xx to 5xx with who is at fault and common codes](../assets/diagrams/01-status-code-families.svg)
+
 ## Request / Response Example
 
 Three requests to the same endpoint producing three different, meaningfully distinct status codes:

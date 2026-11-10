@@ -48,6 +48,8 @@ flowchart TD
     O1 -.references.-> C["/customers/91 (independent top-level resource)"]
 ```
 
+![Diagram: a resource tree of /users, /users/{id} and nested orders with the HTTP methods for each](../assets/diagrams/02-rest-resources.svg)
+
 The order's line items are nested because they have no independent identity outside the order. The customer is referenced, not nested, because it exists on its own and is shared across many orders.
 
 ## Request / Response Example

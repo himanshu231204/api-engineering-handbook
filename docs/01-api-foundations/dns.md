@@ -68,6 +68,8 @@ sequenceDiagram
     Note over D: Only now does the TCP/TLS/HTTP flow begin
 ```
 
+![Diagram: six numbered steps of a DNS lookup from device cache to resolver, root, TLD and authoritative server, with TTL caching](../assets/diagrams/01-dns-resolution.svg)
+
 ## Request / Response Example
 
 DNS itself is a request/response protocol (traditionally over UDP for speed, falling back to TCP for larger responses), though you'll rarely interact with it directly — you'll use tools like `dig` or `nslookup`. A `dig` query and simplified response looks like:

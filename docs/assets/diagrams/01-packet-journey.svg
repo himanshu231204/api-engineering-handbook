@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="490" viewBox="0 0 880 490" role="img" aria-labelledby="t d">
+  <title id="t">The journey of an API request</title>
+  <desc id="d">A request needs a DNS lookup, a TCP and TLS connection, then many router hops to reach the server. A four-layer stack explains what each part of the network does.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="489" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The journey of one API request</text>
+  <text x="32" y="66" class="sub">A name lookup, a connection, then many router hops. Each layer has one job.</text>
+  <rect x="32" y="112" width="124" height="70" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="94" y="140" class="lbl" text-anchor="middle">Browser</text>
+  <text x="94" y="160" class="note" text-anchor="middle">your laptop</text>
+  <circle cx="44" cy="100" r="12" fill="#1c7c54"/>
+  <text x="44" y="104" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <line x1="156" y1="147" x2="205" y2="147" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="205" y="112" width="124" height="70" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="267" y="140" class="lbl" text-anchor="middle">DNS lookup</text>
+  <text x="267" y="160" class="note" text-anchor="middle">name to IP address</text>
+  <circle cx="217" cy="100" r="12" fill="#1c7c54"/>
+  <text x="217" y="104" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <line x1="329" y1="147" x2="378" y2="147" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="378" y="112" width="124" height="70" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="440" y="140" class="lbl" text-anchor="middle">TCP + TLS</text>
+  <text x="440" y="160" class="note" text-anchor="middle">connect and secure</text>
+  <circle cx="390" cy="100" r="12" fill="#1c7c54"/>
+  <text x="390" y="104" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <line x1="502" y1="147" x2="551" y2="147" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="551" y="112" width="124" height="70" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="613" y="140" class="lbl" text-anchor="middle">Router hops</text>
+  <text x="613" y="160" class="note" text-anchor="middle">ISP, backbone, ...</text>
+  <circle cx="563" cy="100" r="12" fill="#1c7c54"/>
+  <text x="563" y="104" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <line x1="675" y1="147" x2="724" y2="147" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="724" y="112" width="124" height="70" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="786" y="140" class="lbl" text-anchor="middle">Server</text>
+  <text x="786" y="160" class="note" text-anchor="middle">api.example.com</text>
+  <circle cx="736" cy="100" r="12" fill="#1c7c54"/>
+  <text x="736" y="104" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <text x="32" y="222" class="h">The packet stack: every request goes down it, across the network, then up it</text>
+  <rect x="32" y="240" width="520" height="48" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="261" class="lbl">Application</text>
+  <text x="48" y="278" class="note">HTTP, DNS</text>
+  <text x="200" y="270" class="note">gives the bytes meaning</text>
+  <rect x="32" y="296" width="520" height="48" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="317" class="lbl">Transport</text>
+  <text x="48" y="334" class="note">TCP</text>
+  <text x="200" y="326" class="note">reliable, ordered delivery</text>
+  <rect x="32" y="352" width="520" height="48" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="373" class="lbl">Internet</text>
+  <text x="48" y="390" class="note">IP</text>
+  <text x="200" y="382" class="note">addresses and hop-by-hop routing</text>
+  <rect x="32" y="408" width="520" height="48" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="429" class="lbl">Link</text>
+  <text x="48" y="446" class="note">Wi-Fi, fiber</text>
+  <text x="200" y="438" class="note">bits over one physical wire</text>
+  <rect x="572" y="240" width="276" height="216" rx="10" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+  <text x="588" y="266" class="h">How a packet travels</text>
+  <text x="588" y="292" class="note">Down: your request is split into</text>
+  <text x="588" y="308" class="note">packets, each wrapped in layers.</text>
+  <text x="588" y="332" class="note">Across: each router reads only the</text>
+  <text x="588" y="348" class="note">IP address and forwards the packet</text>
+  <text x="588" y="364" class="note">one hop closer. No router knows</text>
+  <text x="588" y="380" class="note">the whole route.</text>
+  <text x="588" y="404" class="note">Up: the server's TCP puts the</text>
+  <text x="588" y="420" class="note">packets back in order for HTTP.</text>
+</svg>

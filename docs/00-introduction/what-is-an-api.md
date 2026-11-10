@@ -73,6 +73,8 @@ sequenceDiagram
     A-->>C: HTTP Response (status + body)
 ```
 
+![Diagram: a client app talks to the server only through the API contract, like a diner using a menu and a waiter](../assets/diagrams/00-what-is-an-api.svg)
+
 The API is the boundary in this diagram — it's the only part the client is allowed to depend on. Everything to the right of it (business logic, database schema, internal services) is free to change without breaking the client, as long as the boundary's contract is honored.
 
 ## Request / Response Example

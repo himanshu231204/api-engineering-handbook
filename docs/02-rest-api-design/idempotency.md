@@ -55,6 +55,8 @@ flowchart TD
     F --> G["Requires an idempotency key\n(see Part 6)"]
 ```
 
+![Diagram: a retry after a timeout charges twice without an idempotency key and returns the stored result with one](../assets/diagrams/02-idempotency.svg)
+
 ## Request / Response Example
 
 Idempotent `PUT` — safe to retry after a timeout:

@@ -53,6 +53,8 @@ sequenceDiagram
     API-->>Client: data + next_cursor="eyJpZCI6NDQy..."
 ```
 
+![Diagram: offset pagination repeats an item when a row is inserted, while cursor pagination stays correct](../assets/diagrams/02-pagination-cursor.svg)
+
 ## Request / Response Example
 
 Offset-based:

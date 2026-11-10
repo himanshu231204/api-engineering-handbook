@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">A REST resource tree</title>
+  <desc id="d">A tree of URLs: /users, /users/{id}, /users/{id}/orders and /users/{id}/orders/{order_id}, with the HTTP methods that act on each and what they mean in CRUD terms.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Resources are nouns, methods are the verbs</text>
+  <text x="32" y="66" class="sub">A collection is the shelf, an item is one thing on it. Methods say what to do.</text>
+  <text x="400" y="96" class="h">Methods on this URL</text>
+  <rect x="32" y="108" width="170" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="46" y="132" class="code">/users</text>
+  <text x="46" y="152" class="note">collection</text>
+  <path d="M46,164 L46,224 L56,224" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="400" y="122" width="84" height="28" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="409" y="141" class="lbl" style="fill:#2563eb">GET</text>
+  <text x="442" y="141" class="note">list</text>
+  <rect x="492" y="122" width="107" height="28" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="501" y="141" class="lbl" style="fill:#1c7c54">POST</text>
+  <text x="543" y="141" class="note">create</text>
+  <rect x="56" y="196" width="150" height="56" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="70" y="220" class="code">/users/{id}</text>
+  <text x="70" y="240" class="note">item</text>
+  <path d="M70,252 L70,312 L80,312" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="400" y="210" width="84" height="28" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="409" y="229" class="lbl" style="fill:#2563eb">GET</text>
+  <text x="442" y="229" class="note">read</text>
+  <rect x="492" y="210" width="106" height="28" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="501" y="229" class="lbl" style="fill:#b45309">PUT</text>
+  <text x="534" y="229" class="note">replace</text>
+  <rect x="606" y="210" width="101" height="28" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="615" y="229" class="lbl" style="fill:#b45309">PATCH</text>
+  <text x="666" y="229" class="note">edit</text>
+  <rect x="715" y="210" width="124" height="28" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="724" y="229" class="lbl" style="fill:#b91c1c">DELETE</text>
+  <text x="783" y="229" class="note">remove</text>
+  <rect x="80" y="284" width="190" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="94" y="308" class="code">/users/{id}/orders</text>
+  <text x="94" y="328" class="note">nested collection</text>
+  <path d="M94,340 L94,400 L104,400" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="400" y="298" width="84" height="28" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="409" y="317" class="lbl" style="fill:#2563eb">GET</text>
+  <text x="442" y="317" class="note">list</text>
+  <rect x="492" y="298" width="107" height="28" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="501" y="317" class="lbl" style="fill:#1c7c54">POST</text>
+  <text x="543" y="317" class="note">create</text>
+  <rect x="104" y="372" width="270" height="56" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="118" y="396" class="code">/users/{id}/orders/{order_id}</text>
+  <text x="118" y="416" class="note">nested item</text>
+  <rect x="400" y="386" width="84" height="28" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="409" y="405" class="lbl" style="fill:#2563eb">GET</text>
+  <text x="442" y="405" class="note">read</text>
+  <rect x="492" y="386" width="101" height="28" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="501" y="405" class="lbl" style="fill:#b45309">PATCH</text>
+  <text x="552" y="405" class="note">edit</text>
+  <rect x="601" y="386" width="124" height="28" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="610" y="405" class="lbl" style="fill:#b91c1c">DELETE</text>
+  <text x="669" y="405" class="note">remove</text>
+  <rect x="32" y="448" width="816" height="36" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="440" y="471" class="note" text-anchor="middle">Nouns in the URL, verbs in the method: never /getUser or /deleteOrder. Nest only what cannot exist without its parent.</text>
+</svg>

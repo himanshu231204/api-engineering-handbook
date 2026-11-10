@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420" role="img" aria-labelledby="t d">
+  <title id="t">What an API is</title>
+  <desc id="d">A client app talks to a server only through an API contract, like a diner using a menu and a waiter. The kitchen behind it can change freely as long as the contract holds.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="419" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">An API is a contract in the middle</text>
+  <text x="32" y="66" class="sub">The client only depends on the menu. Everything behind it can change.</text>
+  <rect x="32" y="96" width="208" height="156" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="126" class="h">Client app</text>
+  <text x="48" y="152" class="note">phone app, browser,</text>
+  <text x="48" y="170" class="note">script or AI agent</text>
+  <text x="48" y="208" class="note">Asks. Never sees</text>
+  <text x="48" y="226" class="note">how the answer is made.</text>
+  <rect x="336" y="96" width="208" height="156" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="2.5"/>
+  <text x="352" y="126" class="h">API contract</text>
+  <text x="352" y="158" class="code">GET /users/42</text>
+  <text x="352" y="180" class="code">200 + JSON body</text>
+  <text x="352" y="214" class="note">the menu: exactly what</text>
+  <text x="352" y="232" class="note">you may ask and get back</text>
+  <rect x="640" y="96" width="208" height="156" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="656" y="126" class="h">Server + data</text>
+  <text x="656" y="152" class="note">business logic, database</text>
+  <text x="656" y="170" class="note">other services</text>
+  <text x="656" y="208" class="note">Hidden from the client:</text>
+  <text x="656" y="226" class="note">free to change inside.</text>
+  <line x1="240" y1="152" x2="336" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="544" y1="152" x2="640" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="640" y1="196" x2="544" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="336" y1="196" x2="240" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="288" y="142" class="note" text-anchor="middle">request</text>
+  <text x="592" y="142" class="note" text-anchor="middle">request</text>
+  <text x="288" y="216" class="note" text-anchor="middle">response</text>
+  <text x="592" y="216" class="note" text-anchor="middle">response</text>
+  <line x1="46" y1="266" x2="226" y2="266" stroke="#2563eb" stroke-width="2"/>
+  <text x="136" y="288" class="lbl" text-anchor="middle" style="fill:#2563eb">The diner</text>
+  <line x1="350" y1="266" x2="530" y2="266" stroke="#1c7c54" stroke-width="2"/>
+  <text x="440" y="288" class="lbl" text-anchor="middle" style="fill:#1c7c54">Menu + waiter</text>
+  <line x1="654" y1="266" x2="834" y2="266" stroke="#475569" stroke-width="2"/>
+  <text x="744" y="288" class="lbl" text-anchor="middle" style="fill:#475569">The kitchen</text>
+  <rect x="32" y="308" width="816" height="44" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="440" y="335" class="note" text-anchor="middle">Swap the chefs, the stove or the recipe: if the dish still matches the menu, the client never notices.</text>
+</svg>

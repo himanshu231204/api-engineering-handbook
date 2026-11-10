@@ -74,6 +74,8 @@ sequenceDiagram
     Note over C,S: Connection may be reused (keep-alive)<br/>or closed
 ```
 
+![Diagram: anatomy of an HTTP request and response with start line, headers, blank line and body](../assets/diagrams/01-http-request-anatomy.svg)
+
 ## Request / Response Example
 
 A realistic request creating a resource, and the response it produces:
