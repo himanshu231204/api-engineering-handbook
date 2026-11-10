@@ -10,4 +10,4 @@ Source project for the roadmap video. The finished MP4 is not committed (see `vi
 - `thumb/` — thumbnail source (`index.html`, `shot.js`).
 - `hf/assets/CREDITS.md` — every asset and its license.
 
-Rebuild: edit `build/script_lines.py` or `build/_beats.py`, then in `build/`: `python make_voice.py` → `ffmpeg -i voice.wav -ar 16000 -ac 1 voice16.wav` → `python align.py` → `cat _head.py _beats.py _foot.py > build.py && python build.py` → `python mix.py` → `python post.py`, then `cd hf && npx hyperframes render --quality delivery`. The Kokoro model files go in `models/` (git-ignored).
+Rebuild: edit `build/script_lines.py` or `build/_beats.py`, then in `build/`: `python make_voice.py` → `ffmpeg -i voice.wav -ar 16000 -ac 1 voice16.wav` → `python align.py` → `cat _head.py _beats.py _foot.py > build.py && python build.py` → `python mix.py` → `python post.py`, then `cd ../hf && npx hyperframes render --quality delivery`. The Kokoro model files go in `models/` (git-ignored).

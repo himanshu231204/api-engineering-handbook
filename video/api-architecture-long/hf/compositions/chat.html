@@ -64,7 +64,7 @@ const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n
  tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
 
 tl.fromTo("#chat-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
-A("chat-e1","fade",-0.23,null);
+A("chat-e1","fade",0,null);
 A("chat-e1-L0","wipe",0.02,null);
 A("chat-e1-L1","wipe",5.519,null);
 A("chat-e1-L2","wipe",9.199,null);

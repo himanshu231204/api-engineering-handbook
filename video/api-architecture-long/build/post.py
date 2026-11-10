@@ -13,8 +13,9 @@ def clean(k, s):
         s = s.replace(a, b)
     return s
 def ts(t):
-    h, m = int(t // 3600), int(t % 3600 // 60); sec = t % 60
-    return f"{h:02d}:{m:02d}:{int(sec):02d},{int(round((sec % 1) * 1000)):03d}".replace("1000", "999")
+    ms = int(round(t * 1000))
+    h, ms = divmod(ms, 3600000); m, ms = divmod(ms, 60000); s, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 import math, textwrap
 MAXW, MINDUR = 42, 1.0     # chars per caption line, seconds on screen per cue
 cues = []

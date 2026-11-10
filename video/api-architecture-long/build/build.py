@@ -64,6 +64,7 @@ class Scene:
         i = self.uid()
         st = f"left:{x}px;top:{y}px;" + (f"width:{w}px;" if w else "") + (f"height:{h}px;" if h else "") + style
         self.h.append(f'<div id="{i}" class="el {cls}" style="{st}">{inner}</div>')
+        t = max(t, 0.0)     # a negative start would shift the whole scene timeline (GSAP smoothChildTiming)
         self.js.append(f'A("{i}","{anim}",{t},{"null" if out is None else out});')
         if sfx: SFX.append((self.start + t, sfx))
         return i
@@ -122,7 +123,7 @@ class Scene:
         cid = self.uid()
         dots = '<span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span>'
         self.h.append(f'<div id="{cid}" class="el codecard" style="left:{x}px;top:{y}px;width:{w}px;height:{h}px;background:{bg}"><div class="bar">{dots}<span class="ttl" style="color:{tcolor}">{title}</span></div></div>')
-        self.js.append(f'A("{cid}","fade",{times[0] - 0.25 if times else 0},{"null" if out is None else out});')
+        self.js.append(f'A("{cid}","fade",{max(times[0] - 0.25, 0) if times else 0},{"null" if out is None else out});')
         ids = []
         for k, ln in enumerate(lines):
             i = f"{cid}-L{k}"

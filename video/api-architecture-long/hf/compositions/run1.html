@@ -67,7 +67,7 @@ const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n
  tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
 
 tl.fromTo("#run1-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
-A("run1-e1","fade",-0.23,null);
+A("run1-e1","fade",0,null);
 A("run1-e1-L0","wipe",0.02,null);
 A("run1-e1-L1","wipe",2.98,null);
 A("run1-e1-L2","wipe",3.28,null);

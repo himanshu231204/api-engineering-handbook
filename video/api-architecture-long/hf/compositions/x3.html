@@ -58,7 +58,7 @@ const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n
  tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
 
 tl.fromTo("#x3-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
-A("x3-e1","slam",-0.030000000000000002,null);
+A("x3-e1","slam",0.0,null);
 A("x3-e2","fade",1.68,null);
 A("x3-e3","fade",4.68,null);
 A("x3-e4","wipe",2.28,null);
