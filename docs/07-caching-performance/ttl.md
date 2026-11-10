@@ -111,15 +111,16 @@ r = redis.from_url(os.environ.get("REDIS_URL", "redis://localhost:6379/0"), deco
 SOFT_TTL = 60          # after this, serve stale and refresh in the background
 HARD_TTL = 300         # Redis deletes the key after this
 NEGATIVE_TTL = 30      # "not found" is cached far shorter than real data
-JITTER = 0.2           # +/- 20 percent spread so batches do not expire together
+JITTER = 0.2           # shorten by up to 20 percent so batches do not expire together
 NOT_FOUND = "__nf__"   # sentinel for negative caching
 
 _tasks: set[asyncio.Task] = set()  # strong refs so background tasks are not garbage-collected
 
 
 def jittered(ttl: int) -> int:
-    """Spread expiry across a window so bulk-loaded keys do not all die at once."""
-    return max(1, int(ttl * random.uniform(1 - JITTER, 1 + JITTER)))
+    """Spread expiry across a window so bulk-loaded keys do not all die at once.
+    Downward only: the result is never longer than `ttl`, so the staleness budget holds."""
+    return max(1, int(ttl * random.uniform(1 - JITTER, 1.0)))
 
 
 async def _store(key: str, value: Any) -> None:
@@ -193,7 +194,7 @@ Notes on what this does and does not handle. Cold misses are not single-flight h
 ## Best Practices
 
 - Derive TTLs from a staleness budget agreed with the product owner, then check them against load using the `1 - 1/(r*T)` estimate.
-- Always add 10 to 20 percent jitter to TTLs written in batches.
+- Always shorten TTLs written in batches by a random 10 to 20 percent (jitter downward so the staleness budget still holds).
 - Cache negative results with a much shorter TTL and clear them when the entity is created.
 - Use soft and hard TTLs with a single-flight refresh for hot, expensive keys.
 - Set value and TTL in one atomic command (`SET ... EX`, `GETEX`), and never write a cache entry without an expiry.
@@ -242,7 +243,7 @@ An absolute TTL counts from when the entry was written and is never extended, so
 <details markdown="1">
 <summary>2. Why does a cache warmer that loads 100,000 keys with a fixed one-hour TTL cause a problem an hour later, and how do you fix it?</summary>
 
-All the keys expire within the same second, so a wave of misses hits the database at once. Adding jitter (for example plus or minus 20 percent) spreads the expiries over a window and flattens the load.
+All the keys expire within the same second, so a wave of misses hits the database at once. Adding downward jitter (for example up to 20 percent shorter) spreads the expiries over a window and flattens the load without exceeding the staleness budget.
 
 </details>
 
