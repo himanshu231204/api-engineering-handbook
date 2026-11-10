@@ -1,0 +1,80 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="c2d" data-width="1920" data-height="1080">
+<div id="c2d-stage" class="stage">
+<div id="c2d-e1" class="el box" style="left:120px;top:230px;width:440px;height:220px;border:5px solid #00F0FF;background:rgba(0,240,255,0.09);box-shadow:0 0 28px rgba(0,240,255,0.3);"><div class="bt" style="font-size:44px;color:#fff">Client</div></div>
+<div id="c2d-e2" class="el box" style="left:1360px;top:230px;width:440px;height:220px;border:5px solid #7C8DA6;background:rgba(124,141,166,0.09);box-shadow:0 0 28px rgba(124,141,166,0.3);"><div class="bt" style="font-size:44px;color:#fff">Server</div><div class="bs">no memory of the last request</div></div>
+<svg id="c2d-e3" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c2d-e3-l" x1="580" y1="290" x2="1318.0" y2="290.0" stroke="#00F0FF" stroke-width="6" stroke-linecap="round" stroke-dasharray="760.0" /><polygon id="c2d-e3-h" points="1340,290 1320.190163748241,299.5692417504471 1320.190163748241,280.4307582495529" fill="#00F0FF"/></svg>
+<div id="c2d-e4" class="el " style="left:560px;top:246.0px;width:800px;font-size:32px;font-weight:700;color:#00F0FF;text-align:center;line-height:1.12;">request #1</div>
+<svg id="c2d-e5" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c2d-e5-l" x1="580" y1="400" x2="1318.0" y2="400.0" stroke="#FF2E88" stroke-width="6" stroke-linecap="round" stroke-dasharray="760.0" /><polygon id="c2d-e5-h" points="1340,400 1320.190163748241,409.5692417504471 1320.190163748241,390.4307582495529" fill="#FF2E88"/></svg>
+<div id="c2d-e6" class="el " style="left:560px;top:356.0px;width:800px;font-size:32px;font-weight:700;color:#FF2E88;text-align:center;line-height:1.12;">request #2</div>
+<div id="c2d-e7" class="el chip" style="left:760px;top:130px;background:#FFE500;color:#0E0622;font-size:44px;">STATELESS</div>
+<div id="c2d-e8" class="el chip" style="left:620px;top:520px;background:#FF9100;color:#0E0622;font-size:40px;">send a token or cookie each time</div>
+<div id="c2d-e9" class="el note" style="left:640px;top:640px;width:900px;font-family:'Caveat';font-weight:700;font-size:70px;color:#FFE500;transform-origin:left center;line-height:1;">each request stands alone</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#c2d-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("c2d-e1","pop",3.16,null);
+A("c2d-e2","pop",3.16,null);
+D("c2d-e3",5.28,760.0,true,null);
+A("c2d-e4","fade",5.430000000000001,null);
+D("c2d-e5",6.18,760.0,true,null);
+A("c2d-e6","fade",6.33,null);
+A("c2d-e7","pop",3.9,null);
+A("c2d-e8","pop",8.0,null);
+A("c2d-e9","wipe",6.18,null);
+tl.fromTo("#c2d-stage",{opacity:1},{opacity:0,duration:.2,immediateRender:false},12.099);
+window.__timelines = window.__timelines || {};
+window.__timelines["c2d"] = tl;
+</script>
+</div>
+</template>

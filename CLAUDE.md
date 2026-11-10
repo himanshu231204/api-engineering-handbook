@@ -16,6 +16,8 @@ diagrams/                6 standalone Mermaid diagram reference files.
 docs/assets/diagrams/    Hand-drawn SVG concept diagrams, embedded in chapters (see "SVG concept diagrams").
 mkdocs.yml, scripts/     GitHub Pages site. Nav is generated from part README status tables (scripts/gen_pages.py) — never hand-edit a nav list.
 resources/               cheatsheets/, interview-questions/, exercises/, glossary.md.
+video/                   ROADMAP.md (one video per topic), tools/ (chapter harvesting + diagram converters), what-is-an-api-long/ (worked example).
+.claude/skills/          Repo skills. handbook-video = make/re-cut a topic's video from the repo's own content.
 ```
 
 Part folder slugs (exact, used in every cross-link): `00-introduction, 01-api-foundations, 02-rest-api-design, 03-building-apis, 04-databases-and-apis, 05-authentication-authorization, 06-production-reliability, 07-caching-performance, 08-async-systems, 09-realtime-and-webhooks, 10-api-security, 11-microservices-distributed-systems, 12-observability, 13-api-testing, 14-ai-api-engineering, 15-production-ai-systems, 16-rag-apis, 17-ai-agents-and-mcp, 18-production-architecture, 19-system-design-case-studies, 20-capstone-projects`.
@@ -146,6 +148,19 @@ For an `examples/*` project, "verify" means: `python3 scripts/check_examples_com
 ## Working at scale (writing many chapters)
 
 Chapters are large (1200–2200 words each with a diagram and code) and independent by file, which makes them a good fit for parallel subagents — one agent per part (or per priority subset within a part), each restricted to writing files only inside its own `docs/<slug>/` directory and updating only that part's own `README.md` status table. See recent git log messages (`docs: write Part N, ... chapters`) for the pattern this repo was actually built with. Don't have two agents write into the same directory concurrently.
+
+## Videos — use the `handbook-video` skill
+
+**Whenever the user asks to make, re-cut, script, render or improve a video for a handbook topic (or says "make the video", "video for <chapter>", "next video on the roadmap", or asks to add the repo's diagrams / Mermaid to a video), invoke the `handbook-video` skill first** (`/handbook-video`, defined in `.claude/skills/handbook-video/SKILL.md`) and follow it. It also covers adding the repo's real images (concept SVGs, Mermaid, code, a real run of the example) to an existing video. Do not improvise the pipeline and do not research the web first: the source of truth is the chapter in `docs/`.
+
+What you need to know before the skill loads:
+
+- `video/ROADMAP.md` lists every topic and its status (⬜ Planned → ✍️ Scripted → 🎬 Rendered → ✅ Published). Update the row and the counts when a video is rendered; it is only Published once the user gives the YouTube link.
+- `video/tools/` has `harvest_chapter.py` (pulls a chapter's Mermaid, concept SVGs, code, quiz and related files), `mermaid_to_svg.py` and `repo_svg_to_dark.py` (neon-on-black, transparent versions for the video), `bake_svg_styles.js`.
+- `video/what-is-an-api-long/` is the finished worked example (Part 0, "What Is an API?"): copy its `build/` and `hf/` to start a new video. Its `README.md` lists what each file is.
+- Videos are long-form 16:9 (5–10 min) unless the user asks for a Short. The voice is Kokoro (local, free), the renderer is HyperFrames (local, no credits), no music.
+- **Never commit** MP4/WAV files, voice models or venvs (`tts/`, `fa/`, `models/`, `renders/`); the project `.gitignore` covers them. Commit scripts, scenes, assets, SRT, script, SEO, thumbnail and `CREDITS.md`.
+- Keep `python3 scripts/check_links.py` at zero broken links (local venv folders under `video/` are untracked and can show false hits).
 
 ## House rules
 

@@ -1,0 +1,588 @@
+[
+ {
+  "say": "Your app talks to a server you'll never see.",
+  "cap": "Your app talks to a [server] you'll never see.",
+  "chapter": 0,
+  "beat": "hook",
+  "scene": "logo_reveal",
+  "pill": null,
+  "asset": [
+   "svg/emblem"
+  ],
+  "start": 0.25,
+  "end": 2.46
+ },
+ {
+  "say": "What exactly is it saying? And why do you never need to know how that server works?",
+  "cap": "What is it [saying]? Why don't you need to know how it [works]?",
+  "chapter": 0,
+  "beat": "hook",
+  "start": 2.71,
+  "end": 7.39
+ },
+ {
+  "say": "That's an API. By the end of this video, you'll read one, run one, and spot the mistakes that break them.",
+  "cap": "That's an [API]. You'll [read] one, [run] one, and spot the [mistakes].",
+  "chapter": 0,
+  "beat": "hook",
+  "start": 7.63,
+  "end": 14.27
+ },
+ {
+  "say": "Here's the plan, in five parts.",
+  "cap": "Here's the plan, in [five] parts.",
+  "chapter": 0,
+  "beat": "road",
+  "scene": "roadmap",
+  "pill": "5 parts",
+  "asset": [],
+  "start": 14.72,
+  "end": 16.57
+ },
+ {
+  "say": "One, the contract. Two, a request, line by line. Three, the server side.",
+  "cap": "[Contract]. [Request]. [Server side].",
+  "chapter": 0,
+  "beat": "road",
+  "start": 16.81,
+  "end": 21.48
+ },
+ {
+  "say": "Four, who calls APIs. And five, the mistakes that break them.",
+  "cap": "[Callers]. And the [mistakes] that break them.",
+  "chapter": 0,
+  "beat": "road",
+  "start": 21.72,
+  "end": 25.86
+ },
+ {
+  "say": "API stands for Application Programming Interface. Strip away the acronym, and it's a contract.",
+  "cap": "API: Application Programming Interface. Strip the acronym: a [contract].",
+  "chapter": 1,
+  "beat": "c1a",
+  "scene": "svg_diagram",
+  "pill": "API = a contract",
+  "asset": [],
+  "start": 27.86,
+  "end": 34.58
+ },
+ {
+  "say": "One program asks another program to do something, without knowing how it gets done inside.",
+  "cap": "One program [asks] another to do something, without knowing [how].",
+  "chapter": 1,
+  "beat": "c1a",
+  "start": 34.82,
+  "end": 40.51
+ },
+ {
+  "say": "The handbook's glossary puts it the same way: a defined contract, with no need to know the implementation.",
+  "cap": "The handbook glossary: a [defined contract], no need to know the [implementation].",
+  "chapter": 1,
+  "beat": "c1a",
+  "start": 40.75,
+  "end": 47.49
+ },
+ {
+  "say": "Think of a wall socket. You plug in a lamp, and you know nothing about the power station.",
+  "cap": "Think of a wall [socket]. You know nothing about the power [station].",
+  "chapter": 1,
+  "beat": "c1b",
+  "scene": "svg_flow",
+  "pill": "the shape of the socket is the promise",
+  "asset": [],
+  "start": 47.94,
+  "end": 53.06
+ },
+ {
+  "say": "The shape of the socket is the promise.",
+  "cap": "The shape of the socket is the [promise].",
+  "chapter": 1,
+  "beat": "c1b",
+  "start": 53.3,
+  "end": 55.46
+ },
+ {
+  "say": "Or think of a restaurant. You read the menu, you tell the waiter what you want, and the kitchen cooks it.",
+  "cap": "A restaurant: [menu], [waiter], [kitchen].",
+  "chapter": 1,
+  "beat": "c1c",
+  "scene": "svg_analogy",
+  "pill": "change the kitchen, keep the menu",
+  "asset": [
+   "repo/svg/00-what-is-an-api.svg"
+  ],
+  "start": 55.91,
+  "end": 61.66
+ },
+ {
+  "say": "You never see the kitchen. It can swap chefs, change the stove, even rewrite the recipe.",
+  "cap": "The kitchen can swap [chefs], change the [stove], rewrite the [recipe].",
+  "chapter": 1,
+  "beat": "c1c",
+  "start": 61.9,
+  "end": 67.47
+ },
+ {
+  "say": "As long as the dish matches the menu, you never notice.",
+  "cap": "As long as the dish matches the [menu], you never notice.",
+  "chapter": 1,
+  "beat": "c1c",
+  "start": 67.71,
+  "end": 71.14
+ },
+ {
+  "say": "That's the whole value of an API. Both sides can change independently, as long as the contract holds.",
+  "cap": "Both sides can [change independently], as long as the contract [holds].",
+  "chapter": 1,
+  "beat": "c1c",
+  "start": 71.38,
+  "end": 78.88
+ },
+ {
+  "say": "This handbook focuses on web APIs. A client sends an HTTP request, and a server sends back a response.",
+  "cap": "Web APIs: a [client] sends a [request], a [server] sends a [response].",
+  "chapter": 2,
+  "beat": "c2a",
+  "scene": "svg_flow",
+  "pill": "the client always starts it",
+  "asset": [
+   "shots/mdn_crop.png"
+  ],
+  "start": 80.88,
+  "end": 89.42
+ },
+ {
+  "say": "The client is anything that starts the conversation. A browser, a phone app, another service, a script.",
+  "cap": "The client is anything that [starts] the conversation.",
+  "chapter": 2,
+  "beat": "c2a",
+  "start": 89.66,
+  "end": 96.41
+ },
+ {
+  "say": "MDN puts it plainly: the client always initiates. The server never does.",
+  "cap": "MDN: the client always [initiates]. The server never does.",
+  "chapter": 2,
+  "beat": "c2a",
+  "start": 96.64,
+  "end": 102.18
+ },
+ {
+  "say": "Here's a real request. GET /users/42.",
+  "cap": "A real request: [GET /users/42]",
+  "chapter": 2,
+  "beat": "c2b",
+  "scene": "code_card",
+  "pill": "GET /users/42",
+  "asset": [],
+  "start": 102.63,
+  "end": 106.72
+ },
+ {
+  "say": "GET is the method. It says what you want to do. The path says which thing you want.",
+  "cap": "The [method] says what to do. The [path] says which thing.",
+  "chapter": 2,
+  "beat": "c2b",
+  "start": 106.96,
+  "end": 112.02
+ },
+ {
+  "say": "Headers add context. Accept says you want JSON. Authorization says who you are.",
+  "cap": "[Headers] add context: what you accept, who you are.",
+  "chapter": 2,
+  "beat": "c2b",
+  "start": 112.26,
+  "end": 118.13
+ },
+ {
+  "say": "Every HTTP message, request or response, has the same shape: a start line, headers, an empty line, and an optional body.",
+  "cap": "Same shape: a [start line], [headers], an empty line, a [body].",
+  "chapter": 2,
+  "beat": "c2b2",
+  "scene": "svg_diagram",
+  "pill": "same four-part shape, both ways",
+  "asset": [
+   "repo/svg/01-http-request-anatomy.svg"
+  ],
+  "start": 118.58,
+  "end": 127.4
+ },
+ {
+  "say": "The server answers with a status code. 200 means OK.",
+  "cap": "The server answers with a [status code]. [200] means OK.",
+  "chapter": 2,
+  "beat": "c2c",
+  "scene": "code_card",
+  "pill": "status first, then the body",
+  "asset": [],
+  "start": 127.85,
+  "end": 132.0
+ },
+ {
+  "say": "Then comes the body, in JSON. An id, a name, an email.",
+  "cap": "Then the [body], in [JSON]: an id, a name, an email.",
+  "chapter": 2,
+  "beat": "c2c",
+  "start": 132.25,
+  "end": 136.3
+ },
+ {
+  "say": "Nothing in this response says whether the data came from PostgreSQL, MongoDB, or a plain dictionary. That's the point.",
+  "cap": "Nothing says if the data came from [PostgreSQL], [MongoDB] or a [dictionary].",
+  "chapter": 2,
+  "beat": "c2c",
+  "start": 136.54,
+  "end": 145.09
+ },
+ {
+  "say": "Status codes come in families. 200s mean success. 4xx mean the caller made a mistake. 5xx mean the server did.",
+  "cap": "[2xx] success. [4xx] the caller erred. [5xx] the server erred.",
+  "chapter": 2,
+  "beat": "c2e",
+  "scene": "svg_diagram",
+  "pill": "the first digit tells you whose move it is",
+  "asset": [
+   "repo/svg/01-status-code-families.svg"
+  ],
+  "start": 145.54,
+  "end": 155.06
+ },
+ {
+  "say": "One more thing from MDN. HTTP is stateless. Every request stands alone, so the server doesn't remember the last one unless you send something that identifies you.",
+  "cap": "HTTP is [stateless]. Every request stands [alone].",
+  "chapter": 2,
+  "beat": "c2d",
+  "scene": "svg_flow",
+  "pill": "stateless: say who you are every time",
+  "asset": [],
+  "start": 155.51,
+  "end": 167.5
+ },
+ {
+  "say": "Now zoom out. Here is the whole trip, drawn in the handbook as a sequence diagram.",
+  "cap": "Zoom out: the whole [trip], as a [sequence diagram].",
+  "chapter": 3,
+  "beat": "c3m",
+  "scene": "svg_flow",
+  "pill": "the whole trip, in one diagram",
+  "asset": [
+   "repo/mermaid/what-is-an-api-sequence.svg"
+  ],
+  "start": 169.5,
+  "end": 174.78
+ },
+ {
+  "say": "The client sends a request. The API matches the route and validates it.",
+  "cap": "[Request] in. [Route matched], request [validated].",
+  "chapter": 3,
+  "beat": "c3m",
+  "start": 175.02,
+  "end": 179.72
+ },
+ {
+  "say": "Server logic fetches data from the database, and the result travels back as a response.",
+  "cap": "[Fetch] data. The [result] travels back as a [response].",
+  "chapter": 3,
+  "beat": "c3m",
+  "start": 179.96,
+  "end": 185.85
+ },
+ {
+  "say": "The client only ever depends on the API on the left. Everything to the right is free to change.",
+  "cap": "The client depends on the [API]. The rest is free to [change].",
+  "chapter": 3,
+  "beat": "c3m",
+  "start": 186.09,
+  "end": 192.61
+ },
+ {
+  "say": "Now the other side. This is a complete API endpoint, written in FastAPI, the framework this handbook builds with.",
+  "cap": "The provider side: a complete endpoint in [FastAPI].",
+  "chapter": 3,
+  "beat": "c3a",
+  "scene": "code_card",
+  "pill": "the route is the contract",
+  "asset": [
+   "demo/main.py"
+  ],
+  "start": 193.06,
+  "end": 201.44
+ },
+ {
+  "say": "One decorator maps GET /users/{user_id} to a Python function.",
+  "cap": "One [decorator] maps a [route] to a [function].",
+  "chapter": 3,
+  "beat": "c3a",
+  "start": 201.68,
+  "end": 207.22
+ },
+ {
+  "say": "The function looks the user up. If there's no such user, it raises a 404.",
+  "cap": "No such user? It raises a [404].",
+  "chapter": 3,
+  "beat": "c3a",
+  "start": 207.46,
+  "end": 213.16
+ },
+ {
+  "say": "And because user id is typed as an integer, FastAPI rejects anything else before your code even runs.",
+  "cap": "Typed as an [int]: bad input is rejected [before] your code runs.",
+  "chapter": 3,
+  "beat": "c3a",
+  "start": 213.4,
+  "end": 221.06
+ },
+ {
+  "say": "Run it, and ask for user 42.",
+  "cap": "Run it. Ask for user [42].",
+  "chapter": 3,
+  "beat": "c3b",
+  "scene": "terminal_clip",
+  "pill": "real run: 200, 404, 422",
+  "asset": [
+   "demo/real_output_8000.txt"
+  ],
+  "start": 221.51,
+  "end": 223.72
+ },
+ {
+  "say": "You get the status line, the headers, and the JSON.",
+  "cap": "[Status line], [headers], [JSON].",
+  "chapter": 3,
+  "beat": "c3b",
+  "start": 223.96,
+  "end": 226.98
+ },
+ {
+  "say": "Ask for a user that doesn't exist, and you get a 404. Ask for the word banana, and you get a 422.",
+  "cap": "Missing user: [404]. The word banana: [422].",
+  "chapter": 3,
+  "beat": "c3b",
+  "start": 227.22,
+  "end": 235.0
+ },
+ {
+  "say": "Today that dictionary is fake. Next week it could be PostgreSQL, or a call to another service.",
+  "cap": "Today a fake [dictionary]. Next week [PostgreSQL].",
+  "chapter": 3,
+  "beat": "c3c",
+  "scene": "svg_compare",
+  "pill": "swap the backend, keep the contract",
+  "asset": [],
+  "start": 235.45,
+  "end": 242.13
+ },
+ {
+  "say": "Not one line the client depends on changes. Same URL, same JSON shape, same status codes.",
+  "cap": "Same [URL], same [JSON shape], same [status codes].",
+  "chapter": 3,
+  "beat": "c3c",
+  "start": 242.37,
+  "end": 249.63
+ },
+ {
+  "say": "That is the contract doing its job.",
+  "cap": "That is the [contract] doing its job.",
+  "chapter": 3,
+  "beat": "c3c",
+  "start": 249.87,
+  "end": 251.94
+ },
+ {
+  "say": "Who calls APIs? More than you think.",
+  "cap": "So who calls APIs? [More] than you think.",
+  "chapter": 4,
+  "beat": "c4a",
+  "scene": "svg_icons",
+  "pill": "web, apps, services, AI: all callers",
+  "asset": [],
+  "start": 253.94,
+  "end": 256.4
+ },
+ {
+  "say": "Your weather app. The sign in with Google button. A payment form. Another backend service.",
+  "cap": "Weather app. Sign in with Google. Payments. Other [services].",
+  "chapter": 4,
+  "beat": "c4a",
+  "start": 256.64,
+  "end": 262.39
+ },
+ {
+  "say": "And now, AI. Every call to a language model through code is a web API: a POST request with a JSON body, and JSON coming back.",
+  "cap": "A language model call is a [POST] with a [JSON] body.",
+  "chapter": 4,
+  "beat": "c4a",
+  "start": 262.63,
+  "end": 273.15
+ },
+ {
+  "say": "Same contract. The kitchen is just a very large model you will never see inside.",
+  "cap": "Same contract. The kitchen is a [model] you never see.",
+  "chapter": 4,
+  "beat": "c4b",
+  "scene": "stat_drop",
+  "pill": "Postman 2025 · a vendor survey",
+  "asset": [
+   "shots/postman_crop.png"
+  ],
+  "start": 273.61,
+  "end": 279.05
+ },
+ {
+  "say": "Postman's twenty twenty-five survey of over fifty-seven hundred developers found that eighty-nine percent use generative AI.",
+  "cap": "Postman's 2025 survey: [89%] use generative AI.",
+  "chapter": 4,
+  "beat": "c4b",
+  "start": 279.29,
+  "end": 287.95
+ },
+ {
+  "say": "But only twenty-four percent design their APIs with AI agents in mind.",
+  "cap": "Only [24%] design APIs with AI agents in mind.",
+  "chapter": 4,
+  "beat": "c4b",
+  "start": 288.19,
+  "end": 293.42
+ },
+ {
+  "say": "The same survey found sixty-five percent of organizations earn revenue from their APIs. Contracts are products.",
+  "cap": "[65%] of organizations earn revenue from APIs.",
+  "chapter": 4,
+  "beat": "c4b",
+  "start": 293.66,
+  "end": 301.4
+ },
+ {
+  "say": "Mistake one. Saying API when you mean REST API. APIs also include function signatures and operating system calls. REST is one architectural style for web APIs.",
+  "cap": "Mistake 1: API [is not] REST API.",
+  "chapter": 5,
+  "beat": "m1",
+  "scene": "svg_diagram",
+  "pill": "API ⊃ web API ⊃ REST",
+  "asset": [],
+  "start": 303.4,
+  "end": 317.23
+ },
+ {
+  "say": "Mistake two. Copying your database columns straight into your responses. Rename a column, and every client breaks. Design the contract first, then the code behind it.",
+  "cap": "Mistake 2: mirroring your [database] in responses.",
+  "chapter": 5,
+  "beat": "m2",
+  "scene": "svg_compare",
+  "pill": "design the contract first, then the code",
+  "asset": [],
+  "start": 317.68,
+  "end": 329.03
+ },
+ {
+  "say": "Mistake three. Returning 200 OK for everything, even errors. The status code is part of the contract. Use it.",
+  "cap": "Mistake 3: [200 OK] for everything, even errors.",
+  "chapter": 5,
+  "beat": "m3",
+  "scene": "svg_compare",
+  "pill": "the status code is part of the contract",
+  "asset": [],
+  "start": 329.48,
+  "end": 337.54
+ },
+ {
+  "say": "Mistake four. Confusing the API with the whole system, or with the user interface. A UI consumes an API. One API can serve a website and a mobile app.",
+  "cap": "Mistake 4: the API is not the [system] or the [UI].",
+  "chapter": 5,
+  "beat": "m4",
+  "scene": "svg_flow",
+  "pill": "a UI consumes an API",
+  "asset": [],
+  "start": 337.99,
+  "end": 350.19
+ },
+ {
+  "say": "And mistake five. Leaving the contract undocumented. If callers have to reverse engineer your behavior, it's not a contract. Part three of the handbook covers OpenAPI for exactly this.",
+  "cap": "Mistake 5: an [undocumented] contract.",
+  "chapter": 5,
+  "beat": "m5",
+  "scene": "svg_compare",
+  "pill": "document the contract",
+  "asset": [],
+  "start": 350.64,
+  "end": 364.27
+ },
+ {
+  "say": "Let's recap.",
+  "cap": "Let's [recap].",
+  "chapter": 6,
+  "beat": "rec",
+  "scene": "recap_grid",
+  "pill": "one contract, many callers",
+  "asset": [],
+  "start": 366.27,
+  "end": 367.24
+ },
+ {
+  "say": "An API is a contract between two programs.",
+  "cap": "An API is a [contract] between two programs.",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 367.48,
+  "end": 370.79
+ },
+ {
+  "say": "A web API is an HTTP request and a response.",
+  "cap": "A web API is a [request] and a [response].",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 371.03,
+  "end": 375.23
+ },
+ {
+  "say": "The server behind it is free to change.",
+  "cap": "The server behind it is free to [change].",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 375.47,
+  "end": 377.64
+ },
+ {
+  "say": "Anyone can be the caller, even an AI model.",
+  "cap": "Anyone can call it, even an [AI model].",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 377.88,
+  "end": 380.94
+ },
+ {
+  "say": "And your job is to protect the contract.",
+  "cap": "Your job: [protect] the contract.",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 381.18,
+  "end": 383.63
+ },
+ {
+  "say": "Next up, Part one of the handbook: how the internet actually works.",
+  "cap": "Next: how the [internet] actually works.",
+  "chapter": 6,
+  "beat": "out",
+  "scene": "end_screen",
+  "pill": null,
+  "asset": [],
+  "start": 384.08,
+  "end": 388.16
+ },
+ {
+  "say": "Before you go, try the chapter's exercise: add a GET /users endpoint, and decide what it should return when the database is empty.",
+  "cap": "Try it: a [GET /users] endpoint. What if the database is [empty]?",
+  "chapter": 6,
+  "beat": "out",
+  "start": 388.4,
+  "end": 397.47
+ },
+ {
+  "say": "Subscribe, and I'll see you in the next one.",
+  "cap": "[Subscribe], and see you in the next one.",
+  "chapter": 6,
+  "beat": "out",
+  "start": 397.71,
+  "end": 400.05
+ }
+]

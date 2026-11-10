@@ -1,0 +1,151 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="c1c" data-width="1920" data-height="1080">
+<div id="c1c-stage" class="stage">
+<div id="c1c-e1" class="el box" style="left:110px;top:190px;width:440px;height:220px;border:5px solid #00F0FF;background:rgba(0,240,255,0.09);box-shadow:0 0 28px rgba(0,240,255,0.3);"><div class="bt" style="font-size:44px;color:#fff">You</div><div class="bs">the client</div></div>
+<div id="c1c-e2" class="el box" style="left:740px;top:170px;width:440px;height:260px;border:5px solid #39FF88;background:rgba(57,255,136,0.09);box-shadow:0 0 28px rgba(57,255,136,0.3);"><div class="bt" style="font-size:44px;color:#fff">Menu + waiter</div><div class="bs">the API contract</div></div>
+<div id="c1c-e3" class="el box" style="left:1370px;top:190px;width:440px;height:220px;border:5px dashed #7C8DA6;background:rgba(124,141,166,0.09);box-shadow:0 0 28px rgba(124,141,166,0.3);"><div class="bt" style="font-size:44px;color:#fff">Kitchen</div><div class="bs">the server</div></div>
+<svg id="c1c-e4" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c1c-e4-l" x1="560" y1="270" x2="708.0" y2="270.0" stroke="#00F0FF" stroke-width="6" stroke-linecap="round" stroke-dasharray="170.0" /><polygon id="c1c-e4-h" points="730,270 710.1901637482412,279.5692417504471 710.1901637482412,260.4307582495529" fill="#00F0FF"/></svg>
+<div id="c1c-e5" class="el " style="left:540px;top:228.0px;width:210px;font-size:32px;font-weight:700;color:#00F0FF;text-align:center;line-height:1.12;">order</div>
+<svg id="c1c-e6" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c1c-e6-l" x1="730" y1="350" x2="582.0" y2="350.0" stroke="#39FF88" stroke-width="6" stroke-linecap="round" stroke-dasharray="170.0" /><polygon id="c1c-e6-h" points="560,350 579.8098362517588,340.4307582495529 579.809836251759,359.5692417504471" fill="#39FF88"/></svg>
+<svg id="c1c-e7" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c1c-e7-l" x1="1190" y1="270" x2="1338.0" y2="270.0" stroke="#A0A0B0" stroke-width="6" stroke-linecap="round" stroke-dasharray="170.0" /><polygon id="c1c-e7-h" points="1360,270 1340.190163748241,279.5692417504471 1340.190163748241,260.4307582495529" fill="#A0A0B0"/></svg>
+<svg id="c1c-e8" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="c1c-e8-l" x1="1360" y1="350" x2="1212.0" y2="350.0" stroke="#A0A0B0" stroke-width="6" stroke-linecap="round" stroke-dasharray="170.0" /><polygon id="c1c-e8-h" points="1190,350 1209.809836251759,340.4307582495529 1209.809836251759,359.5692417504471" fill="#A0A0B0"/></svg>
+<div id="c1c-e9" class="el " style="left:1170px;top:368.0px;width:210px;font-size:32px;font-weight:700;color:#fff;text-align:center;line-height:1.12;">dish</div>
+<div id="c1c-e10" class="el chip" style="left:1450px;top:470px;width:290px;background:#FF9100;color:#0E0622;font-size:36px;">new chefs</div>
+<div id="c1c-e11" class="el chip" style="left:1450px;top:548px;width:290px;background:#FF9100;color:#0E0622;font-size:36px;">new stove</div>
+<div id="c1c-e12" class="el chip" style="left:1450px;top:626px;width:290px;background:#FF9100;color:#0E0622;font-size:36px;">new recipe</div>
+<div id="c1c-e13" class="el " style="left:905px;top:440px;width:110px;font-size:140px;font-weight:900;color:#39FF88;text-align:center;line-height:1.12;">✓</div>
+<div id="c1c-e14" class="el note" style="left:140px;top:590px;width:760px;font-family:'Caveat';font-weight:700;font-size:62px;color:#FFE500;transform-origin:left center;line-height:1;">same menu, nobody notices</div>
+<div id="c1c-e15" class="el chip" style="left:300px;top:76px;background:#39FF88;color:#0E0622;font-size:30px;">from the handbook</div>
+<div id="c1c-e16" class="el" style="left:300px;top:130px;width:1320px;height:630px"><svg style="width:1320px;height:630px;display:block;overflow:visible" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420" role="img" aria-labelledby="r00-what-is-an-api-t r00-what-is-an-api-d">
+  <title id="r00-what-is-an-api-t">What an API is</title>
+  <desc id="r00-what-is-an-api-d">A client app talks to a server only through an API contract, like a diner using a menu and a waiter. The kitchen behind it can change freely as long as the contract holds.</desc>
+  <defs>
+    <marker id="r00-what-is-an-api-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8199BB"/>
+    </marker>
+    <style>
+      .r00-what-is-an-api-title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r00-what-is-an-api-sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r00-what-is-an-api-h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r00-what-is-an-api-lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .r00-what-is-an-api-note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r00-what-is-an-api-code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <text x="32" y="44" class="r00-what-is-an-api-title">An API is a contract in the middle</text>
+  <text x="32" y="66" class="r00-what-is-an-api-sub">The client only depends on the menu. Everything behind it can change.</text>
+  <rect x="32" y="96" width="208" height="156" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="48" y="126" class="r00-what-is-an-api-h">Client app</text>
+  <text x="48" y="152" class="r00-what-is-an-api-note">phone app, browser,</text>
+  <text x="48" y="170" class="r00-what-is-an-api-note">script or AI agent</text>
+  <text x="48" y="208" class="r00-what-is-an-api-note">Asks. Never sees</text>
+  <text x="48" y="226" class="r00-what-is-an-api-note">how the answer is made.</text>
+  <rect x="336" y="96" width="208" height="156" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="2.5"/>
+  <text x="352" y="126" class="r00-what-is-an-api-h">API contract</text>
+  <text x="352" y="158" class="r00-what-is-an-api-code">GET /users/42</text>
+  <text x="352" y="180" class="r00-what-is-an-api-code">200 + JSON body</text>
+  <text x="352" y="214" class="r00-what-is-an-api-note">the menu: exactly what</text>
+  <text x="352" y="232" class="r00-what-is-an-api-note">you may ask and get back</text>
+  <rect x="640" y="96" width="208" height="156" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="656" y="126" class="r00-what-is-an-api-h">Server + data</text>
+  <text x="656" y="152" class="r00-what-is-an-api-note">business logic, database</text>
+  <text x="656" y="170" class="r00-what-is-an-api-note">other services</text>
+  <text x="656" y="208" class="r00-what-is-an-api-note">Hidden from the client:</text>
+  <text x="656" y="226" class="r00-what-is-an-api-note">free to change inside.</text>
+  <line x1="240" y1="152" x2="336" y2="152" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="544" y1="152" x2="640" y2="152" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="640" y1="196" x2="544" y2="196" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <line x1="336" y1="196" x2="240" y2="196" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r00-what-is-an-api-arrow)"/>
+  <text x="288" y="142" class="r00-what-is-an-api-note" text-anchor="middle">request</text>
+  <text x="592" y="142" class="r00-what-is-an-api-note" text-anchor="middle">request</text>
+  <text x="288" y="216" class="r00-what-is-an-api-note" text-anchor="middle">response</text>
+  <text x="592" y="216" class="r00-what-is-an-api-note" text-anchor="middle">response</text>
+  <line x1="46" y1="266" x2="226" y2="266" stroke="#3B73ED" stroke-width="2"/>
+  <text x="136" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#5787F0">The diner</text>
+  <line x1="350" y1="266" x2="530" y2="266" stroke="#50D89F" stroke-width="2"/>
+  <text x="440" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#69DDAD">Menu + waiter</text>
+  <line x1="654" y1="266" x2="834" y2="266" stroke="#648BC4" stroke-width="2"/>
+  <text x="744" y="288" class="r00-what-is-an-api-lbl" text-anchor="middle" style="fill:#A0A0B0">The kitchen</text>
+  <rect x="32" y="308" width="816" height="44" rx="10" fill="#302808" stroke="#F58733" stroke-width="1.5"/>
+  <text x="440" y="335" class="r00-what-is-an-api-note" text-anchor="middle">Swap the chefs, the stove or the recipe: if the dish still matches the menu, the client never notices.</text>
+</svg>
+</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#c1c-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("c1c-e1","pop",0.64,15.440999999999999);
+A("c1c-e2","pop",2.3,15.440999999999999);
+A("c1c-e3","pop",4.84,15.440999999999999);
+D("c1c-e4",3.02,170.0,true,15.440999999999999);
+A("c1c-e5","fade",3.17,15.440999999999999);
+D("c1c-e6",5.06,170.0,true,15.440999999999999);
+D("c1c-e7",4.84,170.0,true,15.440999999999999);
+D("c1c-e8",5.06,170.0,true,15.440999999999999);
+A("c1c-e9","fade",5.21,15.440999999999999);
+A("c1c-e10","pop",8.181,15.440999999999999);
+A("c1c-e11","pop",9.441,15.440999999999999);
+A("c1c-e12","pop",10.921,15.440999999999999);
+A("c1c-e13","slam",13.455,15.440999999999999);
+A("c1c-e14","wipe",14.615,15.440999999999999);
+A("c1c-e15","pop",15.801,null);
+tl.fromTo("#c1c-e16",{opacity:1,clipPath:"inset(0 0 100% 0)"},{opacity:1,clipPath:"inset(0 0 81.90% 0)",duration:.5,ease:"power2.out"},15.801);
+tl.fromTo("#c1c-e16",{clipPath:"inset(0 0 81.90% 0)"},{clipPath:"inset(0 0 29.52% 0)",duration:.5,ease:"power2.out",immediateRender:false},18.341);
+tl.fromTo("#c1c-e16",{clipPath:"inset(0 0 29.52% 0)"},{clipPath:"inset(0 0 0.00% 0)",duration:.5,ease:"power2.out",immediateRender:false},21.941);
+tl.fromTo("#c1c-stage",{opacity:1},{opacity:0,duration:.2,immediateRender:false},23.074);
+window.__timelines = window.__timelines || {};
+window.__timelines["c1c"] = tl;
+</script>
+</div>
+</template>

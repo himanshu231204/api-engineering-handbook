@@ -1,0 +1,5 @@
+You use APIs a hundred times a day and can't explain one. Why does your weather app know the forecast without ever touching a weather station?
+Most people think an API is just a URL. That one wrong idea is why their integrations break the moment a team changes a database.
+You're still copying database columns straight into your API responses. That's why one rename breaks every app that depends on you.
+Every app you opened today was secretly asking another computer for permission. What exactly did it say, and why did the answer come back in JSON?
+Stop calling every API a REST API. It's costing you the one idea that makes APIs useful: nobody has to know how the kitchen works.

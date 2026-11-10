@@ -154,6 +154,9 @@ api-engineering-handbook/
 │
 ├── projects/                  ← full capstone project specs (01–10)
 │
+├── video/                     ← video roadmap, video tools and worked example (see "Videos")
+├── .claude/skills/            ← repo skills for Claude Code (handbook-video)
+│
 └── resources/
     ├── cheatsheets/
     ├── interview-questions/
@@ -203,6 +206,14 @@ Additional references: [Cheatsheets](resources/cheatsheets/) · [Interview Quest
 3. **Start every chapter with its TL;DR box and finish with its Check Yourself quiz.** Answer each question before opening it. If you get fewer than two of three right, re-read before moving on. Then do the exercises.
 4. **Build the capstone projects** in `projects/` once you finish the part(s) they depend on. They are the real test of whether the concepts stuck.
 5. **Use it as a reference afterward.** Once you've read it once, come back to specific chapters (or the cheatsheets) whenever you need a refresher while building something real.
+
+---
+
+## Videos
+
+Every handbook topic gets a 5–10 minute explainer video, tracked in [`video/ROADMAP.md`](video/ROADMAP.md). Videos are built from the handbook itself: the chapter's Mermaid diagrams, the concept SVGs in `docs/assets/diagrams/`, its code, and a real run of the example.
+
+**Making a video with Claude Code:** open a session in this repo and run `/handbook-video` (or just ask "make the video for <chapter>"). The repo skill in [`.claude/skills/handbook-video/`](.claude/skills/handbook-video/SKILL.md) carries the whole pipeline (harvest the chapter, script, Kokoro voice, HyperFrames render, QA, SEO package), and [`video/what-is-an-api-long/`](video/what-is-an-api-long/README.md) is a finished worked example. Finished MP4s are not committed; upload to YouTube and add the link to the roadmap.
 
 ---
 
