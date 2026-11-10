@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520" role="img" aria-labelledby="t d">
+  <title id="t">Kubernetes probes: what each failure does</title>
+  <desc id="d">Three probe types for a pod. The startup probe holds off the other two while the app boots; if it never passes, the container is restarted. The liveness probe asks whether the process is stuck; when it fails repeatedly the kubelet restarts container. The readiness probe asks whether the pod can take traffic right now; when it fails the pod is removed from the Service endpoints and receives no traffic, but the container keeps running and is not restarted.</desc>
+  
+<defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="519" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Liveness restarts. Readiness stops traffic. Startup waits.</text>
+  <text x="32" y="66" class="sub">Three probes on the same pod, three very different consequences when they fail.</text>
+
+  <rect x="32" y="90" width="256" height="340" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="120" class="h">Startup probe</text>
+  <text x="48" y="146" class="lbl" fill="#2563eb">"Has the app finished booting?"</text>
+  <text x="48" y="168" class="note">Runs first; liveness and readiness</text>
+  <text x="48" y="186" class="note">are paused until it passes.</text>
+  <circle cx="60" cy="224" r="12" fill="#1c7c54"/>
+  <text x="60" y="228" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="80" y="228" class="note">When it fails:</text>
+  <rect x="48" y="244" width="224" height="36" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="160" y="267" text-anchor="middle" class="lbl" fill="#2563eb">Never passes in time</text>
+  <line x1="160" y1="280" x2="160" y2="304" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="60" cy="326" r="12" fill="#1c7c54"/>
+  <text x="60" y="330" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="80" y="330" class="note">Kubernetes then:</text>
+  <rect x="48" y="342" width="224" height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="160" y="365" text-anchor="middle" class="lbl" fill="#2563eb">Container is restarted</text>
+  <circle cx="60" cy="402" r="12" fill="#1c7c54"/>
+  <text x="60" y="406" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="80" y="406" class="note">Traffic: none yet (not ready)</text>
+  <rect x="312" y="90" width="256" height="340" rx="12" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="328" y="120" class="h">Liveness probe</text>
+  <text x="328" y="146" class="lbl" fill="#b91c1c">"Is the process stuck for good?"</text>
+  <text x="328" y="168" class="note">Check only the process itself,</text>
+  <text x="328" y="186" class="note">never shared dependencies.</text>
+  <circle cx="340" cy="224" r="12" fill="#1c7c54"/>
+  <text x="340" y="228" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="360" y="228" class="note">When it fails:</text>
+  <rect x="328" y="244" width="224" height="36" rx="8" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="440" y="267" text-anchor="middle" class="lbl" fill="#b91c1c">Fails N times in a row</text>
+  <line x1="440" y1="280" x2="440" y2="304" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="340" cy="326" r="12" fill="#1c7c54"/>
+  <text x="340" y="330" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="360" y="330" class="note">Kubernetes then:</text>
+  <rect x="328" y="342" width="224" height="36" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="440" y="365" text-anchor="middle" class="lbl" fill="#b91c1c">kubelet restarts container</text>
+  <circle cx="340" cy="402" r="12" fill="#1c7c54"/>
+  <text x="340" y="406" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="360" y="406" class="note">Traffic: dropped during restart</text>
+  <rect x="592" y="90" width="256" height="340" rx="12" fill="#fffbeb" stroke="#b45309" stroke-width="1.5"/>
+  <text x="608" y="120" class="h">Readiness probe</text>
+  <text x="608" y="146" class="lbl" fill="#b45309">"Can this pod take requests now?"</text>
+  <text x="608" y="168" class="note">May include warm-up and the</text>
+  <text x="608" y="186" class="note">dependencies this pod needs.</text>
+  <circle cx="620" cy="224" r="12" fill="#1c7c54"/>
+  <text x="620" y="228" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="640" y="228" class="note">When it fails:</text>
+  <rect x="608" y="244" width="224" height="36" rx="8" fill="#ffffff" stroke="#b45309" stroke-width="1.5"/>
+  <text x="720" y="267" text-anchor="middle" class="lbl" fill="#b45309">Fails N times in a row</text>
+  <line x1="720" y1="280" x2="720" y2="304" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="620" cy="326" r="12" fill="#1c7c54"/>
+  <text x="620" y="330" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="640" y="330" class="note">Kubernetes then:</text>
+  <rect x="608" y="342" width="224" height="36" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="720" y="365" text-anchor="middle" class="lbl" fill="#b45309">Removed from endpoints</text>
+  <circle cx="620" cy="402" r="12" fill="#1c7c54"/>
+  <text x="620" y="406" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="640" y="406" class="note">Traffic: sent to other pods</text>
+  <rect x="32" y="448" width="816" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="440" y="475" text-anchor="middle" class="lbl" fill="#475569">Rule of thumb: restart only when a restart can help; stop traffic when the pod just needs time or is overloaded.</text>
+</svg>

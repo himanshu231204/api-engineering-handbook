@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">Bulkheads: shared pool versus isolated pools</title>
+  <desc id="d">Left: one shared pool of 10 workers serves both checkout and recommendations. When the recommendations service becomes slow, all 10 workers wait on it and checkout requests are starved. Right: separate pools per dependency. The recommendations pool of 4 slots fills up and rejects extra calls quickly with a fallback, while the payments pool of 8 slots keeps serving checkout normally.</desc>
+  
+<defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Bulkheads: one slow dependency must not sink the whole ship</text>
+  <text x="32" y="66" class="sub">Same traffic, same slow recommendations service. Only the pool layout differs.</text>
+  <!-- left panel -->
+  <rect x="32" y="90" width="396" height="372" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="52" y="120" class="h">Shared pool: one pool for everything</text>
+  <text x="52" y="140" class="note">10 workers shared by every endpoint</text>
+
+  <rect x="52" y="158" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="96" y="158" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="140" y="158" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="184" y="158" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="228" y="158" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="52" y="202" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="96" y="202" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="140" y="202" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="184" y="202" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="228" y="202" width="32" height="32" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="290" y="180" class="lbl" fill="#b91c1c">All 10 busy</text>
+  <text x="290" y="198" class="note">all waiting on slow</text>
+  <text x="290" y="216" class="note">Recs (30 s timeout)</text>
+  <rect x="52" y="262" width="170" height="44" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="137" y="281" text-anchor="middle" class="lbl" fill="#2563eb">POST /checkout</text>
+  <text x="137" y="297" text-anchor="middle" class="note">healthy, needs a worker</text>
+  <line x1="222" y1="284" x2="262" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="266" y="262" width="142" height="44" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="337" y="281" text-anchor="middle" class="lbl" fill="#b91c1c">Queued / timeout</text>
+  <text x="337" y="297" text-anchor="middle" class="note">no worker free</text>
+  
+  <circle cx="60" cy="342" r="12" fill="#1c7c54"/>
+  <text x="60" y="346" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="80" y="346" class="note">Recs slows down, calls pile up</text>
+  <circle cx="60" cy="372" r="12" fill="#1c7c54"/>
+  <text x="60" y="376" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="80" y="376" class="note">Every worker ends up waiting on Recs</text>
+  <circle cx="60" cy="402" r="12" fill="#1c7c54"/>
+  <text x="60" y="406" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="80" y="406" class="note">Checkout fails even though payments is fine</text>
+  <text x="52" y="440" class="lbl" fill="#b91c1c">Result: a partial failure becomes a total outage</text>
+
+  <!-- right panel -->
+  <rect x="452" y="90" width="396" height="372" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="472" y="120" class="h">Bulkheads: one pool per dependency</text>
+  <text x="472" y="140" class="note">Each compartment has its own fixed size</text>
+  <rect x="472" y="154" width="356" height="86" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="488" y="176" class="lbl" fill="#1c7c54">Payments pool: 8 slots</text>
+
+  <rect x="488" y="188" width="30" height="30" rx="6" fill="#bbf7d0" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="528" y="188" width="30" height="30" rx="6" fill="#bbf7d0" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="568" y="188" width="30" height="30" rx="6" fill="#bbf7d0" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="608" y="188" width="30" height="30" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="648" y="188" width="30" height="30" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="688" y="188" width="30" height="30" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="728" y="188" width="30" height="30" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="768" y="188" width="30" height="30" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="488" y="232" class="note">3 busy, 5 free: checkout is served normally</text>
+  <rect x="472" y="254" width="356" height="86" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="488" y="276" class="lbl" fill="#b45309">Recommendations pool: 4 slots</text>
+
+  <rect x="488" y="288" width="30" height="30" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="528" y="288" width="30" height="30" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="568" y="288" width="30" height="30" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="608" y="288" width="30" height="30" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="660" y="308" class="note">full: extra calls rejected fast</text>
+  <text x="488" y="332" class="note">damage is contained to this compartment</text>
+  <circle cx="484" cy="372" r="12" fill="#1c7c54"/>
+  <text x="484" y="376" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="504" y="376" class="note">Recs slows, only its 4 slots fill up</text>
+  <circle cx="484" cy="402" r="12" fill="#1c7c54"/>
+  <text x="484" y="406" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="504" y="406" class="note">Extra Recs calls get a fast fallback (empty list)</text>
+  <circle cx="484" cy="432" r="12" fill="#1c7c54"/>
+  <text x="484" y="436" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="504" y="436" class="note">Checkout keeps its own 8 slots, stays at 200 OK</text>
+</svg>
