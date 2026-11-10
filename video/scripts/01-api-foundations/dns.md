@@ -17,6 +17,8 @@ You never type an IP address into your API client. You type a name. So who turns
 
 ## Why It Matters
 
+[scene: Concept heading="DNS failures look like app failures" body="The API is down often means DNS did not resolve, or returned a stale IP."]
+
 Somewhere between typing api dot stripe dot com and your request leaving your machine, a human-readable name has to become the numeric IP address that routing understands. That translation is DNS. It is also a surprisingly common cause of production incidents. When someone says the API is down, it is very often that DNS didn't resolve, or that DNS is returning a stale IP. It is not an application bug at all. As an API developer, you will configure DNS records for your own services, and you will need to reason about DNS failures in the systems you consume.
 
 ## Concept
