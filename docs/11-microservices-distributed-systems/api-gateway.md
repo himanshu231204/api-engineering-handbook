@@ -15,7 +15,7 @@ Once you have more than one or two backend services (see `monolith-vs-microservi
 
 An **API gateway** is a single entry point that sits in front of your backend services and handles cross-cutting concerns — authentication, rate limiting, request routing, and often request/response transformation — before forwarding (proxying) each request to the appropriate internal service. Clients talk to the gateway; the gateway talks to your services. The gateway is not a service itself in the business-logic sense — it should not know what an "order" or a "refund" is — it is infrastructure that routes and protects traffic.
 
-This is distinct from a **load balancer**, which distributes traffic across multiple instances of the *same* service (covered in the upcoming `load-balancing.md` chapter). A gateway routes across *different* services based on the request (path, host, headers), and typically adds application-aware behavior — auth, rate limits, request shaping — that a plain load balancer does not.
+This is distinct from a **load balancer**, which distributes traffic across multiple instances of the *same* service (covered in [Load Balancing](load-balancing.md)). A gateway routes across *different* services based on the request (path, host, headers), and typically adds application-aware behavior — auth, rate limits, request shaping — that a plain load balancer does not.
 
 ## Mental Model
 
@@ -28,7 +28,7 @@ A request arrives at the gateway's public address. The gateway performs, roughly
 1. **TLS termination** — decrypts HTTPS so downstream services can often communicate over plain HTTP inside a trusted network.
 2. **Authentication** — validates a bearer token, API key, or session cookie (see [Part 5 — Authentication & Authorization](../05-authentication-authorization/README.md)) once, at the edge, rather than in every backend service.
 3. **Rate limiting** — enforces per-client or per-key request quotas (see [Part 6 — Production Reliability](../06-production-reliability/README.md)) before any backend service does real work.
-4. **Routing** — inspects the path, host, or headers and forwards the request to the correct internal service, using service discovery to find a healthy instance (upcoming `service-discovery.md` chapter).
+4. **Routing** — inspects the path, host, or headers and forwards the request to the correct internal service, using service discovery to find a healthy instance ([Service Discovery](service-discovery.md)).
 5. **Optional aggregation/transformation** — combines responses from multiple services into one response, or reshapes a response for a specific client type.
 6. **Observability** — logs the request, attaches a request ID that propagates through downstream calls (see [Part 12 — Observability](../12-observability/README.md)), and emits metrics.
 
@@ -206,7 +206,7 @@ async def gateway_proxy(full_path: str, request: Request):
 - **Latency adds up.** Every hop through the gateway (and any aggregation fan-out it does) adds latency on top of the backend service's own latency. Track gateway-added latency (P95/P99, see `latency-and-p95-p99.md` in [Part 7 — Caching & Performance](../07-caching-performance/README.md)) as its own metric, separate from backend service latency.
 - **Keep the gateway free of business logic.** It's tempting to add "just one" business rule at the gateway because it's convenient — but every rule added there is now invisible to the team that owns the actual service, and couples an infrastructure component to domain logic that should live in a service.
 - **Version the gateway's public contract independently from internal services.** Clients depend on the gateway's routes and response shapes; internal services can be refactored freely as long as the gateway's translation layer absorbs the change.
-- **Secure the internal network.** Once a gateway exists, internal services should generally not be reachable directly from the public internet at all — service-to-service authentication (upcoming `service-to-service-authentication.md` chapter) protects the internal hops themselves.
+- **Secure the internal network.** Once a gateway exists, internal services should generally not be reachable directly from the public internet at all — service-to-service authentication ([Service-to-Service Authentication](service-to-service-authentication.md)) protects the internal hops themselves.
 
 ## Common Mistakes
 
@@ -226,7 +226,7 @@ async def gateway_proxy(full_path: str, request: Request):
 
 ## AI Engineering Perspective
 
-An **AI Gateway** — a specialized API gateway sitting in front of one or more LLM providers — is one of the most common and well-justified applications of this pattern in modern systems (see [Part 15 — Production AI Systems](../15-production-ai-systems/README.md)). It centralizes exactly the concerns this chapter covers, applied to LLM traffic specifically: authenticating callers, enforcing token-based rate limits (not just request-count limits — see the upcoming token-rate-limits content), routing between multiple model providers, applying prompt or semantic caching, and tracking cost per request. The same warning about business logic creep applies with extra force here: an AI gateway should route and meter LLM calls, not contain prompt engineering or business-specific reasoning about *what* to ask the model — that belongs in the calling service, the same way order logic belongs in the orders service and not in a generic HTTP gateway.
+An **AI Gateway** — a specialized API gateway sitting in front of one or more LLM providers — is one of the most common and well-justified applications of this pattern in modern systems (see [Part 15 — Production AI Systems](../15-production-ai-systems/README.md)). It centralizes exactly the concerns this chapter covers, applied to LLM traffic specifically: authenticating callers, enforcing token-based rate limits (not just request-count limits — see [Token Rate Limits](../15-production-ai-systems/token-rate-limits.md)), routing between multiple model providers, applying prompt or semantic caching, and tracking cost per request. The same warning about business logic creep applies with extra force here: an AI gateway should route and meter LLM calls, not contain prompt engineering or business-specific reasoning about *what* to ask the model — that belongs in the calling service, the same way order logic belongs in the orders service and not in a generic HTTP gateway.
 
 ## Exercises
 
@@ -270,6 +270,6 @@ Push back: business logic in the gateway is invisible to the team that owns orde
 
 </details>
 
-See also: [Monolith vs Microservices](monolith-vs-microservices.md), [REST vs gRPC](rest-vs-grpc.md), and the [glossary](../../resources/glossary.md). Service discovery and load balancing (upcoming chapters in this part) are the mechanisms a gateway relies on to find and distribute traffic to healthy backend instances.
+See also: [Monolith vs Microservices](monolith-vs-microservices.md), [REST vs gRPC](rest-vs-grpc.md), and the [glossary](../../resources/glossary.md). [Service Discovery](service-discovery.md) and [Load Balancing](load-balancing.md) are the mechanisms a gateway relies on to find and distribute traffic to healthy backend instances.
 
 [← Back to Part 11 — Microservices & Distributed Systems](README.md)

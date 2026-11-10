@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">OpenTelemetry pipeline: app, SDK, OTLP, Collector, backends</title>
+  <desc id="d">Your application calls the OpenTelemetry API; auto-instrumentation for FastAPI, httpx and SQLAlchemy and your manual spans feed the SDK, which applies a resource, a sampler and a batch processor and exports over OTLP on port 4318 (HTTP) or 4317 (gRPC) to a Collector. The Collector receives, processes (memory limiter, batch, attribute scrubbing, tail sampling) and exports to interchangeable backends for traces, metrics and logs, so switching vendors is a configuration change.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">OpenTelemetry: instrument once, send anywhere</text>
+  <text x="32" y="66" class="sub">The app speaks one open protocol (OTLP). The Collector decides where the data goes.</text>
+
+  <!-- column headings -->
+  <text x="32" y="102" class="h">Your service</text>
+  <text x="342" y="102" class="h">Collector</text>
+  <text x="652" y="102" class="h">Backends (swappable)</text>
+
+  <!-- APP group -->
+  <rect x="32" y="114" width="240" height="266" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="48" y="128" width="208" height="64" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="60" y="150" class="lbl" fill="#1c7c54">Instrumentation</text>
+  <text x="60" y="168" class="note">auto: FastAPI, httpx, SQLAlchemy</text>
+  <text x="60" y="184" class="note">manual: your spans</text>
+  <rect x="48" y="202" width="208" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="60" y="224" class="lbl" fill="#2563eb">OpenTelemetry API</text>
+  <text x="60" y="242" class="note">stable interface, no-op by default</text>
+  <rect x="48" y="264" width="208" height="102" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="60" y="286" class="lbl" fill="#b45309">SDK</text>
+  <text x="60" y="306" class="note">Resource: service.name, version</text>
+  <text x="60" y="324" class="note">Sampler: ParentBased(ratio)</text>
+  <text x="60" y="342" class="note">Batch processor, in background</text>
+  <text x="60" y="358" class="note">OTLP exporter</text>
+  <line x1="152" y1="192" x2="152" y2="200" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="152" y1="254" x2="152" y2="262" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- OTLP arrow -->
+  <line x1="272" y1="246" x2="338" y2="246" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="307" cy="226" r="12" fill="#1c7c54"/>
+  <text x="307" y="230" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="307" y="278" text-anchor="middle" class="code">OTLP</text>
+  <text x="307" y="296" text-anchor="middle" class="note">4318 http</text>
+  <text x="307" y="312" text-anchor="middle" class="note">4317 grpc</text>
+
+  <!-- COLLECTOR group -->
+  <rect x="342" y="114" width="266" height="266" rx="12" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <rect x="358" y="128" width="234" height="64" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="380" cy="160" r="12" fill="#1c7c54"/>
+  <text x="380" y="164" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="400" y="154" class="lbl" fill="#6d28d9">Receivers</text>
+  <text x="400" y="174" class="note">otlp (and others: prometheus…)</text>
+  <rect x="358" y="204" width="234" height="94" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="380" cy="226" r="12" fill="#1c7c54"/>
+  <text x="380" y="230" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="400" y="222" class="lbl" fill="#6d28d9">Processors</text>
+  <text x="374" y="246" class="note">memory_limiter · batch</text>
+  <text x="374" y="264" class="note">attributes (scrub PII)</text>
+  <text x="374" y="282" class="note">tail_sampling · resource</text>
+  <rect x="358" y="310" width="234" height="56" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="380" cy="338" r="12" fill="#1c7c54"/>
+  <text x="380" y="342" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="400" y="332" class="lbl" fill="#6d28d9">Exporters</text>
+  <text x="400" y="350" class="note">otlp, debug, vendor…</text>
+  <line x1="475" y1="192" x2="475" y2="202" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="475" y1="298" x2="475" y2="308" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- arrows to backends -->
+  <line x1="608" y1="246" x2="646" y2="168" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="608" y1="246" x2="646" y2="246" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="608" y1="246" x2="646" y2="324" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- backends -->
+  <rect x="650" y="132" width="198" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="666" y="156" class="lbl" fill="#475569">Traces</text>
+  <text x="666" y="176" class="note">Jaeger, Tempo, vendor</text>
+  <text x="666" y="192" class="note">waterfall, search</text>
+  <rect x="650" y="210" width="198" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="666" y="234" class="lbl" fill="#475569">Metrics</text>
+  <text x="666" y="254" class="note">Prometheus, vendor</text>
+  <text x="666" y="270" class="note">dashboards, alerts</text>
+  <rect x="650" y="288" width="198" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="666" y="312" class="lbl" fill="#475569">Logs</text>
+  <text x="666" y="332" class="note">Loki, Elasticsearch, vendor</text>
+  <text x="666" y="348" class="note">search by trace_id</text>
+
+  <!-- bottom note -->
+  <rect x="32" y="400" width="816" height="52" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="423" class="lbl" fill="#1c7c54">No lock-in</text>
+  <text x="48" y="441" class="note">Changing backend = edit the Collector's exporters. App code, instrumentation and the OTLP wire format stay the same.</text>
+</svg>

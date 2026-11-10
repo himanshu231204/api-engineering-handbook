@@ -15,9 +15,9 @@ Cache-aside (also called "lazy loading") is the default caching strategy in most
 
 Cache-aside describes a **read path** where the application code is directly responsible for managing the cache: check it, and if the answer isn't there, go get it and put it there yourself. The cache never talks to the database on its own — Redis, for example, has no idea a PostgreSQL database exists. All of the coordination lives in the application layer, which is precisely what "aside" means in the name: the cache sits *beside* the data flow, not *inside* it.
 
-This is in contrast to two other strategies you'll meet in future chapters:
+This is in contrast to two other strategies covered elsewhere in this part:
 
-- **Write-through caching** (`write-through-caching.md`, planned): every write to the database also writes through to the cache at the same time, so the cache is always warm and consistent immediately after a write — at the cost of extra latency on every write, whether or not that data is ever read again.
+- **Write-through caching** ([Write-Through Caching](write-through-caching.md)): every write to the database also writes through to the cache at the same time, so the cache is always warm and consistent immediately after a write — at the cost of extra latency on every write, whether or not that data is ever read again.
 - **Write-behind (write-back) caching**: writes go to the cache first and are asynchronously flushed to the database later, prioritizing write latency at the cost of durability risk if the cache fails before the flush happens.
 
 Cache-aside makes the opposite trade-off from both of these: writes are simple (just write to the database, nothing else required), but the first read after a write — or after any TTL expiry — pays the full cost of a cache miss. This makes cache-aside a great fit for **read-heavy workloads**, which describes the overwhelming majority of API endpoints (product pages, user profiles, search results, dashboards).
@@ -217,7 +217,7 @@ async def fetch_product_from_db(product_id: int) -> dict[str, Any] | None:
 
 ## Production Considerations
 
-- **Read-heavy vs. write-heavy fit.** Cache-aside shines when reads vastly outnumber writes for the same key — a product page read thousands of times between price updates is ideal; a counter incremented on every request is a poor fit (see `write-through-caching.md` and rate-limiting patterns instead).
+- **Read-heavy vs. write-heavy fit.** Cache-aside shines when reads vastly outnumber writes for the same key — a product page read thousands of times between price updates is ideal; a counter incremented on every request is a poor fit (see [Write-Through Caching](write-through-caching.md) and rate-limiting patterns instead).
 - **First-request penalty.** Every cache miss (cold start, TTL expiry, invalidation) pays full database latency. For latency-sensitive, high-traffic keys, consider proactive cache warming rather than relying purely on lazy population.
 - **Consistency window.** Between a database write and the next cache miss/repopulation (or explicit invalidation), the cache can serve stale data. Combine cache-aside with explicit invalidation on writes (see [`cache-invalidation.md`](cache-invalidation.md)) when staleness is unacceptable.
 - **Cache and database can diverge under partial failures.** If the cache-populate step fails after a successful database read, the request still succeeds (data was fetched) but the cache stays cold — handle this failure without breaking the response.
@@ -259,7 +259,7 @@ Cache-aside is the base pattern underneath LLM response caching: check whether a
 - Cache-aside is a read path fully managed by application code: check cache, miss, read database, populate cache, return.
 - It optimizes for read-heavy workloads by keeping writes simple, at the cost of a cold-start penalty on every miss.
 - Negative caching and stampede protection (locks or probabilistic early expiry) are essential additions for production traffic, not optional extras.
-- It contrasts with write-through and write-behind caching, which shift work to the write path instead — covered in upcoming chapters.
+- It contrasts with write-through and write-behind caching, which shift work to the write path instead — covered in [Write-Through Caching](write-through-caching.md).
 - The same pattern extends directly to caching expensive LLM calls and retrieval results in AI systems.
 
 ### Check Yourself

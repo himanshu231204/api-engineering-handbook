@@ -19,7 +19,7 @@ A trace is composed of **spans**. A **span** represents one unit of work within 
 
 This parent/child relationship is what turns a pile of disconnected timing records into a single coherent tree: the root span (API gateway handling the request) has child spans for each downstream call it makes (auth service, order service), and each of *those* spans can have their own children (the order service calling the payment service, the payment service querying its database), recursively, as deep as the request actually goes. Reassembling this tree — using trace ID to know which spans belong together, and parent span ID to know how they nest — is what a tracing backend (Jaeger, Zipkin, Grafana Tempo, or a vendor APM tool) does to render the now-familiar waterfall diagram of a request's full lifecycle.
 
-The upcoming tracing.md chapter covers single-service span instrumentation in more depth, and opentelemetry.md covers the vendor-neutral standard (OpenTelemetry) most modern systems use to generate and export this data consistently. This chapter focuses specifically on the *distributed* problem: how trace context survives crossing a network boundary from one service to another.
+[Tracing](tracing.md) covers single-service span instrumentation in more depth, and [OpenTelemetry](opentelemetry.md) covers the vendor-neutral standard (OpenTelemetry) most modern systems use to generate and export this data consistently. This chapter focuses specifically on the *distributed* problem: how trace context survives crossing a network boundary from one service to another.
 
 ## Mental Model
 

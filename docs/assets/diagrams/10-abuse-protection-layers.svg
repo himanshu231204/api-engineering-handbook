@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="486" viewBox="0 0 880 486" role="img" aria-labelledby="t d">
+  <title id="t">Layered abuse protection</title>
+  <desc id="d">A request passes through four layers in order: edge or WAF filtering, per-identity limits, cost-based limits, then anomaly signals. Each layer catches a different kind of abuse. The anomaly signals layer feeds back to tighten the earlier layers. Rejected requests receive 429 with Retry-After, or a block.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="485" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Abuse protection works in layers, cheapest check first</text>
+  <text x="32" y="66" class="sub">No single layer stops a determined attacker. Each one catches what the others miss.</text>
+
+  <!-- incoming request -->
+  <rect x="32" y="96" width="816" height="40" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="121" class="lbl" fill="#2563eb">Incoming requests</text>
+  <text x="200" y="121" class="note">honest users, scrapers, credential stuffing, expensive-call floods</text>
+
+  <!-- layer 1 -->
+  <line x1="440" y1="136" x2="440" y2="156" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="158" width="816" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="58" cy="186" r="12" fill="#1c7c54"/>
+  <text x="58" y="190" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="82" y="181" class="lbl" fill="#475569">Edge / WAF</text>
+  <text x="82" y="200" class="note">IP reputation, bot rules, body-size caps, floods dropped before they cost compute</text>
+
+  <!-- layer 2 -->
+  <line x1="440" y1="214" x2="440" y2="232" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="234" width="816" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="58" cy="262" r="12" fill="#1c7c54"/>
+  <text x="58" y="266" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="82" y="257" class="lbl" fill="#1c7c54">Per-identity limits</text>
+  <text x="82" y="276" class="note">verified user or key, per target account, burst + sustained + daily quota (IP only as a supplement)</text>
+
+  <!-- layer 3 -->
+  <line x1="440" y1="290" x2="440" y2="308" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="310" width="816" height="56" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="58" cy="338" r="12" fill="#1c7c54"/>
+  <text x="58" y="342" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="82" y="333" class="lbl" fill="#b45309">Cost-based limits</text>
+  <text x="82" y="352" class="note">weighted buckets: export costs more than read, LLM calls charged in tokens, per-request caps</text>
+
+  <!-- layer 4 -->
+  <line x1="440" y1="366" x2="440" y2="384" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="386" width="816" height="56" rx="10" fill="#f3e8ff" stroke="#7c3aed" stroke-width="1.5"/>
+  <circle cx="58" cy="414" r="12" fill="#1c7c54"/>
+  <text x="58" y="418" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="82" y="409" class="lbl" fill="#7c3aed">Anomaly signals</text>
+  <text x="82" y="428" class="note">failure ratios, distinct IDs per account, signup bursts: log, slow, challenge, then block</text>
+
+  <!-- feedback + reject notes -->
+  <text x="32" y="466" class="note">Over limit: 429 + Retry-After (layers 2 and 3) or a block (layers 1 and 4). Layer 4 feeds back to tighten layers 2 and 3.</text>
+</svg>

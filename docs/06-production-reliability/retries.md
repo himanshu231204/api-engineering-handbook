@@ -15,7 +15,7 @@ Networks drop packets, servers restart mid-deploy, load balancers occasionally r
 
 A **retry** is re-sending a failed request, on the assumption that the failure was transient rather than a fundamental problem with the request itself. The critical question that must be answered before writing any retry logic is: **is this operation idempotent?** An idempotent operation produces the same end state no matter how many times it's applied — `PUT /users/42 {"name": "Alice"}` sent three times leaves the user in exactly the same state as sending it once. A non-idempotent operation, like `POST /payments {"amount": 50}` without any deduplication mechanism, could charge the customer three times if retried three times after a response was lost (not the request — just the *response* acknowledging it, a subtle but crucial distinction, since the original charge may have already succeeded on the server).
 
-This is why retries and idempotency are inseparable topics: see [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md) for the HTTP-level semantics (idempotent methods, idempotency keys), and the upcoming `idempotency-in-practice.md` chapter in this part for implementing idempotency keys as a first-class reliability mechanism. If you cannot guarantee idempotency — either because the HTTP method is inherently safe to repeat (`GET`, `PUT`, `DELETE`) or because you've added an idempotency key — you should not blindly retry a request that might have already taken effect.
+This is why retries and idempotency are inseparable topics: see [Part 2's idempotency chapter](../02-rest-api-design/idempotency.md) for the HTTP-level semantics (idempotent methods, idempotency keys), and [Idempotency in Practice](idempotency-in-practice.md) in this part for implementing idempotency keys as a first-class reliability mechanism. If you cannot guarantee idempotency — either because the HTTP method is inherently safe to repeat (`GET`, `PUT`, `DELETE`) or because you've added an idempotency key — you should not blindly retry a request that might have already taken effect.
 
 **Retryable vs. non-retryable errors** is the second core distinction:
 
@@ -181,7 +181,7 @@ Note the two gates that must *both* pass before a retry happens: the error must 
 - **A maximum retry count is not optional.** Without one, a client can retry indefinitely against a downstream service that's down for an extended maintenance window, adding load to a system that is actively trying to recover — this is one of the mechanisms behind retry storms (see [Exponential Backoff](exponential-backoff.md)).
 - **Retries consume your timeout budget.** Three retries at a 2-second timeout each is up to 6 seconds of waiting before final failure — factor this into the total budget discussed in [Timeouts](timeouts.md), not just the per-attempt timeout.
 - **Retries should be observable.** Log/metric each retry attempt distinctly from a first attempt, so you can see "this endpoint required 3 retries on 40% of calls last hour" as a leading indicator of a degrading dependency, well before it becomes a full outage.
-- **Idempotency keys turn non-idempotent operations into safely-retryable ones.** A `POST /payments` call with a client-generated `Idempotency-Key` header lets the server recognize "I've already processed this exact key" and return the original result instead of creating a duplicate — this is the mechanism, and `idempotency-in-practice.md` (planned) covers implementing it server-side.
+- **Idempotency keys turn non-idempotent operations into safely-retryable ones.** A `POST /payments` call with a client-generated `Idempotency-Key` header lets the server recognize "I've already processed this exact key" and return the original result instead of creating a duplicate — this is the mechanism, and [Idempotency in Practice](idempotency-in-practice.md) covers implementing it server-side.
 
 ## Common Mistakes
 
@@ -196,7 +196,7 @@ Note the two gates that must *both* pass before a retry happens: the error must 
 - Retry only network-level failures, `429`, `408`, and `5xx` responses — never blindly retry other `4xx` responses.
 - Only retry non-idempotent operations (`POST`, `PATCH` without idempotency guarantees) if you've attached an idempotency key the server honors.
 - Always cap the maximum number of attempts, and make it configurable per call site — a background job can tolerate more retries than a user-facing request under an SLA.
-- Combine retries with exponential backoff (and jitter, covered in the upcoming `jitter.md` chapter) rather than fixed or zero delay between attempts.
+- Combine retries with exponential backoff (and jitter, covered in [Jitter](jitter.md)) rather than fixed or zero delay between attempts.
 - Respect a server-provided `Retry-After` header over your own computed backoff delay when one is present.
 - Log distinct metrics for "succeeded on first attempt" vs. "succeeded after N retries" vs. "exhausted retries" — these tell very different stories about system health.
 

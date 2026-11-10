@@ -9,7 +9,7 @@
 
 ## Why This Matters
 
-Not every "real-time" feature needs a persistent connection, a message broker, or a websocket server. Sometimes the simplest possible thing — a client asking "anything new?" over and over — is exactly the right tool, and reaching for something fancier is premature engineering. Polling is the baseline every other real-time pattern in this part gets compared against: [long polling](README.md), [WebSocket](websocket.md), and [Server-Sent Events](server-sent-events.md) all exist specifically to fix problems that plain polling has. You cannot reason well about when to use those tools until you understand exactly what polling costs you — in server load, in staleness, and in wasted requests — and exactly when those costs are acceptable.
+Not every "real-time" feature needs a persistent connection, a message broker, or a websocket server. Sometimes the simplest possible thing — a client asking "anything new?" over and over — is exactly the right tool, and reaching for something fancier is premature engineering. Polling is the baseline every other real-time pattern in this part gets compared against: [long polling](long-polling.md), [WebSocket](websocket.md), and [Server-Sent Events](server-sent-events.md) all exist specifically to fix problems that plain polling has. You cannot reason well about when to use those tools until you understand exactly what polling costs you — in server load, in staleness, and in wasted requests — and exactly when those costs are acceptable.
 
 ## Core Concept
 
@@ -173,7 +173,7 @@ def poll_job_status(job_id: str, base_url: str, timeout_seconds: int = 120) -> d
 - **Cache the "no new data" path aggressively.** If many clients poll the same resource, a short-TTL cache (see [Part 7 — Caching & Performance](../07-caching-performance/README.md)) in front of the database can absorb the vast majority of poll traffic.
 - **Adaptive/backoff intervals matter at scale.** Polling faster right after an action that's likely to produce a change (e.g., right after submitting a job), then backing off, gives users the *feel* of responsiveness without sustaining a high fixed poll rate indefinitely.
 - **Set a hard ceiling.** Client pollers should always have a maximum duration or attempt count — an orphaned browser tab or retry loop that polls forever against a resource that will never change is a silent, ongoing cost.
-- **Know when to stop reaching for polling.** If staleness requirements tighten (users need updates within milliseconds, not seconds) or request volume grows large enough that most polls are wasted, that's the signal to move to `long-polling.md` (planned), [WebSocket](websocket.md), or [Server-Sent Events](server-sent-events.md) instead.
+- **Know when to stop reaching for polling.** If staleness requirements tighten (users need updates within milliseconds, not seconds) or request volume grows large enough that most polls are wasted, that's the signal to move to [Long Polling](long-polling.md), [WebSocket](websocket.md), or [Server-Sent Events](server-sent-events.md) instead.
 
 ## Common Mistakes
 

@@ -29,7 +29,7 @@ Every part's `docs/<slug>/README.md` has a chapter table with a Status column:
 
 When you write a Planned chapter: create the file, then flip that row in the part's `README.md` from plain text + 🚧 Planned to a Markdown link + ✅ Written, matching the exact format above. Don't touch any other row.
 
-Part 4 (Databases & APIs), Parts 1–3, and Parts 14–17 are fully written (every chapter). Parts 5–13 and 18 have a deliberately curated subset written, with the rest genuinely planned — check each README before assuming a chapter exists.
+All 20 parts are fully written (192 chapters, every row ✅ Written). The 🚧 Planned convention below still applies to any new chapter you scope: add its row as plain text + 🚧 Planned, and flip it only when the file exists.
 
 ## The chapter template
 
@@ -128,12 +128,14 @@ Capacity estimates need real back-of-envelope arithmetic with stated assumptions
 
 ## Verifying the repo
 
-CI (`.github/workflows/ci.yml`) runs on every push/PR to `main`: link check, SVG check, examples compile, a strict MkDocs build, and advisory markdownlint — run the same checks locally before committing:
+CI (`.github/workflows/ci.yml`) runs on every push/PR to `main`: link check, SVG check, chapter-template check, examples compile, a strict MkDocs build, and advisory markdownlint — run the same checks locally before committing:
 
 ```bash
 python3 scripts/check_links.py              # every relative Markdown link must resolve — this is the hard gate
 python3 scripts/check_examples_compile.py    # every examples/*.py must byte-compile — syntax gate, not a runtime test
 python3 scripts/check_svgs.py               # every docs/assets SVG must be well-formed XML (else it renders as a broken image)
+python3 scripts/check_chapters.py           # every chapter: template sections in order, TL;DR callout, 3-question quiz
+python3 scripts/test_check_chapters.py      # regression tests for the chapter checker (stdlib unittest)
 mkdocs build --strict                       # needs `pip install -r requirements-docs.txt`; CI runs this on every PR
 ```
 

@@ -74,7 +74,7 @@ Writing style:
 ## Pull Request Checklist
 
 - [ ] Chapter follows the shared template (where applicable).
-- [ ] Chapter has the TL;DR callout and a 3-question Check Yourself quiz.
+- [ ] Chapter has the TL;DR callout and a 3-question Check Yourself quiz, and `python3 scripts/check_chapters.py` passes.
 - [ ] New SVGs pass `python3 scripts/check_svgs.py`, and `mkdocs build --strict` passes (`pip install -r requirements-docs.txt`).
 - [ ] Internal links use relative paths and resolve correctly — run `python3 scripts/check_links.py` locally (this also runs in CI on every push/PR).
 - [ ] New chapters are linked from their Part's `README.md` and its status is updated from 🚧 Planned to ✅ Written.

@@ -15,7 +15,7 @@ Once you have multiple services calling each other (see `monolith-vs-microservic
 
 **REST** (Representational State Transfer, see [Part 2 — REST API Design](../02-rest-api-design/README.md)) is an architectural style built on HTTP verbs, URLs-as-resources, and (almost universally in practice) JSON payloads. It's human-readable, works through any browser, proxy, or firewall without special configuration, and has close to universal client support — every language, every platform, every tool (`curl`, Postman, browsers) speaks HTTP and JSON natively.
 
-**gRPC** is a Remote Procedure Call framework built by Google on top of HTTP/2, using **Protocol Buffers (Protobuf)** as its interface definition language and wire format (the upcoming `protocol-buffers.md` chapter covers Protobuf itself in depth). Instead of "resources and verbs," gRPC defines strongly-typed **services and methods** — you call `OrderService.GetOrder(request)` almost like calling a local function, and the framework handles serialization, transport, and deserialization. It compiles a `.proto` schema into typed client and server code in your language of choice, giving you compile-time type safety across service boundaries that REST-over-JSON doesn't provide by default.
+**gRPC** is a Remote Procedure Call framework built by Google on top of HTTP/2, using **Protocol Buffers (Protobuf)** as its interface definition language and wire format (the [Protocol Buffers](protocol-buffers.md) chapter covers Protobuf itself in depth). Instead of "resources and verbs," gRPC defines strongly-typed **services and methods** — you call `OrderService.GetOrder(request)` almost like calling a local function, and the framework handles serialization, transport, and deserialization. It compiles a `.proto` schema into typed client and server code in your language of choice, giving you compile-time type safety across service boundaries that REST-over-JSON doesn't provide by default.
 
 Neither is "the modern one." REST is the right default for public, browser-facing, and third-party-integrator APIs. gRPC is the right default for internal, high-throughput, service-to-service calls where both ends are systems you control.
 
@@ -202,7 +202,7 @@ The REST version is directly testable with `curl` and readable by any developer 
 - **Tooling and debuggability differ sharply.** JSON over HTTP is inspectable with `curl`, browser dev tools, and any HTTP proxy without special setup. Protobuf's binary wire format requires the `.proto` schema and gRPC-aware tooling (like `grpcurl`) to inspect — a real cost during incident debugging if your team isn't used to it.
 - **Schema evolution needs discipline in both, but fails differently.** REST/JSON is naturally tolerant of adding new optional fields (old clients ignore unknown fields), but has no compile-time enforcement that a client and server agree on shape at all. Protobuf has strict, well-defined rules for backward/forward-compatible schema changes (never reuse a field number, add new fields as optional, etc.) — get this wrong and you get real deserialization failures, not silent `None`s.
 - **Third-party and public-API consumers overwhelmingly expect REST/JSON.** Requiring external partners to generate gRPC client stubs and pull in a `.proto` file is a significant integration burden compared to "we return JSON, here's the OpenAPI spec" — this is the main reason gRPC rarely wins for public APIs regardless of its performance advantages.
-- **Load balancing gRPC has different constraints than REST.** Because gRPC multiplexes many calls over one long-lived HTTP/2 connection, naive L4 (connection-level) load balancers can send all traffic from one client to a single backend instance; gRPC generally needs L7-aware or client-side load balancing to distribute properly (the upcoming `load-balancing.md` chapter covers this distinction).
+- **Load balancing gRPC has different constraints than REST.** Because gRPC multiplexes many calls over one long-lived HTTP/2 connection, naive L4 (connection-level) load balancers can send all traffic from one client to a single backend instance; gRPC generally needs L7-aware or client-side load balancing to distribute properly ([Load Balancing](load-balancing.md) covers this distinction).
 
 ## Common Mistakes
 
@@ -266,6 +266,6 @@ Don't expose gRPC to the browser: browsers can't speak raw gRPC, and gRPC-Web ne
 
 </details>
 
-See also: [API Gateway](api-gateway.md), [Monolith vs Microservices](monolith-vs-microservices.md), and the [glossary](../../resources/glossary.md). Protocol Buffers are covered in depth in the upcoming `protocol-buffers.md` chapter in this part.
+See also: [API Gateway](api-gateway.md), [Monolith vs Microservices](monolith-vs-microservices.md), and the [glossary](../../resources/glossary.md). Protocol Buffers are covered in depth in [Protocol Buffers](protocol-buffers.md).
 
 [← Back to Part 11 — Microservices & Distributed Systems](README.md)

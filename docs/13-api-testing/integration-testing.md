@@ -23,7 +23,7 @@ An **integration test** verifies that two or more components of your system work
 | Scope | one function | one endpoint's full request lifecycle |
 | Catches | logic bugs | wiring bugs, serialization bugs, query bugs, status-code bugs |
 
-Crucially, "real database" does not mean "your production database" or even "a shared staging database." It means an isolated, disposable test database — often a fresh PostgreSQL instance in a container, or at minimum a dedicated test schema — that your test suite fully controls, seeds, and tears down. `test-databases.md`, an upcoming chapter, covers strategies for provisioning that database; this chapter assumes you have one and focuses on how to test *against* it correctly.
+Crucially, "real database" does not mean "your production database" or even "a shared staging database." It means an isolated, disposable test database — often a fresh PostgreSQL instance in a container, or at minimum a dedicated test schema — that your test suite fully controls, seeds, and tears down. [Test Databases](test-databases.md) covers strategies for provisioning that database; this chapter assumes you have one and focuses on how to test *against* it correctly.
 
 ## Mental Model
 

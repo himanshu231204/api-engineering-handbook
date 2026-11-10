@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="530" viewBox="0 0 880 530" role="img" aria-labelledby="t d">
+  <title id="t">Illustrative monthly cost drivers</title>
+  <desc id="d">Illustrative bar chart of a 100,000 dollar per month AI-backed API platform: LLM tokens 38,000, compute 22,000, database and storage 14,000, observability data 12,000, egress and CDN 8,000, other 6,000. The largest levers, model routing and caching, are marked. All numbers are made up for illustration.</desc>
+  <defs>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="879" height="529" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Where the money goes (ILLUSTRATIVE: a made-up $100k / month system)</text>
+  <text x="32" y="66" class="sub">Your split will differ. Measure it, then spend effort on the biggest bars first.</text>
+  <text x="520" y="96" class="h">Biggest levers</text>
+  <text x="32" y="132" class="lbl" fill="#111827">LLM tokens</text>
+  <rect x="32" y="140" width="311.6" height="18" rx="5" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <text x="353.6" y="154" class="lbl" fill="#7e22ce">$38k (38%)</text>
+  <circle cx="532" cy="137" r="12" fill="#1c7c54"/>
+  <text x="532" y="141" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="554" y="141" class="note">Prompt cache, model routing, semantic cache</text>
+  <text x="32" y="192" class="lbl" fill="#111827">Compute (services, workers)</text>
+  <rect x="32" y="200" width="180.4" height="18" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="222.4" y="214" class="lbl" fill="#1c7c54">$22k (22%)</text>
+  <circle cx="532" cy="197" r="12" fill="#1c7c54"/>
+  <text x="532" y="201" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="554" y="201" class="note">Right-size, autoscale, spot for workers</text>
+  <text x="32" y="252" class="lbl" fill="#111827">Database and storage</text>
+  <rect x="32" y="260" width="114.8" height="18" rx="5" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="156.8" y="274" class="lbl" fill="#b45309">$14k (14%)</text>
+  <circle cx="532" cy="257" r="12" fill="#1c7c54"/>
+  <text x="532" y="261" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="554" y="261" class="note">Indexes, read cache, archive old rows</text>
+  <text x="32" y="312" class="lbl" fill="#111827">Observability data</text>
+  <rect x="32" y="320" width="98.4" height="18" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="140.4" y="334" class="lbl" fill="#2563eb">$12k (12%)</text>
+  <circle cx="532" cy="317" r="12" fill="#1c7c54"/>
+  <text x="532" y="321" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="554" y="321" class="note">Sampling, shorter retention, fewer debug logs</text>
+  <text x="32" y="372" class="lbl" fill="#111827">Egress and CDN</text>
+  <rect x="32" y="380" width="65.6" height="18" rx="5" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="107.6" y="394" class="lbl" fill="#475569">$8k (8%)</text>
+  <text x="520" y="381" class="note">CDN hit rate, compression, same-region calls</text>
+  <text x="32" y="432" class="lbl" fill="#111827">Everything else</text>
+  <rect x="32" y="440" width="49.2" height="18" rx="5" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="91.2" y="454" class="lbl" fill="#475569">$6k (6%)</text>
+  <text x="520" y="441" class="note">Review quarterly</text>
+  <text x="32" y="494" class="note">Total: $100k / month. Illustrative numbers only; real splits depend on traffic, model choice and retention.</text>
+  <text x="32" y="512" class="note">Cheaper is not free: every lever trades something (freshness, redundancy, debuggability, quality).</text>
+</svg>

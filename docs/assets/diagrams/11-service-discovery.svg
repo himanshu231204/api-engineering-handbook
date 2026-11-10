@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="468" viewBox="0 0 880 468" role="img" aria-labelledby="t d">
+  <title id="t">Service discovery with a registry</title>
+  <desc id="d">Three instances of an orders service register themselves with a service registry and send heartbeats. One instance stops answering health checks and is removed from the registry. A client asks the registry for orders, receives the list of healthy instances, picks one itself, and calls it directly.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="879" height="467" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Service discovery: find a healthy instance by name</text>
+  <text x="32" y="66" class="sub">Instances come and go, so callers look up "orders" at call time instead of hard-coding an IP address.</text>
+
+  <!-- client -->
+  <rect x="32" y="190" width="180" height="84" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="216" class="lbl" fill="#2563eb">Client (checkout)</text>
+  <text x="48" y="238" class="note">needs the "orders" service</text>
+  <text x="48" y="256" class="note">picks one instance itself</text>
+
+  <!-- registry -->
+  <rect x="340" y="100" width="220" height="236" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="356" y="124" class="lbl" fill="#475569">Service registry</text>
+  <text x="356" y="142" class="note">Consul / etcd / DNS records</text>
+  <text x="356" y="176" class="code">10.0.1.4:8080</text>
+  <text x="494" y="176" class="lbl" fill="#1c7c54">healthy</text>
+  <text x="356" y="236" class="code">10.0.2.9:8080</text>
+  <text x="494" y="236" class="lbl" fill="#b91c1c">removed</text>
+  <text x="356" y="296" class="code">10.0.3.2:8080</text>
+  <text x="494" y="296" class="lbl" fill="#1c7c54">healthy</text>
+  <text x="356" y="324" class="note">entry expires without heartbeat</text>
+
+  <!-- instances -->
+  <rect x="660" y="100" width="188" height="60" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="676" y="126" class="lbl" fill="#1c7c54">orders instance A</text>
+  <text x="676" y="146" class="note">answers /healthz</text>
+  <rect x="660" y="190" width="188" height="60" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="676" y="216" class="lbl" fill="#b91c1c">orders instance B</text>
+  <text x="676" y="236" class="note">failed 3 health checks</text>
+  <rect x="660" y="270" width="188" height="60" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="676" y="296" class="lbl" fill="#1c7c54">orders instance C</text>
+  <text x="676" y="316" class="note">answers /healthz</text>
+
+  <!-- 1 register + heartbeat -->
+  <line x1="660" y1="130" x2="564" y2="130" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="660" y1="220" x2="564" y2="220" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <line x1="660" y1="300" x2="564" y2="300" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="600" y="122" text-anchor="middle" class="note">register +</text>
+  <text x="600" y="152" text-anchor="middle" class="note">heartbeat</text>
+  <text x="610" y="212" text-anchor="middle" class="note" fill="#b91c1c">silence</text>
+  <circle cx="634" cy="106" r="12" fill="#1c7c54"/>
+  <text x="634" y="110" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+
+  <!-- 2 lookup, 3 answer -->
+  <line x1="212" y1="214" x2="336" y2="214" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="274" y="206" text-anchor="middle" class="note">lookup orders</text>
+  <circle cx="232" cy="182" r="12" fill="#1c7c54"/>
+  <text x="232" y="186" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <line x1="336" y1="254" x2="216" y2="254" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="274" y="274" text-anchor="middle" class="note">healthy list</text>
+  <circle cx="232" cy="296" r="12" fill="#1c7c54"/>
+  <text x="232" y="300" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+
+  <!-- 4 direct call -->
+  <path d="M122 274 L122 392 L754 392 L754 334" fill="none" stroke="#1c7c54" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="148" cy="392" r="12" fill="#1c7c54"/>
+  <text x="148" y="396" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="172" y="384" class="lbl" fill="#1c7c54">client picks C (round-robin, random, least-loaded) and calls it directly</text>
+
+  <text x="32" y="440" class="note">Stale-entry window: until the heartbeat TTL or health check expires, the registry can still list a dead instance, so callers need timeouts and retries.</text>
+</svg>
