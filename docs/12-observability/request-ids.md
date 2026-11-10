@@ -105,7 +105,7 @@ import uuid
 import httpx
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
@@ -186,6 +186,9 @@ async def validation_failed(request: Request, exc: RequestValidationError):
 
 @app.exception_handler(StarletteHTTPException)
 async def http_error(request: Request, exc: StarletteHTTPException):
+    if exc.status_code in (204, 304) or exc.status_code < 200:
+        # These statuses cannot carry a body (the same rule FastAPI's default handler follows).
+        return Response(status_code=exc.status_code, headers=getattr(exc, "headers", None))
     rid = getattr(request.state, "request_id", None)
     return JSONResponse(
         status_code=exc.status_code,

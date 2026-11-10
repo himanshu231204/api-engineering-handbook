@@ -142,6 +142,8 @@ class JsonFormatter(logging.Formatter):
         payload = {"ts": self.formatTime(record), "level": record.levelname,
                    "msg": record.getMessage(), "request_id": request_id_var.get()}
         payload.update(getattr(record, "fields", {}))
+        if record.exc_info:  # log.exception(...): keep the type and traceback in the JSON line
+            payload["exception"] = self.formatException(record.exc_info)
         return json.dumps(payload)
 
 

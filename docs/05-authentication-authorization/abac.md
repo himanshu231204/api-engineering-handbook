@@ -49,7 +49,7 @@ Picture a **customs checkpoint with a rulebook** instead of a guest list. The of
 1. **Collect attributes.** Subject attributes come from the verified token (see [JWT Deeply Explained](jwt-deeply-explained.md)) and, when needed, a directory lookup. Resource attributes come from loading the record. Environment attributes come from the request itself (IP, time) or the session (auth strength). **Never accept attributes about the subject from request parameters**: a caller-supplied `clearance=3` is not an attribute, it is a wish.
 2. **Build the decision request.** Package `subject`, `resource`, `action`, `environment`.
 3. **Evaluate.** The PDP finds the policies whose *target* (action and resource type) matches, evaluates each *condition*, and collects the effects.
-4. **Combine.** Apply deny-overrides: any deny wins; otherwise any permit wins; otherwise default deny. A rule that fails to evaluate (missing attribute, type error) must be treated as *not permit*, and for a deny rule you may choose to fail closed too.
+4. **Combine.** Apply deny-overrides: any deny wins; otherwise any permit wins; otherwise default deny. A rule that fails to evaluate (missing attribute, type error) must fail closed: a permit rule counts as *not matching*, and a deny rule counts as *matching*, so the request is denied either way.
 5. **Enforce.** The PEP acts on the decision: return 403 (or 404 to avoid leaking existence), or run the action.
 6. **Record.** Log the decision with the attributes used, the matched policy ids and the policy version. This is what makes ABAC auditable. Without it, "why was this allowed?" is unanswerable, which is its biggest operational weakness.
 
@@ -144,13 +144,13 @@ class Policy:
 
 
 def _safe(policy: Policy, req: DecisionRequest) -> bool:
-    """A condition that raises (missing key, bad type) counts as NOT matching.
-    For permit rules that fails closed. For deny rules it fails open, so write
-    deny conditions with .get() and explicit checks, and test them."""
+    """A condition that raises (missing key, bad type) cannot be evaluated, so fail closed:
+    a permit rule counts as NOT matching, and a deny rule counts as MATCHING.
+    Either way the request ends up denied, whatever attribute was missing."""
     try:
         return bool(policy.condition(req))
     except (KeyError, TypeError, AttributeError):
-        return False
+        return policy.effect == "deny"
 
 
 class PolicyEngine:
@@ -252,7 +252,7 @@ Behaviours to notice: the engine is a pure function of its inputs (easy to unit 
 
 - Start from RBAC; introduce attribute conditions where roles would explode or where ownership, tenant, region or time matter.
 - Make the decision a pure, unit-testable function of explicit inputs, and centralise it in one module that every handler calls.
-- Deny by default, deny-overrides, and fail closed on evaluation errors for permit rules.
+- Deny by default, deny-overrides, and fail closed on evaluation errors: an erroring permit rule does not match and an erroring deny rule does.
 - Derive attributes server-side from verified credentials and authoritative sources, and know who owns each attribute.
 - Log every decision with policy version and matched rule ids, and keep denies searchable.
 - Pair with [multi-tenant scoping](multi-tenant-authorization.md) so tenant id is an enforced invariant, not one optional condition.
