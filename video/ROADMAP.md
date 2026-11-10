@@ -2,7 +2,7 @@
 
 One video per handbook topic, 5–10 minutes each. This page tracks which topics have a video.
 
-**0 of 202** topics published.
+**0 of 202** topics published · **2** rendered, waiting for upload (What Is an API?, DNS).
 
 ## How videos are made and tracked
 
