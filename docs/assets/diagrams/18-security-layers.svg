@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="588" viewBox="0 0 880 588" role="img" aria-labelledby="t d">
+  <title id="t">Defence in depth: security layers a request passes</title>
+  <desc id="d">Seven ordered layers of a production API platform and the control at each: edge WAF and TLS, gateway authentication and rate limits, service validation and object-level authorization, data-layer least privilege, secrets and supply-chain hygiene, AI gateway guardrails, and audit logging with incident response. If one layer fails, the next still stands.</desc>
+  <defs>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+    </style>
+  </defs>
+  <rect x="0.5" y="0.5" width="879" height="587" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Defence in depth: every layer assumes the one before it failed</text>
+  <text x="32" y="66" class="sub">A request passes the layers in order; each control stops a different class of attack.</text>
+  <text x="520" y="86" class="h" style="display:none"></text>
+  <rect x="32" y="96" width="816" height="54" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="58" cy="123" r="12" fill="#1c7c54"/>
+  <text x="58" y="127" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="82" y="119" class="lbl" fill="#475569">Edge: CDN, WAF, load balancer</text>
+  <text x="82" y="138" class="note">WAF rules, DDoS shielding, TLS 1.2+ termination</text>
+  <text x="556" y="119" class="lbl" fill="#475569">Stops</text>
+  <text x="556" y="138" class="note">bots, floods, plaintext sniffing</text>
+  <rect x="32" y="160" width="816" height="54" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="58" cy="187" r="12" fill="#1c7c54"/>
+  <text x="58" y="191" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="82" y="183" class="lbl" fill="#1c7c54">API gateway</text>
+  <text x="82" y="202" class="note">Authentication, coarse scopes, per-tenant rate limits</text>
+  <text x="556" y="183" class="lbl" fill="#1c7c54">Stops</text>
+  <text x="556" y="202" class="note">anonymous calls, abuse, credential stuffing</text>
+  <rect x="32" y="224" width="816" height="54" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="58" cy="251" r="12" fill="#1c7c54"/>
+  <text x="58" y="255" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="82" y="247" class="lbl" fill="#1c7c54">Application service</text>
+  <text x="82" y="266" class="note">Pydantic validation, object-level ownership checks</text>
+  <text x="556" y="247" class="lbl" fill="#1c7c54">Stops</text>
+  <text x="556" y="266" class="note">injection, BOLA / IDOR, mass assignment</text>
+  <rect x="32" y="288" width="816" height="54" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="58" cy="315" r="12" fill="#1c7c54"/>
+  <text x="58" y="319" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="82" y="311" class="lbl" fill="#b45309">Data layer</text>
+  <text x="82" y="330" class="note">Least-privilege DB roles, encryption at rest, backups</text>
+  <text x="556" y="311" class="lbl" fill="#b45309">Stops</text>
+  <text x="556" y="330" class="note">a stolen service credential reading everything</text>
+  <rect x="32" y="352" width="816" height="54" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="58" cy="379" r="12" fill="#1c7c54"/>
+  <text x="58" y="383" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">5</text>
+  <text x="82" y="375" class="lbl" fill="#475569">Secrets and supply chain</text>
+  <text x="82" y="394" class="note">Secret manager, short-lived creds, pinned deps, scans</text>
+  <text x="556" y="375" class="lbl" fill="#475569">Stops</text>
+  <text x="556" y="394" class="note">leaked keys, malicious packages</text>
+  <rect x="32" y="416" width="816" height="54" rx="10" fill="#f3e8ff" stroke="#7e22ce" stroke-width="1.5"/>
+  <circle cx="58" cy="443" r="12" fill="#1c7c54"/>
+  <text x="58" y="447" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">6</text>
+  <text x="82" y="439" class="lbl" fill="#7e22ce">AI layer</text>
+  <text x="82" y="458" class="note">AI gateway holds keys, tool allow-lists, output checks</text>
+  <text x="556" y="439" class="lbl" fill="#7e22ce">Stops</text>
+  <text x="556" y="458" class="note">prompt injection, tool abuse, key theft</text>
+  <rect x="32" y="480" width="816" height="54" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="58" cy="507" r="12" fill="#1c7c54"/>
+  <text x="58" y="511" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">7</text>
+  <text x="82" y="503" class="lbl" fill="#2563eb">Detect and respond</text>
+  <text x="82" y="522" class="note">Audit logs, alerts, runbooks, key rotation</text>
+  <text x="556" y="503" class="lbl" fill="#2563eb">Stops</text>
+  <text x="556" y="522" class="note">silent breaches, slow recovery</text>
+  <text x="32" y="568" class="note">No single layer is trusted alone: the gateway checks identity, but the service must still check that this user owns this order.</text>
+</svg>
