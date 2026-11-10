@@ -135,6 +135,7 @@ python3 scripts/check_links.py              # every relative Markdown link must 
 python3 scripts/check_examples_compile.py    # every examples/*.py must byte-compile — syntax gate, not a runtime test
 python3 scripts/check_svgs.py               # every docs/assets SVG must be well-formed XML (else it renders as a broken image)
 python3 scripts/check_chapters.py           # every chapter: template sections in order, TL;DR callout, 3-question quiz
+python3 scripts/test_check_chapters.py      # regression tests for the chapter checker (stdlib unittest)
 mkdocs build --strict                       # needs `pip install -r requirements-docs.txt`; CI runs this on every PR
 ```
 

@@ -35,10 +35,11 @@ FENCE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
 def has_unclosed_fence(text: str) -> bool:
     """Line-based fence parser (CommonMark rules).
 
-    A closer must use the opener's character, be at least as long, have no info string, and be
-    indented at most 3 spaces more than the opener. Openers may be indented any amount, since
-    fences inside list items are; a literal marker indented 4+ spaces deeper than the opener
-    inside a fence is therefore content, not a closer.
+    A closer must use the opener's character, be at least as long, and have no info string.
+    Its indentation is limited like this: a top-level fence (opener indented 0-3 spaces) takes a
+    closer indented at most 3 spaces, so a literal marker with 4 spaces inside it is content; a
+    fence nested deeper (inside list items, opener indented 4+) takes a closer at most 3 spaces
+    deeper than its own opener. Openers may be indented any amount.
     """
     opener = None  # (marker character, length, indentation)
     for line in text.split("\n"):
@@ -51,9 +52,11 @@ def has_unclosed_fence(text: str) -> bool:
             if marker[0] == "`" and "`" in rest:
                 continue  # an info string cannot contain a backtick, so this is inline code
             opener = (marker[0], len(marker), indent)
-        elif (marker[0] == opener[0] and len(marker) >= opener[1] and not rest.strip()
-              and indent <= opener[2] + 3):
-            opener = None
+        else:
+            max_indent = 3 if opener[2] <= 3 else opener[2] + 3
+            if (marker[0] == opener[0] and len(marker) >= opener[1] and not rest.strip()
+                    and indent <= max_indent):
+                opener = None
     return opener is not None
 
 

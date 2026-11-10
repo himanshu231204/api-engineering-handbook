@@ -27,6 +27,9 @@ jobs:
       - name: Check every chapter follows the template and learner aids
         run: python3 scripts/check_chapters.py
 
+      - name: Test the chapter checker itself
+        run: python3 scripts/test_check_chapters.py
+
   docs-build:
     name: Build the docs site (strict)
     runs-on: ubuntu-latest
