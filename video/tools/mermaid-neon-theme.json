@@ -34,6 +34,12 @@
   "titleColor": "#ffffff"
  },
  "flowchart": {
-  "htmlLabels": false
- }
+  "htmlLabels": false,
+  "wrappingWidth": 380,
+  "nodeSpacing": 50,
+  "rankSpacing": 60,
+  "padding": 20,
+  "curve": "basis"
+ },
+ "htmlLabels": false
 }

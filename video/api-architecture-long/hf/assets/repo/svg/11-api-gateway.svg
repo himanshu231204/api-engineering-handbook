@@ -1,0 +1,86 @@
+<svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-labelledby="r11-api-gateway-t r11-api-gateway-d">
+  <title id="r11-api-gateway-t">API gateway: one front door for many services</title>
+  <desc id="r11-api-gateway-d">Web, mobile and partner clients all call one API gateway. The gateway terminates TLS, authenticates the caller, applies rate limits using shared counters in Redis, and routes each request by path prefix to the orders, payments, inventory or users service. Bad tokens get 401 and over-quota callers get 429 before any service does work. Services stay private behind the gateway.</desc>
+  <defs>
+    <marker id="r11-api-gateway-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8199BB"/>
+    </marker>
+    <style>
+      .r11-api-gateway-title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r11-api-gateway-sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r11-api-gateway-h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r11-api-gateway-lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .r11-api-gateway-note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r11-api-gateway-code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <text x="32" y="44" class="r11-api-gateway-title">API gateway: one front door</text>
+  <text x="32" y="66" class="r11-api-gateway-sub">Clients see one address. The gateway does the shared chores once, then forwards to the right service.</text>
+  <rect x="32" y="124" width="168" height="62" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="48" y="150" class="r11-api-gateway-lbl" fill="#5787F0">Web app</text>
+  <text x="48" y="170" class="r11-api-gateway-note">browser</text>
+  <line x1="200" y1="155" x2="268" y2="155" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="32" y="216" width="168" height="62" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="48" y="242" class="r11-api-gateway-lbl" fill="#5787F0">Mobile app</text>
+  <text x="48" y="262" class="r11-api-gateway-note">iOS / Android</text>
+  <line x1="200" y1="247" x2="268" y2="247" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="32" y="308" width="168" height="62" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="48" y="334" class="r11-api-gateway-lbl" fill="#5787F0">Partner</text>
+  <text x="48" y="354" class="r11-api-gateway-note">third-party API client</text>
+  <line x1="200" y1="339" x2="268" y2="339" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <text x="32" y="108" class="r11-api-gateway-h">Clients</text>
+  <text x="272" y="108" class="r11-api-gateway-h">API gateway</text>
+  <rect x="272" y="120" width="300" height="264" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="1.5"/>
+  <rect x="288" y="136" width="268" height="50" rx="8" fill="#0B0B0F" stroke="#50D89F" stroke-width="1.2"/>
+  <circle cx="310" cy="161" r="12" fill="#61DBA8"/>
+  <text x="310" y="165" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">1</text>
+  <text x="332" y="157" class="r11-api-gateway-lbl" fill="#FFFFFF">TLS termination</text>
+  <text x="332" y="175" class="r11-api-gateway-note">decrypt HTTPS once, at the edge</text>
+  <rect x="288" y="196" width="268" height="50" rx="8" fill="#0B0B0F" stroke="#50D89F" stroke-width="1.2"/>
+  <circle cx="310" cy="221" r="12" fill="#61DBA8"/>
+  <text x="310" y="225" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">2</text>
+  <text x="332" y="217" class="r11-api-gateway-lbl" fill="#FFFFFF">Authenticate</text>
+  <text x="332" y="235" class="r11-api-gateway-note">validate bearer token / API key</text>
+  <rect x="288" y="256" width="268" height="50" rx="8" fill="#0B0B0F" stroke="#50D89F" stroke-width="1.2"/>
+  <circle cx="310" cy="281" r="12" fill="#61DBA8"/>
+  <text x="310" y="285" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">3</text>
+  <text x="332" y="277" class="r11-api-gateway-lbl" fill="#FFFFFF">Rate limit</text>
+  <text x="332" y="295" class="r11-api-gateway-note">per-client quota, counters in Redis</text>
+  <rect x="288" y="316" width="268" height="50" rx="8" fill="#0B0B0F" stroke="#50D89F" stroke-width="1.2"/>
+  <circle cx="310" cy="341" r="12" fill="#61DBA8"/>
+  <text x="310" y="345" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">4</text>
+  <text x="332" y="337" class="r11-api-gateway-lbl" fill="#FFFFFF">Route by path</text>
+  <text x="332" y="355" class="r11-api-gateway-note">/orders/* → Orders service</text>
+  <line x1="342" y1="384" x2="342" y2="410" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <line x1="502" y1="384" x2="502" y2="410" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="272" y="412" width="140" height="52" rx="10" fill="#300808" stroke="#E34545" stroke-width="1.5"/>
+  <text x="286" y="434" class="r11-api-gateway-lbl" fill="#E76060">401 Unauthorized</text>
+  <text x="286" y="452" class="r11-api-gateway-note">bad or missing token</text>
+  <rect x="432" y="412" width="140" height="52" rx="10" fill="#300808" stroke="#E34545" stroke-width="1.5"/>
+  <text x="446" y="434" class="r11-api-gateway-lbl" fill="#E76060">429 Too Many</text>
+  <text x="446" y="452" class="r11-api-gateway-note">over quota</text>
+  <text x="272" y="486" class="r11-api-gateway-note">Rejected at the edge — no service does any work.</text>
+  <text x="660" y="108" class="r11-api-gateway-h">Private services</text>
+  <rect x="660" y="120" width="188" height="56" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <text x="676" y="144" class="r11-api-gateway-lbl" fill="#A0A0B0">Orders service</text>
+  <text x="676" y="163" class="r11-api-gateway-code">/orders/*</text>
+  <line x1="572" y1="252" x2="656" y2="148" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="660" y="190" width="188" height="56" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <text x="676" y="214" class="r11-api-gateway-lbl" fill="#A0A0B0">Payments service</text>
+  <text x="676" y="233" class="r11-api-gateway-code">/payments/*</text>
+  <line x1="572" y1="252" x2="656" y2="218" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="660" y="260" width="188" height="56" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <text x="676" y="284" class="r11-api-gateway-lbl" fill="#A0A0B0">Inventory service</text>
+  <text x="676" y="303" class="r11-api-gateway-code">/inventory/*</text>
+  <line x1="572" y1="252" x2="656" y2="288" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <rect x="660" y="330" width="188" height="56" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <text x="676" y="354" class="r11-api-gateway-lbl" fill="#A0A0B0">Users service</text>
+  <text x="676" y="373" class="r11-api-gateway-code">/users/*</text>
+  <line x1="572" y1="252" x2="656" y2="358" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r11-api-gateway-arrow)"/>
+  <text x="660" y="418" class="r11-api-gateway-note">Can move, split or merge —</text>
+  <text x="660" y="436" class="r11-api-gateway-note">clients never notice.</text>
+  <rect x="32" y="504" width="816" height="40" rx="10" fill="#302808" stroke="#F58733" stroke-width="1.5"/>
+  <text x="48" y="529" class="r11-api-gateway-note" fill="#FFFFFF">Keep it dumb: route and protect traffic only. Business rules (order totals, refunds) belong in the services.</text>
+</svg>

@@ -1,0 +1,7203 @@
+{
+ "total": 507.321,
+ "lines": [
+  {
+   "beat": "hook",
+   "key": "h1",
+   "ch": 0,
+   "say": "Your API request crosses five layers before it returns.",
+   "cap": "Your API request crosses [five layers] before it returns.",
+   "start": 0.25,
+   "end": 4.312,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Your",
+     "start": 0.2,
+     "end": 0.36
+    },
+    {
+     "w": "API",
+     "start": 0.36,
+     "end": 0.62
+    },
+    {
+     "w": "request",
+     "start": 0.62,
+     "end": 1.36
+    },
+    {
+     "w": "crosses",
+     "start": 1.36,
+     "end": 2.1
+    },
+    {
+     "w": "five",
+     "start": 2.1,
+     "end": 2.54
+    },
+    {
+     "w": "layers",
+     "start": 2.54,
+     "end": 2.94
+    },
+    {
+     "w": "before",
+     "start": 2.94,
+     "end": 3.4
+    },
+    {
+     "w": "it",
+     "start": 3.4,
+     "end": 3.58
+    },
+    {
+     "w": "returns.",
+     "start": 3.58,
+     "end": 3.94
+    }
+   ],
+   "heard": "Your API request crosses five layers before it returns."
+  },
+  {
+   "beat": "hook",
+   "key": "h2",
+   "ch": 0,
+   "say": "Add the wrong one, and you'll lose weeks debugging it.",
+   "cap": "Add the [wrong] one, and you'll lose [weeks] debugging it.",
+   "start": 4.552,
+   "end": 7.39,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Add",
+     "start": 4.502,
+     "end": 4.702
+    },
+    {
+     "w": "the",
+     "start": 4.702,
+     "end": 4.822
+    },
+    {
+     "w": "wrong",
+     "start": 4.822,
+     "end": 5.022
+    },
+    {
+     "w": "one,",
+     "start": 5.022,
+     "end": 5.342
+    },
+    {
+     "w": "and",
+     "start": 5.642,
+     "end": 5.802
+    },
+    {
+     "w": "you'll",
+     "start": 5.802,
+     "end": 5.982
+    },
+    {
+     "w": "lose",
+     "start": 5.982,
+     "end": 6.182
+    },
+    {
+     "w": "weeks",
+     "start": 6.182,
+     "end": 6.482
+    },
+    {
+     "w": "debugging",
+     "start": 6.482,
+     "end": 6.962
+    },
+    {
+     "w": "it.",
+     "start": 6.962,
+     "end": 7.322
+    }
+   ],
+   "heard": "Add the wrong one, and you'll lose weeks debugging it."
+  },
+  {
+   "beat": "hook",
+   "key": "h3",
+   "ch": 0,
+   "say": "Which layers does your API need? By the end of this video, you'll name each layer, trace three requests through them, and know when to skip one.",
+   "cap": "Which layers does [your API] need? Name them, [trace] three requests, know when to [skip].",
+   "start": 7.63,
+   "end": 16.438,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "which",
+     "start": 7.58,
+     "end": 7.76
+    },
+    {
+     "w": "layers",
+     "start": 7.76,
+     "end": 8.0
+    },
+    {
+     "w": "does",
+     "start": 8.0,
+     "end": 8.42
+    },
+    {
+     "w": "your",
+     "start": 8.42,
+     "end": 8.62
+    },
+    {
+     "w": "API",
+     "start": 8.62,
+     "end": 8.92
+    },
+    {
+     "w": "need.",
+     "start": 8.92,
+     "end": 9.62
+    },
+    {
+     "w": "By",
+     "start": 10.46,
+     "end": 10.5
+    },
+    {
+     "w": "the",
+     "start": 10.5,
+     "end": 10.62
+    },
+    {
+     "w": "end",
+     "start": 10.62,
+     "end": 10.82
+    },
+    {
+     "w": "of",
+     "start": 10.82,
+     "end": 10.96
+    },
+    {
+     "w": "this",
+     "start": 10.96,
+     "end": 11.1
+    },
+    {
+     "w": "video,",
+     "start": 11.1,
+     "end": 11.46
+    },
+    {
+     "w": "you'll",
+     "start": 11.66,
+     "end": 11.72
+    },
+    {
+     "w": "name",
+     "start": 11.72,
+     "end": 11.96
+    },
+    {
+     "w": "each",
+     "start": 11.96,
+     "end": 12.28
+    },
+    {
+     "w": "layer,",
+     "start": 12.28,
+     "end": 12.7
+    },
+    {
+     "w": "trace",
+     "start": 13.06,
+     "end": 13.32
+    },
+    {
+     "w": "three",
+     "start": 13.32,
+     "end": 13.7
+    },
+    {
+     "w": "requests",
+     "start": 13.7,
+     "end": 14.1
+    },
+    {
+     "w": "through",
+     "start": 14.1,
+     "end": 14.52
+    },
+    {
+     "w": "them,",
+     "start": 14.52,
+     "end": 14.76
+    },
+    {
+     "w": "and",
+     "start": 15.1,
+     "end": 15.22
+    },
+    {
+     "w": "know",
+     "start": 15.22,
+     "end": 15.4
+    },
+    {
+     "w": "when",
+     "start": 15.4,
+     "end": 15.6
+    },
+    {
+     "w": "to",
+     "start": 15.6,
+     "end": 15.76
+    },
+    {
+     "w": "skip",
+     "start": 15.76,
+     "end": 16.0
+    },
+    {
+     "w": "one.",
+     "start": 16.0,
+     "end": 16.26
+    }
+   ],
+   "heard": "which layers does your API need. By the end of this video, you'll name each layer, trace three requests through them, and know when to skip one."
+  },
+  {
+   "beat": "road",
+   "key": "r1",
+   "ch": 0,
+   "say": "Here's the plan, in five parts.",
+   "cap": "Here's the plan, in [five] parts.",
+   "start": 16.888,
+   "end": 18.745,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Here's",
+     "start": 16.838,
+     "end": 17.078
+    },
+    {
+     "w": "the",
+     "start": 17.078,
+     "end": 17.178
+    },
+    {
+     "w": "plan",
+     "start": 17.178,
+     "end": 17.438
+    },
+    {
+     "w": "in",
+     "start": 17.438,
+     "end": 17.758
+    },
+    {
+     "w": "five",
+     "start": 17.758,
+     "end": 18.058
+    },
+    {
+     "w": "parts.",
+     "start": 18.058,
+     "end": 18.438
+    }
+   ],
+   "heard": "Here's the plan in five parts."
+  },
+  {
+   "beat": "road",
+   "key": "r2",
+   "ch": 0,
+   "say": "One, the big map. Two, who does what. Three, three requests traced through it.",
+   "cap": "[Big map]. [Who does what]. [Three requests].",
+   "start": 18.985,
+   "end": 23.542,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "1.",
+     "start": 18.935,
+     "end": 19.115
+    },
+    {
+     "w": "The",
+     "start": 19.275,
+     "end": 19.295
+    },
+    {
+     "w": "big",
+     "start": 19.295,
+     "end": 19.415
+    },
+    {
+     "w": "map.",
+     "start": 19.415,
+     "end": 19.635
+    },
+    {
+     "w": "2.",
+     "start": 20.175,
+     "end": 20.175
+    },
+    {
+     "w": "Who",
+     "start": 20.415,
+     "end": 20.435
+    },
+    {
+     "w": "does",
+     "start": 20.435,
+     "end": 20.635
+    },
+    {
+     "w": "1?",
+     "start": 20.635,
+     "end": 20.935
+    },
+    {
+     "w": "3.",
+     "start": 21.355,
+     "end": 21.695
+    },
+    {
+     "w": "3",
+     "start": 21.935,
+     "end": 22.075
+    },
+    {
+     "w": "requests",
+     "start": 22.075,
+     "end": 22.535
+    },
+    {
+     "w": "traced",
+     "start": 22.535,
+     "end": 22.875
+    },
+    {
+     "w": "through",
+     "start": 22.875,
+     "end": 23.315
+    },
+    {
+     "w": "it.",
+     "start": 23.315,
+     "end": 23.495
+    }
+   ],
+   "heard": "1. The big map. 2. Who does 1? 3. 3 requests traced through it."
+  },
+  {
+   "beat": "road",
+   "key": "r3",
+   "ch": 0,
+   "say": "Four, a real run. And five, when not to add a layer.",
+   "cap": "[A real run]. And when [not] to add a layer.",
+   "start": 23.782,
+   "end": 27.281,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "4.",
+     "start": 23.732,
+     "end": 24.072
+    },
+    {
+     "w": "A",
+     "start": 24.272,
+     "end": 24.312
+    },
+    {
+     "w": "real",
+     "start": 24.312,
+     "end": 24.532
+    },
+    {
+     "w": "run",
+     "start": 24.532,
+     "end": 24.852
+    },
+    {
+     "w": "and",
+     "start": 24.852,
+     "end": 25.512
+    },
+    {
+     "w": "5.",
+     "start": 25.512,
+     "end": 25.912
+    },
+    {
+     "w": "When",
+     "start": 26.152,
+     "end": 26.192
+    },
+    {
+     "w": "not",
+     "start": 26.192,
+     "end": 26.352
+    },
+    {
+     "w": "to",
+     "start": 26.352,
+     "end": 26.512
+    },
+    {
+     "w": "add",
+     "start": 26.512,
+     "end": 26.712
+    },
+    {
+     "w": "a",
+     "start": 26.712,
+     "end": 26.832
+    },
+    {
+     "w": "layer.",
+     "start": 26.832,
+     "end": 27.052
+    }
+   ],
+   "heard": "4. A real run and 5. When not to add a layer."
+  },
+  {
+   "beat": "air",
+   "key": "a1",
+   "ch": 1,
+   "say": "Picture an airport. Check in, security, then the gate. One job each, before you board.",
+   "cap": "An airport: [check-in], [security], the [gate]. One [job] each.",
+   "start": 29.281,
+   "end": 34.948,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Picture",
+     "start": 29.231,
+     "end": 29.531
+    },
+    {
+     "w": "an",
+     "start": 29.531,
+     "end": 29.691
+    },
+    {
+     "w": "airport,",
+     "start": 29.691,
+     "end": 30.031
+    },
+    {
+     "w": "check",
+     "start": 30.531,
+     "end": 30.751
+    },
+    {
+     "w": "in",
+     "start": 30.751,
+     "end": 30.951
+    },
+    {
+     "w": "security",
+     "start": 30.951,
+     "end": 31.391
+    },
+    {
+     "w": "than",
+     "start": 31.391,
+     "end": 31.871
+    },
+    {
+     "w": "the",
+     "start": 31.871,
+     "end": 31.991
+    },
+    {
+     "w": "gate.",
+     "start": 31.991,
+     "end": 32.231
+    },
+    {
+     "w": "One",
+     "start": 32.911,
+     "end": 33.031
+    },
+    {
+     "w": "job",
+     "start": 33.031,
+     "end": 33.351
+    },
+    {
+     "w": "each",
+     "start": 33.351,
+     "end": 33.691
+    },
+    {
+     "w": "before",
+     "start": 33.691,
+     "end": 34.131
+    },
+    {
+     "w": "you",
+     "start": 34.131,
+     "end": 34.331
+    },
+    {
+     "w": "board.",
+     "start": 34.331,
+     "end": 34.571
+    }
+   ],
+   "heard": "Picture an airport, check in security than the gate. One job each before you board."
+  },
+  {
+   "beat": "air",
+   "key": "a2",
+   "ch": 1,
+   "say": "A request travels the same way. A C D N may answer straight away. A gateway checks who you are. The app does the real work.",
+   "cap": "A [CDN] may answer. A [gateway] checks who you are. The [app] does the work.",
+   "start": 35.188,
+   "end": 43.775,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "A",
+     "start": 35.138,
+     "end": 35.258
+    },
+    {
+     "w": "request",
+     "start": 35.258,
+     "end": 35.538
+    },
+    {
+     "w": "travels",
+     "start": 35.538,
+     "end": 35.998
+    },
+    {
+     "w": "the",
+     "start": 35.998,
+     "end": 36.338
+    },
+    {
+     "w": "same",
+     "start": 36.338,
+     "end": 36.598
+    },
+    {
+     "w": "way.",
+     "start": 36.598,
+     "end": 36.898
+    },
+    {
+     "w": "A",
+     "start": 37.478,
+     "end": 37.498
+    },
+    {
+     "w": "CDN",
+     "start": 37.498,
+     "end": 38.218
+    },
+    {
+     "w": "may",
+     "start": 38.218,
+     "end": 38.438
+    },
+    {
+     "w": "answer",
+     "start": 38.438,
+     "end": 38.798
+    },
+    {
+     "w": "straight",
+     "start": 38.798,
+     "end": 39.078
+    },
+    {
+     "w": "away.",
+     "start": 39.078,
+     "end": 39.438
+    },
+    {
+     "w": "A",
+     "start": 40.058,
+     "end": 40.098
+    },
+    {
+     "w": "gateway",
+     "start": 40.098,
+     "end": 40.358
+    },
+    {
+     "w": "checks",
+     "start": 40.358,
+     "end": 40.818
+    },
+    {
+     "w": "who",
+     "start": 40.818,
+     "end": 41.158
+    },
+    {
+     "w": "you",
+     "start": 41.158,
+     "end": 41.298
+    },
+    {
+     "w": "are.",
+     "start": 41.298,
+     "end": 41.598
+    },
+    {
+     "w": "The",
+     "start": 42.138,
+     "end": 42.198
+    },
+    {
+     "w": "app",
+     "start": 42.198,
+     "end": 42.438
+    },
+    {
+     "w": "does",
+     "start": 42.438,
+     "end": 42.698
+    },
+    {
+     "w": "the",
+     "start": 42.698,
+     "end": 42.878
+    },
+    {
+     "w": "real",
+     "start": 42.878,
+     "end": 43.138
+    },
+    {
+     "w": "work.",
+     "start": 43.138,
+     "end": 43.538
+    }
+   ],
+   "heard": "A request travels the same way. A CDN may answer straight away. A gateway checks who you are. The app does the real work."
+  },
+  {
+   "beat": "map",
+   "key": "m1",
+   "ch": 1,
+   "say": "Here is the whole map, straight from the handbook. It starts with a client: a browser, a mobile app, another service, even an AI agent.",
+   "cap": "The whole [map]. It starts with a [client]: browser, app, service, [AI agent].",
+   "start": 44.225,
+   "end": 53.22,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Here",
+     "start": 44.175,
+     "end": 44.355
+    },
+    {
+     "w": "is",
+     "start": 44.355,
+     "end": 44.515
+    },
+    {
+     "w": "the",
+     "start": 44.515,
+     "end": 44.655
+    },
+    {
+     "w": "whole",
+     "start": 44.655,
+     "end": 44.815
+    },
+    {
+     "w": "map",
+     "start": 44.815,
+     "end": 45.115
+    },
+    {
+     "w": "straight",
+     "start": 45.115,
+     "end": 45.575
+    },
+    {
+     "w": "from",
+     "start": 45.575,
+     "end": 45.935
+    },
+    {
+     "w": "the",
+     "start": 45.935,
+     "end": 46.075
+    },
+    {
+     "w": "handbook.",
+     "start": 46.075,
+     "end": 46.555
+    },
+    {
+     "w": "It",
+     "start": 47.195,
+     "end": 47.235
+    },
+    {
+     "w": "starts",
+     "start": 47.235,
+     "end": 47.455
+    },
+    {
+     "w": "with",
+     "start": 47.455,
+     "end": 47.715
+    },
+    {
+     "w": "a",
+     "start": 47.715,
+     "end": 47.795
+    },
+    {
+     "w": "client,",
+     "start": 47.795,
+     "end": 48.175
+    },
+    {
+     "w": "a",
+     "start": 48.815,
+     "end": 48.835
+    },
+    {
+     "w": "browser,",
+     "start": 48.835,
+     "end": 49.095
+    },
+    {
+     "w": "a",
+     "start": 49.695,
+     "end": 49.735
+    },
+    {
+     "w": "mobile",
+     "start": 49.735,
+     "end": 49.955
+    },
+    {
+     "w": "app,",
+     "start": 49.955,
+     "end": 50.435
+    },
+    {
+     "w": "another",
+     "start": 50.575,
+     "end": 50.715
+    },
+    {
+     "w": "service,",
+     "start": 50.715,
+     "end": 51.215
+    },
+    {
+     "w": "even",
+     "start": 51.595,
+     "end": 51.835
+    },
+    {
+     "w": "an",
+     "start": 51.835,
+     "end": 51.975
+    },
+    {
+     "w": "AI",
+     "start": 51.975,
+     "end": 52.315
+    },
+    {
+     "w": "agent.",
+     "start": 52.315,
+     "end": 52.955
+    }
+   ],
+   "heard": "Here is the whole map straight from the handbook. It starts with a client, a browser, a mobile app, another service, even an AI agent."
+  },
+  {
+   "beat": "map",
+   "key": "m2",
+   "ch": 1,
+   "say": "The client reaches a C D N or load balancer, then an API gateway, then your application service.",
+   "cap": "[CDN], then [gateway], then your [application] service.",
+   "start": 53.46,
+   "end": 60.728,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 53.41,
+     "end": 53.53
+    },
+    {
+     "w": "client",
+     "start": 53.53,
+     "end": 53.79
+    },
+    {
+     "w": "reaches",
+     "start": 53.79,
+     "end": 54.19
+    },
+    {
+     "w": "a",
+     "start": 54.19,
+     "end": 54.47
+    },
+    {
+     "w": "CDN",
+     "start": 54.47,
+     "end": 55.37
+    },
+    {
+     "w": "or",
+     "start": 55.37,
+     "end": 55.67
+    },
+    {
+     "w": "load",
+     "start": 55.67,
+     "end": 55.85
+    },
+    {
+     "w": "balancer,",
+     "start": 55.85,
+     "end": 56.47
+    },
+    {
+     "w": "then",
+     "start": 57.19,
+     "end": 57.27
+    },
+    {
+     "w": "an",
+     "start": 57.27,
+     "end": 57.37
+    },
+    {
+     "w": "API",
+     "start": 57.37,
+     "end": 57.61
+    },
+    {
+     "w": "gateway,",
+     "start": 57.61,
+     "end": 58.35
+    },
+    {
+     "w": "then",
+     "start": 58.95,
+     "end": 59.13
+    },
+    {
+     "w": "your",
+     "start": 59.13,
+     "end": 59.31
+    },
+    {
+     "w": "application",
+     "start": 59.31,
+     "end": 59.67
+    },
+    {
+     "w": "service.",
+     "start": 59.67,
+     "end": 60.33
+    }
+   ],
+   "heard": "The client reaches a CDN or load balancer, then an API gateway, then your application service."
+  },
+  {
+   "beat": "map",
+   "key": "m3",
+   "ch": 1,
+   "say": "And behind the application sit four things: a cache, a database, a message queue with workers, and an AI gateway that reaches the language model providers.",
+   "cap": "Behind the app: [cache], [database], [queue], [AI gateway].",
+   "start": 60.968,
+   "end": 71.761,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "And",
+     "start": 60.918,
+     "end": 61.038
+    },
+    {
+     "w": "behind",
+     "start": 61.038,
+     "end": 61.278
+    },
+    {
+     "w": "the",
+     "start": 61.278,
+     "end": 61.538
+    },
+    {
+     "w": "application",
+     "start": 61.538,
+     "end": 62.078
+    },
+    {
+     "w": "sit",
+     "start": 62.078,
+     "end": 62.438
+    },
+    {
+     "w": "four",
+     "start": 62.438,
+     "end": 62.718
+    },
+    {
+     "w": "things.",
+     "start": 62.718,
+     "end": 63.198
+    },
+    {
+     "w": "A",
+     "start": 63.918,
+     "end": 64.018
+    },
+    {
+     "w": "cache,",
+     "start": 64.018,
+     "end": 64.218
+    },
+    {
+     "w": "a",
+     "start": 64.978,
+     "end": 64.978
+    },
+    {
+     "w": "database,",
+     "start": 64.978,
+     "end": 65.318
+    },
+    {
+     "w": "a",
+     "start": 66.098,
+     "end": 66.158
+    },
+    {
+     "w": "message",
+     "start": 66.158,
+     "end": 66.498
+    },
+    {
+     "w": "queue",
+     "start": 66.498,
+     "end": 66.838
+    },
+    {
+     "w": "with",
+     "start": 66.838,
+     "end": 67.078
+    },
+    {
+     "w": "workers,",
+     "start": 67.078,
+     "end": 67.438
+    },
+    {
+     "w": "and",
+     "start": 68.058,
+     "end": 68.158
+    },
+    {
+     "w": "an",
+     "start": 68.158,
+     "end": 68.258
+    },
+    {
+     "w": "AI",
+     "start": 68.258,
+     "end": 68.578
+    },
+    {
+     "w": "gateway",
+     "start": 68.578,
+     "end": 69.038
+    },
+    {
+     "w": "that",
+     "start": 69.038,
+     "end": 69.478
+    },
+    {
+     "w": "reaches",
+     "start": 69.478,
+     "end": 69.798
+    },
+    {
+     "w": "the",
+     "start": 69.798,
+     "end": 70.078
+    },
+    {
+     "w": "language",
+     "start": 70.078,
+     "end": 70.338
+    },
+    {
+     "w": "model",
+     "start": 70.338,
+     "end": 70.738
+    },
+    {
+     "w": "providers.",
+     "start": 70.738,
+     "end": 71.218
+    }
+   ],
+   "heard": "And behind the application sit four things. A cache, a database, a message queue with workers, and an AI gateway that reaches the language model providers."
+  },
+  {
+   "beat": "lay",
+   "key": "l1",
+   "ch": 1,
+   "say": "The chapter draws the same system a second way, grouped into layers.",
+   "cap": "The same system, grouped into [layers].",
+   "start": 72.211,
+   "end": 76.52,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 72.161,
+     "end": 72.281
+    },
+    {
+     "w": "chapter",
+     "start": 72.281,
+     "end": 72.561
+    },
+    {
+     "w": "draws",
+     "start": 72.561,
+     "end": 72.961
+    },
+    {
+     "w": "the",
+     "start": 72.961,
+     "end": 73.241
+    },
+    {
+     "w": "same",
+     "start": 73.241,
+     "end": 73.501
+    },
+    {
+     "w": "system",
+     "start": 73.501,
+     "end": 73.941
+    },
+    {
+     "w": "a",
+     "start": 73.941,
+     "end": 74.141
+    },
+    {
+     "w": "second",
+     "start": 74.141,
+     "end": 74.441
+    },
+    {
+     "w": "way,",
+     "start": 74.441,
+     "end": 74.881
+    },
+    {
+     "w": "grouped",
+     "start": 75.281,
+     "end": 75.421
+    },
+    {
+     "w": "into",
+     "start": 75.421,
+     "end": 75.801
+    },
+    {
+     "w": "layers.",
+     "start": 75.801,
+     "end": 76.081
+    }
+   ],
+   "heard": "The chapter draws the same system a second way, grouped into layers."
+  },
+  {
+   "beat": "lay",
+   "key": "l2",
+   "ch": 1,
+   "say": "Edge. Gateway. Application. Data. And AI.",
+   "cap": "[Edge]. [Gateway]. [Application]. [Data]. And [AI].",
+   "start": 76.76,
+   "end": 79.588,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Edge",
+     "start": 76.71,
+     "end": 77.03
+    },
+    {
+     "w": "Gateway,",
+     "start": 77.03,
+     "end": 77.45
+    },
+    {
+     "w": "Application",
+     "start": 77.71,
+     "end": 78.05
+    },
+    {
+     "w": "Data",
+     "start": 78.05,
+     "end": 78.63
+    },
+    {
+     "w": "and",
+     "start": 78.63,
+     "end": 78.95
+    },
+    {
+     "w": "AI.",
+     "start": 78.95,
+     "end": 79.19
+    }
+   ],
+   "heard": "Edge Gateway, Application Data and AI."
+  },
+  {
+   "beat": "lay",
+   "key": "l3",
+   "ch": 1,
+   "say": "Five layers, each with a narrow job. Client, edge, gateway, application, then data and AI.",
+   "cap": "Each layer has a [narrow job]. Client, edge, gateway, application, [data and AI].",
+   "start": 79.828,
+   "end": 86.514,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "5",
+     "start": 79.778,
+     "end": 80.078
+    },
+    {
+     "w": "layers",
+     "start": 80.078,
+     "end": 80.318
+    },
+    {
+     "w": "each",
+     "start": 80.318,
+     "end": 80.878
+    },
+    {
+     "w": "with",
+     "start": 80.878,
+     "end": 81.078
+    },
+    {
+     "w": "a",
+     "start": 81.078,
+     "end": 81.178
+    },
+    {
+     "w": "narrow",
+     "start": 81.178,
+     "end": 81.378
+    },
+    {
+     "w": "job,",
+     "start": 81.378,
+     "end": 81.898
+    },
+    {
+     "w": "client,",
+     "start": 82.538,
+     "end": 82.798
+    },
+    {
+     "w": "edge,",
+     "start": 83.118,
+     "end": 83.338
+    },
+    {
+     "w": "gateway",
+     "start": 83.978,
+     "end": 83.978
+    },
+    {
+     "w": "application,",
+     "start": 83.978,
+     "end": 84.638
+    },
+    {
+     "w": "then",
+     "start": 85.138,
+     "end": 85.198
+    },
+    {
+     "w": "data",
+     "start": 85.198,
+     "end": 85.518
+    },
+    {
+     "w": "and",
+     "start": 85.518,
+     "end": 85.818
+    },
+    {
+     "w": "AI.",
+     "start": 85.818,
+     "end": 86.098
+    }
+   ],
+   "heard": "5 layers each with a narrow job, client, edge, gateway application, then data and AI."
+  },
+  {
+   "beat": "org",
+   "key": "o1",
+   "ch": 2,
+   "say": "The handbook's mental model is a company org chart, not one person doing everything.",
+   "cap": "A company [org chart], not one person doing [everything].",
+   "start": 88.514,
+   "end": 94.02,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 88.464,
+     "end": 88.604
+    },
+    {
+     "w": "handbook's",
+     "start": 88.604,
+     "end": 89.124
+    },
+    {
+     "w": "mental",
+     "start": 89.124,
+     "end": 89.304
+    },
+    {
+     "w": "model",
+     "start": 89.304,
+     "end": 89.844
+    },
+    {
+     "w": "is",
+     "start": 89.844,
+     "end": 90.164
+    },
+    {
+     "w": "a",
+     "start": 90.164,
+     "end": 90.264
+    },
+    {
+     "w": "company",
+     "start": 90.264,
+     "end": 90.644
+    },
+    {
+     "w": "org",
+     "start": 90.644,
+     "end": 90.964
+    },
+    {
+     "w": "chart,",
+     "start": 90.964,
+     "end": 91.384
+    },
+    {
+     "w": "not",
+     "start": 91.924,
+     "end": 92.244
+    },
+    {
+     "w": "one",
+     "start": 92.244,
+     "end": 92.504
+    },
+    {
+     "w": "person",
+     "start": 92.504,
+     "end": 92.924
+    },
+    {
+     "w": "doing",
+     "start": 92.924,
+     "end": 93.224
+    },
+    {
+     "w": "everything.",
+     "start": 93.224,
+     "end": 93.724
+    }
+   ],
+   "heard": "The handbook's mental model is a company org chart, not one person doing everything."
+  },
+  {
+   "beat": "org",
+   "key": "o2",
+   "ch": 2,
+   "say": "The C D N is the receptionist. If they already have your answer, they hand it over right there.",
+   "cap": "The [CDN] is the receptionist: they hand over a [cached] answer.",
+   "start": 94.26,
+   "end": 100.128,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 94.21,
+     "end": 94.35
+    },
+    {
+     "w": "CDN",
+     "start": 94.35,
+     "end": 95.13
+    },
+    {
+     "w": "is",
+     "start": 95.13,
+     "end": 95.39
+    },
+    {
+     "w": "the",
+     "start": 95.39,
+     "end": 95.53
+    },
+    {
+     "w": "receptionist.",
+     "start": 95.53,
+     "end": 96.31
+    },
+    {
+     "w": "If",
+     "start": 96.87,
+     "end": 96.93
+    },
+    {
+     "w": "they",
+     "start": 96.93,
+     "end": 97.09
+    },
+    {
+     "w": "already",
+     "start": 97.09,
+     "end": 97.35
+    },
+    {
+     "w": "have",
+     "start": 97.35,
+     "end": 97.71
+    },
+    {
+     "w": "your",
+     "start": 97.71,
+     "end": 97.87
+    },
+    {
+     "w": "answer,",
+     "start": 97.87,
+     "end": 98.27
+    },
+    {
+     "w": "they",
+     "start": 98.75,
+     "end": 98.79
+    },
+    {
+     "w": "hand",
+     "start": 98.79,
+     "end": 99.05
+    },
+    {
+     "w": "it",
+     "start": 99.05,
+     "end": 99.23
+    },
+    {
+     "w": "over",
+     "start": 99.23,
+     "end": 99.41
+    },
+    {
+     "w": "right",
+     "start": 99.41,
+     "end": 99.63
+    },
+    {
+     "w": "there.",
+     "start": 99.63,
+     "end": 99.97
+    }
+   ],
+   "heard": "The CDN is the receptionist. If they already have your answer, they hand it over right there."
+  },
+  {
+   "beat": "org",
+   "key": "o3",
+   "ch": 2,
+   "say": "The gateway is security and routing. It checks your badge, then sends you to the right department.",
+   "cap": "The [gateway] checks your [badge], then [routes] you.",
+   "start": 100.368,
+   "end": 106.452,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 100.318,
+     "end": 100.458
+    },
+    {
+     "w": "gateway",
+     "start": 100.458,
+     "end": 100.698
+    },
+    {
+     "w": "is",
+     "start": 100.698,
+     "end": 101.158
+    },
+    {
+     "w": "security",
+     "start": 101.158,
+     "end": 101.558
+    },
+    {
+     "w": "and",
+     "start": 101.558,
+     "end": 102.098
+    },
+    {
+     "w": "routing.",
+     "start": 102.098,
+     "end": 102.398
+    },
+    {
+     "w": "It",
+     "start": 103.218,
+     "end": 103.238
+    },
+    {
+     "w": "checks",
+     "start": 103.238,
+     "end": 103.418
+    },
+    {
+     "w": "your",
+     "start": 103.418,
+     "end": 103.658
+    },
+    {
+     "w": "badge,",
+     "start": 103.658,
+     "end": 103.978
+    },
+    {
+     "w": "then",
+     "start": 104.538,
+     "end": 104.658
+    },
+    {
+     "w": "sends",
+     "start": 104.658,
+     "end": 104.938
+    },
+    {
+     "w": "you",
+     "start": 104.938,
+     "end": 105.218
+    },
+    {
+     "w": "to",
+     "start": 105.218,
+     "end": 105.338
+    },
+    {
+     "w": "the",
+     "start": 105.338,
+     "end": 105.438
+    },
+    {
+     "w": "right",
+     "start": 105.438,
+     "end": 105.658
+    },
+    {
+     "w": "department.",
+     "start": 105.658,
+     "end": 106.158
+    }
+   ],
+   "heard": "The gateway is security and routing. It checks your badge, then sends you to the right department."
+  },
+  {
+   "beat": "org",
+   "key": "o4",
+   "ch": 2,
+   "say": "The application service is that department, doing the real work. The database is the filing cabinet.",
+   "cap": "The [app] does the work. The [database] is the filing cabinet.",
+   "start": 106.692,
+   "end": 113.254,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 106.642,
+     "end": 106.782
+    },
+    {
+     "w": "application",
+     "start": 106.782,
+     "end": 107.102
+    },
+    {
+     "w": "service",
+     "start": 107.102,
+     "end": 107.722
+    },
+    {
+     "w": "is",
+     "start": 107.722,
+     "end": 108.102
+    },
+    {
+     "w": "that",
+     "start": 108.102,
+     "end": 108.282
+    },
+    {
+     "w": "department",
+     "start": 108.282,
+     "end": 108.682
+    },
+    {
+     "w": "doing",
+     "start": 108.682,
+     "end": 109.362
+    },
+    {
+     "w": "the",
+     "start": 109.362,
+     "end": 109.642
+    },
+    {
+     "w": "real",
+     "start": 109.642,
+     "end": 109.962
+    },
+    {
+     "w": "work.",
+     "start": 109.962,
+     "end": 110.362
+    },
+    {
+     "w": "The",
+     "start": 111.022,
+     "end": 111.082
+    },
+    {
+     "w": "database",
+     "start": 111.082,
+     "end": 111.362
+    },
+    {
+     "w": "is",
+     "start": 111.362,
+     "end": 111.962
+    },
+    {
+     "w": "the",
+     "start": 111.962,
+     "end": 112.122
+    },
+    {
+     "w": "filing",
+     "start": 112.122,
+     "end": 112.522
+    },
+    {
+     "w": "cabinet.",
+     "start": 112.522,
+     "end": 112.902
+    }
+   ],
+   "heard": "The application service is that department doing the real work. The database is the filing cabinet."
+  },
+  {
+   "beat": "org",
+   "key": "o5",
+   "ch": 2,
+   "say": "The queue is the ticket system. The AI gateway talks to outside AI vendors.",
+   "cap": "The [queue] is the ticket system. The [AI gateway] talks to outside vendors.",
+   "start": 113.494,
+   "end": 118.839,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "The",
+     "start": 113.444,
+     "end": 113.564
+    },
+    {
+     "w": "Q",
+     "start": 113.564,
+     "end": 113.744
+    },
+    {
+     "w": "is",
+     "start": 113.744,
+     "end": 114.064
+    },
+    {
+     "w": "the",
+     "start": 114.064,
+     "end": 114.204
+    },
+    {
+     "w": "ticket",
+     "start": 114.204,
+     "end": 114.424
+    },
+    {
+     "w": "system.",
+     "start": 114.424,
+     "end": 114.804
+    },
+    {
+     "w": "The",
+     "start": 115.604,
+     "end": 115.604
+    },
+    {
+     "w": "AI",
+     "start": 115.604,
+     "end": 115.884
+    },
+    {
+     "w": "Gateway",
+     "start": 115.884,
+     "end": 116.344
+    },
+    {
+     "w": "talks",
+     "start": 116.344,
+     "end": 116.784
+    },
+    {
+     "w": "to",
+     "start": 116.784,
+     "end": 117.064
+    },
+    {
+     "w": "outside",
+     "start": 117.064,
+     "end": 117.264
+    },
+    {
+     "w": "AI",
+     "start": 117.264,
+     "end": 117.904
+    },
+    {
+     "w": "vendors.",
+     "start": 117.904,
+     "end": 118.424
+    }
+   ],
+   "heard": "The Q is the ticket system. The AI Gateway talks to outside AI vendors."
+  },
+  {
+   "beat": "gw",
+   "key": "g1",
+   "ch": 2,
+   "say": "Zoom in on the gateway: one front door, one address for web, mobile and partner clients.",
+   "cap": "The [gateway]: one [front door], one address.",
+   "start": 119.289,
+   "end": 125.298,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Zoom",
+     "start": 119.239,
+     "end": 119.519
+    },
+    {
+     "w": "in",
+     "start": 119.519,
+     "end": 119.819
+    },
+    {
+     "w": "on",
+     "start": 119.819,
+     "end": 119.979
+    },
+    {
+     "w": "the",
+     "start": 119.979,
+     "end": 120.099
+    },
+    {
+     "w": "gateway.",
+     "start": 120.099,
+     "end": 120.299
+    },
+    {
+     "w": "One",
+     "start": 121.219,
+     "end": 121.219
+    },
+    {
+     "w": "front",
+     "start": 121.219,
+     "end": 121.479
+    },
+    {
+     "w": "door.",
+     "start": 121.479,
+     "end": 121.799
+    },
+    {
+     "w": "One",
+     "start": 122.359,
+     "end": 122.439
+    },
+    {
+     "w": "address",
+     "start": 122.439,
+     "end": 122.739
+    },
+    {
+     "w": "for",
+     "start": 122.739,
+     "end": 123.039
+    },
+    {
+     "w": "web,",
+     "start": 123.039,
+     "end": 123.259
+    },
+    {
+     "w": "mobile",
+     "start": 123.559,
+     "end": 123.739
+    },
+    {
+     "w": "and",
+     "start": 123.739,
+     "end": 124.159
+    },
+    {
+     "w": "partner",
+     "start": 124.159,
+     "end": 124.399
+    },
+    {
+     "w": "clients.",
+     "start": 124.399,
+     "end": 124.859
+    }
+   ],
+   "heard": "Zoom in on the gateway. One front door. One address for web, mobile and partner clients."
+  },
+  {
+   "beat": "gw",
+   "key": "g2",
+   "ch": 2,
+   "say": "It does the shared chores once: authenticate, rate limit, and route to the right private service.",
+   "cap": "[Authenticate], [rate limit], [route]. Once, for everyone.",
+   "start": 125.538,
+   "end": 131.513,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "It",
+     "start": 125.488,
+     "end": 125.608
+    },
+    {
+     "w": "does",
+     "start": 125.608,
+     "end": 125.768
+    },
+    {
+     "w": "the",
+     "start": 125.768,
+     "end": 125.948
+    },
+    {
+     "w": "shared",
+     "start": 125.948,
+     "end": 126.288
+    },
+    {
+     "w": "chores",
+     "start": 126.288,
+     "end": 126.528
+    },
+    {
+     "w": "once.",
+     "start": 126.528,
+     "end": 127.208
+    },
+    {
+     "w": "Authenticate",
+     "start": 127.968,
+     "end": 128.308
+    },
+    {
+     "w": "rate",
+     "start": 128.308,
+     "end": 128.748
+    },
+    {
+     "w": "limit",
+     "start": 128.748,
+     "end": 129.168
+    },
+    {
+     "w": "and",
+     "start": 129.168,
+     "end": 129.588
+    },
+    {
+     "w": "route",
+     "start": 129.588,
+     "end": 129.828
+    },
+    {
+     "w": "to",
+     "start": 129.828,
+     "end": 130.108
+    },
+    {
+     "w": "the",
+     "start": 130.108,
+     "end": 130.188
+    },
+    {
+     "w": "right",
+     "start": 130.188,
+     "end": 130.368
+    },
+    {
+     "w": "private",
+     "start": 130.368,
+     "end": 130.628
+    },
+    {
+     "w": "service.",
+     "start": 130.628,
+     "end": 131.208
+    }
+   ],
+   "heard": "It does the shared chores once. Authenticate rate limit and route to the right private service."
+  },
+  {
+   "beat": "gw",
+   "key": "g3",
+   "ch": 2,
+   "say": "Fail a check, and the request is rejected right there: a four zero one, or a four twenty nine. No service does any work.",
+   "cap": "Fail a check: [401] or [429]. No service does any work.",
+   "start": 131.754,
+   "end": 139.898,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Fail",
+     "start": 131.704,
+     "end": 131.944
+    },
+    {
+     "w": "a",
+     "start": 131.944,
+     "end": 132.124
+    },
+    {
+     "w": "check",
+     "start": 132.124,
+     "end": 132.384
+    },
+    {
+     "w": "and",
+     "start": 132.384,
+     "end": 132.704
+    },
+    {
+     "w": "the",
+     "start": 132.704,
+     "end": 132.804
+    },
+    {
+     "w": "request",
+     "start": 132.804,
+     "end": 133.144
+    },
+    {
+     "w": "is",
+     "start": 133.144,
+     "end": 133.524
+    },
+    {
+     "w": "rejected",
+     "start": 133.524,
+     "end": 133.924
+    },
+    {
+     "w": "right",
+     "start": 133.924,
+     "end": 134.304
+    },
+    {
+     "w": "there.",
+     "start": 134.304,
+     "end": 134.704
+    },
+    {
+     "w": "A",
+     "start": 135.204,
+     "end": 135.224
+    },
+    {
+     "w": "401",
+     "start": 135.224,
+     "end": 135.604
+    },
+    {
+     "w": "or",
+     "start": 135.604,
+     "end": 136.584
+    },
+    {
+     "w": "a",
+     "start": 136.584,
+     "end": 136.804
+    },
+    {
+     "w": "429.",
+     "start": 136.804,
+     "end": 137.324
+    },
+    {
+     "w": "No",
+     "start": 138.384,
+     "end": 138.524
+    },
+    {
+     "w": "service",
+     "start": 138.524,
+     "end": 138.924
+    },
+    {
+     "w": "does",
+     "start": 138.924,
+     "end": 139.224
+    },
+    {
+     "w": "any",
+     "start": 139.224,
+     "end": 139.364
+    },
+    {
+     "w": "work.",
+     "start": 139.364,
+     "end": 139.684
+    }
+   ],
+   "heard": "Fail a check and the request is rejected right there. A 401 or a 429. No service does any work."
+  },
+  {
+   "beat": "gw",
+   "key": "g4",
+   "ch": 2,
+   "say": "And it stays dumb. A gateway that also holds business logic stops being a gateway.",
+   "cap": "Keep it [dumb]. No [business logic] in the gateway.",
+   "start": 140.138,
+   "end": 145.672,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "And",
+     "start": 140.088,
+     "end": 140.208
+    },
+    {
+     "w": "it",
+     "start": 140.208,
+     "end": 140.288
+    },
+    {
+     "w": "stays",
+     "start": 140.288,
+     "end": 140.488
+    },
+    {
+     "w": "dumb.",
+     "start": 140.488,
+     "end": 140.968
+    },
+    {
+     "w": "A",
+     "start": 141.748,
+     "end": 141.768
+    },
+    {
+     "w": "gateway",
+     "start": 141.768,
+     "end": 141.988
+    },
+    {
+     "w": "that",
+     "start": 141.988,
+     "end": 142.488
+    },
+    {
+     "w": "also",
+     "start": 142.488,
+     "end": 142.668
+    },
+    {
+     "w": "holds",
+     "start": 142.668,
+     "end": 143.228
+    },
+    {
+     "w": "business",
+     "start": 143.228,
+     "end": 143.668
+    },
+    {
+     "w": "logic",
+     "start": 143.668,
+     "end": 144.068
+    },
+    {
+     "w": "stops",
+     "start": 144.068,
+     "end": 144.588
+    },
+    {
+     "w": "being",
+     "start": 144.588,
+     "end": 144.928
+    },
+    {
+     "w": "a",
+     "start": 144.928,
+     "end": 145.048
+    },
+    {
+     "w": "gateway.",
+     "start": 145.048,
+     "end": 145.288
+    }
+   ],
+   "heard": "And it stays dumb. A gateway that also holds business logic stops being a gateway."
+  },
+  {
+   "beat": "cache",
+   "key": "c1",
+   "ch": 2,
+   "say": "The cache sits beside the app. Reads check it first.",
+   "cap": "The [cache] sits beside the app. Reads check it [first].",
+   "start": 146.122,
+   "end": 149.372,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 146.072,
+     "end": 146.212
+    },
+    {
+     "w": "cache",
+     "start": 146.212,
+     "end": 146.392
+    },
+    {
+     "w": "sits",
+     "start": 146.392,
+     "end": 146.792
+    },
+    {
+     "w": "beside",
+     "start": 146.792,
+     "end": 147.092
+    },
+    {
+     "w": "the",
+     "start": 147.092,
+     "end": 147.372
+    },
+    {
+     "w": "app,",
+     "start": 147.372,
+     "end": 147.612
+    },
+    {
+     "w": "reads",
+     "start": 148.112,
+     "end": 148.192
+    },
+    {
+     "w": "check",
+     "start": 148.192,
+     "end": 148.612
+    },
+    {
+     "w": "it",
+     "start": 148.612,
+     "end": 148.752
+    },
+    {
+     "w": "first.",
+     "start": 148.752,
+     "end": 149.052
+    }
+   ],
+   "heard": "The cache sits beside the app, reads check it first."
+  },
+  {
+   "beat": "cache",
+   "key": "c2",
+   "ch": 2,
+   "say": "A hit comes back in about one millisecond. A miss reads the database, then saves the answer for next time.",
+   "cap": "A [hit]: about [1 ms]. A [miss]: read the database, [save] it.",
+   "start": 149.612,
+   "end": 156.724,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "A",
+     "start": 149.562,
+     "end": 149.682
+    },
+    {
+     "w": "hit",
+     "start": 149.682,
+     "end": 149.862
+    },
+    {
+     "w": "comes",
+     "start": 149.862,
+     "end": 150.142
+    },
+    {
+     "w": "back",
+     "start": 150.142,
+     "end": 150.462
+    },
+    {
+     "w": "in",
+     "start": 150.462,
+     "end": 150.682
+    },
+    {
+     "w": "about",
+     "start": 150.682,
+     "end": 150.822
+    },
+    {
+     "w": "one",
+     "start": 150.822,
+     "end": 151.182
+    },
+    {
+     "w": "millisecond.",
+     "start": 151.182,
+     "end": 151.882
+    },
+    {
+     "w": "A",
+     "start": 152.522,
+     "end": 152.542
+    },
+    {
+     "w": "miss",
+     "start": 152.542,
+     "end": 152.722
+    },
+    {
+     "w": "reads",
+     "start": 152.722,
+     "end": 153.122
+    },
+    {
+     "w": "the",
+     "start": 153.122,
+     "end": 153.462
+    },
+    {
+     "w": "database,",
+     "start": 153.462,
+     "end": 153.802
+    },
+    {
+     "w": "then",
+     "start": 154.642,
+     "end": 154.722
+    },
+    {
+     "w": "saves",
+     "start": 154.722,
+     "end": 155.062
+    },
+    {
+     "w": "the",
+     "start": 155.062,
+     "end": 155.362
+    },
+    {
+     "w": "answer",
+     "start": 155.362,
+     "end": 155.642
+    },
+    {
+     "w": "for",
+     "start": 155.642,
+     "end": 155.962
+    },
+    {
+     "w": "next",
+     "start": 155.962,
+     "end": 156.102
+    },
+    {
+     "w": "time.",
+     "start": 156.102,
+     "end": 156.522
+    }
+   ],
+   "heard": "A hit comes back in about one millisecond. A miss reads the database, then saves the answer for next time."
+  },
+  {
+   "beat": "cache",
+   "key": "c3",
+   "ch": 2,
+   "say": "On a write, the app updates the database and deletes the cached copy, so nobody reads stale data.",
+   "cap": "On a write: update the database, [delete] the cached copy.",
+   "start": 156.964,
+   "end": 163.035,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "On",
+     "start": 156.914,
+     "end": 157.054
+    },
+    {
+     "w": "a",
+     "start": 157.054,
+     "end": 157.094
+    },
+    {
+     "w": "right,",
+     "start": 157.094,
+     "end": 157.354
+    },
+    {
+     "w": "the",
+     "start": 157.574,
+     "end": 157.634
+    },
+    {
+     "w": "app",
+     "start": 157.634,
+     "end": 157.814
+    },
+    {
+     "w": "updates",
+     "start": 157.814,
+     "end": 158.214
+    },
+    {
+     "w": "the",
+     "start": 158.214,
+     "end": 158.474
+    },
+    {
+     "w": "database",
+     "start": 158.474,
+     "end": 158.754
+    },
+    {
+     "w": "and",
+     "start": 158.754,
+     "end": 159.214
+    },
+    {
+     "w": "deletes",
+     "start": 159.214,
+     "end": 159.674
+    },
+    {
+     "w": "the",
+     "start": 159.674,
+     "end": 159.774
+    },
+    {
+     "w": "cached",
+     "start": 159.774,
+     "end": 160.054
+    },
+    {
+     "w": "copy,",
+     "start": 160.054,
+     "end": 160.454
+    },
+    {
+     "w": "so",
+     "start": 161.274,
+     "end": 161.294
+    },
+    {
+     "w": "nobody",
+     "start": 161.294,
+     "end": 161.634
+    },
+    {
+     "w": "reads",
+     "start": 161.634,
+     "end": 162.034
+    },
+    {
+     "w": "stale",
+     "start": 162.034,
+     "end": 162.414
+    },
+    {
+     "w": "data.",
+     "start": 162.414,
+     "end": 162.834
+    }
+   ],
+   "heard": "On a right, the app updates the database and deletes the cached copy, so nobody reads stale data."
+  },
+  {
+   "beat": "queue",
+   "key": "q1",
+   "ch": 2,
+   "say": "The queue is for work that shouldn't make the client wait. Like sending a confirmation email.",
+   "cap": "The [queue] is for work the client shouldn't [wait] for.",
+   "start": 163.485,
+   "end": 168.945,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 163.435,
+     "end": 163.555
+    },
+    {
+     "w": "queue",
+     "start": 163.555,
+     "end": 163.835
+    },
+    {
+     "w": "is",
+     "start": 163.835,
+     "end": 164.115
+    },
+    {
+     "w": "for",
+     "start": 164.115,
+     "end": 164.275
+    },
+    {
+     "w": "work",
+     "start": 164.275,
+     "end": 164.555
+    },
+    {
+     "w": "that",
+     "start": 164.555,
+     "end": 164.755
+    },
+    {
+     "w": "shouldn't",
+     "start": 164.755,
+     "end": 165.095
+    },
+    {
+     "w": "make",
+     "start": 165.095,
+     "end": 165.255
+    },
+    {
+     "w": "the",
+     "start": 165.255,
+     "end": 165.415
+    },
+    {
+     "w": "client",
+     "start": 165.415,
+     "end": 165.755
+    },
+    {
+     "w": "wait,",
+     "start": 165.755,
+     "end": 166.155
+    },
+    {
+     "w": "like",
+     "start": 166.795,
+     "end": 166.935
+    },
+    {
+     "w": "sending",
+     "start": 166.935,
+     "end": 167.335
+    },
+    {
+     "w": "a",
+     "start": 167.335,
+     "end": 167.535
+    },
+    {
+     "w": "confirmation",
+     "start": 167.535,
+     "end": 167.875
+    },
+    {
+     "w": "email.",
+     "start": 167.875,
+     "end": 168.595
+    }
+   ],
+   "heard": "The queue is for work that shouldn't make the client wait, like sending a confirmation email."
+  },
+  {
+   "beat": "queue",
+   "key": "q2",
+   "ch": 2,
+   "say": "The API validates the request, drops a job on the queue, and answers right away.",
+   "cap": "Validate, [enqueue], answer [right away].",
+   "start": 169.185,
+   "end": 174.966,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 169.135,
+     "end": 169.275
+    },
+    {
+     "w": "API",
+     "start": 169.275,
+     "end": 169.535
+    },
+    {
+     "w": "validates",
+     "start": 169.535,
+     "end": 170.695
+    },
+    {
+     "w": "the",
+     "start": 170.695,
+     "end": 170.815
+    },
+    {
+     "w": "request,",
+     "start": 170.815,
+     "end": 171.115
+    },
+    {
+     "w": "drops",
+     "start": 171.715,
+     "end": 171.995
+    },
+    {
+     "w": "a",
+     "start": 171.995,
+     "end": 172.215
+    },
+    {
+     "w": "job",
+     "start": 172.215,
+     "end": 172.495
+    },
+    {
+     "w": "on",
+     "start": 172.495,
+     "end": 172.795
+    },
+    {
+     "w": "the",
+     "start": 172.795,
+     "end": 172.915
+    },
+    {
+     "w": "queue,",
+     "start": 172.915,
+     "end": 173.155
+    },
+    {
+     "w": "and",
+     "start": 173.675,
+     "end": 173.695
+    },
+    {
+     "w": "answers",
+     "start": 173.695,
+     "end": 174.095
+    },
+    {
+     "w": "right",
+     "start": 174.095,
+     "end": 174.415
+    },
+    {
+     "w": "away.",
+     "start": 174.415,
+     "end": 174.755
+    }
+   ],
+   "heard": "The API validates the request, drops a job on the queue, and answers right away."
+  },
+  {
+   "beat": "queue",
+   "key": "q3",
+   "ch": 2,
+   "say": "Workers do the slow part later. If a worker crashes, the job goes back on the queue.",
+   "cap": "[Workers] do the slow part. A crash? The job [goes back].",
+   "start": 175.206,
+   "end": 180.749,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Workers",
+     "start": 175.156,
+     "end": 175.536
+    },
+    {
+     "w": "do",
+     "start": 175.536,
+     "end": 175.816
+    },
+    {
+     "w": "the",
+     "start": 175.816,
+     "end": 175.936
+    },
+    {
+     "w": "slow",
+     "start": 175.936,
+     "end": 176.176
+    },
+    {
+     "w": "part",
+     "start": 176.176,
+     "end": 176.476
+    },
+    {
+     "w": "later.",
+     "start": 176.476,
+     "end": 176.816
+    },
+    {
+     "w": "If",
+     "start": 177.576,
+     "end": 177.576
+    },
+    {
+     "w": "a",
+     "start": 177.576,
+     "end": 177.676
+    },
+    {
+     "w": "worker",
+     "start": 177.676,
+     "end": 177.916
+    },
+    {
+     "w": "crashes,",
+     "start": 177.916,
+     "end": 178.496
+    },
+    {
+     "w": "the",
+     "start": 178.956,
+     "end": 179.036
+    },
+    {
+     "w": "job",
+     "start": 179.036,
+     "end": 179.216
+    },
+    {
+     "w": "goes",
+     "start": 179.216,
+     "end": 179.596
+    },
+    {
+     "w": "back",
+     "start": 179.596,
+     "end": 179.916
+    },
+    {
+     "w": "on",
+     "start": 179.916,
+     "end": 180.136
+    },
+    {
+     "w": "the",
+     "start": 180.136,
+     "end": 180.236
+    },
+    {
+     "w": "queue.",
+     "start": 180.236,
+     "end": 180.476
+    }
+   ],
+   "heard": "Workers do the slow part later. If a worker crashes, the job goes back on the queue."
+  },
+  {
+   "beat": "queue",
+   "key": "q4",
+   "ch": 2,
+   "say": "That buys you decoupling, durability, and a steady pace when traffic spikes.",
+   "cap": "[Decoupling], [durability], steady pace in a [spike].",
+   "start": 180.989,
+   "end": 185.883,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "that",
+     "start": 180.939,
+     "end": 181.079
+    },
+    {
+     "w": "buys",
+     "start": 181.079,
+     "end": 181.359
+    },
+    {
+     "w": "you",
+     "start": 181.359,
+     "end": 181.739
+    },
+    {
+     "w": "decoupling",
+     "start": 181.739,
+     "end": 182.339
+    },
+    {
+     "w": "durability",
+     "start": 182.339,
+     "end": 183.039
+    },
+    {
+     "w": "and",
+     "start": 183.039,
+     "end": 183.799
+    },
+    {
+     "w": "a",
+     "start": 183.799,
+     "end": 183.859
+    },
+    {
+     "w": "steady",
+     "start": 183.859,
+     "end": 184.099
+    },
+    {
+     "w": "pace",
+     "start": 184.099,
+     "end": 184.439
+    },
+    {
+     "w": "when",
+     "start": 184.439,
+     "end": 184.759
+    },
+    {
+     "w": "traffic",
+     "start": 184.759,
+     "end": 185.039
+    },
+    {
+     "w": "spikes.",
+     "start": 185.039,
+     "end": 185.459
+    }
+   ],
+   "heard": "that buys you decoupling durability and a steady pace when traffic spikes."
+  },
+  {
+   "beat": "ai",
+   "key": "i1",
+   "ch": 2,
+   "say": "The AI gateway is one front door for every model call. Your apps never talk to a provider directly.",
+   "cap": "The [AI gateway]: one front door for [every] model call.",
+   "start": 186.333,
+   "end": 193.139,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 186.283,
+     "end": 186.423
+    },
+    {
+     "w": "AI",
+     "start": 186.423,
+     "end": 186.703
+    },
+    {
+     "w": "Gateway",
+     "start": 186.703,
+     "end": 187.243
+    },
+    {
+     "w": "is",
+     "start": 187.243,
+     "end": 187.923
+    },
+    {
+     "w": "one",
+     "start": 187.923,
+     "end": 188.143
+    },
+    {
+     "w": "front",
+     "start": 188.143,
+     "end": 188.443
+    },
+    {
+     "w": "door",
+     "start": 188.443,
+     "end": 188.683
+    },
+    {
+     "w": "for",
+     "start": 188.683,
+     "end": 188.963
+    },
+    {
+     "w": "every",
+     "start": 188.963,
+     "end": 189.203
+    },
+    {
+     "w": "model",
+     "start": 189.203,
+     "end": 189.563
+    },
+    {
+     "w": "call.",
+     "start": 189.563,
+     "end": 189.923
+    },
+    {
+     "w": "Your",
+     "start": 190.703,
+     "end": 190.743
+    },
+    {
+     "w": "apps",
+     "start": 190.743,
+     "end": 191.023
+    },
+    {
+     "w": "never",
+     "start": 191.023,
+     "end": 191.363
+    },
+    {
+     "w": "talk",
+     "start": 191.363,
+     "end": 191.723
+    },
+    {
+     "w": "to",
+     "start": 191.723,
+     "end": 191.943
+    },
+    {
+     "w": "a",
+     "start": 191.943,
+     "end": 192.043
+    },
+    {
+     "w": "provider",
+     "start": 192.043,
+     "end": 192.303
+    },
+    {
+     "w": "directly.",
+     "start": 192.303,
+     "end": 192.803
+    }
+   ],
+   "heard": "The AI Gateway is one front door for every model call. Your apps never talk to a provider directly."
+  },
+  {
+   "beat": "ai",
+   "key": "i2",
+   "ch": 2,
+   "say": "It handles authentication, rate limits, caching, routing and cost tracking once, for everyone. And if a provider is down, it falls back to another.",
+   "cap": "[Auth], [limits], [caching], [routing], [cost]. A provider down? [Fallback].",
+   "start": 193.379,
+   "end": 203.217,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "It",
+     "start": 193.329,
+     "end": 193.469
+    },
+    {
+     "w": "handles",
+     "start": 193.469,
+     "end": 193.769
+    },
+    {
+     "w": "authentication,",
+     "start": 193.769,
+     "end": 194.429
+    },
+    {
+     "w": "rate",
+     "start": 195.209,
+     "end": 195.289
+    },
+    {
+     "w": "limits,",
+     "start": 195.289,
+     "end": 195.649
+    },
+    {
+     "w": "caching,",
+     "start": 196.149,
+     "end": 196.409
+    },
+    {
+     "w": "routing,",
+     "start": 196.949,
+     "end": 197.189
+    },
+    {
+     "w": "and",
+     "start": 197.509,
+     "end": 197.569
+    },
+    {
+     "w": "cost",
+     "start": 197.569,
+     "end": 197.889
+    },
+    {
+     "w": "tracking",
+     "start": 197.889,
+     "end": 198.349
+    },
+    {
+     "w": "once",
+     "start": 198.349,
+     "end": 198.709
+    },
+    {
+     "w": "for",
+     "start": 198.709,
+     "end": 199.029
+    },
+    {
+     "w": "everyone.",
+     "start": 199.029,
+     "end": 199.509
+    },
+    {
+     "w": "And",
+     "start": 200.269,
+     "end": 200.349
+    },
+    {
+     "w": "if",
+     "start": 200.349,
+     "end": 200.449
+    },
+    {
+     "w": "a",
+     "start": 200.449,
+     "end": 200.489
+    },
+    {
+     "w": "provider",
+     "start": 200.489,
+     "end": 200.809
+    },
+    {
+     "w": "is",
+     "start": 200.809,
+     "end": 201.209
+    },
+    {
+     "w": "down,",
+     "start": 201.209,
+     "end": 201.489
+    },
+    {
+     "w": "it",
+     "start": 201.849,
+     "end": 201.889
+    },
+    {
+     "w": "falls",
+     "start": 201.889,
+     "end": 202.169
+    },
+    {
+     "w": "back",
+     "start": 202.169,
+     "end": 202.489
+    },
+    {
+     "w": "to",
+     "start": 202.489,
+     "end": 202.729
+    },
+    {
+     "w": "another.",
+     "start": 202.729,
+     "end": 202.989
+    }
+   ],
+   "heard": "It handles authentication, rate limits, caching, routing, and cost tracking once for everyone. And if a provider is down, it falls back to another."
+  },
+  {
+   "beat": "read",
+   "key": "d1",
+   "ch": 3,
+   "say": "Request one, a simple read: GET slash products slash nine. It hits the C D N first.",
+   "cap": "Request one: [GET /products/9]. It hits the [CDN] first.",
+   "start": 205.217,
+   "end": 211.441,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Request",
+     "start": 205.167,
+     "end": 205.447
+    },
+    {
+     "w": "1",
+     "start": 205.447,
+     "end": 205.787
+    },
+    {
+     "w": "a",
+     "start": 205.787,
+     "end": 206.007
+    },
+    {
+     "w": "simple",
+     "start": 206.007,
+     "end": 206.267
+    },
+    {
+     "w": "read,",
+     "start": 206.267,
+     "end": 206.587
+    },
+    {
+     "w": "get",
+     "start": 207.247,
+     "end": 207.267
+    },
+    {
+     "w": "slash",
+     "start": 207.267,
+     "end": 207.587
+    },
+    {
+     "w": "product",
+     "start": 207.587,
+     "end": 207.987
+    },
+    {
+     "w": "slash",
+     "start": 207.987,
+     "end": 208.387
+    },
+    {
+     "w": "9.",
+     "start": 208.387,
+     "end": 209.087
+    },
+    {
+     "w": "It",
+     "start": 209.627,
+     "end": 209.707
+    },
+    {
+     "w": "hits",
+     "start": 209.707,
+     "end": 209.887
+    },
+    {
+     "w": "the",
+     "start": 209.887,
+     "end": 210.067
+    },
+    {
+     "w": "CDN",
+     "start": 210.067,
+     "end": 210.787
+    },
+    {
+     "w": "first.",
+     "start": 210.787,
+     "end": 211.087
+    }
+   ],
+   "heard": "Request 1 a simple read, get slash product slash 9. It hits the CDN first."
+  },
+  {
+   "beat": "read",
+   "key": "d2",
+   "ch": 3,
+   "say": "If the C D N has the answer cached, it returns right there. Nothing behind it ever hears about the request.",
+   "cap": "[Cached] at the edge? Done. Nothing behind it [hears] about it.",
+   "start": 211.681,
+   "end": 218.979,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "If",
+     "start": 211.631,
+     "end": 211.791
+    },
+    {
+     "w": "the",
+     "start": 211.791,
+     "end": 211.891
+    },
+    {
+     "w": "CDN",
+     "start": 211.891,
+     "end": 212.711
+    },
+    {
+     "w": "has",
+     "start": 212.711,
+     "end": 212.931
+    },
+    {
+     "w": "the",
+     "start": 212.931,
+     "end": 213.111
+    },
+    {
+     "w": "answer",
+     "start": 213.111,
+     "end": 213.471
+    },
+    {
+     "w": "cached,",
+     "start": 213.471,
+     "end": 213.811
+    },
+    {
+     "w": "it",
+     "start": 214.431,
+     "end": 214.491
+    },
+    {
+     "w": "returns",
+     "start": 214.491,
+     "end": 214.831
+    },
+    {
+     "w": "right",
+     "start": 214.831,
+     "end": 215.271
+    },
+    {
+     "w": "there.",
+     "start": 215.271,
+     "end": 215.651
+    },
+    {
+     "w": "Nothing",
+     "start": 216.331,
+     "end": 216.531
+    },
+    {
+     "w": "behind",
+     "start": 216.531,
+     "end": 216.931
+    },
+    {
+     "w": "it",
+     "start": 216.931,
+     "end": 217.231
+    },
+    {
+     "w": "ever",
+     "start": 217.231,
+     "end": 217.471
+    },
+    {
+     "w": "hears",
+     "start": 217.471,
+     "end": 217.751
+    },
+    {
+     "w": "about",
+     "start": 217.751,
+     "end": 218.131
+    },
+    {
+     "w": "the",
+     "start": 218.131,
+     "end": 218.271
+    },
+    {
+     "w": "request.",
+     "start": 218.271,
+     "end": 218.551
+    }
+   ],
+   "heard": "If the CDN has the answer cached, it returns right there. Nothing behind it ever hears about the request."
+  },
+  {
+   "beat": "read",
+   "key": "d3",
+   "ch": 3,
+   "say": "If not, the gateway authenticates and rate limits, then routes it to the application service.",
+   "cap": "Not cached: the [gateway] checks, then [routes] to the app.",
+   "start": 219.219,
+   "end": 225.021,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "If",
+     "start": 219.169,
+     "end": 219.329
+    },
+    {
+     "w": "not,",
+     "start": 219.329,
+     "end": 219.529
+    },
+    {
+     "w": "the",
+     "start": 219.849,
+     "end": 219.909
+    },
+    {
+     "w": "gateway",
+     "start": 219.909,
+     "end": 220.129
+    },
+    {
+     "w": "authenticates",
+     "start": 220.129,
+     "end": 221.289
+    },
+    {
+     "w": "and",
+     "start": 221.289,
+     "end": 221.389
+    },
+    {
+     "w": "rate",
+     "start": 221.389,
+     "end": 221.589
+    },
+    {
+     "w": "limits,",
+     "start": 221.589,
+     "end": 221.969
+    },
+    {
+     "w": "then",
+     "start": 222.869,
+     "end": 222.869
+    },
+    {
+     "w": "routes",
+     "start": 222.869,
+     "end": 223.129
+    },
+    {
+     "w": "it",
+     "start": 223.129,
+     "end": 223.429
+    },
+    {
+     "w": "to",
+     "start": 223.429,
+     "end": 223.569
+    },
+    {
+     "w": "the",
+     "start": 223.569,
+     "end": 223.669
+    },
+    {
+     "w": "application",
+     "start": 223.669,
+     "end": 223.989
+    },
+    {
+     "w": "service.",
+     "start": 223.989,
+     "end": 224.689
+    }
+   ],
+   "heard": "If not, the gateway authenticates and rate limits, then routes it to the application service."
+  },
+  {
+   "beat": "read",
+   "key": "d4",
+   "ch": 3,
+   "say": "The app checks its cache. A hit skips the database. A miss queries it, then stores the result.",
+   "cap": "[Hit]: skip the database. [Miss]: query, then [store].",
+   "start": 225.261,
+   "end": 231.27,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 225.211,
+     "end": 225.351
+    },
+    {
+     "w": "app",
+     "start": 225.351,
+     "end": 225.491
+    },
+    {
+     "w": "checks",
+     "start": 225.491,
+     "end": 225.771
+    },
+    {
+     "w": "its",
+     "start": 225.771,
+     "end": 226.011
+    },
+    {
+     "w": "cache,",
+     "start": 226.011,
+     "end": 226.271
+    },
+    {
+     "w": "a",
+     "start": 226.891,
+     "end": 226.951
+    },
+    {
+     "w": "hit",
+     "start": 226.951,
+     "end": 227.091
+    },
+    {
+     "w": "skips",
+     "start": 227.091,
+     "end": 227.531
+    },
+    {
+     "w": "the",
+     "start": 227.531,
+     "end": 227.651
+    },
+    {
+     "w": "database,",
+     "start": 227.651,
+     "end": 227.991
+    },
+    {
+     "w": "a",
+     "start": 228.771,
+     "end": 228.791
+    },
+    {
+     "w": "misqueer",
+     "start": 228.791,
+     "end": 229.471
+    },
+    {
+     "w": "is",
+     "start": 229.471,
+     "end": 229.611
+    },
+    {
+     "w": "it,",
+     "start": 229.611,
+     "end": 229.771
+    },
+    {
+     "w": "then",
+     "start": 230.011,
+     "end": 230.051
+    },
+    {
+     "w": "stores",
+     "start": 230.051,
+     "end": 230.351
+    },
+    {
+     "w": "the",
+     "start": 230.351,
+     "end": 230.771
+    },
+    {
+     "w": "result.",
+     "start": 230.771,
+     "end": 231.051
+    }
+   ],
+   "heard": "The app checks its cache, a hit skips the database, a misqueer is it, then stores the result."
+  },
+  {
+   "beat": "read",
+   "key": "d5",
+   "ch": 3,
+   "say": "Then the response retraces the same path, back to the client.",
+   "cap": "The response [retraces] the same path back.",
+   "start": 231.51,
+   "end": 235.359,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Then",
+     "start": 231.46,
+     "end": 231.66
+    },
+    {
+     "w": "the",
+     "start": 231.66,
+     "end": 231.8
+    },
+    {
+     "w": "response",
+     "start": 231.8,
+     "end": 232.16
+    },
+    {
+     "w": "retraces",
+     "start": 232.16,
+     "end": 232.88
+    },
+    {
+     "w": "the",
+     "start": 232.88,
+     "end": 233.12
+    },
+    {
+     "w": "same",
+     "start": 233.12,
+     "end": 233.38
+    },
+    {
+     "w": "path",
+     "start": 233.38,
+     "end": 233.78
+    },
+    {
+     "w": "back",
+     "start": 233.78,
+     "end": 234.4
+    },
+    {
+     "w": "to",
+     "start": 234.4,
+     "end": 234.64
+    },
+    {
+     "w": "the",
+     "start": 234.64,
+     "end": 234.72
+    },
+    {
+     "w": "client.",
+     "start": 234.72,
+     "end": 235.0
+    }
+   ],
+   "heard": "Then the response retraces the same path back to the client."
+  },
+  {
+   "beat": "write",
+   "key": "w1",
+   "ch": 3,
+   "say": "Request two, a write: POST slash orders. This is the handbook's end to end view of it.",
+   "cap": "Request two: [POST /orders]. The [end to end] view.",
+   "start": 235.809,
+   "end": 241.3,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Request",
+     "start": 235.759,
+     "end": 236.019
+    },
+    {
+     "w": "to",
+     "start": 236.019,
+     "end": 236.379
+    },
+    {
+     "w": "a",
+     "start": 236.379,
+     "end": 236.619
+    },
+    {
+     "w": "right",
+     "start": 236.619,
+     "end": 236.879
+    },
+    {
+     "w": "post",
+     "start": 236.879,
+     "end": 237.479
+    },
+    {
+     "w": "slash",
+     "start": 237.479,
+     "end": 237.839
+    },
+    {
+     "w": "orders.",
+     "start": 237.839,
+     "end": 238.359
+    },
+    {
+     "w": "This",
+     "start": 239.099,
+     "end": 239.179
+    },
+    {
+     "w": "is",
+     "start": 239.179,
+     "end": 239.319
+    },
+    {
+     "w": "the",
+     "start": 239.319,
+     "end": 239.459
+    },
+    {
+     "w": "handbook's",
+     "start": 239.459,
+     "end": 240.019
+    },
+    {
+     "w": "end",
+     "start": 240.019,
+     "end": 240.239
+    },
+    {
+     "w": "to",
+     "start": 240.239,
+     "end": 240.479
+    },
+    {
+     "w": "end",
+     "start": 240.479,
+     "end": 240.619
+    },
+    {
+     "w": "view",
+     "start": 240.619,
+     "end": 240.919
+    },
+    {
+     "w": "of",
+     "start": 240.919,
+     "end": 241.119
+    },
+    {
+     "w": "it.",
+     "start": 241.119,
+     "end": 241.239
+    }
+   ],
+   "heard": "Request to a right post slash orders. This is the handbook's end to end view of it."
+  },
+  {
+   "beat": "write",
+   "key": "w2",
+   "ch": 3,
+   "say": "A POST isn't cached, so it passes straight through to the application service.",
+   "cap": "A POST is [not cached]: it passes [straight through].",
+   "start": 241.54,
+   "end": 245.979,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "A",
+     "start": 241.49,
+     "end": 241.61
+    },
+    {
+     "w": "post",
+     "start": 241.61,
+     "end": 241.87
+    },
+    {
+     "w": "isn't",
+     "start": 241.87,
+     "end": 242.19
+    },
+    {
+     "w": "cached,",
+     "start": 242.19,
+     "end": 242.51
+    },
+    {
+     "w": "so",
+     "start": 243.09,
+     "end": 243.21
+    },
+    {
+     "w": "it",
+     "start": 243.21,
+     "end": 243.33
+    },
+    {
+     "w": "passes",
+     "start": 243.33,
+     "end": 243.61
+    },
+    {
+     "w": "straight",
+     "start": 243.61,
+     "end": 244.05
+    },
+    {
+     "w": "through",
+     "start": 244.05,
+     "end": 244.41
+    },
+    {
+     "w": "to",
+     "start": 244.41,
+     "end": 244.59
+    },
+    {
+     "w": "the",
+     "start": 244.59,
+     "end": 244.69
+    },
+    {
+     "w": "application",
+     "start": 244.69,
+     "end": 245.07
+    },
+    {
+     "w": "service.",
+     "start": 245.07,
+     "end": 245.61
+    }
+   ],
+   "heard": "A post isn't cached, so it passes straight through to the application service."
+  },
+  {
+   "beat": "write",
+   "key": "w3",
+   "ch": 3,
+   "say": "The order service validates the body, commits to Post gress Q L in one transaction, updates Red iss, and publishes a message to the queue.",
+   "cap": "[Validate], [commit], update [Redis], [publish] a message.",
+   "start": 246.219,
+   "end": 255.705,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 246.169,
+     "end": 246.289
+    },
+    {
+     "w": "order",
+     "start": 246.289,
+     "end": 246.489
+    },
+    {
+     "w": "service",
+     "start": 246.489,
+     "end": 246.949
+    },
+    {
+     "w": "validates",
+     "start": 246.949,
+     "end": 247.709
+    },
+    {
+     "w": "the",
+     "start": 247.709,
+     "end": 247.849
+    },
+    {
+     "w": "body,",
+     "start": 247.849,
+     "end": 248.189
+    },
+    {
+     "w": "commits",
+     "start": 248.929,
+     "end": 248.929
+    },
+    {
+     "w": "to",
+     "start": 248.929,
+     "end": 249.189
+    },
+    {
+     "w": "post",
+     "start": 249.189,
+     "end": 249.429
+    },
+    {
+     "w": "-gress",
+     "start": 249.429,
+     "end": 249.769
+    },
+    {
+     "w": "QL",
+     "start": 249.769,
+     "end": 250.409
+    },
+    {
+     "w": "in",
+     "start": 250.409,
+     "end": 250.709
+    },
+    {
+     "w": "one",
+     "start": 250.709,
+     "end": 250.869
+    },
+    {
+     "w": "transaction,",
+     "start": 250.869,
+     "end": 251.329
+    },
+    {
+     "w": "updates",
+     "start": 252.269,
+     "end": 252.509
+    },
+    {
+     "w": "Redis",
+     "start": 252.509,
+     "end": 253.169
+    },
+    {
+     "w": "and",
+     "start": 253.169,
+     "end": 253.769
+    },
+    {
+     "w": "publishes",
+     "start": 253.769,
+     "end": 254.129
+    },
+    {
+     "w": "a",
+     "start": 254.129,
+     "end": 254.489
+    },
+    {
+     "w": "message",
+     "start": 254.489,
+     "end": 254.749
+    },
+    {
+     "w": "to",
+     "start": 254.749,
+     "end": 255.089
+    },
+    {
+     "w": "the",
+     "start": 255.089,
+     "end": 255.209
+    },
+    {
+     "w": "queue.",
+     "start": 255.209,
+     "end": 255.409
+    }
+   ],
+   "heard": "The order service validates the body, commits to post -gress QL in one transaction, updates Redis and publishes a message to the queue."
+  },
+  {
+   "beat": "write",
+   "key": "w4",
+   "ch": 3,
+   "say": "A two hundred one comes back in roughly twenty to one hundred fifty milliseconds. The worker sends the email after the response, so the client never waits.",
+   "cap": "[201] in about [20 to 150 ms]. The email goes out [after].",
+   "start": 255.945,
+   "end": 265.895,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "A",
+     "start": 255.895,
+     "end": 256.015
+    },
+    {
+     "w": "201",
+     "start": 256.015,
+     "end": 256.415
+    },
+    {
+     "w": "comes",
+     "start": 256.415,
+     "end": 257.255
+    },
+    {
+     "w": "back",
+     "start": 257.255,
+     "end": 257.695
+    },
+    {
+     "w": "in",
+     "start": 257.695,
+     "end": 257.935
+    },
+    {
+     "w": "roughly",
+     "start": 257.935,
+     "end": 258.135
+    },
+    {
+     "w": "20",
+     "start": 258.135,
+     "end": 258.675
+    },
+    {
+     "w": "to",
+     "start": 258.675,
+     "end": 258.915
+    },
+    {
+     "w": "150",
+     "start": 258.915,
+     "end": 259.615
+    },
+    {
+     "w": "milliseconds.",
+     "start": 259.615,
+     "end": 259.995
+    },
+    {
+     "w": "The",
+     "start": 261.195,
+     "end": 261.255
+    },
+    {
+     "w": "worker",
+     "start": 261.255,
+     "end": 261.455
+    },
+    {
+     "w": "sends",
+     "start": 261.455,
+     "end": 261.875
+    },
+    {
+     "w": "the",
+     "start": 261.875,
+     "end": 262.155
+    },
+    {
+     "w": "email",
+     "start": 262.155,
+     "end": 262.455
+    },
+    {
+     "w": "after",
+     "start": 262.455,
+     "end": 262.975
+    },
+    {
+     "w": "the",
+     "start": 262.975,
+     "end": 263.155
+    },
+    {
+     "w": "response,",
+     "start": 263.155,
+     "end": 263.495
+    },
+    {
+     "w": "so",
+     "start": 264.275,
+     "end": 264.355
+    },
+    {
+     "w": "the",
+     "start": 264.355,
+     "end": 264.475
+    },
+    {
+     "w": "client",
+     "start": 264.475,
+     "end": 264.835
+    },
+    {
+     "w": "never",
+     "start": 264.835,
+     "end": 265.255
+    },
+    {
+     "w": "waits.",
+     "start": 265.255,
+     "end": 265.535
+    }
+   ],
+   "heard": "A 201 comes back in roughly 20 to 150 milliseconds. The worker sends the email after the response, so the client never waits."
+  },
+  {
+   "beat": "chat",
+   "key": "t1",
+   "ch": 3,
+   "say": "Request three, an AI chat message. The handbook traces it in seven steps.",
+   "cap": "Request three: [POST /chat]. Seven [steps].",
+   "start": 266.345,
+   "end": 271.504,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Request",
+     "start": 266.295,
+     "end": 266.555
+    },
+    {
+     "w": "3,",
+     "start": 266.555,
+     "end": 266.955
+    },
+    {
+     "w": "an",
+     "start": 267.295,
+     "end": 267.355
+    },
+    {
+     "w": "AI",
+     "start": 267.355,
+     "end": 267.655
+    },
+    {
+     "w": "chat",
+     "start": 267.655,
+     "end": 268.055
+    },
+    {
+     "w": "message.",
+     "start": 268.055,
+     "end": 268.595
+    },
+    {
+     "w": "The",
+     "start": 269.295,
+     "end": 269.315
+    },
+    {
+     "w": "Handbook",
+     "start": 269.315,
+     "end": 269.555
+    },
+    {
+     "w": "traces",
+     "start": 269.555,
+     "end": 269.995
+    },
+    {
+     "w": "it",
+     "start": 269.995,
+     "end": 270.375
+    },
+    {
+     "w": "in",
+     "start": 270.375,
+     "end": 270.475
+    },
+    {
+     "w": "7",
+     "start": 270.475,
+     "end": 270.775
+    },
+    {
+     "w": "steps.",
+     "start": 270.775,
+     "end": 271.195
+    }
+   ],
+   "heard": "Request 3, an AI chat message. The Handbook traces it in 7 steps."
+  },
+  {
+   "beat": "chat",
+   "key": "t2",
+   "ch": 3,
+   "say": "The gateway validates the token and checks the rate limit. The app loads the conversation from Post gress Q L, and checks Red iss.",
+   "cap": "[Gateway]: token, rate limit. [App]: Postgres, Redis.",
+   "start": 271.744,
+   "end": 280.524,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 271.694,
+     "end": 271.834
+    },
+    {
+     "w": "Gateway",
+     "start": 271.834,
+     "end": 272.054
+    },
+    {
+     "w": "validates",
+     "start": 272.054,
+     "end": 272.894
+    },
+    {
+     "w": "the",
+     "start": 272.894,
+     "end": 273.014
+    },
+    {
+     "w": "token",
+     "start": 273.014,
+     "end": 273.254
+    },
+    {
+     "w": "and",
+     "start": 273.254,
+     "end": 273.714
+    },
+    {
+     "w": "checks",
+     "start": 273.714,
+     "end": 273.934
+    },
+    {
+     "w": "the",
+     "start": 273.934,
+     "end": 274.174
+    },
+    {
+     "w": "rate",
+     "start": 274.174,
+     "end": 274.354
+    },
+    {
+     "w": "limit.",
+     "start": 274.354,
+     "end": 274.634
+    },
+    {
+     "w": "The",
+     "start": 275.514,
+     "end": 275.514
+    },
+    {
+     "w": "app",
+     "start": 275.514,
+     "end": 275.734
+    },
+    {
+     "w": "loads",
+     "start": 275.734,
+     "end": 276.094
+    },
+    {
+     "w": "the",
+     "start": 276.094,
+     "end": 276.394
+    },
+    {
+     "w": "conversation",
+     "start": 276.394,
+     "end": 276.734
+    },
+    {
+     "w": "from",
+     "start": 276.734,
+     "end": 277.334
+    },
+    {
+     "w": "PostgreSQL",
+     "start": 277.334,
+     "end": 278.014
+    },
+    {
+     "w": "and",
+     "start": 278.014,
+     "end": 279.274
+    },
+    {
+     "w": "checks",
+     "start": 279.274,
+     "end": 279.474
+    },
+    {
+     "w": "Redis.",
+     "start": 279.474,
+     "end": 280.194
+    }
+   ],
+   "heard": "The Gateway validates the token and checks the rate limit. The app loads the conversation from PostgreSQL and checks Redis."
+  },
+  {
+   "beat": "chat",
+   "key": "t3",
+   "ch": 3,
+   "say": "Then the app calls the AI gateway, which routes to an available provider, with a fallback if the primary is down.",
+   "cap": "The [AI gateway] routes to a provider, with a [fallback].",
+   "start": 280.764,
+   "end": 288.245,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Then",
+     "start": 280.714,
+     "end": 280.934
+    },
+    {
+     "w": "the",
+     "start": 280.934,
+     "end": 281.114
+    },
+    {
+     "w": "app",
+     "start": 281.114,
+     "end": 281.374
+    },
+    {
+     "w": "calls",
+     "start": 281.374,
+     "end": 281.714
+    },
+    {
+     "w": "the",
+     "start": 281.714,
+     "end": 281.934
+    },
+    {
+     "w": "AI",
+     "start": 281.934,
+     "end": 282.214
+    },
+    {
+     "w": "Gateway,",
+     "start": 282.214,
+     "end": 282.734
+    },
+    {
+     "w": "which",
+     "start": 283.534,
+     "end": 283.614
+    },
+    {
+     "w": "routes",
+     "start": 283.614,
+     "end": 283.834
+    },
+    {
+     "w": "to",
+     "start": 283.834,
+     "end": 284.194
+    },
+    {
+     "w": "an",
+     "start": 284.194,
+     "end": 284.294
+    },
+    {
+     "w": "available",
+     "start": 284.294,
+     "end": 284.574
+    },
+    {
+     "w": "provider,",
+     "start": 284.574,
+     "end": 285.174
+    },
+    {
+     "w": "with",
+     "start": 285.754,
+     "end": 285.954
+    },
+    {
+     "w": "a",
+     "start": 285.954,
+     "end": 286.034
+    },
+    {
+     "w": "fallback",
+     "start": 286.034,
+     "end": 286.594
+    },
+    {
+     "w": "if",
+     "start": 286.594,
+     "end": 286.834
+    },
+    {
+     "w": "the",
+     "start": 286.834,
+     "end": 286.974
+    },
+    {
+     "w": "primary",
+     "start": 286.974,
+     "end": 287.254
+    },
+    {
+     "w": "is",
+     "start": 287.254,
+     "end": 287.674
+    },
+    {
+     "w": "down.",
+     "start": 287.674,
+     "end": 287.954
+    }
+   ],
+   "heard": "Then the app calls the AI Gateway, which routes to an available provider, with a fallback if the primary is down."
+  },
+  {
+   "beat": "chat",
+   "key": "t4",
+   "ch": 3,
+   "say": "The answer streams back token by token, through the app and the gateway to the client.",
+   "cap": "The answer [streams] back, token by token.",
+   "start": 288.485,
+   "end": 293.759,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "The",
+     "start": 288.435,
+     "end": 288.555
+    },
+    {
+     "w": "answer",
+     "start": 288.555,
+     "end": 288.775
+    },
+    {
+     "w": "streams",
+     "start": 288.775,
+     "end": 289.335
+    },
+    {
+     "w": "back",
+     "start": 289.335,
+     "end": 289.675
+    },
+    {
+     "w": "token",
+     "start": 289.675,
+     "end": 290.015
+    },
+    {
+     "w": "by",
+     "start": 290.015,
+     "end": 290.395
+    },
+    {
+     "w": "token",
+     "start": 290.395,
+     "end": 290.755
+    },
+    {
+     "w": "through",
+     "start": 290.755,
+     "end": 291.555
+    },
+    {
+     "w": "the",
+     "start": 291.555,
+     "end": 291.755
+    },
+    {
+     "w": "app",
+     "start": 291.755,
+     "end": 292.035
+    },
+    {
+     "w": "and",
+     "start": 292.035,
+     "end": 292.275
+    },
+    {
+     "w": "the",
+     "start": 292.275,
+     "end": 292.395
+    },
+    {
+     "w": "gateway",
+     "start": 292.395,
+     "end": 292.635
+    },
+    {
+     "w": "to",
+     "start": 292.635,
+     "end": 293.035
+    },
+    {
+     "w": "the",
+     "start": 293.035,
+     "end": 293.115
+    },
+    {
+     "w": "client.",
+     "start": 293.115,
+     "end": 293.355
+    }
+   ],
+   "heard": "The answer streams back token by token through the app and the gateway to the client."
+  },
+  {
+   "beat": "chat",
+   "key": "t5",
+   "ch": 3,
+   "say": "And logging and cost tracking happen afterwards, through a queue, so they never slow the reply.",
+   "cap": "[Logging] and [cost] go through a [queue], after.",
+   "start": 293.999,
+   "end": 299.675,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "and",
+     "start": 293.949,
+     "end": 294.109
+    },
+    {
+     "w": "logging",
+     "start": 294.109,
+     "end": 294.409
+    },
+    {
+     "w": "and",
+     "start": 294.409,
+     "end": 294.709
+    },
+    {
+     "w": "cost",
+     "start": 294.709,
+     "end": 294.989
+    },
+    {
+     "w": "tracking",
+     "start": 294.989,
+     "end": 295.349
+    },
+    {
+     "w": "happen",
+     "start": 295.349,
+     "end": 295.869
+    },
+    {
+     "w": "afterwards",
+     "start": 295.869,
+     "end": 296.349
+    },
+    {
+     "w": "through",
+     "start": 296.349,
+     "end": 296.989
+    },
+    {
+     "w": "a",
+     "start": 296.989,
+     "end": 297.149
+    },
+    {
+     "w": "queue,",
+     "start": 297.149,
+     "end": 297.429
+    },
+    {
+     "w": "so",
+     "start": 298.009,
+     "end": 298.109
+    },
+    {
+     "w": "they",
+     "start": 298.109,
+     "end": 298.229
+    },
+    {
+     "w": "never",
+     "start": 298.229,
+     "end": 298.449
+    },
+    {
+     "w": "slow",
+     "start": 298.449,
+     "end": 298.769
+    },
+    {
+     "w": "the",
+     "start": 298.769,
+     "end": 299.029
+    },
+    {
+     "w": "reply.",
+     "start": 299.029,
+     "end": 299.289
+    }
+   ],
+   "heard": "and logging and cost tracking happen afterwards through a queue, so they never slow the reply."
+  },
+  {
+   "beat": "sum",
+   "key": "u1",
+   "ch": 3,
+   "say": "Same map, three different paths. A read can stop at the C D N. A write goes to the database and queues the slow work. A chat goes through the AI gateway.",
+   "cap": "Three [paths]. A read can [stop] at the CDN. A chat uses the [AI gateway].",
+   "start": 300.125,
+   "end": 311.095,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "Same",
+     "start": 300.075,
+     "end": 300.335
+    },
+    {
+     "w": "map,",
+     "start": 300.335,
+     "end": 300.615
+    },
+    {
+     "w": "three",
+     "start": 300.815,
+     "end": 301.075
+    },
+    {
+     "w": "different",
+     "start": 301.075,
+     "end": 301.375
+    },
+    {
+     "w": "paths.",
+     "start": 301.375,
+     "end": 301.735
+    },
+    {
+     "w": "A",
+     "start": 302.515,
+     "end": 302.535
+    },
+    {
+     "w": "read",
+     "start": 302.535,
+     "end": 302.715
+    },
+    {
+     "w": "can",
+     "start": 302.715,
+     "end": 302.995
+    },
+    {
+     "w": "stop",
+     "start": 302.995,
+     "end": 303.355
+    },
+    {
+     "w": "at",
+     "start": 303.355,
+     "end": 303.555
+    },
+    {
+     "w": "the",
+     "start": 303.555,
+     "end": 303.655
+    },
+    {
+     "w": "CDN.",
+     "start": 303.655,
+     "end": 304.415
+    },
+    {
+     "w": "A",
+     "start": 305.115,
+     "end": 305.115
+    },
+    {
+     "w": "write",
+     "start": 305.115,
+     "end": 305.335
+    },
+    {
+     "w": "goes",
+     "start": 305.335,
+     "end": 305.675
+    },
+    {
+     "w": "to",
+     "start": 305.675,
+     "end": 305.935
+    },
+    {
+     "w": "the",
+     "start": 305.935,
+     "end": 306.035
+    },
+    {
+     "w": "database",
+     "start": 306.035,
+     "end": 306.315
+    },
+    {
+     "w": "and",
+     "start": 306.315,
+     "end": 306.835
+    },
+    {
+     "w": "cues",
+     "start": 306.835,
+     "end": 307.095
+    },
+    {
+     "w": "the",
+     "start": 307.095,
+     "end": 307.415
+    },
+    {
+     "w": "slow",
+     "start": 307.415,
+     "end": 307.635
+    },
+    {
+     "w": "work.",
+     "start": 307.635,
+     "end": 307.995
+    },
+    {
+     "w": "A",
+     "start": 308.735,
+     "end": 308.775
+    },
+    {
+     "w": "chat",
+     "start": 308.775,
+     "end": 308.995
+    },
+    {
+     "w": "goes",
+     "start": 308.995,
+     "end": 309.395
+    },
+    {
+     "w": "through",
+     "start": 309.395,
+     "end": 309.715
+    },
+    {
+     "w": "the",
+     "start": 309.715,
+     "end": 309.935
+    },
+    {
+     "w": "AI",
+     "start": 309.935,
+     "end": 310.215
+    },
+    {
+     "w": "gateway.",
+     "start": 310.215,
+     "end": 310.715
+    },
+    {
+     "w": "A",
+     "start": 310.715,
+     "end": 310.715
+    },
+    {
+     "w": "chat",
+     "start": 310.715,
+     "end": 310.715
+    },
+    {
+     "w": "goes",
+     "start": 310.715,
+     "end": 310.715
+    },
+    {
+     "w": "through",
+     "start": 310.715,
+     "end": 310.715
+    },
+    {
+     "w": "the",
+     "start": 310.715,
+     "end": 310.715
+    },
+    {
+     "w": "AI",
+     "start": 310.715,
+     "end": 310.755
+    },
+    {
+     "w": "gateway.",
+     "start": 310.755,
+     "end": 310.855
+    }
+   ],
+   "heard": "Same map, three different paths. A read can stop at the CDN. A write goes to the database and cues the slow work. A chat goes through the AI gateway. A chat goes through the AI gateway."
+  },
+  {
+   "beat": "route",
+   "key": "v1",
+   "ch": 4,
+   "say": "Now let's watch the AI layer for real. This is the handbook's L L M gateway example, a small FastAPI app.",
+   "cap": "The handbook's [LLM gateway] example: a small [FastAPI] app.",
+   "start": 313.095,
+   "end": 321.604,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Now",
+     "start": 313.045,
+     "end": 313.245
+    },
+    {
+     "w": "let's",
+     "start": 313.245,
+     "end": 313.585
+    },
+    {
+     "w": "watch",
+     "start": 313.585,
+     "end": 313.905
+    },
+    {
+     "w": "the",
+     "start": 313.905,
+     "end": 314.065
+    },
+    {
+     "w": "AI",
+     "start": 314.065,
+     "end": 314.305
+    },
+    {
+     "w": "layer",
+     "start": 314.305,
+     "end": 314.785
+    },
+    {
+     "w": "for",
+     "start": 314.785,
+     "end": 315.045
+    },
+    {
+     "w": "real.",
+     "start": 315.045,
+     "end": 315.305
+    },
+    {
+     "w": "This",
+     "start": 316.165,
+     "end": 316.225
+    },
+    {
+     "w": "is",
+     "start": 316.225,
+     "end": 316.365
+    },
+    {
+     "w": "the",
+     "start": 316.365,
+     "end": 316.505
+    },
+    {
+     "w": "handbook's",
+     "start": 316.505,
+     "end": 317.085
+    },
+    {
+     "w": "LLM",
+     "start": 317.085,
+     "end": 317.965
+    },
+    {
+     "w": "Gateway",
+     "start": 317.965,
+     "end": 318.265
+    },
+    {
+     "w": "example,",
+     "start": 318.265,
+     "end": 318.805
+    },
+    {
+     "w": "a",
+     "start": 319.445,
+     "end": 319.525
+    },
+    {
+     "w": "small",
+     "start": 319.525,
+     "end": 319.825
+    },
+    {
+     "w": "fast",
+     "start": 319.825,
+     "end": 320.145
+    },
+    {
+     "w": "API",
+     "start": 320.145,
+     "end": 320.645
+    },
+    {
+     "w": "app.",
+     "start": 320.645,
+     "end": 321.385
+    }
+   ],
+   "heard": "Now let's watch the AI layer for real. This is the handbook's LLM Gateway example, a small fast API app."
+  },
+  {
+   "beat": "route",
+   "key": "v1b",
+   "ch": 4,
+   "say": "Its setup is a few lines: providers in priority order, and a token bucket that allows five requests, refilling one per second.",
+   "cap": "[Providers] in priority order. A [token bucket]: five requests, [1/sec].",
+   "start": 321.844,
+   "end": 330.814,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "It's",
+     "start": 321.794,
+     "end": 322.014
+    },
+    {
+     "w": "set",
+     "start": 322.014,
+     "end": 322.194
+    },
+    {
+     "w": "up",
+     "start": 322.194,
+     "end": 322.334
+    },
+    {
+     "w": "is",
+     "start": 322.334,
+     "end": 322.514
+    },
+    {
+     "w": "a",
+     "start": 322.514,
+     "end": 322.594
+    },
+    {
+     "w": "few",
+     "start": 322.594,
+     "end": 322.754
+    },
+    {
+     "w": "lines.",
+     "start": 322.754,
+     "end": 323.194
+    },
+    {
+     "w": "Providers",
+     "start": 323.934,
+     "end": 324.394
+    },
+    {
+     "w": "in",
+     "start": 324.394,
+     "end": 324.594
+    },
+    {
+     "w": "priority",
+     "start": 324.594,
+     "end": 324.954
+    },
+    {
+     "w": "order",
+     "start": 324.954,
+     "end": 325.634
+    },
+    {
+     "w": "and",
+     "start": 325.634,
+     "end": 326.194
+    },
+    {
+     "w": "a",
+     "start": 326.194,
+     "end": 326.294
+    },
+    {
+     "w": "token",
+     "start": 326.294,
+     "end": 326.494
+    },
+    {
+     "w": "bucket",
+     "start": 326.494,
+     "end": 326.974
+    },
+    {
+     "w": "that",
+     "start": 326.974,
+     "end": 327.314
+    },
+    {
+     "w": "allows",
+     "start": 327.314,
+     "end": 327.554
+    },
+    {
+     "w": "five",
+     "start": 327.554,
+     "end": 328.114
+    },
+    {
+     "w": "requests,",
+     "start": 328.114,
+     "end": 328.614
+    },
+    {
+     "w": "refilling",
+     "start": 329.334,
+     "end": 329.694
+    },
+    {
+     "w": "one",
+     "start": 329.694,
+     "end": 329.994
+    },
+    {
+     "w": "per",
+     "start": 329.994,
+     "end": 330.274
+    },
+    {
+     "w": "second.",
+     "start": 330.274,
+     "end": 330.674
+    }
+   ],
+   "heard": "It's set up is a few lines. Providers in priority order and a token bucket that allows five requests, refilling one per second."
+  },
+  {
+   "beat": "route",
+   "key": "v2",
+   "ch": 4,
+   "say": "Over the limit, the gateway answers four twenty nine. And every response gets a cost attached.",
+   "cap": "Over the limit: [429]. Every response gets a [cost].",
+   "start": 331.054,
+   "end": 337.075,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Over",
+     "start": 331.004,
+     "end": 331.224
+    },
+    {
+     "w": "the",
+     "start": 331.224,
+     "end": 331.384
+    },
+    {
+     "w": "limit,",
+     "start": 331.384,
+     "end": 331.644
+    },
+    {
+     "w": "the",
+     "start": 331.964,
+     "end": 332.004
+    },
+    {
+     "w": "gateway",
+     "start": 332.004,
+     "end": 332.224
+    },
+    {
+     "w": "answers",
+     "start": 332.224,
+     "end": 332.824
+    },
+    {
+     "w": "4",
+     "start": 332.824,
+     "end": 333.184
+    },
+    {
+     "w": ".29,",
+     "start": 333.184,
+     "end": 333.824
+    },
+    {
+     "w": "and",
+     "start": 334.304,
+     "end": 334.664
+    },
+    {
+     "w": "every",
+     "start": 334.664,
+     "end": 334.904
+    },
+    {
+     "w": "response",
+     "start": 334.904,
+     "end": 335.364
+    },
+    {
+     "w": "gets",
+     "start": 335.364,
+     "end": 335.744
+    },
+    {
+     "w": "a",
+     "start": 335.744,
+     "end": 335.924
+    },
+    {
+     "w": "cost",
+     "start": 335.924,
+     "end": 336.224
+    },
+    {
+     "w": "attached.",
+     "start": 336.224,
+     "end": 336.544
+    }
+   ],
+   "heard": "Over the limit, the gateway answers 4 .29, and every response gets a cost attached."
+  },
+  {
+   "beat": "run1",
+   "key": "e1",
+   "ch": 4,
+   "say": "Five calls to the same chat endpoint. Four were served by the first provider.",
+   "cap": "Five calls. Four served by the [first] provider.",
+   "start": 337.525,
+   "end": 342.431,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Five",
+     "start": 337.475,
+     "end": 337.815
+    },
+    {
+     "w": "calls",
+     "start": 337.815,
+     "end": 338.155
+    },
+    {
+     "w": "to",
+     "start": 338.155,
+     "end": 338.455
+    },
+    {
+     "w": "the",
+     "start": 338.455,
+     "end": 338.535
+    },
+    {
+     "w": "same",
+     "start": 338.535,
+     "end": 338.775
+    },
+    {
+     "w": "chat",
+     "start": 338.775,
+     "end": 339.095
+    },
+    {
+     "w": "endpoint.",
+     "start": 339.095,
+     "end": 339.375
+    },
+    {
+     "w": "Four",
+     "start": 340.475,
+     "end": 340.515
+    },
+    {
+     "w": "were",
+     "start": 340.515,
+     "end": 340.715
+    },
+    {
+     "w": "served",
+     "start": 340.715,
+     "end": 341.055
+    },
+    {
+     "w": "by",
+     "start": 341.055,
+     "end": 341.355
+    },
+    {
+     "w": "the",
+     "start": 341.355,
+     "end": 341.495
+    },
+    {
+     "w": "first",
+     "start": 341.495,
+     "end": 341.755
+    },
+    {
+     "w": "provider.",
+     "start": 341.755,
+     "end": 342.115
+    }
+   ],
+   "heard": "Five calls to the same chat endpoint. Four were served by the first provider."
+  },
+  {
+   "beat": "run1",
+   "key": "e2",
+   "ch": 4,
+   "say": "On the fifth, it failed, and the gateway fell back to provider A, the only one that costs anything.",
+   "cap": "The fifth: it failed. The gateway fell [back] to provider A.",
+   "start": 342.671,
+   "end": 349.03,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "On",
+     "start": 342.621,
+     "end": 342.781
+    },
+    {
+     "w": "the",
+     "start": 342.781,
+     "end": 342.861
+    },
+    {
+     "w": "5th",
+     "start": 342.861,
+     "end": 343.321
+    },
+    {
+     "w": "it",
+     "start": 343.321,
+     "end": 343.421
+    },
+    {
+     "w": "failed,",
+     "start": 343.421,
+     "end": 343.701
+    },
+    {
+     "w": "and",
+     "start": 344.461,
+     "end": 344.541
+    },
+    {
+     "w": "the",
+     "start": 344.541,
+     "end": 344.641
+    },
+    {
+     "w": "Gateway",
+     "start": 344.641,
+     "end": 344.821
+    },
+    {
+     "w": "fell",
+     "start": 344.821,
+     "end": 345.241
+    },
+    {
+     "w": "back",
+     "start": 345.241,
+     "end": 345.561
+    },
+    {
+     "w": "to",
+     "start": 345.561,
+     "end": 345.721
+    },
+    {
+     "w": "provider",
+     "start": 345.721,
+     "end": 345.981
+    },
+    {
+     "w": "A,",
+     "start": 345.981,
+     "end": 346.481
+    },
+    {
+     "w": "the",
+     "start": 346.881,
+     "end": 347.161
+    },
+    {
+     "w": "only",
+     "start": 347.161,
+     "end": 347.401
+    },
+    {
+     "w": "one",
+     "start": 347.401,
+     "end": 347.741
+    },
+    {
+     "w": "that",
+     "start": 347.741,
+     "end": 347.921
+    },
+    {
+     "w": "costs",
+     "start": 347.921,
+     "end": 348.161
+    },
+    {
+     "w": "anything.",
+     "start": 348.161,
+     "end": 348.721
+    }
+   ],
+   "heard": "On the 5th it failed, and the Gateway fell back to provider A, the only one that costs anything."
+  },
+  {
+   "beat": "run1",
+   "key": "e3",
+   "ch": 4,
+   "say": "The usage endpoint rolls up cost per tenant: five requests, a fraction of a cent.",
+   "cap": "[Usage]: five requests, a fraction of a [cent].",
+   "start": 349.27,
+   "end": 354.784,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "The",
+     "start": 349.22,
+     "end": 349.34
+    },
+    {
+     "w": "usage",
+     "start": 349.34,
+     "end": 349.52
+    },
+    {
+     "w": "endpoint",
+     "start": 349.52,
+     "end": 349.88
+    },
+    {
+     "w": "rolls",
+     "start": 349.88,
+     "end": 350.38
+    },
+    {
+     "w": "up",
+     "start": 350.38,
+     "end": 350.7
+    },
+    {
+     "w": "costs",
+     "start": 350.7,
+     "end": 350.92
+    },
+    {
+     "w": "per",
+     "start": 350.92,
+     "end": 351.28
+    },
+    {
+     "w": "tenant.",
+     "start": 351.28,
+     "end": 351.54
+    },
+    {
+     "w": "Five",
+     "start": 352.48,
+     "end": 352.48
+    },
+    {
+     "w": "requests,",
+     "start": 352.48,
+     "end": 352.92
+    },
+    {
+     "w": "a",
+     "start": 353.52,
+     "end": 353.58
+    },
+    {
+     "w": "fraction",
+     "start": 353.58,
+     "end": 353.82
+    },
+    {
+     "w": "of",
+     "start": 353.82,
+     "end": 354.2
+    },
+    {
+     "w": "a",
+     "start": 354.2,
+     "end": 354.26
+    },
+    {
+     "w": "cent.",
+     "start": 354.26,
+     "end": 354.48
+    }
+   ],
+   "heard": "The usage endpoint rolls up costs per tenant. Five requests, a fraction of a cent."
+  },
+  {
+   "beat": "run2",
+   "key": "f1",
+   "ch": 4,
+   "say": "Now a burst of eight requests. The first five pass. The next three get a four twenty nine: rate limited, right at the gateway.",
+   "cap": "A burst of eight: five [pass], three get [429].",
+   "start": 355.234,
+   "end": 363.615,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "Now",
+     "start": 355.184,
+     "end": 355.444
+    },
+    {
+     "w": "a",
+     "start": 355.444,
+     "end": 355.624
+    },
+    {
+     "w": "burst",
+     "start": 355.624,
+     "end": 355.904
+    },
+    {
+     "w": "of",
+     "start": 355.904,
+     "end": 356.144
+    },
+    {
+     "w": "eight",
+     "start": 356.144,
+     "end": 356.364
+    },
+    {
+     "w": "requests.",
+     "start": 356.364,
+     "end": 356.804
+    },
+    {
+     "w": "The",
+     "start": 357.624,
+     "end": 357.644
+    },
+    {
+     "w": "first",
+     "start": 357.644,
+     "end": 357.844
+    },
+    {
+     "w": "five",
+     "start": 357.844,
+     "end": 358.204
+    },
+    {
+     "w": "pass.",
+     "start": 358.204,
+     "end": 358.584
+    },
+    {
+     "w": "The",
+     "start": 359.284,
+     "end": 359.344
+    },
+    {
+     "w": "next",
+     "start": 359.344,
+     "end": 359.444
+    },
+    {
+     "w": "three",
+     "start": 359.444,
+     "end": 359.844
+    },
+    {
+     "w": "get",
+     "start": 359.844,
+     "end": 360.044
+    },
+    {
+     "w": "a",
+     "start": 360.044,
+     "end": 360.144
+    },
+    {
+     "w": "4",
+     "start": 360.144,
+     "end": 360.364
+    },
+    {
+     "w": "29",
+     "start": 360.364,
+     "end": 360.864
+    },
+    {
+     "w": "rate",
+     "start": 360.864,
+     "end": 361.664
+    },
+    {
+     "w": "limited",
+     "start": 361.664,
+     "end": 362.144
+    },
+    {
+     "w": "right",
+     "start": 362.144,
+     "end": 362.664
+    },
+    {
+     "w": "at",
+     "start": 362.664,
+     "end": 362.864
+    },
+    {
+     "w": "the",
+     "start": 362.864,
+     "end": 362.984
+    },
+    {
+     "w": "gateway.",
+     "start": 362.984,
+     "end": 363.204
+    }
+   ],
+   "heard": "Now a burst of eight requests. The first five pass. The next three get a 4 29 rate limited right at the gateway."
+  },
+  {
+   "beat": "simple",
+   "key": "s1",
+   "ch": 5,
+   "say": "Now the most important rule. Not every API needs every layer. A small internal tool can be one application service with a database behind it, and that's the right architecture at that scale.",
+   "cap": "Not every API needs [every] layer. A small tool: [app] plus database. That's [right].",
+   "start": 365.615,
+   "end": 378.782,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Now",
+     "start": 365.565,
+     "end": 365.785
+    },
+    {
+     "w": "the",
+     "start": 365.785,
+     "end": 365.985
+    },
+    {
+     "w": "most",
+     "start": 365.985,
+     "end": 366.185
+    },
+    {
+     "w": "important",
+     "start": 366.185,
+     "end": 366.705
+    },
+    {
+     "w": "rule.",
+     "start": 366.705,
+     "end": 367.105
+    },
+    {
+     "w": "Not",
+     "start": 367.985,
+     "end": 367.985
+    },
+    {
+     "w": "every",
+     "start": 367.985,
+     "end": 368.345
+    },
+    {
+     "w": "API",
+     "start": 368.345,
+     "end": 368.865
+    },
+    {
+     "w": "needs",
+     "start": 368.865,
+     "end": 369.585
+    },
+    {
+     "w": "every",
+     "start": 369.585,
+     "end": 369.885
+    },
+    {
+     "w": "layer.",
+     "start": 369.885,
+     "end": 370.305
+    },
+    {
+     "w": "A",
+     "start": 370.985,
+     "end": 371.005
+    },
+    {
+     "w": "small",
+     "start": 371.005,
+     "end": 371.285
+    },
+    {
+     "w": "internal",
+     "start": 371.285,
+     "end": 371.585
+    },
+    {
+     "w": "tool",
+     "start": 371.585,
+     "end": 372.285
+    },
+    {
+     "w": "can",
+     "start": 372.285,
+     "end": 372.565
+    },
+    {
+     "w": "be",
+     "start": 372.565,
+     "end": 372.745
+    },
+    {
+     "w": "one",
+     "start": 372.745,
+     "end": 373.025
+    },
+    {
+     "w": "application",
+     "start": 373.025,
+     "end": 373.485
+    },
+    {
+     "w": "service",
+     "start": 373.485,
+     "end": 374.185
+    },
+    {
+     "w": "with",
+     "start": 374.185,
+     "end": 374.525
+    },
+    {
+     "w": "a",
+     "start": 374.525,
+     "end": 374.605
+    },
+    {
+     "w": "database",
+     "start": 374.605,
+     "end": 374.905
+    },
+    {
+     "w": "behind",
+     "start": 374.905,
+     "end": 375.605
+    },
+    {
+     "w": "it,",
+     "start": 375.605,
+     "end": 375.865
+    },
+    {
+     "w": "and",
+     "start": 376.185,
+     "end": 376.445
+    },
+    {
+     "w": "that's",
+     "start": 376.445,
+     "end": 376.705
+    },
+    {
+     "w": "the",
+     "start": 376.705,
+     "end": 376.825
+    },
+    {
+     "w": "right",
+     "start": 376.825,
+     "end": 377.065
+    },
+    {
+     "w": "architecture",
+     "start": 377.065,
+     "end": 377.525
+    },
+    {
+     "w": "at",
+     "start": 377.525,
+     "end": 378.025
+    },
+    {
+     "w": "that",
+     "start": 378.025,
+     "end": 378.145
+    },
+    {
+     "w": "scale.",
+     "start": 378.145,
+     "end": 378.465
+    }
+   ],
+   "heard": "Now the most important rule. Not every API needs every layer. A small internal tool can be one application service with a database behind it, and that's the right architecture at that scale."
+  },
+  {
+   "beat": "simple",
+   "key": "s3",
+   "ch": 5,
+   "say": "Each layer buys you something. A cache buys latency. A gateway buys central auth. A queue buys resilience. But the price is more moving parts, more failure modes, more to operate.",
+   "cap": "[Cache]: latency. [Gateway]: central auth. [Queue]: resilience. The [price]: complexity.",
+   "start": 379.022,
+   "end": 391.941,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Each",
+     "start": 378.972,
+     "end": 379.192
+    },
+    {
+     "w": "layer",
+     "start": 379.192,
+     "end": 379.452
+    },
+    {
+     "w": "buys",
+     "start": 379.452,
+     "end": 379.812
+    },
+    {
+     "w": "you",
+     "start": 379.812,
+     "end": 380.132
+    },
+    {
+     "w": "something.",
+     "start": 380.132,
+     "end": 380.492
+    },
+    {
+     "w": "A",
+     "start": 381.172,
+     "end": 381.172
+    },
+    {
+     "w": "cash",
+     "start": 381.172,
+     "end": 381.412
+    },
+    {
+     "w": "buys",
+     "start": 381.412,
+     "end": 381.912
+    },
+    {
+     "w": "latency.",
+     "start": 381.912,
+     "end": 382.352
+    },
+    {
+     "w": "A",
+     "start": 383.252,
+     "end": 383.252
+    },
+    {
+     "w": "gateway",
+     "start": 383.252,
+     "end": 383.512
+    },
+    {
+     "w": "buys",
+     "start": 383.512,
+     "end": 384.072
+    },
+    {
+     "w": "central",
+     "start": 384.072,
+     "end": 384.632
+    },
+    {
+     "w": "auth.",
+     "start": 384.632,
+     "end": 385.032
+    },
+    {
+     "w": "A",
+     "start": 385.652,
+     "end": 385.652
+    },
+    {
+     "w": "queue",
+     "start": 385.652,
+     "end": 385.852
+    },
+    {
+     "w": "buys",
+     "start": 385.852,
+     "end": 386.472
+    },
+    {
+     "w": "resilience.",
+     "start": 386.472,
+     "end": 386.612
+    },
+    {
+     "w": "But",
+     "start": 387.732,
+     "end": 387.752
+    },
+    {
+     "w": "the",
+     "start": 387.752,
+     "end": 387.832
+    },
+    {
+     "w": "price",
+     "start": 387.832,
+     "end": 388.132
+    },
+    {
+     "w": "is",
+     "start": 388.132,
+     "end": 388.452
+    },
+    {
+     "w": "more",
+     "start": 388.452,
+     "end": 388.652
+    },
+    {
+     "w": "moving",
+     "start": 388.652,
+     "end": 389.052
+    },
+    {
+     "w": "parts,",
+     "start": 389.052,
+     "end": 389.432
+    },
+    {
+     "w": "more",
+     "start": 389.732,
+     "end": 389.872
+    },
+    {
+     "w": "failure",
+     "start": 389.872,
+     "end": 390.272
+    },
+    {
+     "w": "modes,",
+     "start": 390.272,
+     "end": 390.692
+    },
+    {
+     "w": "more",
+     "start": 390.892,
+     "end": 391.132
+    },
+    {
+     "w": "to",
+     "start": 391.132,
+     "end": 391.292
+    },
+    {
+     "w": "operate.",
+     "start": 391.292,
+     "end": 391.572
+    }
+   ],
+   "heard": "Each layer buys you something. A cash buys latency. A gateway buys central auth. A queue buys resilience. But the price is more moving parts, more failure modes, more to operate."
+  },
+  {
+   "beat": "x1",
+   "key": "x1",
+   "ch": 5,
+   "say": "Mistake one. Assuming every API needs a gateway, a queue, and a cache from day one. Most don't, at first. Add a layer for a real problem, not a hypothetical one.",
+   "cap": "Mistake 1: every layer on [day one]. Add one for a [real] problem.",
+   "start": 392.391,
+   "end": 403.994,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 392.341,
+     "end": 392.761
+    },
+    {
+     "w": "one.",
+     "start": 392.761,
+     "end": 393.061
+    },
+    {
+     "w": "Assuming",
+     "start": 393.861,
+     "end": 393.861
+    },
+    {
+     "w": "every",
+     "start": 393.861,
+     "end": 394.301
+    },
+    {
+     "w": "API",
+     "start": 394.301,
+     "end": 394.661
+    },
+    {
+     "w": "needs",
+     "start": 394.661,
+     "end": 395.481
+    },
+    {
+     "w": "a",
+     "start": 395.481,
+     "end": 395.601
+    },
+    {
+     "w": "gateway,",
+     "start": 395.601,
+     "end": 395.861
+    },
+    {
+     "w": "a",
+     "start": 396.321,
+     "end": 396.381
+    },
+    {
+     "w": "queue,",
+     "start": 396.381,
+     "end": 396.681
+    },
+    {
+     "w": "and",
+     "start": 397.001,
+     "end": 397.041
+    },
+    {
+     "w": "a",
+     "start": 397.041,
+     "end": 397.141
+    },
+    {
+     "w": "cache",
+     "start": 397.141,
+     "end": 397.381
+    },
+    {
+     "w": "from",
+     "start": 397.381,
+     "end": 397.681
+    },
+    {
+     "w": "day",
+     "start": 397.681,
+     "end": 397.861
+    },
+    {
+     "w": "one.",
+     "start": 397.861,
+     "end": 398.181
+    },
+    {
+     "w": "Most",
+     "start": 398.961,
+     "end": 398.961
+    },
+    {
+     "w": "don't",
+     "start": 398.961,
+     "end": 399.341
+    },
+    {
+     "w": "at",
+     "start": 399.341,
+     "end": 399.441
+    },
+    {
+     "w": "first.",
+     "start": 399.441,
+     "end": 399.701
+    },
+    {
+     "w": "Add",
+     "start": 400.521,
+     "end": 400.641
+    },
+    {
+     "w": "a",
+     "start": 400.641,
+     "end": 400.741
+    },
+    {
+     "w": "layer",
+     "start": 400.741,
+     "end": 401.041
+    },
+    {
+     "w": "for",
+     "start": 401.041,
+     "end": 401.321
+    },
+    {
+     "w": "a",
+     "start": 401.321,
+     "end": 401.461
+    },
+    {
+     "w": "real",
+     "start": 401.461,
+     "end": 401.661
+    },
+    {
+     "w": "problem,",
+     "start": 401.661,
+     "end": 402.281
+    },
+    {
+     "w": "not",
+     "start": 402.601,
+     "end": 402.721
+    },
+    {
+     "w": "a",
+     "start": 402.721,
+     "end": 402.841
+    },
+    {
+     "w": "hypothetical",
+     "start": 402.841,
+     "end": 403.261
+    },
+    {
+     "w": "one.",
+     "start": 403.261,
+     "end": 403.861
+    }
+   ],
+   "heard": "Mistake one. Assuming every API needs a gateway, a queue, and a cache from day one. Most don't at first. Add a layer for a real problem, not a hypothetical one."
+  },
+  {
+   "beat": "x2",
+   "key": "x2",
+   "ch": 5,
+   "say": "Mistake two. Treating microservices as automatically more production grade than a well built monolith. It depends on the problem. Part eleven covers it.",
+   "cap": "Mistake 2: [microservices] are not [automatically] better.",
+   "start": 404.444,
+   "end": 414.928,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 404.394,
+     "end": 404.814
+    },
+    {
+     "w": "2.",
+     "start": 404.814,
+     "end": 405.134
+    },
+    {
+     "w": "Treating",
+     "start": 405.894,
+     "end": 406.274
+    },
+    {
+     "w": "microservices",
+     "start": 406.274,
+     "end": 407.074
+    },
+    {
+     "w": "as",
+     "start": 407.074,
+     "end": 407.534
+    },
+    {
+     "w": "automatically",
+     "start": 407.534,
+     "end": 408.074
+    },
+    {
+     "w": "more",
+     "start": 408.074,
+     "end": 408.634
+    },
+    {
+     "w": "production",
+     "start": 408.634,
+     "end": 409.034
+    },
+    {
+     "w": "grade",
+     "start": 409.034,
+     "end": 409.494
+    },
+    {
+     "w": "than",
+     "start": 409.494,
+     "end": 409.874
+    },
+    {
+     "w": "a",
+     "start": 409.874,
+     "end": 409.954
+    },
+    {
+     "w": "well",
+     "start": 409.954,
+     "end": 410.154
+    },
+    {
+     "w": "-built",
+     "start": 410.154,
+     "end": 410.574
+    },
+    {
+     "w": "monolith.",
+     "start": 410.574,
+     "end": 411.174
+    },
+    {
+     "w": "It",
+     "start": 411.854,
+     "end": 411.894
+    },
+    {
+     "w": "depends",
+     "start": 411.894,
+     "end": 412.094
+    },
+    {
+     "w": "on",
+     "start": 412.094,
+     "end": 412.514
+    },
+    {
+     "w": "the",
+     "start": 412.514,
+     "end": 412.614
+    },
+    {
+     "w": "problem.",
+     "start": 412.614,
+     "end": 412.894
+    },
+    {
+     "w": "Part",
+     "start": 413.834,
+     "end": 413.834
+    },
+    {
+     "w": "11",
+     "start": 413.834,
+     "end": 414.234
+    },
+    {
+     "w": "covers",
+     "start": 414.234,
+     "end": 414.594
+    },
+    {
+     "w": "it.",
+     "start": 414.594,
+     "end": 414.874
+    }
+   ],
+   "heard": "Mistake 2. Treating microservices as automatically more production grade than a well -built monolith. It depends on the problem. Part 11 covers it."
+  },
+  {
+   "beat": "x3",
+   "key": "x3",
+   "ch": 5,
+   "say": "Mistake three. Bolting the AI layer on as an afterthought. It needs its own timeouts, fallbacks, and cost tracking.",
+   "cap": "Mistake 3: AI as an [afterthought]. It needs [timeouts], [fallbacks], [cost] tracking.",
+   "start": 415.378,
+   "end": 423.186,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Mistake",
+     "start": 415.328,
+     "end": 415.748
+    },
+    {
+     "w": "3.",
+     "start": 415.748,
+     "end": 416.108
+    },
+    {
+     "w": "Bolting",
+     "start": 417.028,
+     "end": 417.248
+    },
+    {
+     "w": "the",
+     "start": 417.248,
+     "end": 417.388
+    },
+    {
+     "w": "AI",
+     "start": 417.388,
+     "end": 417.648
+    },
+    {
+     "w": "layer",
+     "start": 417.648,
+     "end": 418.148
+    },
+    {
+     "w": "on",
+     "start": 418.148,
+     "end": 418.548
+    },
+    {
+     "w": "as",
+     "start": 418.548,
+     "end": 418.748
+    },
+    {
+     "w": "an",
+     "start": 418.748,
+     "end": 418.848
+    },
+    {
+     "w": "afterthought.",
+     "start": 418.848,
+     "end": 419.528
+    },
+    {
+     "w": "It",
+     "start": 419.988,
+     "end": 420.028
+    },
+    {
+     "w": "needs",
+     "start": 420.028,
+     "end": 420.228
+    },
+    {
+     "w": "its",
+     "start": 420.228,
+     "end": 420.448
+    },
+    {
+     "w": "own",
+     "start": 420.448,
+     "end": 420.648
+    },
+    {
+     "w": "timeouts,",
+     "start": 420.648,
+     "end": 421.228
+    },
+    {
+     "w": "fallbacks,",
+     "start": 421.468,
+     "end": 421.988
+    },
+    {
+     "w": "and",
+     "start": 422.208,
+     "end": 422.268
+    },
+    {
+     "w": "cost",
+     "start": 422.268,
+     "end": 422.488
+    },
+    {
+     "w": "tracking.",
+     "start": 422.488,
+     "end": 422.928
+    }
+   ],
+   "heard": "Mistake 3. Bolting the AI layer on as an afterthought. It needs its own timeouts, fallbacks, and cost tracking."
+  },
+  {
+   "beat": "aip",
+   "key": "y1",
+   "ch": 5,
+   "say": "A database query is usually fast and predictable. A model call can be slow, non-deterministic, and billed by usage. That's why it deserves its own box.",
+   "cap": "A query is usually [fast]. A model call is [slow], [random], [metered].",
+   "start": 423.636,
+   "end": 434.742,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "A",
+     "start": 423.586,
+     "end": 423.706
+    },
+    {
+     "w": "database",
+     "start": 423.706,
+     "end": 423.986
+    },
+    {
+     "w": "query",
+     "start": 423.986,
+     "end": 424.506
+    },
+    {
+     "w": "is",
+     "start": 424.506,
+     "end": 424.986
+    },
+    {
+     "w": "usually",
+     "start": 424.986,
+     "end": 425.366
+    },
+    {
+     "w": "fast",
+     "start": 425.366,
+     "end": 425.786
+    },
+    {
+     "w": "and",
+     "start": 425.786,
+     "end": 426.126
+    },
+    {
+     "w": "predictable.",
+     "start": 426.126,
+     "end": 426.386
+    },
+    {
+     "w": "A",
+     "start": 427.426,
+     "end": 427.446
+    },
+    {
+     "w": "model",
+     "start": 427.446,
+     "end": 427.686
+    },
+    {
+     "w": "call",
+     "start": 427.686,
+     "end": 428.066
+    },
+    {
+     "w": "can",
+     "start": 428.066,
+     "end": 428.386
+    },
+    {
+     "w": "be",
+     "start": 428.386,
+     "end": 428.546
+    },
+    {
+     "w": "slow,",
+     "start": 428.546,
+     "end": 428.926
+    },
+    {
+     "w": "non",
+     "start": 429.526,
+     "end": 429.566
+    },
+    {
+     "w": "-deterministic,",
+     "start": 429.566,
+     "end": 430.226
+    },
+    {
+     "w": "and",
+     "start": 430.746,
+     "end": 430.786
+    },
+    {
+     "w": "billed",
+     "start": 430.786,
+     "end": 431.026
+    },
+    {
+     "w": "by",
+     "start": 431.026,
+     "end": 431.406
+    },
+    {
+     "w": "usage.",
+     "start": 431.406,
+     "end": 431.666
+    },
+    {
+     "w": "That's",
+     "start": 432.606,
+     "end": 432.806
+    },
+    {
+     "w": "why",
+     "start": 432.806,
+     "end": 433.026
+    },
+    {
+     "w": "it",
+     "start": 433.026,
+     "end": 433.226
+    },
+    {
+     "w": "deserves",
+     "start": 433.226,
+     "end": 433.486
+    },
+    {
+     "w": "its",
+     "start": 433.486,
+     "end": 433.866
+    },
+    {
+     "w": "own",
+     "start": 433.866,
+     "end": 434.086
+    },
+    {
+     "w": "box.",
+     "start": 434.086,
+     "end": 434.306
+    }
+   ],
+   "heard": "A database query is usually fast and predictable. A model call can be slow, non -deterministic, and billed by usage. That's why it deserves its own box."
+  },
+  {
+   "beat": "aip",
+   "key": "y3",
+   "ch": 5,
+   "say": "So Parts fourteen to seventeen add L L M gateways, token rate limits, prompt caching, and semantic caching. Ideas a typical C R U D API never needed.",
+   "cap": "[LLM gateways], [token limits], [prompt caching], [semantic caching].",
+   "start": 434.982,
+   "end": 447.613,
+   "gap": 2.0,
+   "words": [
+    {
+     "w": "So",
+     "start": 434.932,
+     "end": 435.092
+    },
+    {
+     "w": "parts",
+     "start": 435.092,
+     "end": 435.272
+    },
+    {
+     "w": "14",
+     "start": 435.272,
+     "end": 435.832
+    },
+    {
+     "w": "to",
+     "start": 435.832,
+     "end": 436.012
+    },
+    {
+     "w": "17",
+     "start": 436.012,
+     "end": 436.632
+    },
+    {
+     "w": "add",
+     "start": 436.632,
+     "end": 436.972
+    },
+    {
+     "w": "LLM",
+     "start": 436.972,
+     "end": 437.872
+    },
+    {
+     "w": "gateways,",
+     "start": 437.872,
+     "end": 438.392
+    },
+    {
+     "w": "token",
+     "start": 438.852,
+     "end": 439.192
+    },
+    {
+     "w": "rate",
+     "start": 439.192,
+     "end": 439.532
+    },
+    {
+     "w": "limits,",
+     "start": 439.532,
+     "end": 439.892
+    },
+    {
+     "w": "prompt",
+     "start": 440.472,
+     "end": 440.652
+    },
+    {
+     "w": "caching",
+     "start": 440.652,
+     "end": 441.112
+    },
+    {
+     "w": "and",
+     "start": 441.112,
+     "end": 441.612
+    },
+    {
+     "w": "semantic",
+     "start": 441.612,
+     "end": 441.892
+    },
+    {
+     "w": "caching.",
+     "start": 441.892,
+     "end": 442.492
+    },
+    {
+     "w": "Ideas",
+     "start": 443.412,
+     "end": 443.632
+    },
+    {
+     "w": "a",
+     "start": 443.632,
+     "end": 444.052
+    },
+    {
+     "w": "typical",
+     "start": 444.052,
+     "end": 444.352
+    },
+    {
+     "w": "CRUD",
+     "start": 444.352,
+     "end": 445.652
+    },
+    {
+     "w": "API",
+     "start": 445.652,
+     "end": 446.112
+    },
+    {
+     "w": "never",
+     "start": 446.112,
+     "end": 447.052
+    },
+    {
+     "w": "needed.",
+     "start": 447.052,
+     "end": 447.312
+    }
+   ],
+   "heard": "So parts 14 to 17 add LLM gateways, token rate limits, prompt caching and semantic caching. Ideas a typical CRUD API never needed."
+  },
+  {
+   "beat": "rec",
+   "key": "n1",
+   "ch": 6,
+   "say": "Let's recap.",
+   "cap": "Let's [recap].",
+   "start": 449.613,
+   "end": 450.582,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Let's",
+     "start": 449.563,
+     "end": 449.923
+    },
+    {
+     "w": "recap.",
+     "start": 449.923,
+     "end": 450.223
+    }
+   ],
+   "heard": "Let's recap."
+  },
+  {
+   "beat": "rec",
+   "key": "n2",
+   "ch": 6,
+   "say": "A production API is a layered system: client, edge, gateway, application, then data and AI.",
+   "cap": "A layered system: client, edge, [gateway], [app], data and [AI].",
+   "start": 450.822,
+   "end": 457.969,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "A",
+     "start": 450.772,
+     "end": 450.892
+    },
+    {
+     "w": "production",
+     "start": 450.892,
+     "end": 451.152
+    },
+    {
+     "w": "API",
+     "start": 451.152,
+     "end": 451.612
+    },
+    {
+     "w": "is",
+     "start": 451.612,
+     "end": 452.312
+    },
+    {
+     "w": "a",
+     "start": 452.312,
+     "end": 452.412
+    },
+    {
+     "w": "layered",
+     "start": 452.412,
+     "end": 452.632
+    },
+    {
+     "w": "system.",
+     "start": 452.632,
+     "end": 453.152
+    },
+    {
+     "w": "Client,",
+     "start": 453.852,
+     "end": 453.992
+    },
+    {
+     "w": "Edge,",
+     "start": 454.372,
+     "end": 454.612
+    },
+    {
+     "w": "Gateway",
+     "start": 455.392,
+     "end": 455.392
+    },
+    {
+     "w": "application,",
+     "start": 455.392,
+     "end": 455.972
+    },
+    {
+     "w": "then",
+     "start": 456.612,
+     "end": 456.632
+    },
+    {
+     "w": "Data",
+     "start": 456.632,
+     "end": 456.912
+    },
+    {
+     "w": "and",
+     "start": 456.912,
+     "end": 457.272
+    },
+    {
+     "w": "AI.",
+     "start": 457.272,
+     "end": 457.532
+    }
+   ],
+   "heard": "A production API is a layered system. Client, Edge, Gateway application, then Data and AI."
+  },
+  {
+   "beat": "rec",
+   "key": "n3",
+   "ch": 6,
+   "say": "Each layer has one narrow job, and requests take different paths through them.",
+   "cap": "One [narrow job] each. Different requests, different [paths].",
+   "start": 458.209,
+   "end": 462.785,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Each",
+     "start": 458.159,
+     "end": 458.379
+    },
+    {
+     "w": "layer",
+     "start": 458.379,
+     "end": 458.619
+    },
+    {
+     "w": "has",
+     "start": 458.619,
+     "end": 458.899
+    },
+    {
+     "w": "one",
+     "start": 458.899,
+     "end": 459.119
+    },
+    {
+     "w": "narrow",
+     "start": 459.119,
+     "end": 459.439
+    },
+    {
+     "w": "job",
+     "start": 459.439,
+     "end": 459.939
+    },
+    {
+     "w": "and",
+     "start": 459.939,
+     "end": 460.599
+    },
+    {
+     "w": "requests",
+     "start": 460.599,
+     "end": 460.919
+    },
+    {
+     "w": "take",
+     "start": 460.919,
+     "end": 461.419
+    },
+    {
+     "w": "different",
+     "start": 461.419,
+     "end": 461.679
+    },
+    {
+     "w": "paths",
+     "start": 461.679,
+     "end": 462.059
+    },
+    {
+     "w": "through",
+     "start": 462.059,
+     "end": 462.439
+    },
+    {
+     "w": "them.",
+     "start": 462.439,
+     "end": 462.659
+    }
+   ],
+   "heard": "Each layer has one narrow job and requests take different paths through them."
+  },
+  {
+   "beat": "rec",
+   "key": "n4",
+   "ch": 6,
+   "say": "Add a layer only for a real problem, and treat the AI layer like the database.",
+   "cap": "Add a layer only for a [real] problem. Treat the [AI layer] like the database.",
+   "start": 463.025,
+   "end": 468.364,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Add",
+     "start": 462.975,
+     "end": 463.175
+    },
+    {
+     "w": "a",
+     "start": 463.175,
+     "end": 463.235
+    },
+    {
+     "w": "layer",
+     "start": 463.235,
+     "end": 463.535
+    },
+    {
+     "w": "only",
+     "start": 463.535,
+     "end": 463.955
+    },
+    {
+     "w": "for",
+     "start": 463.955,
+     "end": 464.235
+    },
+    {
+     "w": "a",
+     "start": 464.235,
+     "end": 464.375
+    },
+    {
+     "w": "real",
+     "start": 464.375,
+     "end": 464.595
+    },
+    {
+     "w": "problem",
+     "start": 464.595,
+     "end": 465.215
+    },
+    {
+     "w": "and",
+     "start": 465.215,
+     "end": 465.815
+    },
+    {
+     "w": "treat",
+     "start": 465.815,
+     "end": 466.015
+    },
+    {
+     "w": "the",
+     "start": 466.015,
+     "end": 466.275
+    },
+    {
+     "w": "AI",
+     "start": 466.275,
+     "end": 466.575
+    },
+    {
+     "w": "layer",
+     "start": 466.575,
+     "end": 467.055
+    },
+    {
+     "w": "like",
+     "start": 467.055,
+     "end": 467.355
+    },
+    {
+     "w": "the",
+     "start": 467.355,
+     "end": 467.515
+    },
+    {
+     "w": "database.",
+     "start": 467.515,
+     "end": 467.795
+    }
+   ],
+   "heard": "Add a layer only for a real problem and treat the AI layer like the database."
+  },
+  {
+   "beat": "rec",
+   "key": "n6",
+   "ch": 6,
+   "say": "And bookmark Part eighteen. It's the full production version of this map.",
+   "cap": "Bookmark [Part 18]: the full production map.",
+   "start": 468.604,
+   "end": 472.88,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "and",
+     "start": 468.554,
+     "end": 468.714
+    },
+    {
+     "w": "bookmark",
+     "start": 468.714,
+     "end": 468.914
+    },
+    {
+     "w": "part",
+     "start": 468.914,
+     "end": 469.334
+    },
+    {
+     "w": "18.",
+     "start": 469.334,
+     "end": 469.954
+    },
+    {
+     "w": "It's",
+     "start": 470.714,
+     "end": 470.814
+    },
+    {
+     "w": "the",
+     "start": 470.814,
+     "end": 470.914
+    },
+    {
+     "w": "full",
+     "start": 470.914,
+     "end": 471.154
+    },
+    {
+     "w": "production",
+     "start": 471.154,
+     "end": 471.494
+    },
+    {
+     "w": "version",
+     "start": 471.494,
+     "end": 471.954
+    },
+    {
+     "w": "of",
+     "start": 471.954,
+     "end": 472.214
+    },
+    {
+     "w": "this",
+     "start": 472.214,
+     "end": 472.334
+    },
+    {
+     "w": "map.",
+     "start": 472.334,
+     "end": 472.574
+    }
+   ],
+   "heard": "and bookmark part 18. It's the full production version of this map."
+  },
+  {
+   "beat": "quiz",
+   "key": "z1",
+   "ch": 6,
+   "say": "Quick check before you go. A POST slash orders request must also send a confirmation email. How do you avoid making the client wait for it?",
+   "cap": "POST /orders must send an email. How do you not make the client [wait]?",
+   "start": 473.33,
+   "end": 482.752,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Quick",
+     "start": 473.28,
+     "end": 473.44
+    },
+    {
+     "w": "check",
+     "start": 473.44,
+     "end": 473.72
+    },
+    {
+     "w": "before",
+     "start": 473.72,
+     "end": 474.08
+    },
+    {
+     "w": "you",
+     "start": 474.08,
+     "end": 474.36
+    },
+    {
+     "w": "go.",
+     "start": 474.36,
+     "end": 474.62
+    },
+    {
+     "w": "A",
+     "start": 475.38,
+     "end": 475.4
+    },
+    {
+     "w": "post",
+     "start": 475.4,
+     "end": 475.58
+    },
+    {
+     "w": "slash",
+     "start": 475.58,
+     "end": 475.94
+    },
+    {
+     "w": "orders",
+     "start": 475.94,
+     "end": 476.44
+    },
+    {
+     "w": "request",
+     "start": 476.44,
+     "end": 476.94
+    },
+    {
+     "w": "must",
+     "start": 476.94,
+     "end": 477.46
+    },
+    {
+     "w": "also",
+     "start": 477.46,
+     "end": 477.76
+    },
+    {
+     "w": "send",
+     "start": 477.76,
+     "end": 478.3
+    },
+    {
+     "w": "a",
+     "start": 478.3,
+     "end": 478.4
+    },
+    {
+     "w": "confirmation",
+     "start": 478.4,
+     "end": 478.7
+    },
+    {
+     "w": "email.",
+     "start": 478.7,
+     "end": 479.4
+    },
+    {
+     "w": "How",
+     "start": 480.36,
+     "end": 480.44
+    },
+    {
+     "w": "do",
+     "start": 480.44,
+     "end": 480.56
+    },
+    {
+     "w": "you",
+     "start": 480.56,
+     "end": 480.66
+    },
+    {
+     "w": "avoid",
+     "start": 480.66,
+     "end": 480.94
+    },
+    {
+     "w": "making",
+     "start": 480.94,
+     "end": 481.5
+    },
+    {
+     "w": "the",
+     "start": 481.5,
+     "end": 481.62
+    },
+    {
+     "w": "client",
+     "start": 481.62,
+     "end": 481.86
+    },
+    {
+     "w": "wait",
+     "start": 481.86,
+     "end": 482.26
+    },
+    {
+     "w": "for",
+     "start": 482.26,
+     "end": 482.56
+    },
+    {
+     "w": "it?",
+     "start": 482.56,
+     "end": 482.72
+    }
+   ],
+   "heard": "Quick check before you go. A post slash orders request must also send a confirmation email. How do you avoid making the client wait for it?"
+  },
+  {
+   "beat": "quiz",
+   "key": "z2",
+   "ch": 6,
+   "say": "Pause and answer. Got it? Put the email on a queue as a background job. A worker sends it after the response.",
+   "cap": "Put it on a [queue]. A [worker] sends it [after] the response.",
+   "start": 482.992,
+   "end": 490.523,
+   "gap": 0.45,
+   "words": [
+    {
+     "w": "Pause",
+     "start": 482.942,
+     "end": 483.302
+    },
+    {
+     "w": "and",
+     "start": 483.302,
+     "end": 483.502
+    },
+    {
+     "w": "answer.",
+     "start": 483.502,
+     "end": 483.922
+    },
+    {
+     "w": "Got",
+     "start": 484.502,
+     "end": 484.602
+    },
+    {
+     "w": "it.",
+     "start": 484.602,
+     "end": 484.802
+    },
+    {
+     "w": "Put",
+     "start": 485.402,
+     "end": 485.402
+    },
+    {
+     "w": "the",
+     "start": 485.402,
+     "end": 485.522
+    },
+    {
+     "w": "email",
+     "start": 485.522,
+     "end": 485.802
+    },
+    {
+     "w": "on",
+     "start": 485.802,
+     "end": 486.202
+    },
+    {
+     "w": "a",
+     "start": 486.202,
+     "end": 486.282
+    },
+    {
+     "w": "queue",
+     "start": 486.282,
+     "end": 486.582
+    },
+    {
+     "w": "as",
+     "start": 486.582,
+     "end": 486.842
+    },
+    {
+     "w": "a",
+     "start": 486.842,
+     "end": 486.902
+    },
+    {
+     "w": "background",
+     "start": 486.902,
+     "end": 487.142
+    },
+    {
+     "w": "job.",
+     "start": 487.142,
+     "end": 487.642
+    },
+    {
+     "w": "A",
+     "start": 488.362,
+     "end": 488.382
+    },
+    {
+     "w": "worker",
+     "start": 488.382,
+     "end": 488.602
+    },
+    {
+     "w": "sends",
+     "start": 488.602,
+     "end": 489.042
+    },
+    {
+     "w": "it",
+     "start": 489.042,
+     "end": 489.302
+    },
+    {
+     "w": "after",
+     "start": 489.302,
+     "end": 489.462
+    },
+    {
+     "w": "the",
+     "start": 489.462,
+     "end": 489.722
+    },
+    {
+     "w": "response.",
+     "start": 489.722,
+     "end": 490.042
+    }
+   ],
+   "heard": "Pause and answer. Got it. Put the email on a queue as a background job. A worker sends it after the response."
+  },
+  {
+   "beat": "out",
+   "key": "p1",
+   "ch": 6,
+   "say": "Next up: the handbook's learning roadmap, a guided path through all twenty parts.",
+   "cap": "Next: the [learning roadmap] through all [20] parts.",
+   "start": 490.973,
+   "end": 496.089,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "Next",
+     "start": 490.923,
+     "end": 491.143
+    },
+    {
+     "w": "up,",
+     "start": 491.143,
+     "end": 491.403
+    },
+    {
+     "w": "the",
+     "start": 491.843,
+     "end": 491.983
+    },
+    {
+     "w": "Handbook's",
+     "start": 491.983,
+     "end": 492.463
+    },
+    {
+     "w": "Learning",
+     "start": 492.463,
+     "end": 492.643
+    },
+    {
+     "w": "Road",
+     "start": 492.643,
+     "end": 493.043
+    },
+    {
+     "w": "Map,",
+     "start": 493.043,
+     "end": 493.323
+    },
+    {
+     "w": "a",
+     "start": 493.663,
+     "end": 493.803
+    },
+    {
+     "w": "guided",
+     "start": 493.803,
+     "end": 494.083
+    },
+    {
+     "w": "path",
+     "start": 494.083,
+     "end": 494.483
+    },
+    {
+     "w": "through",
+     "start": 494.483,
+     "end": 494.843
+    },
+    {
+     "w": "all",
+     "start": 494.843,
+     "end": 495.043
+    },
+    {
+     "w": "20",
+     "start": 495.043,
+     "end": 495.383
+    },
+    {
+     "w": "parts.",
+     "start": 495.383,
+     "end": 495.743
+    }
+   ],
+   "heard": "Next up, the Handbook's Learning Road Map, a guided path through all 20 parts."
+  },
+  {
+   "beat": "out",
+   "key": "p2",
+   "ch": 6,
+   "say": "Or try the chapter's exercise: the layers a GET orders by I D request passes through, in a food delivery app.",
+   "cap": "Try it: layers for [GET /orders/{id}] in a [food delivery] app.",
+   "start": 496.329,
+   "end": 504.145,
+   "gap": 0.24,
+   "words": [
+    {
+     "w": "or",
+     "start": 496.279,
+     "end": 496.399
+    },
+    {
+     "w": "try",
+     "start": 496.399,
+     "end": 496.599
+    },
+    {
+     "w": "the",
+     "start": 496.599,
+     "end": 496.799
+    },
+    {
+     "w": "chapters",
+     "start": 496.799,
+     "end": 497.199
+    },
+    {
+     "w": "exercise.",
+     "start": 497.199,
+     "end": 497.919
+    },
+    {
+     "w": "The",
+     "start": 498.759,
+     "end": 498.779
+    },
+    {
+     "w": "layers",
+     "start": 498.779,
+     "end": 499.159
+    },
+    {
+     "w": "of",
+     "start": 499.159,
+     "end": 499.399
+    },
+    {
+     "w": "Get",
+     "start": 499.399,
+     "end": 499.599
+    },
+    {
+     "w": "Orders",
+     "start": 499.599,
+     "end": 499.939
+    },
+    {
+     "w": "by",
+     "start": 499.939,
+     "end": 500.279
+    },
+    {
+     "w": "ID",
+     "start": 500.279,
+     "end": 500.719
+    },
+    {
+     "w": "Request",
+     "start": 500.719,
+     "end": 501.079
+    },
+    {
+     "w": "passes",
+     "start": 501.079,
+     "end": 501.819
+    },
+    {
+     "w": "through",
+     "start": 501.819,
+     "end": 502.179
+    },
+    {
+     "w": "in",
+     "start": 502.179,
+     "end": 502.779
+    },
+    {
+     "w": "a",
+     "start": 502.779,
+     "end": 502.839
+    },
+    {
+     "w": "food",
+     "start": 502.839,
+     "end": 503.039
+    },
+    {
+     "w": "delivery",
+     "start": 503.039,
+     "end": 503.359
+    },
+    {
+     "w": "app.",
+     "start": 503.359,
+     "end": 503.939
+    }
+   ],
+   "heard": "or try the chapters exercise. The layers of Get Orders by ID Request passes through in a food delivery app."
+  },
+  {
+   "beat": "out",
+   "key": "p3",
+   "ch": 6,
+   "say": "Subscribe, and I'll see you in the next one.",
+   "cap": "[Subscribe], and see you in the next one.",
+   "start": 504.385,
+   "end": 506.721,
+   "gap": 0.6,
+   "words": [
+    {
+     "w": "Subscribe",
+     "start": 504.335,
+     "end": 504.795
+    },
+    {
+     "w": "and",
+     "start": 504.795,
+     "end": 505.335
+    },
+    {
+     "w": "I'll",
+     "start": 505.335,
+     "end": 505.535
+    },
+    {
+     "w": "see",
+     "start": 505.535,
+     "end": 505.735
+    },
+    {
+     "w": "you",
+     "start": 505.735,
+     "end": 505.935
+    },
+    {
+     "w": "in",
+     "start": 505.935,
+     "end": 506.015
+    },
+    {
+     "w": "the",
+     "start": 506.015,
+     "end": 506.095
+    },
+    {
+     "w": "next",
+     "start": 506.095,
+     "end": 506.295
+    },
+    {
+     "w": "one.",
+     "start": 506.295,
+     "end": 506.575
+    }
+   ],
+   "heard": "Subscribe and I'll see you in the next one."
+  }
+ ]
+}

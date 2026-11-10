@@ -1,0 +1,92 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="route" data-width="1920" data-height="1080">
+<div id="route-stage" class="stage">
+<div id="route-e1" class="el codecard" style="left:160px;top:130px;width:1600px;height:524px;background:#0A0A0A"><div class="bar"><span class="dot" style="background:#FF5F57"></span><span class="dot" style="background:#FEBC2E"></span><span class="dot" style="background:#28C840"></span><span class="ttl" style="color:#A0A0B0">examples/llm-gateway/main.py  ·  excerpt</span></div></div>
+<div id="route-e1-L0" class="el mono" style="left:194px;top:208px;width:1540px;font-size:28px;height:60px;white-space:pre">PROVIDER_PRIORITY = [<span class="f">UnreliableTestAdapter</span>(), <span class="f">ProviderAAdapter</span>(), <span class="f">ProviderBAdapter</span>()]</div>
+<div id="route-e1-L1" class="el mono" style="left:194px;top:268px;width:1540px;font-size:28px;height:60px;white-space:pre">rate_limiter = <span class="f">TokenBucketRateLimiter</span>(capacity=<span class="n">5</span>, refill_rate=<span class="n">1.0</span>)</div>
+<div id="route-e1-L2" class="el mono" style="left:194px;top:328px;width:1540px;font-size:28px;height:60px;white-space:pre"><span class="c"># …</span></div>
+<div id="route-e1-L3" class="el mono" style="left:194px;top:388px;width:1540px;font-size:28px;height:60px;white-space:pre"><span class="k">if</span> <span class="k">not</span> <span class="k">await</span> rate_limiter.<span class="f">allow</span>():</div>
+<div id="route-e1-L4" class="el mono" style="left:194px;top:448px;width:1540px;font-size:28px;height:60px;white-space:pre">    <span class="k">raise</span> <span class="f">HTTPException</span>(status_code=<span class="n">429</span>, detail=<span class="s">"rate limit exceeded, try again shortly"</span>)</div>
+<div id="route-e1-L5" class="el mono" style="left:194px;top:508px;width:1540px;font-size:28px;height:60px;white-space:pre"><span class="c"># …</span></div>
+<div id="route-e1-L6" class="el mono" style="left:194px;top:568px;width:1540px;font-size:28px;height:60px;white-space:pre">cost_usd = <span class="f">compute_cost_usd</span>(result)</div>
+<div id="route-e2" class="el" style="left:160px;top:208px;width:1600px;height:60px;background:rgba(255,229,0,0.16);border-left:6px solid #FFE500;opacity:0"></div>
+<div id="route-e3" class="el chip" style="left:160px;top:700px;background:#00F0FF;color:#0E0622;font-size:34px;">providers, in priority order</div>
+<div id="route-e4" class="el chip" style="left:700px;top:700px;background:#39FF88;color:#0E0622;font-size:34px;">5 requests, refill 1 per second</div>
+<div id="route-e5" class="el chip" style="left:1300px;top:700px;background:#FF9100;color:#0E0622;font-size:34px;">over the limit → 429</div>
+<div id="route-e6" class="el chip" style="left:160px;top:780px;background:#FF2E88;color:#0E0622;font-size:34px;">a cost on every response</div>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#route-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("route-e1","fade",3.19,null);
+A("route-e1-L0","wipe",3.44,null);
+A("route-e1-L1","wipe",13.229,null);
+A("route-e1-L2","wipe",16.269,null);
+A("route-e1-L3","wipe",17.939,null);
+A("route-e1-L4","wipe",18.189,null);
+A("route-e1-L5","wipe",21.599,null);
+A("route-e1-L6","wipe",22.859,null);
+tl.fromTo("#route-e2",{opacity:0,y:0},{opacity:1,y:0,duration:.2},10.869);
+tl.fromTo("#route-e2",{y:0},{y:60,duration:.3,ease:"power2.inOut",immediateRender:false},13.229);
+tl.fromTo("#route-e2",{y:60},{y:180,duration:.3,ease:"power2.inOut",immediateRender:false},17.939);
+tl.fromTo("#route-e2",{y:180},{y:240,duration:.3,ease:"power2.inOut",immediateRender:false},18.239);
+tl.fromTo("#route-e2",{y:240},{y:360,duration:.3,ease:"power2.inOut",immediateRender:false},22.859);
+A("route-e3","pop",10.869,null);
+A("route-e4","pop",13.229,null);
+A("route-e5","pop",17.939,null);
+A("route-e6","pop",22.859,null);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["route"] = tl;
+</script>
+</div>
+</template>

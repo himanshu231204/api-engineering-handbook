@@ -1,0 +1,5 @@
+Your API request passes through five layers before it reaches your code. Which ones does your app really need, and which are just extra complexity?
+You're adding a gateway, a queue and a cache to an app with ten users. Before you do, learn which layers earn their place and which just make it harder to debug.
+One request can touch six systems in under two hundred milliseconds. If you can't name them, you can't debug your API when it's slow.
+You don't need a gateway, a queue and a cache on day one. Why do most teams add them anyway, and how do you know when a layer is worth it?
+Your API call never goes straight to your server. It passes through a CDN, a gateway, and more. What does each one do, and which can you skip?

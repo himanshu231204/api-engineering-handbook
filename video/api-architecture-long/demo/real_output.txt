@@ -1,0 +1,17 @@
+$ for i in 1 2 3 4 5; do curl -s -X POST localhost:8000/chat ... | print(provider, cost_usd); done
+flaky_test_provider 0.0
+flaky_test_provider 0.0
+flaky_test_provider 0.0
+flaky_test_provider 0.0
+provider_a 0.000228
+$ curl -s localhost:8000/usage
+{"acme_corp":{"requests":5,"total_cost_usd":0.000228}}
+$ for i in $(seq 1 8); do curl ... -w "%{http_code}\n" ... /chat; done   # a burst, after the bucket refilled
+200
+200
+200
+200
+200
+429
+429
+429

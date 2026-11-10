@@ -2,7 +2,7 @@
 
 One video per handbook topic, 5–10 minutes each. This page tracks which topics have a video.
 
-**0 of 202** topics published · **2** rendered, waiting for upload (What Is an API?, DNS).
+**0 of 202** topics published · **3** rendered, waiting for upload (What Is an API?, DNS, API Architecture at a Glance).
 
 ## How videos are made and tracked
 
@@ -16,7 +16,7 @@ Next up: **JWT Deeply Explained** (pilot, Part 5 — Authentication & Authorizat
 
 | Part | Published | Rendered | Scripted | Planned | Total |
 |---|---|---|---|---|---|
-| Part 0 — Introduction | 0 | 1 | 0 | 2 | 3 |
+| Part 0 — Introduction | 0 | 2 | 0 | 1 | 3 |
 | Part 1 — API Foundations | 0 | 1 | 0 | 10 | 11 |
 | Part 2 — REST API Design | 0 | 0 | 0 | 11 | 11 |
 | Part 3 — Building APIs | 0 | 0 | 0 | 10 | 10 |
@@ -43,7 +43,7 @@ Next up: **JWT Deeply Explained** (pilot, Part 5 — Authentication & Authorizat
 | # | Topic | Status | Video |
 |---|---|---|---|
 | 1 | [What Is an API?](../docs/00-introduction/what-is-an-api.md) | 🎬 Rendered | — |
-| 2 | [API Architecture at a Glance](../docs/00-introduction/api-architecture.md) | ⬜ Planned | — |
+| 2 | [API Architecture at a Glance](../docs/00-introduction/api-architecture.md) | 🎬 Rendered | — |
 | 3 | [Learning Roadmap](../docs/00-introduction/learning-roadmap.md) | ⬜ Planned | — |
 
 ## Part 1 — API Foundations

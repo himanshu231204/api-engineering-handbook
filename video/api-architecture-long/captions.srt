@@ -1,0 +1,599 @@
+1
+00:00:00,250 --> 00:00:04,312
+Your API request crosses five
+layers before it returns.
+
+2
+00:00:04,552 --> 00:00:07,390
+Add the wrong one, and you'll
+lose weeks debugging it.
+
+3
+00:00:07,630 --> 00:00:12,681
+Which layers does your API need? By the
+end of this video, you'll name each layer,
+
+4
+00:00:12,681 --> 00:00:16,438
+trace three requests through them, and
+know when to skip one.
+
+5
+00:00:16,888 --> 00:00:18,745
+Here's the plan, in
+five parts.
+
+6
+00:00:18,985 --> 00:00:23,542
+One, the big map. Two, who does what.
+Three, three requests traced through it.
+
+7
+00:00:23,782 --> 00:00:27,281
+Four, a real run. And five, when
+not to add a layer.
+
+8
+00:00:29,281 --> 00:00:32,881
+Picture an airport. Check
+in, security, then the gate.
+
+9
+00:00:32,881 --> 00:00:34,948
+One job each, before you
+board.
+
+10
+00:00:35,188 --> 00:00:40,412
+A request travels the same way. A CDN
+may answer straight away. A gateway
+
+11
+00:00:40,412 --> 00:00:43,775
+checks who you are. The app does the
+real work.
+
+12
+00:00:44,225 --> 00:00:49,394
+Here is the whole map, straight from the
+handbook. It starts with a client: a
+
+13
+00:00:49,394 --> 00:00:53,220
+browser, a mobile app, another service,
+even an AI agent.
+
+14
+00:00:53,460 --> 00:00:57,680
+The client reaches a CDN or
+load balancer, then an API
+
+15
+00:00:57,680 --> 00:01:00,728
+gateway, then your application
+service.
+
+16
+00:01:00,968 --> 00:01:06,154
+And behind the application sit four
+things: a cache, a database, a message
+
+17
+00:01:06,154 --> 00:01:11,761
+queue with workers, and an AI gateway that
+reaches the language model providers.
+
+18
+00:01:12,211 --> 00:01:16,520
+The chapter draws the same system a
+second way, grouped into layers.
+
+19
+00:01:16,760 --> 00:01:19,588
+Edge. Gateway. Application.
+Data. And AI.
+
+20
+00:01:19,828 --> 00:01:23,584
+Five layers, each with a
+narrow job. Client, edge,
+
+21
+00:01:23,584 --> 00:01:26,514
+gateway, application, then
+data and AI.
+
+22
+00:01:28,514 --> 00:01:33,067
+The handbook's mental model is a company
+org chart, not one person doing
+
+23
+00:01:33,067 --> 00:01:34,020
+everything.
+
+24
+00:01:34,260 --> 00:01:37,704
+The CDN is the receptionist.
+If they already have your
+
+25
+00:01:37,704 --> 00:01:40,128
+answer, they hand it over
+right there.
+
+26
+00:01:40,368 --> 00:01:44,006
+The gateway is security and
+routing. It checks your badge,
+
+27
+00:01:44,006 --> 00:01:46,452
+then sends you to the right
+department.
+
+28
+00:01:46,692 --> 00:01:50,536
+The application service is that
+department, doing the real
+
+29
+00:01:50,536 --> 00:01:53,254
+work. The database is the
+filing cabinet.
+
+30
+00:01:53,494 --> 00:01:58,839
+The queue is the ticket system. The AI
+gateway talks to outside AI vendors.
+
+31
+00:01:59,289 --> 00:02:03,088
+Zoom in on the gateway: one
+front door, one address for
+
+32
+00:02:03,088 --> 00:02:05,298
+web, mobile and partner
+clients.
+
+33
+00:02:05,538 --> 00:02:09,335
+It does the shared chores once:
+authenticate, rate limit, and
+
+34
+00:02:09,335 --> 00:02:11,513
+route to the right private
+service.
+
+35
+00:02:11,754 --> 00:02:16,929
+Fail a check, and the request
+is rejected right there: a 401,
+
+36
+00:02:16,929 --> 00:02:19,898
+or a 429. No service does any
+work.
+
+37
+00:02:20,138 --> 00:02:24,748
+And it stays dumb. A gateway that also
+holds business logic stops being a
+
+38
+00:02:24,748 --> 00:02:25,672
+gateway.
+
+39
+00:02:26,122 --> 00:02:29,372
+The cache sits beside the app.
+Reads check it first.
+
+40
+00:02:29,612 --> 00:02:33,548
+A hit comes back in about 1
+millisecond. A miss reads the
+
+41
+00:02:33,548 --> 00:02:36,724
+database, then saves the answer
+for next time.
+
+42
+00:02:36,964 --> 00:02:40,948
+On a write, the app updates the
+database and deletes the cached
+
+43
+00:02:40,948 --> 00:02:43,035
+copy, so nobody reads stale
+data.
+
+44
+00:02:43,485 --> 00:02:46,571
+The queue is for work that
+shouldn't make the client
+
+45
+00:02:46,571 --> 00:02:48,945
+wait. Like sending a
+confirmation email.
+
+46
+00:02:49,185 --> 00:02:54,966
+The API validates the request, drops a job
+on the queue, and answers right away.
+
+47
+00:02:55,206 --> 00:02:59,847
+Workers do the slow part later. If a
+worker crashes, the job goes back on the
+
+48
+00:02:59,847 --> 00:03:00,749
+queue.
+
+49
+00:03:00,989 --> 00:03:05,883
+That buys you decoupling, durability, and
+a steady pace when traffic spikes.
+
+50
+00:03:06,333 --> 00:03:10,430
+The AI gateway is one front
+door for every model call. Your
+
+51
+00:03:10,430 --> 00:03:13,139
+apps never talk to a provider
+directly.
+
+52
+00:03:13,379 --> 00:03:18,770
+It handles authentication, rate limits,
+caching, routing and cost tracking once,
+
+53
+00:03:18,770 --> 00:03:23,217
+for everyone. And if a provider is down,
+it falls back to another.
+
+54
+00:03:25,217 --> 00:03:31,441
+Request one, a simple read: GET
+/products/9. It hits the CDN first.
+
+55
+00:03:31,681 --> 00:03:36,242
+If the CDN has the answer cached,
+it returns right there. Nothing
+
+56
+00:03:36,242 --> 00:03:38,979
+behind it ever hears about the
+request.
+
+57
+00:03:39,219 --> 00:03:42,372
+If not, the gateway
+authenticates and rate limits,
+
+58
+00:03:42,372 --> 00:03:45,021
+then routes it to the
+application service.
+
+59
+00:03:45,261 --> 00:03:49,009
+The app checks its cache. A
+hit skips the database. A miss
+
+60
+00:03:49,009 --> 00:03:51,270
+queries it, then stores the
+result.
+
+61
+00:03:51,510 --> 00:03:55,359
+Then the response retraces the same
+path, back to the client.
+
+62
+00:03:55,809 --> 00:04:01,300
+Request two, a write: POST /orders. This
+is the handbook's end to end view of it.
+
+63
+00:04:01,540 --> 00:04:05,979
+A POST isn't cached, so it passes straight
+through to the application service.
+
+64
+00:04:06,219 --> 00:04:10,998
+The order service validates the body,
+commits to PostgreSQL in one
+
+65
+00:04:10,998 --> 00:04:15,705
+transaction, updates Redis, and
+publishes a message to the queue.
+
+66
+00:04:15,945 --> 00:04:21,722
+A 201 comes back in roughly 20 to 150
+milliseconds. The worker sends the
+
+67
+00:04:21,722 --> 00:04:25,895
+email after the response, so the
+client never waits.
+
+68
+00:04:26,345 --> 00:04:31,504
+Request three, an AI chat message. The
+handbook traces it in seven steps.
+
+69
+00:04:31,744 --> 00:04:36,884
+The gateway validates the token and
+checks the rate limit. The app loads
+
+70
+00:04:36,884 --> 00:04:40,524
+the conversation from PostgreSQL, and
+checks Redis.
+
+71
+00:04:40,764 --> 00:04:44,972
+Then the app calls the AI gateway,
+which routes to an available
+
+72
+00:04:44,972 --> 00:04:48,245
+provider, with a fallback if the
+primary is down.
+
+73
+00:04:48,485 --> 00:04:51,649
+The answer streams back
+token by token, through the
+
+74
+00:04:51,649 --> 00:04:53,759
+app and the gateway to the
+client.
+
+75
+00:04:53,999 --> 00:04:57,501
+And logging and cost tracking
+happen afterwards, through a
+
+76
+00:04:57,501 --> 00:04:59,675
+queue, so they never slow the
+reply.
+
+77
+00:05:00,125 --> 00:05:05,976
+Same map, three different paths. A read
+can stop at the CDN. A write goes to the
+
+78
+00:05:05,976 --> 00:05:11,095
+database and queues the slow work. A chat
+goes through the AI gateway.
+
+79
+00:05:13,095 --> 00:05:18,517
+Now let's watch the AI layer for
+real. This is the handbook's LLM
+
+80
+00:05:18,517 --> 00:05:21,604
+gateway example, a small FastAPI
+app.
+
+81
+00:05:21,844 --> 00:05:27,082
+Its setup is a few lines: providers in
+priority order, and a token bucket
+
+82
+00:05:27,082 --> 00:05:30,814
+that allows five requests, refilling
+one per second.
+
+83
+00:05:31,054 --> 00:05:37,075
+Over the limit, the gateway answers 429.
+And every response gets a cost attached.
+
+84
+00:05:37,525 --> 00:05:42,431
+Five calls to the same chat endpoint. Four
+were served by the first provider.
+
+85
+00:05:42,671 --> 00:05:46,110
+On the fifth, it failed, and
+the gateway fell back to
+
+86
+00:05:46,110 --> 00:05:49,030
+provider A, the only one that
+costs anything.
+
+87
+00:05:49,270 --> 00:05:53,890
+The usage endpoint rolls up cost per
+tenant: five requests, a fraction of a
+
+88
+00:05:53,890 --> 00:05:54,784
+cent.
+
+89
+00:05:55,234 --> 00:06:00,472
+Now a burst of eight requests. The
+first five pass. The next three get
+
+90
+00:06:00,472 --> 00:06:03,615
+a 429: rate limited, right at the
+gateway.
+
+91
+00:06:05,615 --> 00:06:10,448
+Now the most important rule. Not every
+API needs every layer. A small
+
+92
+00:06:10,448 --> 00:06:15,700
+internal tool can be one application
+service with a database behind it, and
+
+93
+00:06:15,700 --> 00:06:18,782
+that's the right architecture at that
+scale.
+
+94
+00:06:19,022 --> 00:06:23,912
+Each layer buys you something. A
+cache buys latency. A gateway buys
+
+95
+00:06:23,912 --> 00:06:28,292
+central auth. A queue buys
+resilience. But the price is more
+
+96
+00:06:28,292 --> 00:06:31,941
+moving parts, more failure modes,
+more to operate.
+
+97
+00:06:32,391 --> 00:06:38,047
+Mistake one. Assuming every API needs a
+gateway, a queue, and a cache from day
+
+98
+00:06:38,047 --> 00:06:43,994
+one. Most don't, at first. Add a layer for
+a real problem, not a hypothetical one.
+
+99
+00:06:44,444 --> 00:06:50,221
+Mistake two. Treating microservices as
+automatically more production grade than a
+
+100
+00:06:50,221 --> 00:06:54,928
+well built monolith. It depends on the
+problem. Part 11 covers it.
+
+101
+00:06:55,378 --> 00:07:00,241
+Mistake three. Bolting the AI layer
+on as an afterthought. It needs its
+
+102
+00:07:00,241 --> 00:07:03,186
+own timeouts, fallbacks, and cost
+tracking.
+
+103
+00:07:03,636 --> 00:07:09,189
+A database query is usually fast and
+predictable. A model call can be slow,
+
+104
+00:07:09,189 --> 00:07:14,742
+non-deterministic, and billed by usage.
+That's why it deserves its own box.
+
+105
+00:07:14,982 --> 00:07:22,172
+So Parts 14 to 17 add LLM gateways,
+token rate limits, prompt caching, and
+
+106
+00:07:22,172 --> 00:07:27,613
+semantic caching. Ideas a typical CRUD
+API never needed.
+
+107
+00:07:29,613 --> 00:07:30,582
+Let's recap.
+
+108
+00:07:30,822 --> 00:07:34,872
+A production API is a layered
+system: client, edge,
+
+109
+00:07:34,872 --> 00:07:37,969
+gateway, application, then
+data and AI.
+
+110
+00:07:38,209 --> 00:07:41,918
+Each layer has one narrow job, and
+requests take different paths through
+
+111
+00:07:41,918 --> 00:07:42,785
+them.
+
+112
+00:07:43,025 --> 00:07:48,364
+Add a layer only for a real problem, and
+treat the AI layer like the database.
+
+113
+00:07:48,604 --> 00:07:52,880
+And bookmark Part 18. It's the full
+production version of this map.
+
+114
+00:07:53,330 --> 00:07:58,006
+Quick check before you go. A POST
+/orders request must also send a
+
+115
+00:07:58,006 --> 00:08:02,752
+confirmation email. How do you avoid
+making the client wait for it?
+
+116
+00:08:02,992 --> 00:08:07,594
+Pause and answer. Got it? Put the
+email on a queue as a background
+
+117
+00:08:07,594 --> 00:08:10,523
+job. A worker sends it after the
+response.
+
+118
+00:08:10,973 --> 00:08:16,089
+Next up: the handbook's learning roadmap,
+a guided path through all 20 parts.
+
+119
+00:08:16,329 --> 00:08:20,712
+Or try the chapter's exercise:
+the layers a GET /orders/{id}
+
+120
+00:08:20,712 --> 00:08:24,145
+request passes through, in a food
+delivery app.
+
+121
+00:08:24,385 --> 00:08:26,721
+Subscribe, and I'll see you
+in the next one.
+

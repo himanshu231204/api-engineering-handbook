@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph Edge
+        C[Client] --> CDN[CDN / LB]
+    end
+    subgraph Gateway Layer
+        CDN --> GW[API Gateway]
+    end
+    subgraph Application Layer
+        GW --> S1[Service A]
+        GW --> S2[Service B]
+    end
+    subgraph Data Layer
+        S1 --> Cache[(Redis)]
+        S1 --> DB[(PostgreSQL)]
+        S2 --> Q[[Queue]]
+    end
+    subgraph AI Layer
+        S1 --> AIGW[AI Gateway]
+        AIGW --> P1[Provider A]
+        AIGW --> P2[Provider B]
+    end

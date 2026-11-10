@@ -1,0 +1,17 @@
+{
+ "themeVariables": {
+  "fontSize": "26px"
+ },
+ "sequence": {
+  "mirrorActors": false,
+  "messageMargin": 22,
+  "actorMargin": 26,
+  "width": 170,
+  "height": 60,
+  "boxMargin": 8,
+  "noteMargin": 8,
+  "diagramMarginY": 8,
+  "labelBoxWidth": 60,
+  "labelBoxHeight": 30
+ }
+}

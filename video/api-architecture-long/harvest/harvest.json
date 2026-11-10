@@ -1,0 +1,66 @@
+{
+ "chapter": "docs/00-introduction/api-architecture.md",
+ "title": "API Architecture at a Glance",
+ "tldr": {
+  "In one line": "A production API is a layered system — client, edge, gateway, application, then data and AI layers — and you add each layer only when a real problem demands it.",
+  "In plain English": "Picture an airport: check-in, security and the gate each do one job before you board. A request travels the same way. A CDN may answer straight away, a gateway checks who you are, and the app does the real work with a database or an AI model behind it.",
+  "You'll be able to": "Name the main layers of a production API and the job of each · Trace which layers a read, a write and an AI chat request pass through · Decide when a layer is worth adding and when it is just extra complexity"
+ },
+ "sections": [
+  "Why This Matters",
+  "Core Concept",
+  "Mental Model",
+  "How It Works",
+  "Architecture",
+  "Request / Response Example",
+  "Code Example",
+  "Production Considerations",
+  "Common Mistakes",
+  "Best Practices",
+  "AI Engineering Perspective",
+  "Exercises",
+  "Key Takeaways"
+ ],
+ "mermaid": [
+  {
+   "mmd": "mermaid/diagram1.mmd",
+   "svg": "mermaid/diagram1.svg",
+   "section": "Core Concept",
+   "first_line": "flowchart TD"
+  },
+  {
+   "mmd": "mermaid/diagram2.mmd",
+   "svg": "mermaid/diagram2.svg",
+   "section": "Architecture",
+   "first_line": "flowchart LR"
+  }
+ ],
+ "code": [
+  {
+   "file": "code/block1.txt",
+   "lang": "text",
+   "section": "Request / Response Example",
+   "lines": 7
+  }
+ ],
+ "svgs": [],
+ "takeaways": [
+  "Production APIs are layered systems: edge → gateway → application → data/AI.",
+  "Not every API needs every layer — add complexity when the problem demands it.",
+  "AI systems introduce a new layer (the AI gateway) with different failure and cost characteristics than a typical database call.",
+  "This map will be referenced constantly — bookmark [Part 18](../18-production-architecture/README.md) for the full version."
+ ],
+ "quiz": [
+  "1. What is the difference between the API gateway layer and the application service layer?",
+  "2. Why not add a CDN, a gateway, a queue and a cache to every new API from day one?",
+  "3. A POST /orders request must also send a confirmation email. How do you avoid making the client wait for the email?"
+ ],
+ "related": {
+  "resources": [],
+  "examples": [],
+  "diagrams": [
+   "diagrams/api-request-flow.md"
+  ],
+  "projects": []
+ }
+}

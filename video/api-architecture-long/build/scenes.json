@@ -1,0 +1,438 @@
+[
+ {
+  "id": "hook",
+  "start": 0.0,
+  "dur": 16.808,
+  "kind": "logo_reveal",
+  "chapter": 0,
+  "keys": [
+   "h1",
+   "h2",
+   "h3"
+  ],
+  "assets": [],
+  "pill": null
+ },
+ {
+  "id": "road",
+  "start": 16.808,
+  "dur": 10.723,
+  "kind": "roadmap",
+  "chapter": 0,
+  "keys": [
+   "r1",
+   "r2",
+   "r3"
+  ],
+  "assets": [],
+  "pill": "5 parts \u00b7 about 8 minutes"
+ },
+ {
+  "id": "card1",
+  "start": 27.531,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 1,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "air",
+  "start": 29.201,
+  "dur": 14.944,
+  "kind": "svg_analogy",
+  "chapter": 1,
+  "keys": [
+   "a1",
+   "a2"
+  ],
+  "assets": [],
+  "pill": "one narrow job per layer"
+ },
+ {
+  "id": "map",
+  "start": 44.145,
+  "dur": 27.986,
+  "kind": "svg_flow",
+  "chapter": 1,
+  "keys": [
+   "m1",
+   "m2",
+   "m3"
+  ],
+  "assets": [
+   "repo/mermaid/api-architecture-layers-td.svg"
+  ],
+  "pill": "client \u2192 edge \u2192 gateway \u2192 application \u2192 data / AI"
+ },
+ {
+  "id": "lay",
+  "start": 72.131,
+  "dur": 14.633,
+  "kind": "svg_flow",
+  "chapter": 1,
+  "keys": [
+   "l1",
+   "l2",
+   "l3"
+  ],
+  "assets": [
+   "repo/mermaid/api-architecture-layers-lr.svg"
+  ],
+  "pill": "five layers, one narrow job each"
+ },
+ {
+  "id": "card2",
+  "start": 86.764,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 2,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "org",
+  "start": 88.434,
+  "dur": 30.775,
+  "kind": "svg_icons",
+  "chapter": 2,
+  "keys": [
+   "o1",
+   "o2",
+   "o3",
+   "o4",
+   "o5"
+  ],
+  "assets": [],
+  "pill": "a company org chart, not one person doing everything"
+ },
+ {
+  "id": "gw",
+  "start": 119.209,
+  "dur": 26.833,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "g1",
+   "g2",
+   "g3",
+   "g4"
+  ],
+  "assets": [
+   "repo/svg/11-api-gateway.svg"
+  ],
+  "pill": "one front door for every client"
+ },
+ {
+  "id": "cache",
+  "start": 146.042,
+  "dur": 17.363,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "c1",
+   "c2",
+   "c3"
+  ],
+  "assets": [
+   "repo/svg/07-cache-aside.svg"
+  ],
+  "pill": "cache-aside: check the cache first"
+ },
+ {
+  "id": "queue",
+  "start": 163.405,
+  "dur": 22.848,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "q1",
+   "q2",
+   "q3",
+   "q4"
+  ],
+  "assets": [
+   "repo/svg/08-message-queue.svg"
+  ],
+  "pill": "answer fast, work later"
+ },
+ {
+  "id": "ai",
+  "start": 186.253,
+  "dur": 17.214,
+  "kind": "svg_diagram",
+  "chapter": 2,
+  "keys": [
+   "i1",
+   "i2"
+  ],
+  "assets": [
+   "repo/svg/15-llm-gateway.svg"
+  ],
+  "pill": "one front door for every model call"
+ },
+ {
+  "id": "card3",
+  "start": 203.467,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 3,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "read",
+  "start": 205.137,
+  "dur": 30.592,
+  "kind": "svg_flow",
+  "chapter": 3,
+  "keys": [
+   "d1",
+   "d2",
+   "d3",
+   "d4",
+   "d5"
+  ],
+  "assets": [
+   "repo/mermaid/api-request-flow.svg"
+  ],
+  "pill": "GET /products/9"
+ },
+ {
+  "id": "write",
+  "start": 235.729,
+  "dur": 30.536,
+  "kind": "svg_diagram",
+  "chapter": 3,
+  "keys": [
+   "w1",
+   "w2",
+   "w3",
+   "w4"
+  ],
+  "assets": [
+   "repo/svg/18-request-flow.svg"
+  ],
+  "pill": "POST /orders"
+ },
+ {
+  "id": "chat",
+  "start": 266.265,
+  "dur": 33.78,
+  "kind": "code_card",
+  "chapter": 3,
+  "keys": [
+   "t1",
+   "t2",
+   "t3",
+   "t4",
+   "t5"
+  ],
+  "assets": [
+   "harvest/code/block1.txt"
+  ],
+  "pill": "POST /chat: seven steps"
+ },
+ {
+  "id": "sum",
+  "start": 300.045,
+  "dur": 11.3,
+  "kind": "svg_compare",
+  "chapter": 3,
+  "keys": [
+   "u1"
+  ],
+  "assets": [],
+  "pill": "same map, three different paths"
+ },
+ {
+  "id": "card4",
+  "start": 311.345,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 4,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "route",
+  "start": 313.015,
+  "dur": 24.43,
+  "kind": "code_card",
+  "chapter": 4,
+  "keys": [
+   "v1",
+   "v1b",
+   "v2"
+  ],
+  "assets": [
+   "examples/llm-gateway/main.py"
+  ],
+  "pill": "examples/llm-gateway"
+ },
+ {
+  "id": "run1",
+  "start": 337.445,
+  "dur": 17.709,
+  "kind": "terminal_clip",
+  "chapter": 4,
+  "keys": [
+   "e1",
+   "e2",
+   "e3"
+  ],
+  "assets": [
+   "demo/real_output.txt"
+  ],
+  "pill": "real run \u00b7 commands trimmed"
+ },
+ {
+  "id": "run2",
+  "start": 355.154,
+  "dur": 8.711,
+  "kind": "terminal_clip",
+  "chapter": 4,
+  "keys": [
+   "f1"
+  ],
+  "assets": [
+   "demo/real_output.txt"
+  ],
+  "pill": "real run \u00b7 a burst of 8 requests"
+ },
+ {
+  "id": "card5",
+  "start": 363.865,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 5,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "simple",
+  "start": 365.535,
+  "dur": 26.776,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "s1",
+   "s3"
+  ],
+  "assets": [],
+  "pill": "every layer has a price"
+ },
+ {
+  "id": "x1",
+  "start": 392.311,
+  "dur": 12.053,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x1"
+  ],
+  "assets": [],
+  "pill": "every layer on day one"
+ },
+ {
+  "id": "x2",
+  "start": 404.364,
+  "dur": 10.934,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x2"
+  ],
+  "assets": [],
+  "pill": "it depends on the problem \u00b7 Part 11"
+ },
+ {
+  "id": "x3",
+  "start": 415.298,
+  "dur": 8.258,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "x3"
+  ],
+  "assets": [],
+  "pill": "slow \u00b7 can fail \u00b7 costs per call"
+ },
+ {
+  "id": "aip",
+  "start": 423.556,
+  "dur": 24.307,
+  "kind": "svg_compare",
+  "chapter": 5,
+  "keys": [
+   "y1",
+   "y3"
+  ],
+  "assets": [],
+  "pill": "the AI layer has different failure and cost"
+ },
+ {
+  "id": "card6",
+  "start": 447.863,
+  "dur": 1.67,
+  "kind": "chapter_card",
+  "chapter": 6,
+  "keys": [],
+  "assets": [],
+  "pill": null,
+  "card": true
+ },
+ {
+  "id": "rec",
+  "start": 449.533,
+  "dur": 23.717,
+  "kind": "recap_grid",
+  "chapter": 6,
+  "keys": [
+   "n1",
+   "n2",
+   "n3",
+   "n4",
+   "n6"
+  ],
+  "assets": [],
+  "pill": "layers earn their place"
+ },
+ {
+  "id": "quiz",
+  "start": 473.25,
+  "dur": 17.643,
+  "kind": "quiz_card",
+  "chapter": 6,
+  "keys": [
+   "z1",
+   "z2"
+  ],
+  "assets": [],
+  "pill": "Check yourself"
+ },
+ {
+  "id": "out",
+  "start": 490.893,
+  "dur": 16.44,
+  "kind": "end_screen",
+  "chapter": 6,
+  "keys": [
+   "p1",
+   "p2",
+   "p3"
+  ],
+  "assets": [],
+  "pill": null
+ }
+]

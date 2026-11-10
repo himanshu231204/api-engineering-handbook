@@ -55,6 +55,9 @@ s = re.sub(r'class="([^"]+)"', lambda m: 'class="' + " ".join(pre + c for c in m
 s = re.sub(r'\bid="([^"]+)"', lambda m: f'id="{pre}{m.group(1)}"', s)
 s = re.sub(r"url\(#([^)]+)\)", lambda m: f"url(#{pre}{m.group(1)})", s)
 s = re.sub(r'aria-labelledby="([^"]+)"', lambda m: 'aria-labelledby="' + " ".join(pre + c for c in m.group(1).split()) + '"', s)
+# step badges: the dark circle is brightened above, so its 1-2 digit numeral needs dark ink (white on mint is ~1.7:1)
+s = re.sub(r'(<text\b[^>]*?)fill="#FFFFFF"([^>]*>\s*\d{1,2}\s*</text>)', lambda m: m.group(1) + 'fill="#0E0622"' + m.group(2) if 'font-size="12"' in m.group(0) or 'font-size="13"' in m.group(0) else m.group(0), s)
+s = re.sub(r'(<text\b[^>]*?style="font:\s*700 1[23]px[^"]*?)fill:\s*#FFFFFF;("[^>]*>\s*\d{1,2}\s*</text>)', r'\1fill:#0E0622;\2', s)
 s = re.sub(r"<svg ", '<svg fill="#FFFFFF" ', s, count=1)              # text without an explicit fill defaulted to black
 open(dst, "w").write(s)
 vb = re.search(r'viewBox="[\-\d\.]+ [\-\d\.]+ ([\d\.]+) ([\d\.]+)"', s)

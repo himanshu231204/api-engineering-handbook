@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1280, height=720" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1280px;height:720px;overflow:hidden;background:#000;font-family:'Inter',sans-serif}
+#root{position:absolute;left:0;top:0;width:1280px;height:720px;background:#000}
+.t{position:absolute;font-weight:900;line-height:1;color:#fff;white-space:nowrap}
+.layer{position:absolute;height:84px;border-radius:20px;border:5px solid;display:flex;align-items:center;padding-left:26px;font-weight:900;font-size:40px;color:#fff;white-space:nowrap}
+.chip{position:absolute;border-radius:999px;padding:12px 32px;font-weight:900;font-size:40px;white-space:nowrap}
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="t" style="left:70px;top:70px;font-size:250px;color:#FFE500;text-shadow:0 0 30px rgba(255,229,0,.35)">5</div>
+  <div class="t" style="left:70px;top:330px;font-size:112px">LAYERS</div>
+  <div class="t" style="left:70px;top:472px;font-size:88px;color:#FF3B3B">NOT 1 SERVER</div>
+  <div class="chip" style="left:70px;top:610px;background:#39FF88;color:#0E0622">API Architecture at a Glance</div>
+  <div class="layer" style="left:810px;top:70px;width:400px;border-color:#00F0FF;background:rgba(0,240,255,.09);box-shadow:0 0 26px rgba(0,240,255,.35)">Client</div>
+  <div class="layer" style="left:810px;top:190px;width:400px;border-color:#39FF88;background:rgba(57,255,136,.09);box-shadow:0 0 26px rgba(57,255,136,.35)">Edge · CDN</div>
+  <div class="layer" style="left:810px;top:310px;width:400px;border-color:#FF2E88;background:rgba(255,46,136,.09);box-shadow:0 0 26px rgba(255,46,136,.35)">Gateway</div>
+  <div class="layer" style="left:810px;top:430px;width:400px;border-color:#FF9100;background:rgba(255,145,0,.09);box-shadow:0 0 26px rgba(255,145,0,.35)">Application</div>
+  <div class="layer" style="left:810px;top:550px;width:400px;border-color:#9D4EFF;background:rgba(157,78,255,.12);box-shadow:0 0 26px rgba(157,78,255,.35)">Data + AI</div>
+</div>
+</body>
+</html>
