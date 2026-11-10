@@ -1,5 +1,12 @@
 # Cache Invalidation
 
+> [!TIP]
+> **In one line:** Keep caches correct by combining a TTL safety net with explicit or event-driven invalidation, and protect hot keys from stampedes when they expire.
+>
+> **In plain English:** When the real data changes, any cached copy becomes a lie until it is removed or refreshed. You can let copies expire on a timer, delete them the moment you write, or broadcast a 'this changed' message that a listener uses to delete them. Like recalling a product from store shelves, the hard part is reaching every copy, every time.
+>
+> **You'll be able to:** choose between TTL, explicit and event-driven invalidation · explain why TTL must stay as a safety net · recognize and mitigate a cache stampede with locks or early refresh
+
 ## Why This Matters
 
 There's a well-worn joke in computer science, usually attributed to Phil Karlton: "There are only two hard things in Computer Science: cache invalidation and naming things." It's funny because it's true, and it's worth taking seriously rather than treating as a punchline. Cache invalidation is hard not because the *concept* is complicated — "remove or update a cache entry when the underlying data changes" is one sentence — but because getting it *reliably correct* under concurrency, partial failures, and distributed systems is genuinely difficult. A cache that's fast but wrong is worse than no cache at all, because wrong answers look exactly like right answers to your API consumers until someone notices the bug.
@@ -75,6 +82,8 @@ flowchart TD
     Stampede -->|Yes, mitigated| Good[Lock or probabilistic\nearly refresh spreads load]
     Stampede -->|No| Fine[Single DB read,\nnormal miss]
 ```
+
+![Three invalidation strategies compared on the same price change: TTL only, delete on write with its stale-write race, and versioned keys](../assets/diagrams/07-cache-invalidation.svg)
 
 ## Request / Response Example
 
@@ -232,6 +241,29 @@ Invalidation gets genuinely harder in AI systems because the "source of truth" i
 - A cache stampede occurs when a hot key's expiry causes many concurrent requests to miss simultaneously and overwhelm the database; locking and probabilistic early expiration are the two standard mitigations.
 - Never cache an error or failed response — it turns a transient failure into a sustained one for the length of the TTL.
 - Invalidation gets structurally harder in AI systems where cache keys are semantic rather than exact, making event-driven and TTL-based approaches more important than precise explicit invalidation.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three fundamental invalidation strategies?</summary>
+
+TTL-based expiry (entries disappear after a fixed time), explicit invalidation (the write path deletes or overwrites the key), and event-driven invalidation (a change event is published and a consumer deletes the affected keys).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why keep a TTL even when every write explicitly deletes the cache key?</summary>
+
+Some write path will eventually be missed, such as an admin tool, a migration or a background job, or a DEL will fail silently. Without a TTL that stale entry would live forever; with one, staleness is bounded and the cache corrects itself.
+
+</details>
+
+<details markdown="1">
+<summary>3. A downstream call fails and your code caches the empty result with a 10-minute TTL. What do users see?</summary>
+
+Every request for that key gets the cached failure for up to 10 minutes, long after the downstream recovered, turning a brief outage into a sustained one. Only write to the cache after confirming the result is a valid success.
+
+</details>
 
 ---
 

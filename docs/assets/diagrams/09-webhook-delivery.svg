@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" role="img" aria-labelledby="t d">
+  <title id="t">Webhook delivery with signature check, fast acknowledgement and retries</title>
+  <desc id="d">A provider event triggers a signed POST to your endpoint. Your endpoint verifies the HMAC signature, skips event IDs it has already seen, enqueues the event and returns 200 within a second; a background worker does the real work. If the provider gets a timeout or a 5xx it retries with growing gaps, so duplicates are normal.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="539" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Webhook delivery: verify, acknowledge fast, work later</text>
+  <text x="32" y="66" class="sub">The provider calls you when something happens. Your job: prove it is really them, say OK quickly, process in the background.</text>
+  <rect x="32" y="112" width="176" height="92" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="48" y="138" class="lbl" fill="#6d28d9">Provider</text>
+  <text x="48" y="158" class="note">e.g. payment service</text>
+  <text x="48" y="182" class="code">payment.succeeded</text>
+  <line x1="210" y1="140" x2="266" y2="140" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="238" cy="120" r="12" fill="#1c7c54"/>
+  <text x="238" y="124.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <text x="238" y="160" class="note" text-anchor="middle">signed</text>
+  <text x="238" y="175" class="note" text-anchor="middle">POST</text>
+  <rect x="268" y="96" width="364" height="196" rx="12" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="284" y="120" class="h">Your endpoint</text>
+  <text x="400" y="120" class="code">POST /webhooks/payments</text>
+  <rect x="284" y="134" width="332" height="42" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <circle cx="306" cy="155" r="12" fill="#1c7c54"/>
+  <text x="306" y="159.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <text x="328" y="152" class="lbl" fill="#1f2937">Verify HMAC signature</text>
+  <text x="328" y="168" class="note">bad → 400, stop here</text>
+  <rect x="284" y="184" width="332" height="42" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <circle cx="306" cy="205" r="12" fill="#1c7c54"/>
+  <text x="306" y="209.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <text x="328" y="202" class="lbl" fill="#1f2937">Seen this event ID before?</text>
+  <text x="328" y="218" class="note">yes → 200, do nothing again</text>
+  <rect x="284" y="234" width="332" height="42" rx="8" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <circle cx="306" cy="255" r="12" fill="#1c7c54"/>
+  <text x="306" y="259.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <text x="328" y="252" class="lbl" fill="#1f2937">Enqueue + return 200 OK</text>
+  <text x="328" y="268" class="note">well under a second</text>
+  <path d="M268,270 L120,270 L120,206" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="194" y="262" class="lbl" fill="#1c7c54" text-anchor="middle">200 OK</text>
+  <line x1="618" y1="255" x2="686" y2="255" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="688" y="222" width="160" height="64" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="704" y="248" class="lbl" fill="#b45309">Queue</text>
+  <text x="704" y="268" class="note">event stored safely</text>
+  <line x1="768" y1="220" x2="768" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="688" y="112" width="160" height="82" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="710" cy="134" r="12" fill="#1c7c54"/>
+  <text x="710" y="138.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <text x="730" y="139" class="lbl" fill="#475569">Worker</text>
+  <text x="704" y="162" class="note">the slow, real work:</text>
+  <text x="704" y="178" class="note">emails, orders, DB</text>
+  <rect x="32" y="316" width="816" height="132" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="342" class="h">If you fail or time out, the provider retries with growing gaps</text>
+  <line x1="96" y1="384" x2="800" y2="384" stroke="#cbd5e1" stroke-width="2"/>
+  <circle cx="96" cy="384" r="9" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="96" y="366" class="lbl" fill="#b91c1c" text-anchor="middle">attempt 1</text>
+  <text x="96" y="410" class="note" text-anchor="middle">timeout</text>
+  <circle cx="330" cy="384" r="9" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <text x="330" y="366" class="lbl" fill="#b91c1c" text-anchor="middle">attempt 2</text>
+  <text x="330" y="410" class="note" text-anchor="middle">503 error</text>
+  <circle cx="600" cy="384" r="9" fill="#e8f5ee" stroke="#1c7c54" stroke-width="2"/>
+  <text x="600" y="366" class="lbl" fill="#1c7c54" text-anchor="middle">attempt 3</text>
+  <text x="600" y="410" class="note" text-anchor="middle">200 OK</text>
+  <text x="213" y="378" class="note" text-anchor="middle">wait 1 min</text>
+  <text x="465" y="378" class="note" text-anchor="middle">wait 10 min</text>
+  <text x="800" y="366" class="note" text-anchor="end">… for hours or days,</text>
+  <text x="800" y="410" class="note" text-anchor="end">then the provider gives up</text>
+  <text x="48" y="438" class="note">A lost 200 looks like a failure to the provider, so the same event can arrive twice: always dedupe by event ID.</text>
+  <g transform="translate(32,464)">
+    <rect width="816" height="52" rx="10" fill="#ffffff" stroke="#e5e7eb"/>
+    <text x="16" y="31" class="lbl" fill="#1c7c54">2xx</text><text x="50" y="31" class="note">got it, stop retrying</text>
+    <text x="230" y="31" class="lbl" fill="#b45309">4xx</text><text x="264" y="31" class="note">invalid request, do not retry</text>
+    <text x="480" y="31" class="lbl" fill="#b91c1c">5xx / timeout</text><text x="582" y="31" class="note">temporary failure, please retry</text>
+  </g>
+</svg>

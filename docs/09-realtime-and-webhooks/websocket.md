@@ -1,5 +1,12 @@
 # WebSocket
 
+> [!TIP]
+> **In one line:** WebSocket upgrades one HTTP request into a long-lived two-way channel; use it only for genuinely bidirectional traffic, and build heartbeats, reconnection and sticky routing yourself.
+>
+> **In plain English:** After a one-time 'let's switch' handshake, client and server keep a single connection open and either side can send a message at any moment. It is like an intercom line left open between two rooms: great for chat or multiplayer games, but if the line silently dies nobody notices unless you keep checking. For server-to-client-only updates, SSE is simpler.
+>
+> **You'll be able to:** walk through the upgrade handshake and 101 Switching Protocols · add ping/pong heartbeats and client reconnection with backoff · scale WebSocket servers with sticky routing and shared pub/sub
+
 ## Why This Matters
 
 [Polling](polling.md) is client-initiated and one-shot per request. [Webhooks](webhooks.md) are server-initiated but still one-shot per event, over a fresh connection each time, and only make sense when your service has a publicly reachable URL. Neither pattern fits a scenario like a chat application or a multiplayer collaborative editor, where *both* sides need to send arbitrary messages to each other, frequently, with low latency, over what is conceptually one ongoing conversation. WebSocket exists precisely for that case: a single, long-lived, full-duplex connection where either side can send a message at any time without re-establishing anything. It's also one of the most over-used tools in real-time API design — reaching for WebSocket when you only need one-directional server-to-client updates (where [Server-Sent Events](server-sent-events.md) would be simpler and more operationally robust) is a genuinely common and costly mistake, so this chapter is as much about *when not to use it* as how it works.
@@ -199,6 +206,29 @@ WebSocket is the right choice for AI features that are genuinely bidirectional a
 - Heartbeats (`ping`/`pong`) and client-side reconnection logic are mandatory, not optional — the protocol does not detect or recover from silent connection drops on its own.
 - WebSocket connections are stateful server resources that require sticky routing and, at scale, a shared pub/sub layer for cross-process broadcast.
 - Use WebSocket only when you genuinely need bidirectional, low-latency messaging — for one-directional streaming (like LLM output), [Server-Sent Events](server-sent-events.md) is usually the simpler and more robust choice.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What status code completes a WebSocket handshake, and what changes after it?</summary>
+
+101 Switching Protocols. After it, HTTP request/response semantics are gone and both sides exchange framed messages (text, binary, ping, pong, close) over the same persistent connection.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why are ping/pong heartbeats necessary?</summary>
+
+A TCP connection can die silently, for example after a network switch or NAT timeout, with no close frame. Without heartbeats the server keeps a zombie connection open forever and believes messages were delivered; a missed pong reveals the connection is dead.
+
+</details>
+
+<details markdown="1">
+<summary>3. You run three WebSocket servers behind a load balancer and users only see chat messages from people on the same server. What is missing?</summary>
+
+Each server only knows its own in-memory connections, so a broadcast never reaches clients on other servers. Route messages through a shared pub/sub layer such as Redis or Kafka so every server can deliver them to its own clients.
+
+</details>
 
 ---
 

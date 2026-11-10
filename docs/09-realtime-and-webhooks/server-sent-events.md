@@ -1,5 +1,12 @@
 # Server-Sent Events
 
+> [!TIP]
+> **In one line:** SSE streams events one way, server to client, over a plain long-lived HTTP response (text/event-stream), and it is the standard way LLM tokens are streamed.
+>
+> **In plain English:** The client makes one normal request and the server keeps the response open, writing a new 'data:' line whenever it has news. Picture a stock ticker on a screen that keeps updating by itself: you just watch it. The browser reconnects automatically and can resume where it left off, but the client cannot send messages back on that connection.
+>
+> **You'll be able to:** write a FastAPI SSE endpoint with correct headers and event framing · make streams resumable with id: and Last-Event-ID · choose between polling, SSE and WebSocket for a feature
+
 ## Why This Matters
 
 [WebSocket](websocket.md) gives you full bidirectional messaging, but most real-time features don't actually need the client to send anything after the initial request — a live dashboard, a progress indicator, a notification feed, and — the case that matters most for this handbook — a streaming LLM response, are all fundamentally **one-directional**: the server has an ongoing stream of updates, and the client just wants to receive them as they happen. Server-Sent Events (SSE) is the tool built specifically for that shape of problem: streaming, server-to-client, over plain HTTP, with none of WebSocket's protocol upgrade, heartbeat design, or connection-affinity concerns. It's a strong default you should reach for before WebSocket, and it's the mechanism behind how virtually every LLM provider streams chat completions today.
@@ -59,6 +66,8 @@ sequenceDiagram
 ```
 
 The important structural detail: only two arrows ever originate from the client — the initial request, and (if needed) a reconnect carrying `Last-Event-ID`. Every actual data event flows one direction, which is exactly the shape of a token-streaming LLM response.
+
+![Side-by-side sequence diagrams of short polling, Server-Sent Events and WebSocket](../assets/diagrams/09-polling-sse-websocket.svg)
 
 ## Request / Response Example
 
@@ -211,6 +220,29 @@ SSE is the de facto standard for streaming LLM chat completions, and for good re
 - Native browser support (`EventSource`) includes automatic reconnection and resumption via `Last-Event-ID`, which [WebSocket](websocket.md) does not provide out of the box.
 - Proxy/server response buffering is the most common production pitfall — it must be explicitly disabled or the "stream" silently becomes a single buffered response.
 - SSE is the standard mechanism for streaming LLM responses because that data flow is one-directional — prefer it over WebSocket whenever the client doesn't need to send messages after the initial request.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does an SSE event look like on the wire?</summary>
+
+Plain text lines such as 'data: {...}', optionally with 'id:', 'event:' or 'retry:' fields, with each event ended by a blank line. The response uses Content-Type: text/event-stream and stays open.
+
+</details>
+
+<details markdown="1">
+<summary>2. Your SSE endpoint streams token by token locally, but in production the whole answer appears at once. What is the likely cause?</summary>
+
+A reverse proxy such as Nginx is buffering the response body before forwarding it. Disable buffering, for example with X-Accel-Buffering: no, and set Cache-Control: no-cache.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user closes the tab halfway through a long LLM answer streamed over SSE. What should the server do, and why?</summary>
+
+Detect the disconnect (in Python, an asyncio.CancelledError in the generator) and stop pulling tokens from the upstream model; otherwise you keep paying for generation nobody will receive.
+
+</details>
 
 ---
 

@@ -1,5 +1,12 @@
 # Background Tasks
 
+> [!TIP]
+> **In one line:** FastAPI BackgroundTasks runs work after the response is sent, in the same process with no persistence or retries, so use it only for work you can afford to lose.
+>
+> **In plain English:** BackgroundTasks lets your endpoint reply first and finish small chores afterwards. It is like asking a shop assistant to email your receipt after you leave: usually it arrives, but if their computer crashes first, nobody notices and nobody sends it again. Anything that must happen, such as charging a card, needs a real queue.
+>
+> **You'll be able to:** schedule post-response work with add_task · judge whether a task is safe to lose or needs a durable queue · explain what happens to pending tasks during a deploy or crash
+
 ## Why This Matters
 
 You now know when to move work outside the request/response cycle ([Sync vs Async](sync-vs-async.md)) and how Python's asyncio lets a single process handle many concurrent I/O-bound operations ([Python asyncio](python-asyncio.md)). The next question is mechanical: given a request that needs to trigger work *after* the response is sent — send a confirmation email, log an analytics event, kick off a cheap cleanup step — what's the simplest tool that does that correctly? FastAPI's `BackgroundTasks` is that tool, and it's genuinely useful for a specific, narrow band of work. It's also one of the most commonly misused features in FastAPI applications, because it's easy to reach for it in situations that actually need the durability guarantees of a real job queue. This chapter draws that line precisely.
@@ -187,3 +194,26 @@ def create_user_record(email: str, password: str) -> int:
 - It's the right tool for best-effort, low-stakes, quick work; it's the wrong tool for anything requiring guaranteed execution, retries, or cross-instance visibility.
 - Work that must not be lost belongs in a durable queue processed by a separate worker, not in `BackgroundTasks` — see [Message Queues](message-queues.md) and the upcoming job-queues and workers chapters.
 - The decision isn't about how "big" the work is — it's about whether losing it occasionally is an acceptable outcome.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. When does a BackgroundTasks function run relative to the HTTP response?</summary>
+
+After the response has already been sent to the client, inside the same server process and event loop that handled the request. The client never waits for it and never sees whether it succeeded.
+
+</details>
+
+<details markdown="1">
+<summary>2. The server is killed one second after sending 201 Created, before the welcome email task finishes. What happens to the email?</summary>
+
+It is lost silently: background tasks live only in that process's memory, so there is no record of the task and nothing retries it.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate wants to charge the customer's card in a BackgroundTasks job so checkout returns faster. What should you tell them?</summary>
+
+Payments must not be lost and need retries and an audit trail, which BackgroundTasks cannot give. Persist the job to a durable queue or outbox before responding (for example with 202 Accepted) and let a separate worker process it idempotently.
+
+</details>

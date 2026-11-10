@@ -1,5 +1,12 @@
 # Cache-Aside Pattern
 
+> [!TIP]
+> **In one line:** In cache-aside the application owns the cache: check it, on a miss read the database, store the result with a TTL, then return.
+>
+> **In plain English:** The cache never fetches anything by itself; your code does all the work. Think of a chef who keeps a small tray of prepped ingredients: if something is on the tray they grab it, if not they prep it from scratch and put the extra on the tray for next time. Writes simply go to the database, so the first read after a change or an expiry is slow.
+>
+> **You'll be able to:** implement the four-step cache-aside read path correctly · add negative caching for 'not found' results · protect hot keys from a stampede with a short-lived lock
+
 ## Why This Matters
 
 Cache-aside (also called "lazy loading") is the default caching strategy in most API systems, and for good reason: it's the simplest pattern that gets the core benefit of caching — protecting the database from redundant reads — with the least amount of new infrastructure. If you only learn one caching pattern well, it should be this one, because it's also the pattern that every other strategy (write-through, write-behind, TTL-based expiry) gets compared against. Understanding *why* cache-aside works the way it does, and specifically *why* it puts the application in charge of populating the cache rather than the cache or database doing it automatically, sets up everything else in this part.
@@ -59,6 +66,8 @@ sequenceDiagram
 ```
 
 The key detail visible in this diagram: the database is only ever consulted on the miss branch, and the cache population (`SET ... EX 300`) happens *before* the response is returned to the client, keeping the cache consistently ahead of the next request rather than racing it.
+
+![Cache-aside flow: read path checks the cache, falls back to the database on a miss and stores the result with a TTL; write path updates the database and deletes the cached key](../assets/diagrams/07-cache-aside.svg)
 
 ## Request / Response Example
 
@@ -232,6 +241,29 @@ Cache-aside is the base pattern underneath LLM response caching: check whether a
 - Negative caching and stampede protection (locks or probabilistic early expiry) are essential additions for production traffic, not optional extras.
 - It contrasts with write-through and write-behind caching, which shift work to the write path instead — covered in upcoming chapters.
 - The same pattern extends directly to caching expensive LLM calls and retrieval results in AI systems.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four steps of the cache-aside read path?</summary>
+
+Check the cache by key; on a hit, return the cached value; on a miss, read the authoritative answer from the database; populate the cache with that answer and a TTL before returning, so the next request hits.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you never cache 'not found' results?</summary>
+
+Every request for a nonexistent ID always misses and falls through to the database, so a buggy client or an attacker can hammer the database cheaply. Negative caching stores a 'not found' marker with a short TTL to absorb those repeats.
+
+</details>
+
+<details markdown="1">
+<summary>3. A hot product key expires and 200 requests arrive in the same instant. With the lock from the code example, what happens to them?</summary>
+
+Only the request that wins the SET NX lock queries the database and repopulates the cache; the others wait briefly and re-read the cache instead of all hitting the database. The trade-off is that those waiting requests get a little extra latency.
+
+</details>
 
 ---
 

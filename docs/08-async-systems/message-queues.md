@@ -1,5 +1,12 @@
 # Message Queues
 
+> [!TIP]
+> **In one line:** A message queue durably stores work between producers and consumers, giving decoupling, crash survival and load leveling, at the cost of at-least-once delivery and idempotent consumers.
+>
+> **In plain English:** The API drops a small job description into the queue and replies right away; separate workers pull jobs out and process them at their own pace. Like order tickets clipped on a kitchen rail, a ticket stays there until a cook finishes it, and if a cook walks off mid-order, the ticket goes back for someone else. Because a job can occasionally run twice, workers must be safe to repeat.
+>
+> **You'll be able to:** explain producers, consumers, acknowledgments and redelivery · write consumers that ack only after success and tolerate duplicates · use dead-letter queues and queue-depth monitoring for failing messages
+
 ## Why This Matters
 
 [Background Tasks](background-tasks.md) established a hard limit: in-process background work disappears if the server restarts, and there's no way for a different process — or a different machine entirely — to pick up the slack. Once your system needs work to survive a crash, needs to retry failed operations, needs multiple independent workers pulling from the same backlog, or needs a slow consumer to not take down a fast producer, you need a **message queue**: a durable, external system that sits between the thing that creates work and the thing that does it. This chapter covers the general concept — the same core idea underlies specific systems like RabbitMQ, Kafka, SQS, and the job queues built on top of them, which get their own dedicated chapters later in this part. Understanding the concept first means you'll recognize it correctly no matter which specific technology you end up using.
@@ -47,6 +54,8 @@ flowchart LR
 ```
 
 Multiple producers can publish to the same queue without knowing about each other or about the consumers. Multiple consumers can pull from the same queue, spreading load across them (this is how you scale processing throughput — add more consumers). If a consumer crashes before acknowledging (`C3` above), the queue redelivers that message rather than losing it — which is exactly the guarantee `BackgroundTasks` cannot offer.
+
+![Producer API returns 202 Accepted after enqueueing; workers pull messages, ack after success, failed messages are retried and eventually dead-lettered](../assets/diagrams/08-message-queue.svg)
 
 ## Request / Response Example
 
@@ -219,3 +228,26 @@ Message queues are the backbone of production AI pipelines that can't reasonably
 - Only acknowledge a message after processing has genuinely completed; premature acknowledgment silently loses work exactly the way `BackgroundTasks` does.
 - Queues are the durability boundary that in-process approaches like `BackgroundTasks` cannot provide — reach for one when work must survive a crash or be retried.
 - This chapter covers the general concept; concrete systems (RabbitMQ, Kafka) and the job-queue/worker patterns built on top of them are covered in upcoming chapters in this part.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why is at-least-once delivery the realistic default for message queues?</summary>
+
+If a consumer crashes after doing the work but before acknowledging, the queue cannot tell that apart from crashing before the work, so it redelivers rather than risk losing the message. Duplicates are therefore expected.
+
+</details>
+
+<details markdown="1">
+<summary>2. What goes wrong if a consumer acknowledges a message before processing it?</summary>
+
+If the consumer then crashes mid-processing, the queue believes the message is done and never redelivers it, so the work is silently lost, exactly the weakness the queue was meant to remove.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your order.shipped consumer runs 'increment shipped_count by 1' and occasionally double-counts. What is the cause and the fix?</summary>
+
+Redelivery after a crash processed the same message twice, and the operation is not idempotent. Make it idempotent, for example by setting the order's state to shipped or recording processed message IDs, so a repeat has no extra effect.
+
+</details>
