@@ -124,6 +124,7 @@ This example shows cache-aside as a reusable decorator, including **negative cac
 import asyncio
 import json
 import os
+import uuid
 from functools import wraps
 from typing import Any, Awaitable, Callable
 
@@ -136,6 +137,15 @@ NEGATIVE_CACHE_TTL = 30  # short TTL for "not found" results
 SENTINEL_NOT_FOUND = "__NOT_FOUND__"
 LOCK_TTL = 5  # seconds; guards against stampede while DB is being queried
 WAIT_RETRIES = 20  # 20 x 50 ms = at most 1 s waiting for the lock owner
+
+# Delete the lock only if it still holds OUR token. Without this, a slow fetch
+# that outlives LOCK_TTL would delete the lock a different request now owns.
+RELEASE_LOCK = """
+if redis.call("get", KEYS[1]) == ARGV[1] then
+    return redis.call("del", KEYS[1])
+end
+return 0
+"""
 
 
 def cache_aside(key_template: str, ttl: int = 300):
@@ -160,7 +170,8 @@ def cache_aside(key_template: str, ttl: int = 300):
             # others briefly wait and retry the cache instead of all
             # hitting the database at once for the same missing key.
             lock_key = f"lock:{cache_key}"
-            acquired = await redis_client.set(lock_key, "1", nx=True, ex=LOCK_TTL)
+            lock_token = uuid.uuid4().hex  # proves ownership when releasing
+            acquired = await redis_client.set(lock_key, lock_token, nx=True, ex=LOCK_TTL)
 
             if not acquired:
                 # Not the lock owner: poll the cache for a short, bounded time
@@ -187,7 +198,7 @@ def cache_aside(key_template: str, ttl: int = 300):
                 return {"data": result, "cache": "MISS"}
             finally:
                 if acquired:
-                    await redis_client.delete(lock_key)
+                    await redis_client.eval(RELEASE_LOCK, 1, lock_key, lock_token)
 
         return wrapper
 

@@ -97,14 +97,17 @@ Hand-drawn SVGs live in `docs/assets/diagrams/<NN>-<name>.svg` (NN = part number
 
 ## Verification before committing
 
-Run both from the repo root and fix anything they report — the repo has held at 0 broken links through every prior change:
+Run these from the repo root and fix anything they report — the repo has held at 0 broken links through every prior change:
 
 ```bash
 python3 scripts/check_links.py
+python3 scripts/check_svgs.py
 python3 scripts/check_examples_compile.py
+pip install -r requirements-docs.txt   # once, for the MkDocs build
+mkdocs build --strict
 ```
 
-Both are stdlib-only, no install required. These are exactly the checks `.github/workflows/ci.yml` runs on every push/PR to `main`.
+The three scripts are stdlib-only, no install required; the MkDocs build needs `requirements-docs.txt`. These are the checks `.github/workflows/ci.yml` runs on every push/PR to `main` (plus an advisory markdownlint pass).
 
 For an `examples/*` change: `scripts/check_examples_compile.py` is the syntax floor; actually run the example end-to-end if you have the ability to install its `requirements.txt`.
 

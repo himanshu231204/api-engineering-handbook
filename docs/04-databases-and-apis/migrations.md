@@ -125,7 +125,7 @@ def downgrade():
 ```
 
 ```python
-"""add index concurrently to avoid locking the orders table
+"""add an index concurrently to avoid locking the orders table
 
 Revision ID: c3d4e5f6a7b8
 Revises: b2c3d4e5f6a7
@@ -139,11 +139,11 @@ def upgrade():
     # its transaction, runs the statements in autocommit mode, then goes
     # back to normal.
     with op.get_context().autocommit_block():
-        op.execute("CREATE INDEX CONCURRENTLY ix_orders_user_id ON orders (user_id)")
+        op.execute("CREATE INDEX CONCURRENTLY ix_orders_created_at ON orders (created_at)")
 
 def downgrade():
     with op.get_context().autocommit_block():
-        op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_user_id")
+        op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_created_at")
 ```
 
 ## Production Considerations
