@@ -3,9 +3,9 @@
 > [!TIP]
 > **In one line:** SSE streams events one way, server to client, over a plain long-lived HTTP response (text/event-stream), and it is the standard way LLM tokens are streamed.
 >
-> **In plain English:** The client makes one normal request and the server keeps the response open, writing a new 'data:' line whenever it has news. Picture a stock ticker on a screen that keeps updating by itself: you just watch it. The browser reconnects automatically and can resume where it left off, but the client cannot send messages back on that connection.
+> **In plain English:** The client makes one normal request and the server keeps the response open, writing a new 'data:' line whenever it has news. Picture a stock ticker on a screen that keeps updating by itself: you just watch it. The browser reconnects automatically and tells the server the last event id it saw, so a server that keeps its events can resume the stream, but the client cannot send messages back on that connection.
 >
-> **You'll be able to:** write a FastAPI SSE endpoint with correct headers and event framing · make streams resumable with id: and Last-Event-ID · choose between polling, SSE and WebSocket for a feature
+> **You'll be able to:** write a FastAPI SSE endpoint with correct headers and event framing · handle reconnects with id: and Last-Event-ID · choose between polling, SSE and WebSocket for a feature
 
 ## Why This Matters
 
@@ -130,8 +130,10 @@ async def sse_event_generator(prompt: str):
     try:
         async for event_id, token in fake_llm_token_stream(prompt):
             payload = json.dumps({"delta": token})
-            # The "id:" field lets a reconnecting client resume via
-            # Last-Event-ID instead of restarting the whole generation.
+            # The "id:" field makes a reconnecting browser send Last-Event-ID.
+            # This example does not read that header, so a reconnect restarts
+            # the generation; to truly resume, keep the events and replay
+            # those after the id (see Exercise 2).
             yield f"id: {event_id}\ndata: {payload}\n\n"
         yield "event: done\ndata: {}\n\n"
     except asyncio.CancelledError:

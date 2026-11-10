@@ -135,13 +135,15 @@ from alembic import op
 def upgrade():
     # CONCURRENTLY builds the index without holding a write lock on the
     # table — critical for large, live production tables. It cannot run
-    # inside a transaction block, so Alembic must be told to skip its
-    # normal transactional wrapper for this migration.
-    op.execute("COMMIT")  # end the implicit transaction Alembic opened
-    op.execute("CREATE INDEX CONCURRENTLY ix_orders_user_id ON orders (user_id)")
+    # inside a transaction block, so use autocommit_block(): Alembic commits
+    # its transaction, runs the statements in autocommit mode, then goes
+    # back to normal.
+    with op.get_context().autocommit_block():
+        op.execute("CREATE INDEX CONCURRENTLY ix_orders_user_id ON orders (user_id)")
 
 def downgrade():
-    op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_user_id")
+    with op.get_context().autocommit_block():
+        op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_user_id")
 ```
 
 ## Production Considerations
@@ -198,14 +200,14 @@ It records the current revision in a table (usually `alembic_version`), and each
 <details markdown="1">
 <summary>2. Why does renaming a column in a single migration break a rolling deploy?</summary>
 
-During the rollout, old application instances are still running and still query the old column name, which no longer exists. Expand-contract avoids this: add the new column, write to both, switch reads, and drop the old column in a later migration.
+During the rollout, old application instances are still running and still query the old column name, which no longer exists. Expand-contract avoids this: add the new column, make every instance write to both, backfill the existing rows and verify them, then switch reads, and drop the old column in a later migration.
 
 </details>
 
 <details markdown="1">
 <summary>3. You need an index on a 50-million-row orders table that takes live writes. What do you run, and what is special about it in Alembic?</summary>
 
-`CREATE INDEX CONCURRENTLY`, which builds the index without blocking writes. It cannot run inside a transaction block, so the migration must step outside Alembic's usual transactional wrapper, for example by issuing `COMMIT` first as the chapter shows.
+`CREATE INDEX CONCURRENTLY`, which builds the index without blocking writes. It cannot run inside a transaction block, so the migration must step outside Alembic's usual transactional wrapper, using `op.get_context().autocommit_block()` as the chapter shows.
 
 </details>
 

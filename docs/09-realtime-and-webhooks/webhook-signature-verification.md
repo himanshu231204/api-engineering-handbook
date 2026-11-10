@@ -215,7 +215,7 @@ Authenticity, since only someone holding the shared secret could produce that ex
 <details markdown="1">
 <summary>2. Why is a valid signature alone not enough, and what fixes it?</summary>
 
-An attacker can capture a real, correctly signed request and resend it later; the signature still matches because the bytes are identical. Signing a timestamp along with the body and rejecting requests outside a few-minute window blocks the replay.
+An attacker can capture a real, correctly signed request and resend it later; the signature still matches because the bytes are identical. Signing a timestamp along with the body and rejecting requests outside a few-minute window limits how long a captured request stays usable, but a replay inside that window still passes. So also record each event ID durably and skip repeats.
 
 </details>
 

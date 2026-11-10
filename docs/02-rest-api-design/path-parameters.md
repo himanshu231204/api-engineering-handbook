@@ -170,7 +170,7 @@ If removing the value would point at a different resource, it's a path parameter
 <details markdown="1">
 <summary>2. What goes wrong if GET /orders/{order_id}/items/{item_id} looks up the item by item_id alone?</summary>
 
-It's an IDOR (broken object-level authorization) bug: a caller can request an item from someone else's order and receive it. Always look up "item 17 where order_id = 482".
+It's an IDOR (broken object-level authorization) bug: a caller can request an item from someone else's order and receive it. Always look up "item 17 where order_id = 482", and also check that the authenticated caller is allowed to access order 482: matching IDs alone say nothing about who is asking.
 
 </details>
 

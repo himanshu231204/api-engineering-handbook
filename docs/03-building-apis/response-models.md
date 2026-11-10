@@ -1,7 +1,7 @@
 # Response Models
 
 > [!TIP]
-> **In one line:** A response_model is an allowlist: whatever your function returns, only the fields declared on that model reach the client.
+> **In one line:** A response_model is an allowlist: whatever your function returns, only its declared fields reach the client, unless you return a Response object directly, which bypasses it.
 >
 > **In plain English:** Your code often holds more data than the client should see, such as password hashes or internal scores. A response model works like a museum display case: visitors only see what you deliberately put in the case, never what is in the storeroom.
 >

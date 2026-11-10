@@ -178,7 +178,7 @@ Both pass the balance check and both write, causing a lost update or an overdraf
 <details markdown="1">
 <summary>3. Your checkout handler opens a transaction, calls a slow third-party payment API, then commits. Why is this a problem?</summary>
 
-The transaction holds its locks for the whole network call, blocking other requests on those rows and keeping `VACUUM` from cleaning up. Keep transactions tight: do the external call outside, and wrap only the database writes that must be atomic.
+The transaction holds its locks for the whole network call, blocking other requests on those rows and keeping `VACUUM` from cleaning up. Keep transactions tight: do the external call outside, and wrap only the database writes that must be atomic. The payment and the database write are then no longer atomic, so save a pending order first and send an idempotency key to the payment API; a crash in between can then be reconciled instead of leaving a charge with no order.
 
 </details>
 

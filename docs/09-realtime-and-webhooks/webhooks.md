@@ -232,7 +232,7 @@ Providers deliver at least once: if they do not see a 2xx (a timeout, or a lost 
 <details markdown="1">
 <summary>2. What happens if your handler sends emails and updates three systems before returning, and that takes 40 seconds?</summary>
 
-The provider's timeout (often 5 to 30 seconds) expires, which looks like a failure, so it retries while the first request is still running, causing duplicate side effects. Verify, record or enqueue the event, return 2xx immediately, and do the slow work in the background.
+The provider's timeout (often 5 to 30 seconds) expires, which looks like a failure, so it retries while the first request is still running, causing duplicate side effects. Verify the signature, durably save the event and its pending work in one transaction, return 2xx immediately, and do the slow work in the background. Never acknowledge before the event is safely stored, or a crash loses it.
 
 </details>
 

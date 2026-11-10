@@ -248,6 +248,6 @@ If the consumer then crashes mid-processing, the queue believes the message is d
 <details markdown="1">
 <summary>3. Your order.shipped consumer runs 'increment shipped_count by 1' and occasionally double-counts. What is the cause and the fix?</summary>
 
-Redelivery after a crash processed the same message twice, and the operation is not idempotent. Make it idempotent, for example by setting the order's state to shipped or recording processed message IDs, so a repeat has no extra effect.
+Redelivery after a crash processed the same message twice, and the operation is not idempotent. Make it idempotent: record the processed message ID and apply the increment in the same database transaction, so a crash cannot separate them. Or stop keeping a counter and compute it from state (the number of orders marked shipped), so a repeat has no extra effect.
 
 </details>

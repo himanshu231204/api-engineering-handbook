@@ -135,6 +135,7 @@ redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 NEGATIVE_CACHE_TTL = 30  # short TTL for "not found" results
 SENTINEL_NOT_FOUND = "__NOT_FOUND__"
 LOCK_TTL = 5  # seconds; guards against stampede while DB is being queried
+WAIT_RETRIES = 20  # 20 x 50 ms = at most 1 s waiting for the lock owner
 
 
 def cache_aside(key_template: str, ttl: int = 300):
@@ -162,23 +163,31 @@ def cache_aside(key_template: str, ttl: int = 300):
             acquired = await redis_client.set(lock_key, "1", nx=True, ex=LOCK_TTL)
 
             if not acquired:
-                await asyncio.sleep(0.05)
-                cached = await redis_client.get(cache_key)
-                if cached is not None and cached != SENTINEL_NOT_FOUND:
-                    return {"data": json.loads(cached), "cache": "HIT_AFTER_WAIT"}
+                # Not the lock owner: poll the cache for a short, bounded time
+                # instead of querying the database.
+                for _ in range(WAIT_RETRIES):
+                    await asyncio.sleep(0.05)
+                    cached = await redis_client.get(cache_key)
+                    if cached is not None:
+                        if cached == SENTINEL_NOT_FOUND:
+                            return {"data": None, "cache": "HIT_NEGATIVE"}
+                        return {"data": json.loads(cached), "cache": "HIT_AFTER_WAIT"}
+                # The owner is slow or died: fall back to one direct read so
+                # this request still finishes (the lock's TTL guarantees progress).
 
             try:
                 result = await fetch_fn(**kwargs)
+                if result is None:
+                    # Negative caching: avoid repeated DB hits for missing data.
+                    await redis_client.set(cache_key, SENTINEL_NOT_FOUND, ex=NEGATIVE_CACHE_TTL)
+                    return {"data": None, "cache": "MISS_NEGATIVE"}
+                # Populate the cache BEFORE releasing the lock, so waiting
+                # requests find the value instead of racing to the database.
+                await redis_client.set(cache_key, json.dumps(result), ex=ttl)
+                return {"data": result, "cache": "MISS"}
             finally:
-                await redis_client.delete(lock_key)
-
-            if result is None:
-                # Negative caching: avoid repeated DB hits for missing data.
-                await redis_client.set(cache_key, SENTINEL_NOT_FOUND, ex=NEGATIVE_CACHE_TTL)
-                return {"data": None, "cache": "MISS_NEGATIVE"}
-
-            await redis_client.set(cache_key, json.dumps(result), ex=ttl)
-            return {"data": result, "cache": "MISS"}
+                if acquired:
+                    await redis_client.delete(lock_key)
 
         return wrapper
 
@@ -261,7 +270,7 @@ Every request for a nonexistent ID always misses and falls through to the databa
 <details markdown="1">
 <summary>3. A hot product key expires and 200 requests arrive in the same instant. With the lock from the code example, what happens to them?</summary>
 
-Only the request that wins the SET NX lock queries the database and repopulates the cache; the others wait briefly and re-read the cache instead of all hitting the database. The trade-off is that those waiting requests get a little extra latency.
+Only the request that wins the SET NX lock queries the database and repopulates the cache; the others poll the cache for a bounded wait (up to 1 second here) instead of all hitting the database, and the owner releases the lock only after writing the cache. The trade-offs are the extra latency for waiting requests and the fallback read if the owner is slow.
 
 </details>
 

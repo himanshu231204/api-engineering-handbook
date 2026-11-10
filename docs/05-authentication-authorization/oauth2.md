@@ -177,14 +177,22 @@ async def login():
         "code_challenge_method": "S256",
     }
     query = "&".join(f"{k}={v}" for k, v in params.items())
-    return RedirectResponse(f"{AUTH_SERVER}/authorize?{query}")
+    response = RedirectResponse(f"{AUTH_SERVER}/authorize?{query}")
+    # Bind this flow to THIS browser. A callback link that an attacker forwards
+    # to a victim carries the attacker's state but not this cookie, so the
+    # check in /callback rejects it.
+    response.set_cookie("oauth_state", state, httponly=True, secure=True,
+                        samesite="lax", max_age=600)
+    return response
 
 
 @app.get("/callback")
-async def callback(code: str, state: str):
+async def callback(request: Request, code: str, state: str):
     flow = PENDING_FLOWS.pop(state, None)
-    if flow is None:
-        # Unknown or reused state -> possible CSRF attempt on the redirect
+    cookie_state = request.cookies.get("oauth_state") or ""
+    if flow is None or not secrets.compare_digest(cookie_state, state):
+        # Unknown, reused, or started in a different browser -> possible CSRF
+        # attempt on the redirect
         raise HTTPException(status_code=400, detail="Invalid or expired state")
 
     async with httpx.AsyncClient() as http_client:
@@ -275,6 +283,6 @@ Redeeming the code at /token requires the original code_verifier, and the author
 <details markdown="1">
 <summary>3. Your callback handler accepts any incoming code without checking state. What can an attacker do?</summary>
 
-They can trick a victim's browser into completing a flow with the attacker's own authorization code (login CSRF), binding the victim's session to the attacker's account. Generate a random state per flow, store it, and reject the callback if the returned state is unknown or already used.
+They can trick a victim's browser into completing a flow with the attacker's own authorization code (login CSRF), binding the victim's session to the attacker's account. Generate a random state per flow, bind it to the browser that started the flow (for example in an HttpOnly cookie or the server-side session), and reject the callback if the returned state is unknown, already used, or does not match that browser's own value. Otherwise an attacker's callback link would still work in the victim's browser.
 
 </details>
