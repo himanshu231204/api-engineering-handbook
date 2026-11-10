@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="528" viewBox="0 0 880 528" role="img" aria-labelledby="t d">
+  <title id="t">Guardrails around an agent</title>
+  <desc id="d">Input checks feed the agent. The agent proposes a tool action, which passes a permission gate: low-risk actions run in a sandbox, high-risk actions wait for human approval, and disallowed ones are blocked. Results pass output checks before reaching the user. Prompt-injection entry points, shown in red, are typed user text and content the agent reads: web pages, documents, emails and tool results.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="527" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Guardrails: check going in, gate the actions, check coming out</text>
+  <text x="32" y="66" class="sub">Red dashed arrows are prompt-injection entry points: content the agent reads, not just what the user types.</text>
+  <rect x="32" y="96" width="150" height="72" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="107" y="128" class="lbl" style="fill: #2563eb;" text-anchor="middle">User input</text>
+  <text x="107" y="148" class="note" text-anchor="middle">typed request</text>
+  <rect x="236" y="96" width="150" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="258" cy="116" r="12" fill="#1c7c54"/>
+  <text x="258" y="120" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="318" y="134" class="lbl" style="fill: #475569;" text-anchor="middle">Input checks</text>
+  <text x="311" y="154" class="note" text-anchor="middle">validate, filter, limit</text>
+  <rect x="440" y="96" width="150" height="72" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="515" y="128" class="lbl" style="fill: #6d28d9;" text-anchor="middle">Agent</text>
+  <text x="515" y="148" class="note" text-anchor="middle">LLM loop</text>
+  <rect x="644" y="96" width="204" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="666" cy="116" r="12" fill="#1c7c54"/>
+  <text x="666" y="120" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="756" y="134" class="lbl" style="fill: #475569;" text-anchor="middle">Permission gate</text>
+  <text x="746" y="154" class="note" text-anchor="middle">allow-list + risk tier</text>
+  <line x1="184" y1="132" x2="232" y2="132" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <line x1="388" y1="132" x2="436" y2="132" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="592" y1="132" x2="640" y2="132" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="108" y="186" class="note" text-anchor="middle">even typed text can be hostile</text>
+  <path d="M746,170 L746,198" fill="none" stroke="#475569" stroke-width="1.75"/>
+  <path d="M502,198 L790,198" fill="none" stroke="#475569" stroke-width="1.75"/>
+  <rect x="436" y="236" width="132" height="60" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="502.0" y="262" class="lbl" style="fill: #1c7c54;" text-anchor="middle">Low risk</text>
+  <text x="502.0" y="281" class="note" text-anchor="middle">read-only: run it</text>
+  <line x1="502.0" y1="198" x2="502.0" y2="233" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="576" y="236" width="132" height="60" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="642.0" y="262" class="lbl" style="fill: #b45309;" text-anchor="middle">High risk</text>
+  <text x="642.0" y="281" class="note" text-anchor="middle">ask a human first</text>
+  <line x1="642.0" y1="198" x2="642.0" y2="233" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="716" y="236" width="132" height="60" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="782.0" y="262" class="lbl" style="fill: #b91c1c;" text-anchor="middle">Not allowed</text>
+  <text x="782.0" y="281" class="note" text-anchor="middle">blocked, error back</text>
+  <line x1="782.0" y1="198" x2="782.0" y2="233" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="436" y="336" width="272" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="572" y="362" class="lbl" style="fill: #475569;" text-anchor="middle">Tool in a sandbox</text>
+  <text x="572" y="381" class="note" text-anchor="middle">timeout · least-privilege credentials</text>
+  <line x1="502" y1="298" x2="502" y2="333" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="642" y1="298" x2="642" y2="333" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="650" y="320" class="note">if approved</text>
+  <rect x="236" y="336" width="150" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="258" cy="356" r="12" fill="#1c7c54"/>
+  <text x="258" y="360" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">4</text>
+  <text x="318" y="374" class="lbl" style="fill: #475569;" text-anchor="middle">Output checks</text>
+  <text x="311" y="390" class="note" text-anchor="middle">redact, verify</text>
+  <rect x="32" y="336" width="150" height="60" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="107" y="362" class="lbl" style="fill: #1c7c54;" text-anchor="middle">Answer</text>
+  <text x="107" y="381" class="note" text-anchor="middle">safe to show</text>
+  <line x1="432" y1="366" x2="390" y2="366" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="232" y1="366" x2="186" y2="366" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="236" width="360" height="60" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="48" y="262" class="lbl" style="fill: #b91c1c;">Injection entry points</text>
+  <text x="48" y="282" class="note">web pages · documents · emails · tool results</text>
+  <path d="M240,234 L468,172" fill="none" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <g transform="translate(32,424)">
+    <rect width="816" height="80" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="26" class="lbl" fill="#b91c1c">No single gate is perfect.</text>
+    <text x="16" y="47" class="note">Injection cannot be fully prevented, so bound the damage: least privilege, approval for risky actions,</text>
+    <text x="16" y="65" class="note">iteration and cost caps enforced server-side, sandboxing, and an audit log of every tool call.</text>
+  </g>
+</svg>

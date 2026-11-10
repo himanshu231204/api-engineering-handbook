@@ -1,5 +1,12 @@
 # Bearer Tokens
 
+> [!TIP]
+> **In one line:** A bearer token grants access to whoever presents it — so its safety depends entirely on TLS, careful storage, short lifetimes and narrow scopes.
+>
+> **In plain English:** A bearer token is like cash: a shop accepts a banknote from anyone holding it and never asks whose it is. Lose your wallet and the finder can spend it. So you carry little, keep it somewhere safe, and prefer notes that stop working soon.
+>
+> **You'll be able to:** send and verify `Authorization: Bearer` tokens correctly in FastAPI · weigh stateless (JWT) against stateful (opaque) tokens, especially for revocation · avoid the classic leaks: URLs, logs, `localStorage` and plain HTTP
+
 ## Why This Matters
 
 Most modern APIs — REST APIs behind mobile apps, service-to-service calls, LLM provider APIs — authenticate requests with a single, unassuming header: `Authorization: Bearer <token>`. Understanding exactly what "bearer" means, and what it implies about trust and risk, is foundational to almost everything else in this Part: [API keys](api-keys.md), [JWTs](jwt-deeply-explained.md), and [OAuth 2.0](oauth2.md) access tokens are all, in practice, bearer tokens. Get the bearer model wrong and you get vulnerable systems that look secure on the surface.
@@ -39,7 +46,7 @@ sequenceDiagram
     participant API as API Server
     participant Verifier as Token Verifier
 
-    Client->>API: GET /v1/resource\nAuthorization: Bearer <token>
+    Client->>API: GET /v1/resource<br/>Authorization: Bearer <token>
     API->>Verifier: Validate token
     alt Stateless (JWT)
         Verifier->>Verifier: Check signature + expiry locally
@@ -54,7 +61,7 @@ sequenceDiagram
         API-->>Client: 200 OK + resource
     end
 
-    Note over Client,API: Anyone who obtains this exact token string\ncan replay this entire flow successfully.\nThat is the defining property of "bearer".
+    Note over Client,API: Anyone who obtains this exact token string<br/>can replay this entire flow successfully.<br/>That is the defining property of "bearer".
 ```
 
 ## Request / Response Example
@@ -172,3 +179,26 @@ Nearly every LLM provider (Anthropic, OpenAI, and most inference platforms) and 
 - Stateless (JWT) bearer tokens avoid a database lookup per request but are hard to revoke before expiry; stateful (opaque) tokens are instantly revocable but require a lookup.
 - Transport security (TLS) and safe client-side storage matter enormously, since a leaked bearer token is immediately usable by whoever has it.
 - Short expiry and scope-limiting are the main practical levers for reducing the damage a leaked bearer token can do.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does "bearer" mean, and which HTTP header carries a bearer token?</summary>
+
+Possession is proof: whoever presents ("bears") the token is treated as authorized, with no further identity check. It is sent as Authorization: Bearer followed by the token, as defined in RFC 6750.
+
+</details>
+
+<details markdown="1">
+<summary>2. You must be able to kick a compromised user out immediately. Why does that favour stateful (opaque) tokens over long-lived JWTs?</summary>
+
+An opaque token is looked up on every request, so deleting its row revokes it at once. A JWT is verified by signature alone and stays valid until exp, so instant revocation needs a server-side check on each request (a denylist or session lookup). A short-lived JWT paired with a revocable refresh token only bounds the delay to the token's remaining lifetime.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate proposes passing the token as ?token=... in the URL "because it's simpler". What goes wrong?</summary>
+
+Query strings end up in server and proxy logs, browser history and Referer headers, so the token leaks to everyone who can read those — and a leaked bearer token is immediately usable. Always send it in the Authorization header over HTTPS.
+
+</details>

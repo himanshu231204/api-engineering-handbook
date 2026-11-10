@@ -1,5 +1,12 @@
 # Multi-Agent Communication
 
+> [!TIP]
+> **In one line:** Multi-agent systems coordinate several agent loops; default to an orchestrator calling sub-agents like tools, with independent limits and one trace ID across the tree.
+>
+> **In plain English:** Sometimes one agent hands parts of a job to other specialized agents, like a researcher and a writer. The simplest setup is a boss agent that calls helper agents the way it would call any tool and collects their answers. It is like a general contractor hiring an electrician and a plumber: each does a full job and reports back, but the contractor keeps the budget.
+>
+> **You'll be able to:** Compare orchestrator/sub-agent, peer-to-peer and shared-state designs · Cap iterations and cost independently for every sub-agent · Decide when a single well-tooled agent is the better choice
+
 ## Why This Matters
 
 A single agent loop (see [Agent Architecture](agent-architecture.md)) with a well-chosen set of tools handles a surprising amount of complexity. But some problems genuinely benefit from splitting work across multiple agents with different roles: a "researcher" agent that gathers information and a "writer" agent that turns it into a polished document, or a "planner" that breaks a task into subtasks handed to specialized "worker" agents. Multi-agent systems are the architecture for coordinating several LLM-driven loops toward one overall goal.
@@ -199,3 +206,26 @@ The honest framing: most of what's marketed as "multi-agent systems" is orchestr
 - Cost and iteration limits must be enforced independently at every level of the agent tree, not just at the top.
 - Peer-to-peer and shared-state topologies are more flexible but much harder to bound and debug — use them only when orchestrator/sub-agent genuinely doesn't fit.
 - Prefer a single well-tooled agent unless you have a concrete reason (context isolation, distinct tool sets, parallelizable sub-tasks) to split into multiple agents.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. From the orchestrator's point of view, what is a sub-agent?</summary>
+
+Just another tool call. Calling something like `invoke_research_agent(task)` runs an entire nested agent loop and returns only its final result, so the orchestrator treats it as a black box unless internal steps are explicitly surfaced.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must each sub-agent have its own iteration cap and cost budget, not just the orchestrator?</summary>
+
+Each sub-agent is a full loop with many LLM calls, so costs multiply quickly. Without independent limits, one stuck sub-agent can silently consume the entire budget meant for the whole run.
+
+</details>
+
+<details markdown="1">
+<summary>3. Two peer agents keep asking each other clarifying questions and never finish. What design flaw is this, and what is the usual fix?</summary>
+
+A peer-to-peer topology with no termination or convergence guarantee. Add explicit loop-termination rules and limits, or switch to orchestrator/sub-agent with message passing, which is far easier to bound and debug.
+
+</details>

@@ -1,5 +1,12 @@
 # Embedding APIs
 
+> [!TIP]
+> **In one line:** An embedding turns text into a list of numbers where similar meanings land close together, so "find relevant chunks" becomes "find the nearest vectors."
+>
+> **In plain English:** Computers cannot compare meaning directly, but they are great at comparing numbers. An embedding model turns each sentence into a long list of numbers, and sentences that mean the same thing get similar numbers even if they share no words. It works like sorting a playlist by mood rather than by title: songs that feel alike sit next to each other.
+>
+> **You'll be able to:** Explain why cosine similarity captures semantic closeness · Batch embedding calls and retry on rate limits · Keep query and document embeddings on the same pinned model version
+
 ## Why This Matters
 
 Once you have chunks (see [Chunking Pipelines](chunking-pipelines.md)), you need a way to compare "how related is this chunk to this query" without a human reading every chunk for every query — that's a search problem, and traditional keyword search alone (matching exact words) fails badly when the query and the answer use different words for the same idea ("car" vs. "automobile", "cheap" vs. "affordable"). Embeddings solve this by converting text into a mathematical representation where *meaning* determines *position* — texts with similar meaning end up numerically close together, regardless of the exact words used. Understanding embeddings well enough to use them correctly — not just "text becomes vectors" but *why* that enables similarity search, and how to call an embedding API efficiently in production — is the layer that makes semantic retrieval possible at all.
@@ -41,6 +48,8 @@ flowchart LR
     E --> I
     I --> J[Top-K similar chunks]
 ```
+
+![Texts drawn as points in a 2D space: similar meanings cluster together, and a query point lands closest to the nearest-meaning texts by cosine similarity](../assets/diagrams/16-embeddings-space.svg)
 
 ## Request / Response Example
 
@@ -171,6 +180,29 @@ Embedding quality is a silent multiplier on every downstream RAG component: a me
 - Queries and documents must be embedded with the exact same model; mixing models produces silently meaningless similarity scores.
 - Batch embedding calls to amortize network overhead across many chunks; always plan for rate limits and retries.
 - Track embedding model and version as metadata on every stored vector to support safe future migrations.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does cosine similarity measure between two embedding vectors, and what do values near 1 and near 0 mean?</summary>
+
+It measures the angle between the vectors (their direction, largely ignoring magnitude). Near 1 means they point the same way and the texts mean nearly the same thing; near 0 means they are unrelated.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you embed your documents with one model and your queries with a different one?</summary>
+
+The vectors live in different coordinate systems, so similarity scores become meaningless. Worse, nothing errors out: retrieval just silently returns poor results, which is why you pin and record the model and version on every stored vector.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your ingestion job embeds 10,000 chunks with 10,000 separate API calls and keeps hitting 429 errors. What two changes should you make?</summary>
+
+Batch many chunks per request (most embedding APIs accept an array of inputs) to cut per-request overhead and request count, and add retry with exponential backoff for rate-limit responses, using bounded concurrency across batches.
+
+</details>
 
 ---
 **Previous**: [Chunking Pipelines](chunking-pipelines.md) · **Next**: [Vector Database APIs](vector-database-apis.md)

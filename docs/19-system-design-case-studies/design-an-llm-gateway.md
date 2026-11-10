@@ -1,5 +1,12 @@
 # Design an LLM Gateway
 
+> [!TIP]
+> **In one line:** An LLM gateway is a thin, stateless proxy in front of every model provider that adds routing, automatic fallback, token-based rate limits and per-team cost tracking with negligible added latency.
+>
+> **In plain English:** Instead of every team holding its own keys and contracts with each AI provider, everyone goes through one switchboard. The switchboard knows each team's allowance, sends each call to whichever provider is healthy, and keeps the bill — while adding almost no delay.
+>
+> **You'll be able to:** Size the gateway fleet and token throughput from daily call volume · Design a health-driven fallback chain across providers · Explain why token-based limits and fail-open rate limiting are the right defaults
+
 ## Problem Statement
 
 Design an internal gateway service that sits between every application in a company and the various LLM providers (OpenAI, Anthropic, an in-house fine-tuned model) they use. Instead of every application team integrating directly with each provider's SDK, they all call one internal API. The gateway is responsible for routing requests to the right model/provider, falling back to an alternative when a provider is degraded, enforcing per-team rate and cost limits, tracking spend, and caching responses/prompts where possible — all while adding minimal latency to what is already a slow operation (LLM generation).
@@ -209,3 +216,26 @@ At 10x scale (9,250 req/s average, ~37,000 req/s peak):
 - [Part 6 — Rate Limiting](../06-production-reliability/rate-limiting.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. At 3,700 req/s peak, how many gateway instances are needed, and where is the real scaling ceiling?</summary>
+
+At about 500 req/s per instance, 3,700 ÷ 500 ≈ 8 instances — a small, stateless, easily scaled fleet. The real ceilings are elsewhere: the shared Redis that keeps rate-limit counters consistent (shard it by team_id) and each provider's own account rate limits (spread load across providers and accounts).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why limit tokens per minute in addition to requests per minute?</summary>
+
+One request can carry a few hundred tokens or hundreds of thousands, so two teams with the same request count can have wildly different cost and provider load. Tokens are a far better proxy for real cost; the price is that the limiter needs token estimation (or exact post-hoc counts) instead of a simple counter.
+
+</details>
+
+<details markdown="1">
+<summary>3. The primary provider suddenly starts returning errors. Walk through what the gateway does.</summary>
+
+The health monitor sees the error rate climb within seconds and marks the provider degraded/down, so the router stops sending it new traffic. Requests that fail are retried immediately against the next provider in the fallback chain, and responses are tagged with model_used/fallback_used. If the whole chain fails, the gateway stops after a bounded number of attempts and returns a clear "all providers exhausted" error.
+
+</details>

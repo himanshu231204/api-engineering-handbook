@@ -1,5 +1,12 @@
 # Database Transactions
 
+> [!TIP]
+> **In one line:** A transaction makes a group of writes all-or-nothing, and ACID plus row locks are what keep money, stock, and other critical data consistent under concurrent requests.
+>
+> **In plain English:** When one request must change several things together, such as taking money from one account and adding it to another, a transaction makes that one unbreakable step. Think of a vending machine: you either get the snack and it keeps the coins, or you get your coins back, never the coins gone and no snack.
+>
+> **You'll be able to:** Wrap multi-write operations in `BEGIN`/`COMMIT` with `session.begin()` · Prevent lost updates with `SELECT ... FOR UPDATE` · Choose between Read Committed, Repeatable Read, and Serializable
+
 ## Why This Matters
 
 The moment your API does more than one write in a request — debit one account and credit another, create an order and decrement inventory — you need transactions, or you will eventually leave your database in a state that's internally inconsistent. A transaction is the guarantee that a group of operations either all happen or none happen. Without understanding this precisely, "it worked in testing" turns into "half the write happened during a production outage" and that's how you get orders with no matching inventory decrement.
@@ -28,6 +35,8 @@ UPDATE accounts SET balance_cents = balance_cents + 5000 WHERE id = 2;
 COMMIT;  -- both updates become visible atomically, or...
 -- ROLLBACK;  -- ...neither does, if something went wrong
 ```
+
+![Money transfer transaction: debit and credit inside BEGIN and COMMIT succeed together, and a crash after the debit triggers ROLLBACK so nothing is half-done](../assets/diagrams/04-transaction-acid.svg)
 
 If the connection drops or an exception is raised between the two `UPDATE`s, Postgres automatically rolls back everything since `BEGIN` — the first update never becomes visible to anyone else.
 
@@ -149,6 +158,29 @@ Multi-step AI agent workflows that touch a database (e.g., "check inventory, res
 - Isolation levels trade correctness guarantees against concurrency and the need for retry logic.
 - Keep transactions short and free of slow external calls to avoid holding locks too long.
 - Row-level locking (`FOR UPDATE`) is how you prevent lost updates in read-modify-write flows.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What do the four letters of ACID stand for?</summary>
+
+Atomicity (all or nothing), Consistency (constraints always hold), Isolation (concurrent transactions do not see each other's uncommitted work), and Durability (committed data survives a crash, via the write-ahead log).
+
+</details>
+
+<details markdown="1">
+<summary>2. Two concurrent transfers both read a balance of 100 and each withdraw 80 without a row lock. What happens, and what prevents it?</summary>
+
+Both pass the balance check and both write, causing a lost update or an overdraft. Locking the source row with `SELECT ... FOR UPDATE` inside the transaction makes the second transfer wait and then see the updated balance.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your checkout handler opens a transaction, calls a slow third-party payment API, then commits. Why is this a problem?</summary>
+
+The transaction holds its locks for the whole network call, blocking other requests on those rows and keeping `VACUUM` from cleaning up. Keep transactions tight: do the external call outside, and wrap only the database writes that must be atomic. The payment and the database write are then no longer atomic, so save a pending order first and send an idempotency key to the payment API; a crash in between can then be reconciled instead of leaving a charge with no order.
+
+</details>
 
 ---
 Previous: [ORM Concepts](orm-concepts.md) · Next: [Connection Pooling](connection-pooling.md) · Back to [Part 4 README](README.md)

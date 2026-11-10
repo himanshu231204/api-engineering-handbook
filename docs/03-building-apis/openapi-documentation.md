@@ -1,5 +1,12 @@
 # API Documentation with OpenAPI
 
+> [!TIP]
+> **In one line:** FastAPI generates an OpenAPI schema from your type hints and models, served as interactive docs and a machine-readable contract; it is a starting point, so document errors and test it.
+>
+> **In plain English:** Hand-written API docs go stale as soon as someone adds a field. FastAPI builds the docs from the real code, like a restaurant menu printed straight from the kitchen's actual recipes, so it cannot list a dish that does not exist.
+>
+> **You'll be able to:** Enrich `/docs` with `summary`, `tags`, `Field(description=...)`, and `responses` · Customize and cache the schema with `app.openapi()` · Use `/openapi.json` for SDK generation and contract tests
+
 ## Why This Matters
 
 Undocumented APIs force consumers to read your source code or reverse-engineer behavior by trial and error — slow, error-prone, and a constant source of integration bugs. Manually maintained documentation (a wiki page, a Postman collection) drifts out of sync with the real code the moment someone adds a field and forgets to update the docs. FastAPI removes this trade-off entirely: because every route already declares its inputs and outputs as typed Pydantic models (Chapters 2 and 3 of this part), FastAPI can generate complete, accurate, always-up-to-date API documentation automatically, with zero extra effort.
@@ -255,6 +262,29 @@ This chapter closes an important loop for Part 14 (AI API Engineering): the same
 - The schema is more than documentation — it's a machine-readable contract consumable by SDK generators, contract tests, and gateways.
 - `Field(description=...)`, `summary`, `tags`, and explicit `responses={...}` make auto-generated docs genuinely useful, not just technically correct.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Where are Swagger UI, ReDoc, and the raw schema served by default?</summary>
+
+Swagger UI at `/docs`, ReDoc at `/redoc`, and the machine-readable schema at `/openapi.json`. Both UIs are built on top of that one schema.
+
+</details>
+
+<details markdown="1">
+<summary>2. Your route raises HTTPException(404) when an order is missing. Why does /docs not show a 404 response, and how do you fix it?</summary>
+
+FastAPI cannot infer documented responses from `HTTPException` calls inside your function body. Declare it explicitly with `responses={404: {"description": "Order not found"}}` on the decorator.
+
+</details>
+
+<details markdown="1">
+<summary>3. An internal-only admin API has /docs and /openapi.json publicly reachable. What is the risk, and what are your options?</summary>
+
+Anyone can read the full list of internal endpoints and data shapes. Disable the docs and the schema itself with `docs_url=None, redoc_url=None, openapi_url=None` (setting only the first two leaves `/openapi.json` readable), or put them behind authentication.
+
+</details>
 
 Previous: `configuration-management.md` · Back to `README.md`.
 

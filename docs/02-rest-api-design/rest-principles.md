@@ -1,5 +1,12 @@
 # REST Principles
 
+> [!TIP]
+> **In one line:** REST is a set of six architectural constraints, not a protocol; most real APIs keep statelessness and the uniform interface and skip HATEOAS — a legitimate, pragmatic choice.
+>
+> **In plain English:** A vending machine doesn't know who you are: each time you insert a coin and pick a slot, and it behaves the same for everyone. REST asks servers to work like that — every request carries everything needed to handle it. That's why any one of ten identical servers can answer you.
+>
+> **You'll be able to:** List REST's six constraints in your own words · Explain why statelessness makes scaling out easy · Judge when HATEOAS is worth its cost (rarely)
+
 ## Why This Matters
 
 Almost every API you'll build or consume in your career calls itself "RESTful." Yet most of these APIs violate at least one of Roy Fielding's original constraints, and that's usually fine. Understanding what REST actually *is* — versus the loose convention the industry settled on — lets you make deliberate design decisions instead of cargo-culting patterns you don't understand. When you know *why* a constraint exists, you know when it's safe to bend it and when bending it will hurt you at scale.
@@ -146,3 +153,26 @@ LLM provider APIs (OpenAI, Anthropic) are a good real-world case study: they're 
 - "REST-ish" JSON-over-HTTP APIs are the industry norm, and that's a legitimate, pragmatic outcome, not a failure to implement REST correctly.
 
 See also: [Resources and Endpoints](resources-and-endpoints.md), [API Contracts](api-contracts.md), and the [glossary](../../resources/glossary.md) for quick definitions of REST-related terms.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which constraint is the core of REST, and what are its four sub-parts?</summary>
+
+The uniform interface: resources identified by URLs, changed through representations, self-descriptive messages, and HATEOAS — responses carry links to what you can do next.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does keeping logged-in users in an in-process dict break an API that claims to be stateless?</summary>
+
+The session lives in one server's memory. Add replicas behind a load balancer and requests that land on another instance can't find the user — the classic "works on one server, fails with replicas" bug. Send a token with every request instead.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your internal API is used only by services your team deploys together. Should you build full HATEOAS?</summary>
+
+Usually not. Its payoff is loose coupling with clients you can't coordinate; here you control every client, so the cost outweighs the gain. Keep statelessness and standard HTTP semantics, perhaps with a `next` link for pagination.
+
+</details>

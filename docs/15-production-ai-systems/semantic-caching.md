@@ -1,5 +1,12 @@
 # Semantic Caching
 
+> [!TIP]
+> **In one line:** Semantic caching reuses an answer when a new query means nearly the same as a cached one — a big win, if you tune the threshold and exclude personal queries.
+>
+> **In plain English:** People ask the same question in many different words. A semantic cache turns each question into a list of numbers that captures its meaning, and reuses an earlier answer when a new question means nearly the same thing — like a hotel concierge who realises 'Where's the loo?' and 'Which way to the restroom?' deserve the same reply.
+>
+> **You'll be able to:** Explain the embed, search, threshold, store flow · Tune the similarity threshold against labeled query pairs · Keep personalized and time-sensitive queries out of the cache and set sensible TTLs
+
 ## Why This Matters
 
 Traditional caching (see [Part 7 — Caching & Performance](../07-caching-performance/README.md), especially [Cache-Aside](../07-caching-performance/cache-aside.md)) matches on exact keys: the same input produces a cache hit only if it's byte-for-byte identical to a previous request. That works well for a URL or a database query, but it works poorly for natural-language input, because two users asking "How do I reset my password?" and "What's the process to change my password?" are asking the *same question* in different words — an exact-match cache treats them as completely unrelated and misses both times, forcing a full, paid LLM call for a question that's effectively already been answered. Semantic caching closes this gap by matching on **meaning**, not exact text, using embeddings to measure similarity between the new query and previously cached queries.
@@ -41,6 +48,8 @@ flowchart TD
     LLM --> STORE[Store query embedding\n+ response, with TTL]
     STORE --> RETURN[Return fresh response\ntag as cache_miss]
 ```
+
+![Semantic cache flow: embed the query, search for a similar cached query, return the cached answer above the threshold or call the LLM and store the result](../assets/diagrams/15-semantic-cache.svg)
 
 ## Request / Response Example
 
@@ -198,3 +207,26 @@ Semantic caching is a natural complement to [RAG pipelines](../16-rag-apis/READM
 - The similarity threshold is the central trade-off between cache-hit rate and the risk of returning a confidently wrong answer for a superficially similar but different question.
 - Personalized and time-sensitive queries must be excluded from semantic caching entirely — a similarity match doesn't imply the same correct answer applies.
 - It complements, rather than replaces, [Prompt Caching](prompt-caching.md), and pairs especially well with RAG workloads that see repeated user intent.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How does a semantic cache decide whether a new query is a hit?</summary>
+
+It embeds the query, searches stored entries for the most similar embedding (usually cosine similarity), and counts it as a hit only if that similarity is at or above the configured threshold. Otherwise it calls the LLM and stores the new pair.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you set the similarity threshold too low, and what if you set it too high?</summary>
+
+Too low and superficially similar but different questions (like deleting an account versus deleting a project) get a confidently wrong cached answer. Too high and you rarely hit, so you pay embedding overhead for almost no savings.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user asks 'What's my account balance?' and receives another customer's cached answer. What went wrong and how do you prevent it?</summary>
+
+A personalized query was treated as cacheable, so a semantically similar entry from another user was returned — a data leak, not just a stale answer. Classify requests and bypass the semantic cache entirely for anything personalized or time-sensitive.
+
+</details>

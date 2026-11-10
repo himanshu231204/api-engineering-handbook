@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" role="img" aria-labelledby="t d">
+  <title id="t">Middleware as layers of an onion</title>
+  <desc id="d">Three nested middleware layers wrap the route handler. The request passes inward through request ID, CORS and timing middleware to the route; the response passes back outward through them in reverse order.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="539" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Middleware wraps your app like an onion</text>
+  <text x="32" y="66" class="sub">Every request crosses each layer twice: inward on the way to the route, outward on the way back.</text>
+
+  <rect x="200" y="100" width="648" height="330" rx="14" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <rect x="250" y="140" width="548" height="250" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <rect x="300" y="180" width="448" height="170" rx="14" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="216" y="125" class="lbl" fill="#475569">RequestIDMiddleware  (outermost: registered last)</text>
+  <text x="216" y="415" class="note">adds X-Request-ID to the response</text>
+  <text x="266" y="165" class="lbl" fill="#2563eb">CORSMiddleware</text>
+  <text x="266" y="375" class="note">adds Access-Control-Allow-Origin</text>
+  <text x="316" y="205" class="lbl" fill="#b45309">Timing middleware</text>
+  <text x="316" y="335" class="note">measures time around call_next()</text>
+  <rect x="360" y="220" width="328" height="90" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="396" cy="265" r="12" fill="#1c7c54"/>
+  <text x="396" y="269" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">4</text>
+  <text x="420" y="260" class="h">Route handler</text>
+  <text x="420" y="282" class="note">your endpoint code runs here</text>
+  <rect x="32" y="200" width="128" height="130" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="96" y="258" class="h" text-anchor="middle">Client</text>
+  <text x="96" y="280" class="note" text-anchor="middle">browser / app</text>
+  <line x1="162" y1="245" x2="357" y2="245" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="358" y1="290" x2="163" y2="290" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="225" cy="245" r="12" fill="#1c7c54"/>
+  <text x="225" y="249" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <circle cx="275" cy="245" r="12" fill="#1c7c54"/>
+  <text x="275" y="249" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <circle cx="324" cy="245" r="12" fill="#1c7c54"/>
+  <text x="324" y="249" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <circle cx="324" cy="290" r="12" fill="#1c7c54"/>
+  <text x="324" y="294" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">5</text>
+  <circle cx="275" cy="290" r="12" fill="#1c7c54"/>
+  <text x="275" y="294" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">6</text>
+  <circle cx="225" cy="290" r="12" fill="#1c7c54"/>
+  <text x="225" y="294" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">7</text>
+  <text x="166" y="236" class="note">in</text>
+  <text x="166" y="308" class="note">out</text>
+  <rect x="32" y="452" width="816" height="56" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="476" class="lbl" fill="#111827">Request goes in 1 → 2 → 3 → route (4); the response comes back out 5 → 6 → 7, in reverse.</text>
+  <text x="48" y="496" class="note">With add_middleware(), the last one you register becomes the outermost layer: first to see the request, last to touch the response.</text>
+
+</svg>

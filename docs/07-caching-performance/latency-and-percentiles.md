@@ -1,5 +1,12 @@
 # Latency and P95/P99
 
+> [!TIP]
+> **In one line:** Latency is a distribution, not a number: averages hide slow users, so measure, alert and set SLOs on P50, P95 and P99.
+>
+> **In plain English:** If you line up every request from fastest to slowest, P95 is the point that 95 out of 100 requests beat. Like judging a commute, 'usually 20 minutes' matters less than 'one day in twenty it takes an hour'. Caching makes the typical request faster but often leaves the slowest ones, the tail, just as slow.
+>
+> **You'll be able to:** read a latency report and spot what the average hides · explain why caching moves P50 more than P99 · estimate how fan-out amplifies tail latency
+
 ## Why This Matters
 
 If you take one measurement habit from this entire handbook, it should be this: **averages lie, and percentiles tell the truth.** Every previous chapter in this part — cache-aside, Redis, invalidation — exists to reduce latency and database load, but you can't know whether any of it actually worked if you're only looking at the average response time. A cache that dramatically speeds up 95% of requests while leaving the remaining 5% just as slow (or slower, due to stampede-induced contention) can produce an average that looks great while a meaningful slice of your users have a bad experience every single day. Understanding percentiles is what lets you see past that illusion — and it's the correct lens for evaluating everything else in this part.
@@ -67,6 +74,8 @@ flowchart TB
     D --> G[Acceptable-bar for most users]
     E --> H[Tail: cache misses,\nGC pauses, lock contention,\ntimeouts]
 ```
+
+![Latency histogram on a log scale with P50, P95, P99 and the average marked, showing the long tail of slow requests that the average hides](../assets/diagrams/07-latency-percentiles.svg)
 
 ## Request / Response Example
 
@@ -191,6 +200,29 @@ Latency percentiles matter even more in AI-backed APIs because the underlying la
 - Caching typically improves P50 and P95 dramatically by creating a fast "hit" cluster, but often has a much smaller (or even negative, under stampede) effect on P99, which is dominated by the miss path.
 - In fan-out systems, individual-service tail latency compounds across calls — a rare per-service tail event becomes a much more common user-facing event.
 - Always alert, report, and set SLOs on percentiles, never on averages alone.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does a P99 of 200ms mean?</summary>
+
+99% of requests completed in 200ms or less, and the slowest 1% took longer. It describes the tail that the unluckiest users experience, which the average can almost completely hide.
+
+</details>
+
+<details markdown="1">
+<summary>2. After adding a cache, P50 drops from 90ms to 3ms but P99 barely moves. Why?</summary>
+
+The distribution becomes bimodal: most requests are fast hits, but the tail is made up of misses that still pay full database latency, plus contention, GC pauses or timeouts the cache does not fix. P99 must be tracked separately, ideally per hit or miss path.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your endpoint calls five backends in parallel and waits for all of them; each is slow 1% of the time. Roughly how often is the user request slow?</summary>
+
+About 1 - 0.99^5, which is roughly 4.9%, nearly five times the per-service rate (assuming the five slowdowns are independent; if they always happened together it would be 1%). That is why per-service P99 targets must be tighter than the user-facing target.
+
+</details>
 
 ---
 

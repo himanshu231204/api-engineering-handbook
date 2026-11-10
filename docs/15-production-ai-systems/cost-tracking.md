@@ -1,5 +1,12 @@
 # Cost Tracking
 
+> [!TIP]
+> **In one line:** Compute each request's dollar cost from token usage, tag it with tenant and feature, and enforce budgets with real-time pre-call caps — not just a monthly invoice surprise.
+>
+> **In plain English:** Every AI call costs money based on how much text goes in and out, and one bug can multiply the bill overnight. So you record each call's price and who caused it, and block spending past a limit — like company cards with a per-person monthly cap and an itemized statement.
+>
+> **You'll be able to:** Calculate per-request cost from input, output and cached tokens · Attribute spend by tenant, feature and model in an append-only ledger · Enforce hard budget caps before calls and alert on cost rate of change
+
 ## Why This Matters
 
 Traditional API infrastructure costs are mostly fixed and predictable: you provision servers, you pay roughly the same amount whether traffic is light or heavy that day, and a bad month looks like a 20% overage, not a 20x one. LLM costs are the opposite: they scale directly and immediately with usage, per token, and a single bug — an infinite retry loop, an agent stuck reasoning in circles, a prompt that accidentally includes an entire document on every turn — can turn a $200/day feature into a $20,000/day feature before anyone notices, because nothing about the system *looks* broken from the outside. Cost tracking is the practice of making AI spend visible, attributable, and boundable in real time, rather than discovered a month later on an invoice.
@@ -210,3 +217,26 @@ Agent loops (see [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README.md
 - LLM costs scale directly with usage and can spike unboundedly from bugs — a hard, real-time budget cap is not optional for production systems.
 - Cache-hit discounts materially affect cost calculations and should be reflected accurately, not ignored.
 - Attribution metadata must be captured at the source (on each gateway request), because retrofitting it later is far more expensive.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three layers of cost tracking?</summary>
+
+Calculation (turning token usage into dollars with a current pricing table), attribution (tagging each cost with tenant, feature and sometimes user), and enforcement (budget alerts and hard caps driven by that attributed data).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must a hard budget check run before the provider call rather than only after recording usage?</summary>
+
+An after-the-fact ledger can only tell you that you overspent. A pre-call check against a fast real-time counter is what actually stops a runaway feature or tenant from exceeding its ceiling.
+
+</details>
+
+<details markdown="1">
+<summary>3. A tenant hits its monthly AI budget. What should the gateway return, and what should the response contain?</summary>
+
+A clear, typed error — the chapter uses 402 Payment Required with error budget_exceeded — including current spend, the budget, and when it resets. That is actionable for the caller, unlike a silent throttle or a generic 500.
+
+</details>

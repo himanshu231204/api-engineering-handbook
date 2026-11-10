@@ -1,5 +1,12 @@
 # OAuth 2.0
 
+> [!TIP]
+> **In one line:** OAuth 2.0 lets a user grant an app scoped, revocable access to their data on another service — use Authorization Code + PKCE, never share the password.
+>
+> **In plain English:** Instead of giving a babysitter your house keys, you ask a neighbour you trust to let them in to the kitchen only, just for tonight. The babysitter never learns your key, and you can call the neighbour to cancel at any time. OAuth is that trusted middle step for apps.
+>
+> **You'll be able to:** walk through the Authorization Code + PKCE flow step by step · explain what `state`, `code_verifier` and `code_challenge` each protect against · request minimal scopes and avoid deprecated flows like Implicit
+
 ## Why This Matters
 
 Every time you click "Sign in with Google" or grant a third-party app access to your calendar without ever typing your Google password into that app, you're using OAuth 2.0. It solves a problem that predates it caused real damage: before OAuth, the only way to let a third-party app act on your behalf was to **hand it your actual password**, giving it unlimited, unscoped, indefinite access — exactly what you'd never want to give a random calendar-sync tool. OAuth 2.0 is the industry-standard protocol for **delegated authorization**: letting a user grant a third-party application limited, revocable access to their resources on another service, without ever sharing credentials with that third party.
@@ -50,23 +57,25 @@ sequenceDiagram
     participant AuthS as Authorization Server
     participant ResS as Resource Server
 
-    Client->>Client: Generate code_verifier (random)\ncode_challenge = SHA256(code_verifier)
-    Client->>User: Redirect to /authorize\n?client_id&redirect_uri&scope&state&code_challenge
+    Client->>Client: Generate code_verifier (random)<br/>code_challenge = SHA256(code_verifier)
+    Client->>User: Redirect to /authorize<br/>?client_id&redirect_uri&scope&state&code_challenge
     User->>AuthS: GET /authorize (via browser redirect)
     AuthS->>User: Login + consent screen
     User->>AuthS: Approve access
-    AuthS-->>User: Redirect to redirect_uri\n?code=AUTH_CODE&state=...
+    AuthS-->>User: Redirect to redirect_uri<br/>?code=AUTH_CODE&state=...
     User->>Client: Deliver code + state (browser redirect)
     Client->>Client: Verify state matches original
 
-    Client->>AuthS: POST /token\n{code, code_verifier, client_id, redirect_uri}
+    Client->>AuthS: POST /token<br/>{code, code_verifier, client_id, redirect_uri}
     AuthS->>AuthS: Verify SHA256(code_verifier) == code_challenge
     AuthS-->>Client: {access_token, refresh_token, expires_in}
 
-    Client->>ResS: GET /calendar/events\nAuthorization: Bearer <access_token>
+    Client->>ResS: GET /calendar/events<br/>Authorization: Bearer <access_token>
     ResS->>AuthS: (optionally) validate token
     ResS-->>Client: 200 OK + calendar data
 ```
+
+![Numbered OAuth 2.0 Authorization Code + PKCE flow across four lanes — user, client app, authorization server, API: create verifier and challenge, redirect to /authorize, user logs in and consents, redirect back with a code, POST the code plus verifier to /token, server checks the hash, tokens returned, API called with the bearer token](../assets/diagrams/05-oauth2-auth-code-pkce.svg)
 
 ## Request / Response Example
 
@@ -168,14 +177,22 @@ async def login():
         "code_challenge_method": "S256",
     }
     query = "&".join(f"{k}={v}" for k, v in params.items())
-    return RedirectResponse(f"{AUTH_SERVER}/authorize?{query}")
+    response = RedirectResponse(f"{AUTH_SERVER}/authorize?{query}")
+    # Bind this flow to THIS browser. A callback link that an attacker forwards
+    # to a victim carries the attacker's state but not this cookie, so the
+    # check in /callback rejects it.
+    response.set_cookie("oauth_state", state, httponly=True, secure=True,
+                        samesite="lax", max_age=600)
+    return response
 
 
 @app.get("/callback")
-async def callback(code: str, state: str):
+async def callback(request: Request, code: str, state: str):
     flow = PENDING_FLOWS.pop(state, None)
-    if flow is None:
-        # Unknown or reused state -> possible CSRF attempt on the redirect
+    cookie_state = request.cookies.get("oauth_state") or ""
+    if flow is None or not secrets.compare_digest(cookie_state, state):
+        # Unknown, reused, or started in a different browser -> possible CSRF
+        # attempt on the redirect
         raise HTTPException(status_code=400, detail="Invalid or expired state")
 
     async with httpx.AsyncClient() as http_client:
@@ -246,3 +263,26 @@ OAuth 2.0 is increasingly central to AI agent architectures: when an [AI agent](
 - PKCE prevents a stolen authorization code from being redeemed by anyone other than the client that originated the flow, by requiring the original `code_verifier` at token exchange.
 - `state` validation prevents CSRF on the authorization redirect; strict `redirect_uri` validation prevents code leakage to attacker endpoints.
 - OAuth alone establishes authorization, not identity — identity requires OpenID Connect layered on top.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four roles in OAuth 2.0?</summary>
+
+The resource owner (the user who owns the data), the client (the app requesting access), the authorization server (logs the user in and issues tokens), and the resource server (the API that holds the data and accepts the access token).
+
+</details>
+
+<details markdown="1">
+<summary>2. An attacker intercepts the authorization code during the redirect. Why can't they redeem it when PKCE is used?</summary>
+
+Redeeming the code at /token requires the original code_verifier, and the authorization server checks that its SHA256 hash matches the code_challenge sent in the first redirect. The verifier never travelled through the browser, so the attacker doesn't have it and the exchange fails.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your callback handler accepts any incoming code without checking state. What can an attacker do?</summary>
+
+They can trick a victim's browser into completing a flow with the attacker's own authorization code (login CSRF), binding the victim's session to the attacker's account. Generate a random state per flow, bind it to the browser that started the flow (for example in an HttpOnly cookie or the server-side session), and reject the callback if the returned state is unknown, already used, or does not match that browser's own value. Otherwise an attacker's callback link would still work in the victim's browser.
+
+</details>

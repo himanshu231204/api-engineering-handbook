@@ -1,5 +1,12 @@
 # LLM APIs
 
+> [!TIP]
+> **In one line:** An LLM API looks like any JSON-over-HTTP endpoint, but it is non-deterministic, billed per token, and stateless — your app owns the conversation.
+>
+> **In plain English:** You send text in, the model writes text back one small piece at a time, and you pay for every piece in both directions. It is like a taxi meter that runs on words instead of miles, and your app — not the model — has to keep the notes of the conversation so far.
+>
+> **You'll be able to:** Explain which REST assumptions break for LLM APIs · Make a safe LLM call with explicit max_tokens and a timeout · Read the usage block to track cost per request
+
 ## Why This Matters
 
 By the time you reach this chapter, you already know how to design and consume a REST API: send a request, get a deterministic response, done. LLM APIs look identical on the wire — they're HTTP endpoints that accept JSON and return JSON — but they break almost every assumption you've built up about how APIs behave. The same request can return a different response every time. A single call can cost real money in a way a `GET /users/42` never does. Latency is measured in seconds, not milliseconds, and scales with how much text goes in and out. If you treat an LLM API like a normal CRUD endpoint — call it synchronously, assume identical inputs give identical outputs, ignore the cost per call — you will build something that is slow, expensive, and impossible to test reliably. This chapter establishes the mental model for everything else in Part 14: what an LLM API actually is, and precisely which REST assumptions no longer hold.
@@ -190,3 +197,26 @@ Everything in Parts 14–17 is a variation on this same core contract: stateless
 - Latency and cost scale with input and output token counts, not with "a request happening," which changes how you budget and design around LLM calls.
 - Always set explicit `max_tokens` and timeouts — omitting either is a common and expensive production mistake.
 - This chapter's model (stateless model, caller-managed state, metered tokens) underlies every later chapter in this part, and reappears in RAG and agent systems in Parts 16–17.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What three properties make an LLM API different from a typical REST endpoint?</summary>
+
+It is non-deterministic (the same input can give different outputs because the next token is sampled), its cost and latency scale with the number of input and output tokens, and the model is stateless — any memory is history your application re-sends on every call.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does asking for a longer answer make a non-streamed call take longer, even on fast infrastructure?</summary>
+
+The model generates output one token at a time, each conditioned on the ones before it, so wall-clock time grows roughly in proportion to output length. Doubling the answer length roughly doubles the wait, regardless of network speed.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your chatbot sends only the newest user message to the LLM API, and users complain it forgets what they said a minute ago. What is wrong and how do you fix it?</summary>
+
+The model has no memory between calls — it only sees the tokens in the current request. Store the conversation history in your own database and send the full relevant message list (system prompt plus prior turns) on every call.
+
+</details>

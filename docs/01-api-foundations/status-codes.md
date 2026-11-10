@@ -1,5 +1,12 @@
 # HTTP Status Codes
 
+> [!TIP]
+> **In one line:** A status code's first digit says what happened — 2xx success, 3xx go elsewhere, 4xx the client must fix the request, 5xx the server failed and a retry might help.
+>
+> **In plain English:** Think of a parcel-tracking page: "delivered", "forwarded to a new address", "wrong address, please fix it", "problem at our depot, we'll try again". One short label tells you whose move it is. Status codes do the same for every API response, so programs can react without reading the message.
+>
+> **You'll be able to:** Pick the right code for common cases: 200, 201, 204, 400, 401, 403, 404, 409, 422, 429 and 5xx · Tell 401 from 403, and 400 from 422 · Decide which responses a client should retry
+
 ## Why This Matters
 
 A status code is the first thing a client checks in an HTTP response, before it even looks at the body — it's a compact, standardized signal of what happened. Get status codes right and clients (including your own frontend, other services, and monitoring tools) can react correctly without parsing error messages. Get them wrong — returning `200 OK` on a validation failure, or `500` for something that's actually the caller's fault — and you break retry logic, alerting, and the basic trust a client places in your API. Status codes are also one of the fastest things to check when something breaks in production, which is exactly why understanding them precisely matters.
@@ -66,6 +73,8 @@ flowchart TD
     CE2 -->|422/400| Val[Validation failed]
     CE2 -->|429| RL[Rate limited — check Retry-After]
 ```
+
+![Diagram: the five status code families 1xx to 5xx with who is at fault and common codes](../assets/diagrams/01-status-code-families.svg)
 
 ## Request / Response Example
 
@@ -205,3 +214,26 @@ LLM provider APIs lean heavily on a few specific status codes you'll handle cons
 - Precise status codes (401 vs. 403, 404 vs. 422) carry real meaning that clients and infrastructure rely on to behave correctly.
 - Retry logic, alerting, and caching all depend on correct status code usage — misusing codes breaks automated systems, not just human understanding.
 - 429 and 503 responses should include a `Retry-After` header; AI systems calling LLM providers depend heavily on correctly distinguishing 429/5xx (retry) from 400/401/403 (don't retry, fix the request or credentials).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between 401 and 403?</summary>
+
+401 means the request has no valid authentication — the server doesn't know who you are. 403 means the server knows who you are, but you aren't allowed to do this.
+
+</details>
+
+<details markdown="1">
+<summary>2. What goes wrong if your API returns 500 for a validation error?</summary>
+
+Monitoring and retry logic treat 5xx as "the server is unhealthy", so you set off false alerts and clients may retry a request that will fail the same way every time. Validation failures are 4xx (400 or 422).
+
+</details>
+
+<details markdown="1">
+<summary>3. Your API is rate-limiting a client. What should the response look like?</summary>
+
+Return `429 Too Many Requests` with a `Retry-After` header saying how long to wait, plus your standard error body. The client can then back off for the right amount of time instead of guessing.
+
+</details>

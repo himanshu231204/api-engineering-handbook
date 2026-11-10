@@ -1,5 +1,12 @@
 # HTTP Methods
 
+> [!TIP]
+> **In one line:** The method is the request's verb — GET reads, POST creates, PUT replaces, PATCH edits, DELETE removes — and whether it is safe or idempotent decides what may be cached or retried.
+>
+> **In plain English:** A method works like the verb in a sentence: the URL is the noun, the method says what to do with it. Browsers, caches and proxies look only at the verb to decide whether to fetch early, keep a copy or try again. Pick the wrong verb and those tools do the wrong thing.
+>
+> **You'll be able to:** Match each method to its purpose and say whether it's safe and idempotent · Choose between PUT and PATCH for an update · Explain why a POST must not be retried blindly
+
 ## Why This Matters
 
 The HTTP method is the very first thing on the request line — it's the verb that tells the server what kind of operation you intend, before it even looks at the path or body. Choosing the right method isn't a stylistic preference: it determines whether intermediaries (caches, proxies, browsers) treat your request as safe to retry, safe to cache, or safe to repeat automatically. Get this wrong — like using `GET` to delete something — and you can accidentally let a search engine crawler or browser prefetcher destroy data. Every REST API design decision in Part 2 builds on getting these semantics right.
@@ -192,3 +199,26 @@ Nearly every LLM API call — chat completions, embeddings, image generation —
 - Safety (no side effects) and idempotency (repeatable with the same end result) are the two properties that determine what's safe to cache, retry, or prefetch automatically.
 - `POST` is the only common method that is neither safe nor idempotent by default — this is exactly why idempotency keys exist for production reliability.
 - LLM chat and generation endpoints are `POST` for the same fundamental reasons any non-idempotent, body-carrying action is — not an arbitrary API design choice.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which common methods are safe, and which are idempotent?</summary>
+
+Safe (read-only): GET, HEAD and OPTIONS. Idempotent: those three plus PUT and DELETE. POST is neither, and PATCH depends on what the patch does.
+
+</details>
+
+<details markdown="1">
+<summary>2. What can go wrong if GET /users/42/delete deletes a user?</summary>
+
+Anything that treats GET as safe — browser prefetching, search-engine crawlers, caches — may call that URL on its own and delete data nobody meant to delete.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client sends PUT /users/42 with only an email field, meaning to change just the email. What happens, and what should it use?</summary>
+
+PUT means full replacement, so fields it leaves out may be cleared or reset. The client should use PATCH, which changes only the fields it sends.
+
+</details>

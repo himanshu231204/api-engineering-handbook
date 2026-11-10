@@ -13,6 +13,8 @@ docs/<NN-slug>/          20 parts + 00-introduction. Each part has a README.md (
 examples/<name>/         Small, focused, runnable code samples. Each has its own README.md, requirements.txt.
 projects/<NN-slug>/      10 capstone project specs (README.md each) — specs, not full implementations (a few may gain reference implementations over time).
 diagrams/                6 standalone Mermaid diagram reference files.
+docs/assets/diagrams/    Hand-drawn SVG concept diagrams, embedded in chapters (see "SVG concept diagrams").
+mkdocs.yml, scripts/     GitHub Pages site. Nav is generated from part README status tables (scripts/gen_pages.py) — never hand-edit a nav list.
 resources/               cheatsheets/, interview-questions/, exercises/, glossary.md.
 ```
 
@@ -52,6 +54,28 @@ Every chapter under `docs/` (except Part 19's case studies and `projects/*/READM
 ```
 
 Depth bar: ~1200–2200 words of real technical content (900+ is fine for the simplest Part 1 topics). Teach from first principles — problem → why it exists → basic solution → internal mechanics → real example → trade-offs → production implications. Never write a shallow one-liner definition. At least one Mermaid diagram in "Architecture." A real, correct, commented code example (Python + FastAPI + Pydantic v2 + SQLAlchemy async for backend chapters; illustrative pseudo-SDK calls with clear comments for LLM-provider-specific code, since we don't commit to one vendor SDK). Never hardcode secrets — always environment variables. "AI Engineering Perspective" should be a genuine connection, not a forced one; for chapters inside Parts 14–17 (already AI-native), use that section to go *deeper* — cross-references to RAG/agents/gateways — rather than restating that the topic is AI-related. Exercises: 1–2 each for Beginner / Intermediate / Advanced. Key Takeaways: 3–5 bullets.
+
+### Learner aids (every chapter, including Part 19 case studies)
+
+Two additions sit *around* the template — they don't add or reorder `##` sections:
+
+1. **TL;DR callout**, directly under the `# Title` line:
+
+   ```markdown
+   > [!TIP]
+   > **In one line:** <the single most important idea, ≤ 30 words>
+   >
+   > **In plain English:** <2–3 jargon-free sentences>
+   >
+   > **You'll be able to:** <outcome> · <outcome> · <outcome>
+   ```
+
+   GitHub renders `> [!TIP]` natively; `scripts/mkdocs_hooks.py` converts it to a styled "TL;DR" box on the Pages site.
+2. **Check Yourself quiz** — a `### Check Yourself` H3 at the end of `## Key Takeaways` (end of file for Part 19) with 3 questions (recall, why/what-if, applied scenario), each as `<details markdown="1"><summary>N. Question</summary>` + blank line + answer + blank line + `</details>`. Blank lines and `markdown="1"` are required.
+
+### SVG concept diagrams
+
+Hand-drawn SVGs live in `docs/assets/diagrams/<NN>-<name>.svg` (NN = part number) and are embedded with `![alt text](../assets/diagrams/<NN>-<name>.svg)`. Copy the visual system of `docs/assets/diagrams/01-http-request-anatomy.svg`: width 880, own white rounded background (so it reads in dark mode), `<title>`/`<desc>`, the same `<style>` classes, the fixed palette (green = main path, blue = client/info, amber = data, red = failure, purple = AI/external, slate = infra), numbered circles for ordered steps, no text under 12px. Escape `&` as `&amp;`. They supplement Mermaid diagrams, they don't replace them. The site's Diagrams page lists every SVG automatically.
 
 ### Part 19 (system design case studies) template
 
@@ -104,11 +128,13 @@ Capacity estimates need real back-of-envelope arithmetic with stated assumptions
 
 ## Verifying the repo
 
-CI (`.github/workflows/ci.yml`) runs on every push/PR to `main` and does three things — run the same checks locally before committing:
+CI (`.github/workflows/ci.yml`) runs on every push/PR to `main`: link check, SVG check, examples compile, a strict MkDocs build, and advisory markdownlint — run the same checks locally before committing:
 
 ```bash
 python3 scripts/check_links.py              # every relative Markdown link must resolve — this is the hard gate
 python3 scripts/check_examples_compile.py    # every examples/*.py must byte-compile — syntax gate, not a runtime test
+python3 scripts/check_svgs.py               # every docs/assets SVG must be well-formed XML (else it renders as a broken image)
+mkdocs build --strict                       # needs `pip install -r requirements-docs.txt`; CI runs this on every PR
 ```
 
 Both scripts are stdlib-only (no install needed). Zero broken links is the bar — this repo has held at 0 through every content addition so far. A third CI job runs `markdownlint-cli2` against `.markdownlint.jsonc` in advisory mode (`continue-on-error: true`) — it won't block anything, but read its output.

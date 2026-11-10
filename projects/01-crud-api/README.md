@@ -28,8 +28,8 @@ Build a "Bookshelf" resource API — a full CRUD service for managing a personal
 flowchart LR
     Client[HTTP Client / curl / Swagger UI] -->|JSON over HTTP| API[FastAPI App]
     API --> Router[Books Router]
-    Router --> Schema[Pydantic Schemas\n(BookCreate, BookUpdate, BookRead)]
-    Router --> Service[Book Service\n(business rules, uniqueness checks)]
+    Router --> Schema["Pydantic Schemas\n(BookCreate, BookUpdate, BookRead)"]
+    Router --> Service["Book Service\n(business rules, uniqueness checks)"]
     Service --> Repo[Book Repository]
     Repo --> DB[(SQLite / In-Memory Store)]
     API --> Docs[OpenAPI / Swagger UI at /docs]

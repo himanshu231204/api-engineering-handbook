@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="546" viewBox="0 0 880 546" role="img" aria-labelledby="t d">
+  <title id="t">Idempotency keys make retries safe</title>
+  <desc id="d">A client retries a payment after a timeout. Without an idempotency key the server charges twice. With a key the server recognises the retry and returns the stored result.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="545" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">A lost response forces a retry. Is the retry safe?</text>
+  <text x="32" y="66" class="sub">Same request, same timeout. The idempotency key is the difference.</text>
+  <rect x="32" y="82" width="400" height="438" rx="10" fill="#ffffff" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="108" class="h" style="fill:#b91c1c">Without an idempotency key</text>
+  <rect x="48" y="122" width="88" height="30" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="92" y="142" class="lbl" text-anchor="middle">Client</text>
+  <rect x="294" y="122" width="88" height="30" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="338" y="142" class="lbl" text-anchor="middle">Server</text>
+  <line x1="92" y1="152" x2="92" y2="440" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="338" y1="152" x2="338" y2="440" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="92" y1="196" x2="338" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="222" y="186" class="lbl" text-anchor="middle">POST /payments $99</text>
+  <circle cx="122" cy="196" r="12" fill="#1c7c54"/>
+  <text x="122" y="200" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <rect x="268" y="212" width="140" height="34" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="338" y="233" class="note" text-anchor="middle">charge card $99</text>
+  <circle cx="252" cy="229" r="12" fill="#1c7c54"/>
+  <text x="252" y="233" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <line x1="338" y1="290" x2="92" y2="290" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="222" y="280" class="lbl" text-anchor="middle" style="fill:#b91c1c">200 OK (lost: timeout)</text>
+  <line x1="214" y1="282" x2="230" y2="298" stroke="#b91c1c" stroke-width="3"/>
+  <line x1="214" y1="298" x2="230" y2="282" stroke="#b91c1c" stroke-width="3"/>
+  <circle cx="308" cy="290" r="12" fill="#1c7c54"/>
+  <text x="308" y="294" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <line x1="92" y1="350" x2="338" y2="350" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="222" y="340" class="lbl" text-anchor="middle">retry: same POST $99</text>
+  <circle cx="122" cy="350" r="12" fill="#1c7c54"/>
+  <text x="122" y="354" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <rect x="260" y="372" width="156" height="50" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="338" y="393" class="note" text-anchor="middle">charge card again</text>
+  <text x="338" y="411" class="note" text-anchor="middle">$198 in total</text>
+  <circle cx="244" cy="397" r="12" fill="#1c7c54"/>
+  <text x="244" y="401" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <rect x="48" y="452" width="368" height="52" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="232" y="484" class="lbl" text-anchor="middle" style="fill:#b91c1c">Customer charged twice. Money lost.</text>
+  <rect x="448" y="82" width="400" height="438" rx="10" fill="#ffffff" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="464" y="108" class="h" style="fill:#1c7c54">With an Idempotency-Key</text>
+  <rect x="464" y="122" width="88" height="30" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="508" y="142" class="lbl" text-anchor="middle">Client</text>
+  <rect x="710" y="122" width="88" height="30" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="754" y="142" class="lbl" text-anchor="middle">Server</text>
+  <line x1="508" y1="152" x2="508" y2="440" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="754" y1="152" x2="754" y2="440" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="508" y1="196" x2="754" y2="196" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="638" y="186" class="lbl" text-anchor="middle">POST $99 + key k-123</text>
+  <circle cx="538" cy="196" r="12" fill="#1c7c54"/>
+  <text x="538" y="200" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <rect x="684" y="212" width="140" height="34" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="754" y="233" class="note" text-anchor="middle">charge + save k-123</text>
+  <circle cx="668" cy="229" r="12" fill="#1c7c54"/>
+  <text x="668" y="233" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <line x1="754" y1="290" x2="508" y2="290" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="638" y="280" class="lbl" text-anchor="middle" style="fill:#b91c1c">200 OK (lost: timeout)</text>
+  <line x1="630" y1="282" x2="646" y2="298" stroke="#b91c1c" stroke-width="3"/>
+  <line x1="630" y1="298" x2="646" y2="282" stroke="#b91c1c" stroke-width="3"/>
+  <circle cx="724" cy="290" r="12" fill="#1c7c54"/>
+  <text x="724" y="294" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <line x1="508" y1="350" x2="754" y2="350" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="638" y="340" class="lbl" text-anchor="middle">retry: same key k-123</text>
+  <circle cx="538" cy="350" r="12" fill="#1c7c54"/>
+  <text x="538" y="354" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <rect x="676" y="372" width="156" height="50" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="754" y="393" class="note" text-anchor="middle">k-123 seen before:</text>
+  <text x="754" y="411" class="note" text-anchor="middle">return saved result</text>
+  <circle cx="660" cy="397" r="12" fill="#1c7c54"/>
+  <text x="660" y="401" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <rect x="464" y="452" width="368" height="52" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="648" y="484" class="lbl" text-anchor="middle" style="fill:#1c7c54">Charged once. The retry is harmless.</text>
+</svg>

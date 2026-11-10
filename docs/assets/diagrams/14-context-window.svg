@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">The context window is one shared token budget</title>
+  <desc id="d">A fixed-size context window bar is filled by the system prompt, tool schemas, conversation history, retrieved documents, the new user message, and space reserved for the model's answer. When history keeps growing, input pushes past the limit and the request fails or the answer is cut off. The fix is to drop or summarize the oldest history so input plus reserved output fits.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">One context window, shared by input and output</text>
+  <text x="32" y="66" class="sub">Everything you send, plus room for the answer, must fit in one fixed token budget set by the model.</text>
+
+  <!-- brackets above the bar -->
+  <text x="368" y="96" class="lbl" fill="#2563eb" text-anchor="middle">INPUT — what you send on every call</text>
+  <path d="M32,110 L32,104 L704,104 L704,110" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="776" y="96" class="lbl" fill="#6d28d9" text-anchor="middle">OUTPUT</text>
+  <path d="M708,110 L708,104 L848,104 L848,110" fill="none" stroke="#6d28d9" stroke-width="1.5"/>
+
+  <!-- main bar: y 114..170 -->
+  <rect x="32"  y="114" width="112" height="56" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="88"  y="138" class="lbl" fill="#1c7c54" text-anchor="middle">System prompt</text>
+  <text x="88"  y="158" class="note" text-anchor="middle">fixed</text>
+
+  <rect x="148" y="114" width="104" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="200" y="138" class="lbl" fill="#475569" text-anchor="middle">Tool schemas</text>
+  <text x="200" y="158" class="note" text-anchor="middle">fixed</text>
+
+  <rect x="256" y="114" width="208" height="56" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="360" y="138" class="lbl" fill="#2563eb" text-anchor="middle">Conversation history</text>
+  <text x="360" y="158" class="note" text-anchor="middle">grows every turn</text>
+
+  <rect x="468" y="114" width="144" height="56" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="540" y="138" class="lbl" fill="#b45309" text-anchor="middle">Retrieved docs</text>
+  <text x="540" y="158" class="note" text-anchor="middle">varies per query</text>
+
+  <rect x="616" y="114" width="88" height="56" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="660" y="138" class="lbl" fill="#2563eb" text-anchor="middle">User msg</text>
+  <text x="660" y="158" class="note" text-anchor="middle">this turn</text>
+
+  <rect x="708" y="114" width="140" height="56" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="778" y="138" class="lbl" fill="#6d28d9" text-anchor="middle">Reserved answer</text>
+  <text x="778" y="158" class="note" text-anchor="middle">= max_tokens</text>
+
+  <!-- window size arrow -->
+  <line x1="36" y1="190" x2="844" y2="190" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <rect x="300" y="180" width="280" height="20" fill="#ffffff"/>
+  <text x="440" y="195" class="lbl" fill="#475569" text-anchor="middle">context window, e.g. 200,000 tokens</text>
+
+  <line x1="32" y1="222" x2="848" y2="222" stroke="#e5e7eb"/>
+  <text x="32" y="250" class="h">What happens as the conversation keeps growing</text>
+
+  <!-- row A: overflow -->
+  <text x="32" y="276" class="lbl" fill="#b91c1c">✗ Overflow: history pushes input past the limit</text>
+  <rect x="744" y="282" width="104" height="44" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <rect x="32"  y="286" width="64"  height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="100" y="286" width="52"  height="36" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <rect x="156" y="286" width="440" height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="376" y="309" class="note" text-anchor="middle">history — 40 turns, never trimmed</text>
+  <rect x="600" y="286" width="104" height="36" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="708" y="286" width="64"  height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="812" y="309" class="lbl" fill="#b91c1c" text-anchor="middle">no room</text>
+  <line x1="744" y1="270" x2="744" y2="334" stroke="#b91c1c" stroke-width="1.75"/>
+  <text x="738" y="266" class="note" text-anchor="end">limit</text>
+  <text x="32" y="350" class="note">→ The API rejects it (400 error), or the answer is cut off mid-sentence (stop_reason: "max_tokens").</text>
+
+  <!-- row B: fixed -->
+  <text x="32" y="384" class="lbl" fill="#1c7c54">✓ Fix: summarize or drop the oldest history; keep system prompt and newest message</text>
+  <rect x="32"  y="394" width="64"  height="36" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="100" y="394" width="52"  height="36" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <rect x="156" y="394" width="80"  height="36" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="196" y="417" class="note" text-anchor="middle">summary</text>
+  <rect x="240" y="394" width="164" height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="322" y="417" class="note" text-anchor="middle">recent turns</text>
+  <rect x="408" y="394" width="96"  height="36" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="508" y="394" width="64"  height="36" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <rect x="576" y="394" width="168" height="36" rx="8" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="660" y="417" class="note" text-anchor="middle">room for the answer</text>
+  <line x1="744" y1="388" x2="744" y2="436" stroke="#1c7c54" stroke-width="1.75"/>
+  <text x="756" y="417" class="lbl" fill="#1c7c54">fits</text>
+  <text x="32" y="454" class="note">Budget rule: input ≤ context window − max_tokens − safety margin. Always check stop_reason.</text>
+</svg>

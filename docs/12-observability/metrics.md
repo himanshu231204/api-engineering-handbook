@@ -1,5 +1,12 @@
 # Metrics
 
+> [!TIP]
+> **In one line:** Metrics are cheap numbers over time — counters, gauges and histograms — that tell you whether the whole system is healthy right now, via latency, traffic, errors and saturation.
+>
+> **In plain English:** A metric is a running number, like a car's speedometer or fuel gauge, recorded every few seconds. Instead of reading every single request, you watch a few numbers and get an alert when one crosses a line. When a number looks wrong, you then turn to logs and traces to find out why.
+>
+> **You'll be able to:** pick the right metric type: counter, gauge or histogram · instrument the four golden signals with prometheus_client and a /metrics endpoint · keep label cardinality bounded and alert on symptoms rather than causes
+
 ## Why This Matters
 
 Logs are great for answering "what exactly happened to this one request?" — but they're a terrible tool for answering "is my API healthy right now, across all ten thousand requests it served in the last minute?" You would not want to grep ten thousand JSON log lines every time you wanted to know your p99 latency or your current error rate. That's the gap metrics fill: a way to track the aggregate, numerical shape of your system's behavior — cheaply, continuously, and in a form built for dashboards and alerts rather than storytelling. Every production API needs both logs and metrics, for different jobs. This chapter covers what metrics are, the handful of types that cover nearly every use case, and the four categories of signal ("the four golden signals") that tell you, at a glance, whether a service is healthy.
@@ -182,5 +189,28 @@ AI systems need metrics tracked for dimensions that don't exist in a typical CRU
 - The four golden signals — latency, traffic, errors, saturation — form a minimum viable health checklist for any service.
 - Label cardinality is the most common way metrics systems break in production; keep labels bounded.
 - Metrics, logs, and distributed tracing are complementary pillars, not substitutes — see distributed-tracing.md for the third pillar.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between a counter, a gauge and a histogram?</summary>
+
+A counter only goes up (total requests, total errors) and rates are derived from it. A gauge goes up and down to show current state (active connections, queue depth). A histogram buckets observed values like request durations so you can compute percentiles such as P95 and P99 cheaply.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is labeling a metric with a raw user ID or full request path dangerous?</summary>
+
+Every unique combination of label values creates a new time series, so an unbounded label can create millions of series and overload or bankrupt the metrics backend. Use bounded labels such as the route template `/orders/{id}` instead of the literal path.
+
+</details>
+
+<details markdown="1">
+<summary>3. Average latency on your dashboard is a healthy 80 ms, yet users complain about slow checkouts. What should you look at instead?</summary>
+
+Averages hide the tail, so look at percentiles from a latency histogram: P99 might be several seconds even with an 80 ms mean. That is why latency should always be tracked as a histogram and reported as P95/P99, not as an average.
+
+</details>
 
 Continue to [Distributed Tracing](distributed-tracing.md), or return to the [Part 12 overview](README.md).

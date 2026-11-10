@@ -1,5 +1,12 @@
 # Headers
 
+> [!TIP]
+> **In one line:** Headers are `Name: value` metadata about a request or response — format, credentials, caching, tracing — that proxies, caches and gateways act on without ever reading the body.
+>
+> **In plain English:** Headers are like the subject line, sender and "reply by" date on an email: they're about the message, not the message itself. Your mail app can sort and flag emails using only those fields. HTTP tools do the same with headers.
+>
+> **You'll be able to:** Name the common request and response headers and what each does · Send credentials the standard way, in the `Authorization` header · Use a request ID header to trace one call across several services
+
 ## Why This Matters
 
 Headers are how HTTP carries *metadata about a request or response* separately from the actual payload — what format the body is in, who's making the request, how the response should be cached, what the client is willing to accept. Nearly every cross-cutting concern in API engineering (authentication, caching, content negotiation, tracing, rate limiting) is implemented through headers, not through the body or URL. If you don't know your way around headers, you'll end up reinventing things (like passing auth tokens as query parameters) that HTTP already has a correct, standard mechanism for.
@@ -183,3 +190,26 @@ LLM provider APIs authenticate almost exclusively through headers — Anthropic'
 - Standard headers (`Authorization`, `Content-Type`, `Cache-Control`, `Accept`) already solve most common needs; reach for custom headers only when nothing standard fits.
 - Headers drive real infrastructure behavior: caching, content negotiation, authentication, and rate limiting all work through headers, not the body.
 - LLM provider APIs rely on headers for both authentication and rate-limit signaling — patterns you'll normalize yourself when building multi-provider AI systems.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does Content-Type tell the receiver, and what does Accept tell the server?</summary>
+
+`Content-Type` gives the format of this message's body (for example `application/json`) so it can be parsed. `Accept` lists the response formats the client can handle, which lets the server choose one (content negotiation).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why put a token in the Authorization header rather than in the URL?</summary>
+
+URLs are logged far more widely — server access logs, proxies, browser history. `Authorization` is a standard header that logging can be set up to redact, and gateways and client libraries already understand it.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your client sends a JSON body, but the server can't parse it. What's the first header to check?</summary>
+
+Make sure the request sets `Content-Type: application/json`. Without it the server may refuse to parse the body or guess the format wrongly.
+
+</details>

@@ -8,7 +8,9 @@ on:
       - "projects/**"
       - "resources/**"
       - "mkdocs.yml"
+      - "diagrams/**"
       - "scripts/gen_pages.py"
+      - "scripts/mkdocs_hooks.py"
       - "requirements-docs.txt"
       - ".github/workflows/deploy-docs.yml"
   workflow_dispatch: {}

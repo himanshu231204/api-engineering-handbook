@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="532" viewBox="0 0 880 532" role="img" aria-labelledby="t d">
+  <title id="t">Two-stage retrieval with a reranker</title>
+  <desc id="d">A fast vector search narrows one million chunks to the top 50 candidates. A cross-encoder reranker then reads the query together with each of the 50 candidates and scores them. The best chunk, which vector search ranked number 7, moves to number 1, and only the top 5 go into the prompt.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="531" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Reranking: cheap wide net first, careful judge second</text>
+  <text x="32" y="66" class="sub">Fast search finds 50 plausible chunks; a slower, smarter model picks the best 5 for the prompt.</text>
+  <rect x="32" y="120.0" width="132" height="300" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="98.0" y="146.0" class="lbl" style="fill: #475569;" text-anchor="middle">Corpus</text>
+  <text x="98.0" y="164.0" class="note" text-anchor="middle">1,000,000 chunks</text>
+  <rect x="48" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="180.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="193.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="206.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="219.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="232.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="245.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="258.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="271.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="284.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="297.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="310.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="323.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="336.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="349.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="362.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="375.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="48" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="63" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="78" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="93" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="108" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="123" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="138" y="388.0" width="11" height="8" rx="2" fill="#cbd5e1"/>
+  <rect x="228" y="138.0" width="150" height="264" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="303.0" y="164.0" class="lbl" style="fill: #b45309;" text-anchor="middle">Top 50</text>
+  <text x="303.0" y="182.0" class="note" text-anchor="middle">vector-search order</text>
+  <text x="242" y="207.0" class="note">#1</text>
+  <rect x="272" y="196.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="227.0" class="note">#2</text>
+  <rect x="272" y="216.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="247.0" class="note">#3</text>
+  <rect x="272" y="236.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="267.0" class="note">#4</text>
+  <rect x="272" y="256.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="287.0" class="note">#5</text>
+  <rect x="272" y="276.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="307.0" class="note">#6</text>
+  <rect x="272" y="296.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="327.0" class="note">#7</text>
+  <rect x="272" y="316.0" width="92" height="14" rx="3" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="242" y="347.0" class="note">#8</text>
+  <rect x="272" y="336.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="242" y="367.0" class="note">#9</text>
+  <rect x="272" y="356.0" width="92" height="14" rx="3" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="303.0" y="388.0" class="note" text-anchor="middle">… 41 more</text>
+  <rect x="442" y="170.0" width="206" height="200" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="545.0" y="196.0" class="lbl" style="fill: #6d28d9;" text-anchor="middle">Cross-encoder reranker</text>
+  <text x="545.0" y="214.0" class="note" text-anchor="middle">reads query + chunk together</text>
+  <rect x="458" y="234.0" width="72" height="30" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="494" y="254.0" class="lbl" style="fill: #2563eb;" text-anchor="middle">query</text>
+  <text x="540" y="254.0" class="h">+</text>
+  <rect x="556" y="234.0" width="76" height="30" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="594" y="254.0" class="lbl" style="fill: #b45309;" text-anchor="middle">chunk #7</text>
+  <line x1="545.0" y1="270.0" x2="545.0" y2="294.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="545.0" y="316.0" class="lbl" style="fill: #6d28d9;" text-anchor="middle">relevance 0.94</text>
+  <text x="545.0" y="340.0" class="note" text-anchor="middle">repeated for all 50 pairs</text>
+  <text x="545.0" y="357.0" class="note" text-anchor="middle">then re-sorted by score</text>
+  <rect x="712" y="186.0" width="136" height="168" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="780.0" y="212.0" class="lbl" style="fill: #1c7c54;" text-anchor="middle">Top 5</text>
+  <text x="780.0" y="230.0" class="note" text-anchor="middle">→ into the prompt</text>
+  <text x="726" y="255.0" class="note">#1</text>
+  <rect x="750" y="244.0" width="36" height="14" rx="3" fill="#e8f5ee" stroke="#1c7c54" stroke-width="2"/>
+  <text x="794" y="255.0" class="note">was #7</text>
+  <text x="726" y="275.0" class="note">#2</text>
+  <rect x="750" y="264.0" width="36" height="14" rx="3" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="794" y="275.0" class="note">was #1</text>
+  <text x="726" y="295.0" class="note">#3</text>
+  <rect x="750" y="284.0" width="36" height="14" rx="3" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="794" y="295.0" class="note">was #3</text>
+  <text x="726" y="315.0" class="note">#4</text>
+  <rect x="750" y="304.0" width="36" height="14" rx="3" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="794" y="315.0" class="note">was #12</text>
+  <text x="726" y="335.0" class="note">#5</text>
+  <rect x="750" y="324.0" width="36" height="14" rx="3" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="794" y="335.0" class="note">was #2</text>
+  <line x1="168" y1="270" x2="224" y2="270" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="196.0" cy="248" r="12" fill="#1c7c54"/>
+  <text x="196.0" y="252" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="196.0" y="292" class="note" text-anchor="middle">fast,</text>
+  <text x="196.0" y="308" class="note" text-anchor="middle">approx.</text>
+  <line x1="382" y1="270" x2="438" y2="270" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="410.0" cy="248" r="12" fill="#1c7c54"/>
+  <text x="410.0" y="252" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="410.0" y="292" class="note" text-anchor="middle">score</text>
+  <text x="410.0" y="308" class="note" text-anchor="middle">each</text>
+  <line x1="652" y1="270" x2="708" y2="270" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <circle cx="680.0" cy="248" r="12" fill="#1c7c54"/>
+  <text x="680.0" y="252" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="680.0" y="292" class="note" text-anchor="middle">keep</text>
+  <text x="680.0" y="308" class="note" text-anchor="middle">best 5</text>
+  <rect x="32" y="436" width="396" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="462" class="lbl" style="fill: #475569;">Stage 1 · bi-encoder (vector search)</text>
+  <text x="48" y="482" class="note">query and chunks embedded separately, ahead of time</text>
+  <text x="48" y="498" class="note">→ milliseconds over millions, but a shallow match</text>
+  <rect x="452" y="436" width="396" height="72" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="468" y="462" class="lbl" style="fill: #6d28d9;">Stage 2 · cross-encoder (reranker)</text>
+  <text x="468" y="482" class="note">one model pass per query + chunk pair</text>
+  <text x="468" y="498" class="note">→ much more accurate, too slow for the whole corpus</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="492" viewBox="0 0 880 492" role="img" aria-labelledby="t d">
+  <title id="t">The agent loop</title>
+  <desc id="d">A user goal enters the loop. Step 1, think: the LLM picks the next action. If it answers with no tool call, the run ends with a final answer. Otherwise step 2, act: run the chosen tool. Step 3, observe: append the result to the history. A guard then checks the step count and budget; if a limit is hit the run stops early with status max_iterations, otherwise the loop goes back to think.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="491" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The agent loop: think → act → observe → repeat</text>
+  <text x="32" y="66" class="sub">An agent is a while-loop around an LLM call, with a guard so it can never run forever.</text>
+  <rect x="32" y="96" width="160" height="72" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="50" y="128.0" class="lbl" style="fill: #2563eb;">User goal</text>
+  <text x="50" y="147.0" class="note">“book a cheap flight”</text>
+  <rect x="300" y="96" width="200" height="72" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <circle cx="326" cy="132.0" r="12" fill="#1c7c54"/>
+  <text x="326" y="136.0" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="348" y="128.0" class="lbl" style="fill: #6d28d9;">Think</text>
+  <text x="348" y="147.0" class="note">LLM picks next action</text>
+  <rect x="668" y="96" width="180" height="72" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="686" y="128.0" class="lbl" style="fill: #1c7c54;">Final answer</text>
+  <text x="686" y="147.0" class="note">status: completed</text>
+  <rect x="580" y="316" width="200" height="72" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="606" cy="352.0" r="12" fill="#1c7c54"/>
+  <text x="606" y="356.0" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="628" y="348.0" class="lbl" style="fill: #b45309;">Act</text>
+  <text x="628" y="367.0" class="note">run the chosen tool</text>
+  <rect x="240" y="316" width="220" height="72" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="266" cy="352.0" r="12" fill="#1c7c54"/>
+  <text x="266" y="356.0" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="288" y="348.0" class="lbl" style="fill: #475569;">Observe</text>
+  <text x="288" y="367.0" class="note">add result to history</text>
+  <rect x="260" y="214" width="180" height="58" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="276" y="238" class="lbl" style="fill: #b91c1c;">Guard</text>
+  <text x="276" y="257" class="note">steps &lt; max? budget left?</text>
+  <rect x="32" y="214" width="150" height="58" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="50" y="239.0" class="lbl" style="fill: #b91c1c;">Stop early</text>
+  <text x="50" y="258.0" class="note">status: max_iterations</text>
+  <line x1="194" y1="132" x2="296" y2="132" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="504" y1="132" x2="664" y2="132" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="584" y="122" class="note" text-anchor="middle">no tool call</text>
+  <path d="M470,170 L640,312" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="566" y="236" class="note">tool call</text>
+  <line x1="576" y1="352" x2="464" y2="352" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="520" y="342" class="note" text-anchor="middle">result</text>
+  <line x1="350" y1="312" x2="350" y2="276" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="350" y1="210" x2="350" y2="172" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="360" y="196" class="lbl" style="fill: #1c7c54;">yes → loop again</text>
+  <line x1="256" y1="243" x2="186" y2="243" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="221" y="234" class="note" text-anchor="middle">no</text>
+  <g transform="translate(32,412)">
+    <rect width="816" height="58" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="24" class="lbl" fill="#b45309">Why it gets expensive</text>
+    <text x="16" y="43" class="note">The LLM is stateless, so every Think step re-sends the goal plus every earlier tool call and result. Context grows each loop.</text>
+  </g>
+</svg>

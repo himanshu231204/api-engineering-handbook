@@ -1,5 +1,12 @@
 # OWASP API Security Top 10
 
+> [!TIP]
+> **In one line:** The OWASP API Security Top 10 is a map of the ten most common ways APIs get breached — mostly authorization failures and resource abuse, not just broken logins.
+>
+> **In plain English:** Think of it as a checklist written from thousands of real API break-ins. Most items are not about checking who someone is, but about checking what that person is allowed to touch and how much they can use. Each item points to the part of this handbook that teaches the fix.
+>
+> **You'll be able to:** name and describe all ten 2023 categories in plain terms · recognize and fix a BOLA bug with an object-ownership check · walk an API's endpoint inventory against the list as a recurring security review
+
 ## Why This Matters
 
 Web application security guidance historically focused on browser-rendered pages — XSS, CSRF, session fixation — but APIs fail in different, API-specific ways: broken authorization on individual objects, endpoints that leak internal implementation details, or business logic flows that have no rate limit at all. The **OWASP API Security Top 10** is a community-maintained, industry-standard list of the most critical and most common API-specific vulnerability categories, and it exists precisely because generic web security checklists miss these patterns. This chapter is a **survey**: it explains each of the 10 categories conceptually and points to the chapter elsewhere in this handbook that covers the concrete defense in depth, so you can use this as a map when reasoning about an API's overall security posture rather than a single vulnerability at a time.
@@ -205,6 +212,29 @@ AI-specific APIs map onto this list in ways worth calling out explicitly. **API4
 - No single chapter or technique fixes this list; it maps onto authentication/authorization (Part 5), rate limiting (Part 6), validation and configuration (this part), and API lifecycle discipline (Parts 2–3).
 - Treat this list as a recurring checklist against your endpoint inventory, not a one-time audit — new endpoints reopen old categories.
 - AI-specific APIs inherit every category and add sharper edges to resource consumption (API4) and unsafe consumption of upstream/model output (API7, API10).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is BOLA (API1), and why does authentication alone not prevent it?</summary>
+
+Broken Object Level Authorization means a logged-in user can reach someone else's object just by changing an ID in the request. Authentication only proves who the caller is; preventing BOLA requires checking, on every request, that this specific caller owns or may access this specific object.
+
+</details>
+
+<details markdown="1">
+<summary>2. How does API5 (Broken Function Level Authorization) differ from API1?</summary>
+
+API1 is about which objects a caller can access (another user's invoice); API5 is about which actions or endpoints a role can call at all (a regular user reaching an admin-only DELETE endpoint). Both are authorization failures, but API5 is fixed with consistent role checks per endpoint rather than per-object ownership checks.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your app has a "fetch an image from this URL" feature and an attacker submits http://169.254.169.254/... as the URL. Which category is this, and what is the defense?</summary>
+
+This is API7, Server-Side Request Forgery: the attacker uses your server as a proxy to reach internal-only systems such as cloud metadata. The defense is strict validation and allowlisting of permitted outbound destinations, never fetching arbitrary client-supplied URLs.
+
+</details>
 
 See also: [Secrets Management](secrets-management.md), [CORS](cors.md), [SQL Injection](sql-injection.md), [Input Validation](input-validation.md), [Part 5 — Authentication & Authorization](../05-authentication-authorization/README.md), [Part 6 — Production Reliability](../06-production-reliability/README.md), and the [glossary](../../resources/glossary.md).
 

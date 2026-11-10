@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" role="img" aria-labelledby="t d">
+  <title id="t">The TLS handshake</title>
+  <desc id="d">The client and server exchange hello messages and a certificate, verify it, agree on a session key, then send HTTP encrypted. An attacker sees only who connected, not the contents.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="539" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The TLS handshake behind every HTTPS call</text>
+  <text x="32" y="66" class="sub">Four setup steps, then everything is encrypted. Done once per connection.</text>
+  <rect x="32" y="86" width="216" height="36" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="140" y="110" class="lbl" text-anchor="middle">Client</text>
+  <rect x="632" y="86" width="216" height="36" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="740" y="110" class="lbl" text-anchor="middle">Server (api.example.com)</text>
+  <line x1="140" y1="122" x2="140" y2="384" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="740" y1="122" x2="740" y2="384" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="140" y1="176" x2="740" y2="176" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440" y="166" class="lbl" text-anchor="middle">Client Hello: supported TLS versions and ciphers</text>
+  <circle cx="190" cy="176" r="12" fill="#1c7c54"/>
+  <text x="190" y="180" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <line x1="740" y1="216" x2="140" y2="216" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440" y="206" class="lbl" text-anchor="middle">Server Hello + certificate (public key, signed by a CA)</text>
+  <circle cx="690" cy="216" r="12" fill="#1c7c54"/>
+  <text x="690" y="220" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <rect x="224" y="236" width="432" height="30" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="440" y="256" class="lbl" text-anchor="middle">Client checks the CA signature and the domain name</text>
+  <circle cx="240" cy="251" r="12" fill="#1c7c54"/>
+  <text x="240" y="255" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <line x1="140" y1="306" x2="740" y2="306" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="440" y="296" class="lbl" text-anchor="middle">Key exchange: both sides derive the same session key</text>
+  <circle cx="190" cy="306" r="12" fill="#1c7c54"/>
+  <text x="190" y="310" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <line x1="140" y1="356" x2="740" y2="356" stroke="#1c7c54" stroke-width="3.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="440" y="346" class="lbl" text-anchor="middle" style="fill:#1c7c54">Encrypted HTTP: GET /orders + Authorization header</text>
+  <circle cx="190" cy="356" r="12" fill="#1c7c54"/>
+  <text x="190" y="360" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <rect x="32" y="404" width="400" height="102" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="430" class="h" style="fill:#b91c1c">What an attacker on the wire sees</text>
+  <text x="48" y="454" class="note">• that you connected to api.example.com:443</text>
+  <text x="48" y="474" class="note">• roughly when, and how much data</text>
+  <text x="48" y="494" class="note">• the hostname during the handshake</text>
+  <rect x="448" y="404" width="400" height="102" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="464" y="430" class="h" style="fill:#1c7c54">What stays hidden</text>
+  <text x="464" y="454" class="note">• the path, query string and headers</text>
+  <text x="464" y="474" class="note">• your token and the JSON body</text>
+  <text x="464" y="494" class="note">• the response; tampering is detected</text>
+</svg>

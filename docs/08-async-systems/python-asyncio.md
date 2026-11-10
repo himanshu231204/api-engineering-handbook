@@ -1,5 +1,12 @@
 # Python asyncio
 
+> [!TIP]
+> **In one line:** asyncio runs many I/O-bound tasks on one thread by pausing each at await, but one blocking call inside async def freezes every request on the process.
+>
+> **In plain English:** Your code says 'I'm waiting on the network now' with await, and the event loop uses that pause to run someone else's request. It is like a chess master playing twenty boards at once: one move at a time, switching boards while each opponent thinks. It only helps when the time is spent waiting, not computing.
+>
+> **You'll be able to:** explain coroutines, await and the event loop · use asyncio.gather to overlap independent slow calls · find and fix blocking calls that stall the event loop
+
 ## Why This Matters
 
 [Sync vs Async](sync-vs-async.md) established that a synchronous request handler ties up a server resource for the entire duration of any slow work it performs — including I/O that spends most of its time just waiting. `asyncio` is Python's answer to that specific problem: a way to run many I/O-bound operations concurrently on a single thread, so that "waiting" for one operation doesn't block progress on everything else. It's the runtime underneath FastAPI's `async def` routes, `httpx.AsyncClient`, and most modern async database drivers. If you don't understand what asyncio actually does — and, just as importantly, what it *doesn't* do — you will write code that looks async but performs no better than fully synchronous code, or worse, code that silently freezes your entire server under load.
@@ -34,23 +41,23 @@ The key mechanical fact: **nothing runs in parallel on multiple CPU cores here.*
 
 ```mermaid
 sequenceDiagram
-    participant Loop as Event Loop
+    participant EL as Event Loop
     participant A as Coroutine A (request 1)
     participant B as Coroutine B (request 2)
     participant DB as Database / LLM API (I/O)
 
-    Loop->>A: run until first await
+    EL->>A: run until first await
     A->>DB: await query()
     Note over A: A suspends, control returns to loop
-    Loop->>B: run until first await
+    EL->>B: run until first await
     B->>DB: await llm_call()
     Note over B: B suspends, control returns to loop
-    DB-->>Loop: A's query result ready
-    Loop->>A: resume A with result
-    A-->>Loop: A completes, response sent
-    DB-->>Loop: B's LLM result ready
-    Loop->>B: resume B with result
-    B-->>Loop: B completes, response sent
+    DB-->>EL: A's query result ready
+    EL->>A: resume A with result
+    A-->>EL: A completes, response sent
+    DB-->>EL: B's LLM result ready
+    EL->>B: resume B with result
+    B-->>EL: B completes, response sent
 ```
 
 Both requests are handled on one thread, but because each spends most of its time waiting on external I/O rather than doing CPU work, the loop interleaves them and neither blocks the other — total wall-clock time for both is close to `max(time_A, time_B)`, not `time_A + time_B`.
@@ -197,3 +204,26 @@ Async is close to mandatory for AI-backed APIs. LLM calls (see [Part 14 — AI A
 - Use async-native libraries and connection pools end to end; mixing in synchronous I/O libraries silently defeats the purpose.
 - `asyncio.gather` (or `TaskGroup`) lets independent slow operations overlap instead of running sequentially — a direct latency win for multi-step requests like RAG pipelines.
 - asyncio is the runtime layer under [Background Tasks](background-tasks.md) and async HTTP/database clients used throughout production AI systems.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What happens at an await point?</summary>
+
+The current coroutine suspends and hands control back to the event loop, which runs other ready coroutines until the awaited I/O completes, then resumes the original coroutine where it left off.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does asyncio help a route calling a slow HTTP API but not a route resizing an image in pure Python?</summary>
+
+asyncio overlaps time spent waiting on I/O; there is no waiting in CPU-bound work, and only one coroutine runs at a time on one thread. CPU-heavy work needs run_in_executor, a process pool, or a separate worker.
+
+</details>
+
+<details markdown="1">
+<summary>3. An async def route calls requests.get() on a slow third-party API. Under load, every endpoint on the server slows down. Why?</summary>
+
+requests is a blocking library, so the call never yields to the event loop; the single thread is stuck for the full call and every other in-flight request on that process stalls. Use an async client such as httpx.AsyncClient instead.
+
+</details>

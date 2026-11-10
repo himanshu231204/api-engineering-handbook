@@ -1,5 +1,12 @@
 # Tool Calling
 
+> [!TIP]
+> **In one line:** Tool calling is an app-controlled loop: call the model, run any requested tool, send the result back, repeat until a final answer, bounded by iteration caps and timeouts.
+>
+> **In plain English:** The model can ask your app to fetch information, wait for the answer, then ask for more, several times before replying to the user. It works like a detective sending an assistant out for one clue at a time, deciding after each one whether the case is solved.
+>
+> **You'll be able to:** Implement a bounded request-execute-respond tool loop · Return tool errors as results the model can react to instead of crashing · Correlate results to calls by ID and account for compounding cost
+
 ## Why This Matters
 
 [Function Calling](function-calling.md) covered the mechanism by which a model requests a single capability invocation. In real systems, you rarely stop at one call — a model might need to look up an order, then check inventory, then draft a response, each step informed by the previous one's result. **Tool calling** is the full, often multi-turn loop: define tools, let the model request one, execute it, feed the result back, and let the model continue — possibly requesting another tool, possibly several turns later. This loop is the actual runtime architecture behind every "AI agent" you've heard about, and building it correctly — with proper error handling, bounded iteration, and result formatting — is the difference between a demo that works once and a production system that survives a malformed tool result, a slow downstream API, or a model that gets stuck in a loop.
@@ -56,6 +63,8 @@ sequenceDiagram
     LLM-->>App: text: "Your order is in transit, ETA Aug 21. It can be expedited for $12."
     App-->>User: final answer
 ```
+
+![Numbered tool-calling loop: app sends messages and tool schemas, model returns a tool call, app runs the tool, sends the result back, model gives a final answer](../assets/diagrams/14-tool-calling-loop.svg)
 
 Two full tool-calling rounds before a final text answer — each round is a complete, independent chat completion call carrying the growing history, exactly as described in [Chat Completion Architecture](chat-completion-architecture.md).
 
@@ -226,3 +235,26 @@ The tool-calling loop described in this chapter is, almost verbatim, the runtime
 - Bound the loop with a hard iteration cap, and give every tool execution its own timeout independent of the outer request.
 - Feed tool errors back to the model as structured results rather than raising exceptions that kill the loop — this lets the model recover gracefully.
 - This loop is the literal runtime architecture behind AI agents (Part 17) and agentic RAG (Part 16) — everything in those parts builds on the pattern shown here.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. When does a tool-calling loop end in the normal, successful case?</summary>
+
+When the model responds with plain text and no tool-call request — that text is its final answer. Otherwise it ends on a safety condition such as the iteration cap, a timeout, or an unrecoverable error.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a failed tool execution usually be returned to the model as a result instead of raising an exception?</summary>
+
+A structured error like 'order not found' lets the model recover — ask the user to clarify or try another lookup — the way a competent assistant would. An exception kills the whole loop and the user gets nothing.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your agent loop keeps calling the same lookup tool over and over and the bill spikes. What safeguards were missing?</summary>
+
+A hard MAX_ITERATIONS cap with an explicit 'did not converge' outcome, plus per-iteration logging to see why the tool result confuses the model. Remember each iteration resends the full growing history, so cost compounds with every round.
+
+</details>

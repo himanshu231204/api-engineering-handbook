@@ -1,5 +1,12 @@
 # Reranking
 
+> [!TIP]
+> **In one line:** Reranking re-scores a small shortlist from fast retrieval with a cross-encoder that reads query and chunk together, putting the truly best chunks first.
+>
+> **In plain English:** Fast search compares precomputed numbers, so it is quick but a bit shallow. A reranker reads the question next to each candidate passage and judges how well it actually answers, which is slow, so you only run it on the top few dozen results. It is like a talent show where online votes pick 30 finalists and judges then watch each one carefully.
+>
+> **You'll be able to:** Explain the bi-encoder vs cross-encoder trade-off · Size the candidate set (retrieve ~4-6x more than you keep) · Make reranking a fail-open stage that falls back to retrieval order
+
 ## Why This Matters
 
 Vector similarity search (see [Retrieval](retrieval.md)) is fast because it's approximate and because it scores the query and each chunk *independently* — the embedding for a chunk is computed once at ingestion time, without any knowledge of what query it might eventually be compared against. That independence is exactly what makes the index fast to search, but it's also a structural limitation: the model never gets to look at the query and the chunk *together* and reason jointly about relevance. This means initial retrieval, however good, systematically leaves a gap between "vector-similar" and "actually the best answer to this specific question" — and reranking exists to close that gap by trading extra compute for extra precision, applied only to a small shortlist rather than the entire corpus.
@@ -37,6 +44,8 @@ flowchart LR
     E --> F[Re-sorted Top-N]
     F --> G[Context Construction]
 ```
+
+![Fast vector search returns the top 50 candidates, a cross-encoder reranker scores each against the query, and only the best 5 go into the prompt](../assets/diagrams/16-reranking.svg)
 
 ## Request / Response Example
 
@@ -176,6 +185,29 @@ Reranking is one of the highest-leverage, lowest-risk additions you can make to 
 - It's applied only to a small shortlist from initial retrieval, never the whole corpus, because cross-encoder scoring doesn't scale to millions of documents per query.
 - Reranking is worth its added latency/cost when retrieval quality is inconsistent, stakes are high, or results come from multiple heterogeneous sources.
 - Design reranking as a fail-open, swappable stage — never let a reranker outage take down the whole RAG pipeline.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the key difference between a bi-encoder and a cross-encoder?</summary>
+
+A bi-encoder embeds the query and each document separately, so document vectors can be precomputed and compared cheaply. A cross-encoder processes the query and one document together as a single input and outputs a relevance score, which is more accurate but needs a fresh model pass for every pair.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is reranking applied only to the top 20-50 candidates instead of the whole corpus?</summary>
+
+Cross-encoder scoring cannot be precomputed or cached, so running it over millions of documents per query is infeasible. Applying it to a shortlist keeps latency acceptable while sharply improving precision at the top of the list.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your rerank provider has an outage and every RAG request now returns 500. How should the pipeline have been designed?</summary>
+
+Reranking should fail open: on error or timeout, fall back to the original retrieval order (top `final_k`) and still answer. A reranker improves ordering but is not essential to producing a response.
+
+</details>
 
 ---
 **Previous**: [Retrieval](retrieval.md) · **Next**: [Context Construction](context-construction.md)

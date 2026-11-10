@@ -1,5 +1,12 @@
 # Rate Limiting
 
+> [!TIP]
+> **In one line:** Rate limiting caps how much work one caller can demand; the token bucket allows short bursts while enforcing a steady average rate, rejecting extras with 429 and Retry-After.
+>
+> **In plain English:** A bouncer lets people in at a steady pace and won't let one group crowd out everyone else. A token bucket is the bouncer's stack of tickets: tickets are handed out at a fixed rate, each entry costs one, and when the stack is empty you wait.
+>
+> **You'll be able to:** compare fixed window, sliding window, token bucket and leaky bucket · implement a per-client token bucket and return 429 with `Retry-After` · place limits at the gateway and in the app, using shared state such as Redis
+
 ## Why This Matters
 
 An API with no limit on how fast a single caller can send requests is an API that any one misbehaving client — a buggy retry loop, a scraping script, a compromised account, or just a single customer's traffic spike — can use to degrade service for everyone else. Rate limiting is the mechanism that protects your API's capacity from being monopolized by any one caller, keeps costs predictable when downstream calls (especially LLM APIs) are billed per request or per token, and gives you a controlled way to say "not right now" instead of falling over. It's also one of the few reliability patterns that sits on both sides of a call: you rate-limit callers of *your* API, and you have to gracefully handle being rate-limited by APIs *you* call — see [Retries](retries.md) and [Exponential Backoff](exponential-backoff.md) for the caller-side response.
@@ -56,6 +63,8 @@ flowchart TB
         LB2 --> LB3["Processed at\nfixed steady rate"]
     end
 ```
+
+![Token bucket: tokens refill at rate r up to capacity b; each request takes one token and gets 200 OK, and when the bucket is empty the request gets 429 Too Many Requests with a Retry-After header; a worked example shows a burst of 25 requests with 20 allowed and 5 rejected](../assets/diagrams/06-token-bucket.svg)
 
 **Where to enforce it: gateway vs. application.** Rate limiting can live at the API Gateway/edge (before a request ever reaches your application code — cheapest to reject at, protects everything behind it, but usually only has access to coarse identifiers like IP or API key) or in the application layer (has access to rich context like authenticated user, plan tier, or the specific resource being hit, but the request has already consumed some of your application's resources by the time it's rejected). Production systems commonly do both: a coarse, cheap gateway-level limit as a first line of defense against abuse, and a more precise, business-aware application-level limit for per-user/per-plan quotas.
 
@@ -199,6 +208,29 @@ LLM APIs typically enforce *two* independent rate limits simultaneously — requ
 - Token bucket is the most common choice for client-facing API limits because it matches realistic bursty client behavior while still enforcing an average rate.
 - Scope limits per client and per endpoint — a single global bucket causes noisy-neighbor problems.
 - In distributed deployments, rate limit state must live in a shared store (e.g., Redis), not per-instance memory, or the effective limit multiplies with instance count.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How does a token bucket decide whether to allow a request?</summary>
+
+It first refills the bucket by elapsed time times the refill rate, capped at capacity. If at least one token is available it removes one and allows the request; otherwise it rejects with 429 and can tell the client how long until a token is available.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why can a fixed window limit of 100 requests per minute let 200 requests through in about two seconds?</summary>
+
+The counter resets sharply at the window boundary, so a client can send 100 requests at the end of one window and 100 more at the start of the next. Sliding windows and token buckets avoid this boundary burst.
+
+</details>
+
+<details markdown="1">
+<summary>3. You run four API instances, each with its own in-memory token bucket of 100 per minute. What limit does a client really get, and what is the fix?</summary>
+
+Up to about 400 per minute, because the client's requests spread across four separate buckets. Keep the bucket state in a shared store such as Redis (updated atomically, for example with a Lua script) so every instance sees the same count.
+
+</details>
 
 See also: [Retries](retries.md), [Exponential Backoff](exponential-backoff.md), [Circuit Breakers](circuit-breakers.md), and the [glossary](../../resources/glossary.md).
 

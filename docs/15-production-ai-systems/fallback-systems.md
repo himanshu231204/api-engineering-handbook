@@ -1,5 +1,12 @@
 # Fallback Systems
 
+> [!TIP]
+> **In one line:** When a provider call fails, retry transient errors briefly, then walk an ordered fallback chain guarded by per-provider circuit breakers — and log every fallback.
+>
+> **In plain English:** AI providers go down, so you keep backups ready: if the first one fails, try another provider, then a cheaper model, then a cached or polite 'try again' answer. It is like a pharmacy that, when your usual brand is out of stock, offers an equivalent, then a generic, and tells you which one you got.
+>
+> **You'll be able to:** Combine bounded retries, a fallback chain and circuit breakers · Treat 429s, timeouts and 5xx differently · Cap end-to-end fallback latency and make degraded answers visible
+
 ## Why This Matters
 
 LLM providers go down. Not hypothetically — every major provider has had multi-hour outages, regional degradations, and periods of severely elevated latency, often without much advance warning. Unlike a typical internal microservice outage, you usually can't fix a provider outage yourself; you can only route around it. A production AI feature that has no fallback path treats every provider incident as a full outage of your own feature, even when a perfectly capable second option was one HTTP call away. Fallback systems are what turn "the provider is down" from an incident into a non-event.
@@ -52,6 +59,8 @@ sequenceDiagram
     P2-->>GW: 200 OK, response
     GW-->>GW: log fallback event (P1 failed -> P2 served)
 ```
+
+![Fallback chain: primary model, then another provider, then a cheaper model, then a cached or graceful response, with a circuit breaker skipping failing providers](../assets/diagrams/15-fallback-chain.svg)
 
 ## Request / Response Example
 
@@ -226,3 +235,26 @@ In an [agent loop](../17-ai-agents-and-mcp/README.md), a single failed step can 
 - Bound total fallback latency; a long chain of slow timeouts can be worse for the user than failing fast.
 - Falling back across capability tiers (not just across providers at the same tier) is a quality trade-off and should be an explicit, monitored decision.
 - Every fallback event must be logged — invisible fallback becomes an invisible, undebuggable quality or cost regression.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three components of a fallback system?</summary>
+
+A fallback chain (ordered alternative provider/model pairs), a circuit breaker per provider (stop sending traffic to a clearly failing one), and a degradation policy (what falling back means — same tier elsewhere, a cheaper model, a cached answer, or a clear error).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a 429 from a provider move straight to the next candidate rather than retrying the same provider?</summary>
+
+A 429 means the provider is healthy but rate-limiting you; retrying into the limit just makes it worse and wastes latency. Retries are for transient faults like timeouts or brief 5xx errors.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your chain has three providers, each with a 30-second timeout and one retry, and during an outage users wait over a minute before seeing an error. What should you change?</summary>
+
+Set an overall deadline for the whole fallback chain, not just per-provider timeouts, and fail fast with a clear typed error once it is spent. Shared circuit breakers also help by skipping the dead provider instead of paying its timeout on every request.
+
+</details>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="462" viewBox="0 0 880 462" role="img" aria-labelledby="t d">
+  <title id="t">HTTP status code families</title>
+  <desc id="d">Five bands of status codes: 1xx informational, 2xx success, 3xx redirection, 4xx client error and 5xx server error, with who is at fault and common codes for each.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="461" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">HTTP status code families</text>
+  <text x="32" y="66" class="sub">The first digit tells you whose move it is, and whether a retry can help.</text>
+  <rect x="32" y="84" width="816" height="64" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="116" style="font: 700 22px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #475569;">1xx</text>
+  <text x="48" y="136" class="lbl" style="fill:#475569">Informational</text>
+  <text x="170" y="110" class="note">Who is at fault?</text>
+  <text x="170" y="130" class="lbl">Nobody: in progress</text>
+  <line x1="350" y1="94" x2="350" y2="138" stroke="#475569" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="370" y="112" class="code">100 Continue · 101 Switching Protocols</text>
+  <text x="370" y="132" class="note">Rare in API code; wait for the final response</text>
+  <rect x="32" y="156" width="816" height="64" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="188" style="font: 700 22px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #1c7c54;">2xx</text>
+  <text x="48" y="208" class="lbl" style="fill:#1c7c54">Success</text>
+  <text x="170" y="182" class="note">Who is at fault?</text>
+  <text x="170" y="202" class="lbl">Nobody: it worked</text>
+  <line x1="350" y1="166" x2="350" y2="210" stroke="#1c7c54" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="370" y="184" class="code">200 OK · 201 Created · 204 No Content</text>
+  <text x="370" y="204" class="note">Use the result; no retry needed</text>
+  <rect x="32" y="228" width="816" height="64" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="260" style="font: 700 22px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #2563eb;">3xx</text>
+  <text x="48" y="280" class="lbl" style="fill:#2563eb">Redirection</text>
+  <text x="170" y="254" class="note">Who is at fault?</text>
+  <text x="170" y="274" class="lbl">Nobody: it moved</text>
+  <line x1="350" y1="238" x2="350" y2="282" stroke="#2563eb" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="370" y="256" class="code">301 Moved Permanently · 304 Not Modified</text>
+  <text x="370" y="276" class="note">Follow Location, or reuse your cached copy</text>
+  <rect x="32" y="300" width="816" height="64" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="332" style="font: 700 22px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #b45309;">4xx</text>
+  <text x="48" y="352" class="lbl" style="fill:#b45309">Client error</text>
+  <text x="170" y="326" class="note">Who is at fault?</text>
+  <text x="170" y="346" class="lbl">The client</text>
+  <line x1="350" y1="310" x2="350" y2="354" stroke="#b45309" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="370" y="328" class="code">400 · 401 · 403 · 404 · 422 · 429</text>
+  <text x="370" y="348" class="note">Fix the request; retrying unchanged will not help</text>
+  <rect x="32" y="372" width="816" height="64" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="404" style="font: 700 22px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #b91c1c;">5xx</text>
+  <text x="48" y="424" class="lbl" style="fill:#b91c1c">Server error</text>
+  <text x="170" y="398" class="note">Who is at fault?</text>
+  <text x="170" y="418" class="lbl">The server</text>
+  <line x1="350" y1="382" x2="350" y2="426" stroke="#b91c1c" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="370" y="400" class="code">500 Internal · 502 · 503 · 504</text>
+  <text x="370" y="420" class="note">Retry later with backoff; alert on-call</text>
+</svg>

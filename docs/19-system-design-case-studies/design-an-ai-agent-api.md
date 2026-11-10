@@ -1,5 +1,12 @@
 # Design an AI Agent API
 
+> [!TIP]
+> **In one line:** An agent run is a durable background job: each step is saved and streamed, tools run sandboxed, risky actions wait for human approval, and hard caps bound steps and spend.
+>
+> **In plain English:** Picture handing a task to a new intern: you watch their progress as they go, they work in a practice room where they can't break anything important, and they must ask before sending an email or spending money. You also tell them up front how many steps and how much money they are allowed.
+>
+> **You'll be able to:** Estimate concurrent runs and sandbox capacity with rate × duration math · Design durable pause-and-resume for human approval gates · Enforce iteration and cost caps and recover from mid-run worker crashes
+
 ## Problem Statement
 
 Design an API for running an AI agent — a system that takes a user goal, autonomously plans a sequence of tool calls (searching, reading files, calling internal APIs, writing code), executes them, observes the results, and iterates until the goal is achieved or it gives up. Unlike a single chat completion request, an agent run can take seconds to many minutes, involves executing code or calling external systems with real side effects, and needs a human to be able to step in when the agent is about to do something risky (send an email, delete a record, spend money).
@@ -217,3 +224,26 @@ At 10x scale (125 concurrent average, ~1,000+ peak concurrent runs):
 - [Part 8 — Background Tasks](../08-async-systems/background-tasks.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why does the design focus on concurrent runs rather than runs per second, and what is the number?</summary>
+
+Each run holds resources for its whole duration, so load is starts × duration: 20,000 runs/day × 90 s ÷ 86,400 s ≈ 21 runs in flight on average, about 125 at a 6x peak. Runs per second (≈0.23) would badly understate the capacity needed.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why persist every step to the database instead of keeping the agent loop in memory?</summary>
+
+Durable steps let a crashed run resume from its last saved step on another worker, and let a run pause for hours waiting for human approval without holding a worker hostage — any worker can pick it up later. The cost is a little extra latency per step.
+
+</details>
+
+<details markdown="1">
+<summary>3. An agent run is close to its max_cost_usd. When exactly should the orchestrator check the cap, and why does the timing matter?</summary>
+
+Before making the next LLM call, not after. Checking afterwards means every capped run overshoots by one call's worth of spend, which compounds when many runs hit the cap at once; checking first makes the cap a real hard limit, and the run ends with an explicit status explaining why it stopped.
+
+</details>

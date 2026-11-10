@@ -1,5 +1,12 @@
 # Client-Server Architecture
 
+> [!TIP]
+> **In one line:** Clients start requests; servers own the shared data and logic, treat every client as untrusted, and stay stateless so many copies can run behind a load balancer.
+>
+> **In plain English:** Think of a public library. It keeps the one official collection, and many visitors ask the front desk for books without ever entering the storeroom. Visitors can't rewrite the catalogue themselves. That's the client-server split: many askers, one trusted keeper of the truth.
+>
+> **You'll be able to:** Identify the client and the server in any system, including AI agents · Explain why a stateless server can scale out to many instances · Spot secrets and business logic that wrongly live in the client
+
 ## Why This Matters
 
 Almost everything you'll build in this handbook — a REST API, an authentication service, an LLM gateway — is an instance of one architectural pattern: **client-server**. It's such a foundational assumption that it's easy to stop noticing it's a *choice*, with specific trade-offs versus alternatives (peer-to-peer, monoliths with embedded UIs, etc.). Understanding what the client-server split actually buys you — and what it costs — shapes almost every later design decision in this handbook, from statelessness to scaling to authentication.
@@ -152,3 +159,26 @@ LLM providers are servers in exactly this sense: your application (the client) s
 - Servers own the shared source of truth; clients are untrusted, independent, and shouldn't hold business logic or secrets.
 - Statelessness on the server side is what enables horizontal scaling — a core theme that resurfaces throughout Parts 4, 6, and 11.
 - LLM providers, tool APIs, and AI agents all fit the same client-server model, just with more layers stacked together.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In the basic model, which side starts the conversation, and which side owns the shared source of truth?</summary>
+
+The client starts every exchange; the server only responds. The server owns the shared data, which is what keeps every client's view consistent.
+
+</details>
+
+<details markdown="1">
+<summary>2. What breaks if you keep a user's mid-checkout state in one server process's memory?</summary>
+
+Once you run more than one instance, the next request may reach a different instance that knows nothing about that user, so the checkout seems to vanish. Shared state belongs in a database or cache that every instance can reach.
+
+</details>
+
+<details markdown="1">
+<summary>3. A mobile app ships with an API key inside it and calculates discount prices on the phone. What's wrong?</summary>
+
+Anything shipped to a client can be inspected or changed. The key can be pulled out and the price logic bypassed. Secrets, pricing and authorization decisions belong on the server, which must validate every request.
+
+</details>

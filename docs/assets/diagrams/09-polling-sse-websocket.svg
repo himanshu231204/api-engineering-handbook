@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-labelledby="t d">
+  <title id="t">Short polling, Server-Sent Events and WebSocket compared</title>
+  <desc id="d">Three mini sequence diagrams with the client on the left and the server on the right, time flowing down. Short polling: the client repeatedly asks and usually hears no. Server-Sent Events: one request, then the server keeps pushing events on the same open response, one way only. WebSocket: one upgrade handshake, then both sides send messages whenever they like.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="559" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Polling vs SSE vs WebSocket</text>
+  <text x="32" y="66" class="sub">Client on the left, server on the right, time flows down. Who starts each message, and how many connections?</text>
+  <rect x="32" y="86" width="256" height="36" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="160.0" y="109" class="h" fill="#475569" text-anchor="middle">Short polling</text>
+  <rect x="36" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="66" y="146" class="note" text-anchor="middle">Client</text>
+  <line x1="66" y1="154" x2="66" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="224" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="254" y="146" class="note" text-anchor="middle">Server</text>
+  <line x1="254" y1="154" x2="254" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="68" y1="180" x2="252" y2="180" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="173" class="note" text-anchor="middle">any news?</text>
+  <line x1="252" y1="204" x2="68" y2="204" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="197" class="note" text-anchor="middle">no</text>
+  <line x1="68" y1="256" x2="252" y2="256" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="249" class="note" text-anchor="middle">any news?</text>
+  <line x1="252" y1="280" x2="68" y2="280" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="273" class="note" text-anchor="middle">no</text>
+  <line x1="68" y1="332" x2="252" y2="332" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="325" class="note" text-anchor="middle">any news?</text>
+  <line x1="252" y1="356" x2="68" y2="356" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="160.0" y="349" class="note" fill="#1c7c54" text-anchor="middle">yes! here it is</text>
+  <text x="160.0" y="230" class="note" fill="#6b7280" text-anchor="middle">… wait 5 s …</text>
+  <text x="160.0" y="306" class="note" fill="#6b7280" text-anchor="middle">… wait 5 s …</text>
+  <text x="160.0" y="398" class="note" text-anchor="middle">a new request every time</text>
+  <rect x="312" y="86" width="256" height="36" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="440.0" y="109" class="h" fill="#1c7c54" text-anchor="middle">Server-Sent Events</text>
+  <rect x="316" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="346" y="146" class="note" text-anchor="middle">Client</text>
+  <line x1="346" y1="154" x2="346" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="504" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="534" y="146" class="note" text-anchor="middle">Server</text>
+  <line x1="534" y1="154" x2="534" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="348" y1="182" x2="532" y2="182" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440.0" y="175" class="note" text-anchor="middle">GET /stream (once)</text>
+  <rect x="341" y="196" width="10" height="176" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="529" y="196" width="10" height="176" rx="5" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <line x1="526" y1="220" x2="354" y2="220" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440.0" y="213" class="note" text-anchor="middle">data: Hello</text>
+  <line x1="526" y1="262" x2="354" y2="262" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440.0" y="255" class="note" text-anchor="middle">data: world</text>
+  <line x1="526" y1="304" x2="354" y2="304" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440.0" y="297" class="note" text-anchor="middle">data: …</text>
+  <line x1="526" y1="346" x2="354" y2="346" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440.0" y="339" class="note" text-anchor="middle">event: done</text>
+  <text x="440.0" y="398" class="note" text-anchor="middle">one open response, server → client</text>
+  <rect x="592" y="86" width="256" height="36" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="720.0" y="109" class="h" fill="#2563eb" text-anchor="middle">WebSocket</text>
+  <rect x="596" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="626" y="146" class="note" text-anchor="middle">Client</text>
+  <line x1="626" y1="154" x2="626" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <rect x="784" y="130" width="60" height="24" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="814" y="146" class="note" text-anchor="middle">Server</text>
+  <line x1="814" y1="154" x2="814" y2="378" stroke="#cbd5e1" stroke-width="1.5"/>
+  <line x1="628" y1="182" x2="812" y2="182" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="175" class="note" text-anchor="middle">GET + Upgrade: websocket</text>
+  <line x1="812" y1="210" x2="628" y2="210" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="203" class="note" text-anchor="middle">101 Switching Protocols</text>
+  <rect x="621" y="222" width="10" height="150" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <rect x="809" y="222" width="10" height="150" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2"/>
+  <line x1="634" y1="248" x2="806" y2="248" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="241" class="note" text-anchor="middle">msg: hi</text>
+  <line x1="806" y1="284" x2="634" y2="284" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="277" class="note" text-anchor="middle">msg: hey!</text>
+  <line x1="634" y1="318" x2="806" y2="318" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="311" class="note" text-anchor="middle">msg: typing…</text>
+  <line x1="806" y1="352" x2="634" y2="352" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="720.0" y="345" class="note" text-anchor="middle">ping / pong</text>
+  <text x="720.0" y="398" class="note" text-anchor="middle">one open connection, both ways</text>
+  <rect x="32" y="420" width="256" height="112" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="446" class="lbl" fill="#475569">Client asks on a timer</text>
+  <text x="48" y="468" class="note">simplest; plain HTTP everywhere</text>
+  <text x="48" y="486" class="note">but mostly wasted requests and</text>
+  <text x="48" y="504" class="note">news is late by up to one interval</text>
+  <rect x="312" y="420" width="256" height="112" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="328" y="446" class="lbl" fill="#1c7c54">One request, server streams</text>
+  <text x="328" y="468" class="note">one way only; auto-reconnect</text>
+  <text x="328" y="486" class="note">resumes with Last-Event-ID</text>
+  <text x="328" y="504" class="note">best for LLM tokens, live feeds</text>
+  <rect x="592" y="420" width="256" height="112" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="608" y="446" class="lbl" fill="#2563eb">Both sides talk any time</text>
+  <text x="608" y="468" class="note">chat, games, live collaboration</text>
+  <text x="608" y="486" class="note">you build heartbeats, reconnects</text>
+  <text x="608" y="504" class="note">and sticky routing yourself</text>
+</svg>

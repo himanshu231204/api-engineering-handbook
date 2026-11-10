@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" role="img" aria-labelledby="t d">
+  <title id="t">The three pillars of observability: logs, metrics and traces</title>
+  <desc id="d">Metrics answer whether the system is healthy right now using cheap aggregate numbers, traces answer where one request spent its time across services, and logs answer what exactly happened and why. A shared trace ID on every log line and span links the three, so an alert from a metric leads to the slow trace and then to the exact log lines.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="539" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Three pillars, three different questions</text>
+  <text x="32" y="66" class="sub">Each pillar answers one question well. A shared trace_id lets you jump from one to the next.</text>
+  <rect x="32" y="90" width="264" height="250" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="116" r="12" fill="#1c7c54"/>
+  <text x="56" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="122" class="h" fill="#2563eb">Metrics</text>
+  <text x="48" y="154" class="lbl" fill="#111827">“Is the system healthy</text>
+  <text x="48" y="174" class="lbl" fill="#111827">right now?”</text>
+  <text x="48" y="204" class="note">Cheap numbers over time:</text>
+  <text x="48" y="222" class="note">counters, gauges, histograms</text>
+  <rect x="44" y="236" width="240" height="36" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="54" y="259" class="code">error_rate = 5.2%  ↑</text>
+  <text x="48" y="300" class="lbl" fill="#2563eb">Shows THAT something is wrong</text>
+  <text x="48" y="320" class="note">Alert and dashboard here</text>
+  <line x1="164.0" y1="340" x2="164.0" y2="388" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-start="url(#arrow)"/>
+  <rect x="308" y="90" width="264" height="250" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="332" cy="116" r="12" fill="#1c7c54"/>
+  <text x="332" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="354" y="122" class="h" fill="#1c7c54">Traces</text>
+  <text x="324" y="154" class="lbl" fill="#111827">“Where did this one</text>
+  <text x="324" y="174" class="lbl" fill="#111827">request spend its time?”</text>
+  <text x="324" y="204" class="note">One request across services:</text>
+  <text x="324" y="222" class="note">spans with parent/child links</text>
+  <rect x="320" y="236" width="240" height="36" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="330" y="259" class="code">payment → db.insert 340 ms</text>
+  <text x="324" y="300" class="lbl" fill="#1c7c54">Shows WHERE it went wrong</text>
+  <text x="324" y="320" class="note">Find the slow hop here</text>
+  <line x1="440.0" y1="340" x2="440.0" y2="388" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-start="url(#arrow)"/>
+  <rect x="584" y="90" width="264" height="250" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="608" cy="116" r="12" fill="#1c7c54"/>
+  <text x="608" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="630" y="122" class="h" fill="#b45309">Logs</text>
+  <text x="600" y="154" class="lbl" fill="#111827">“What exactly happened,</text>
+  <text x="600" y="174" class="lbl" fill="#111827">and why?”</text>
+  <text x="600" y="204" class="note">Timestamped events,</text>
+  <text x="600" y="222" class="note">structured JSON, leveled</text>
+  <rect x="596" y="236" width="240" height="36" rx="8" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="606" y="259" class="code">ERROR payment_timeout</text>
+  <text x="600" y="300" class="lbl" fill="#b45309">Shows WHY it went wrong</text>
+  <text x="600" y="320" class="note">Read the details here</text>
+  <line x1="716.0" y1="340" x2="716.0" y2="388" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-start="url(#arrow)"/>
+  <rect x="32" y="390" width="816" height="58" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="48" y="415" class="lbl" fill="#6d28d9">Shared key on every log line and span:</text>
+  <text x="330" y="415" class="code">trace_id = 7f3a9c1e2b4d…</text>
+  <text x="48" y="437" class="note">Take the trace_id of a slow request (e.g. its X-Trace-Id response header) and search logs and traces with it.</text>
+  <rect x="32" y="466" width="816" height="54" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="489" class="lbl" fill="#475569">Typical incident path</text>
+  <text x="48" y="508" class="note">① A metric alert fires (error rate up)   →   ② a trace shows the slow or failing hop   →   ③ that hop’s logs explain why.</text>
+</svg>

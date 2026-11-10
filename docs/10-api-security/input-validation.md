@@ -1,5 +1,12 @@
 # Input Validation
 
+> [!TIP]
+> **In one line:** Validate every input at the system's boundary against an explicit allowlist of type, format, range and business rules — and reject bad data loudly instead of silently fixing it.
+>
+> **In plain English:** Anything arriving at your API can be wrong or hostile, so check it at the door before any of your code uses it. Describe exactly what good data looks like and refuse everything else, rather than trying to guess every kind of bad data. In FastAPI, Pydantic models do this checking for you and return a clear 422 error listing every problem.
+>
+> **You'll be able to:** tell allowlisting from denylisting and explain why allowlists are safer · express type, format, range and cross-field rules with Pydantic Field, field_validator and model_validator · decide where validation belongs, including internal services and background jobs
+
 ## Why This Matters
 
 Every request that reaches your API originates outside your control — a browser, a mobile app, a third-party integration, or an attacker's script — and none of them are obligated to send well-formed data. Input validation is the practice of checking, at the boundary of your system, that incoming data is the shape, type, range, and format your application logic actually assumes before that data touches any business logic, database query, or downstream call. Skipping it doesn't just risk crashes on malformed input; it's the root enabler behind [SQL Injection](sql-injection.md), broken business rules (negative prices, impossible dates, orders exceeding stock), and a large share of the categories in the [OWASP API Security Top 10](owasp-api-security.md). Validation is cheap to do correctly and expensive to skip — a single bad assumption about what "a user ID" or "an email" looks like can cascade into data corruption or a security incident far downstream of where the bad data entered.
@@ -206,6 +213,29 @@ Input validation takes on an extra dimension in AI-facing APIs: the *shape* of a
 - Reject invalid input with clear, specific errors rather than silently coercing or dropping bad values.
 - Client-side validation is a UX convenience only; the server must independently validate every request regardless of what the frontend already checked.
 - Validation is one layer of defense in depth, working alongside parameterized queries and output encoding, not a replacement for either.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four layers of input validation described in this chapter?</summary>
+
+Type validation (is it really an int, string, bool?), format validation (email, UUID, date shape), range/bounds validation (min/max values and lengths), and business rule validation (does it make sense in context, like an end date after a start date). Only the last usually needs custom validator code.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is silently clamping a negative quantity to 0 worse than rejecting the request?</summary>
+
+Silent correction hides a client bug or an attack attempt, and stores different data from what the client believes it sent. Rejecting with a clear field-level 422 fails loudly, so the client can fix the problem and nothing unexpected is processed.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your frontend already blocks discounts above 100%, so a developer skipped the server-side check. What goes wrong?</summary>
+
+Anyone can call the API directly with curl or a script and bypass the frontend entirely, so a `discount_percent` of 150 would reach business logic. Client-side validation is only a UX convenience; the server must enforce `Field(ge=0, le=100)` itself on every request.
+
+</details>
 
 See also: [SQL Injection](sql-injection.md), [CORS](cors.md), [OWASP API Security Top 10](owasp-api-security.md), and the [glossary](../../resources/glossary.md).
 

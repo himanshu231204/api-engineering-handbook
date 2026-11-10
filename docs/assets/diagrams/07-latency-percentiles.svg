@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">Latency distribution with P50, P95 and P99</title>
+  <desc id="d">A histogram of request latency on a log scale. Most requests are cache hits between 1 and 6 ms; a small cluster of cache misses sits around 80 to 250 ms and a thin tail reaches 600 ms. P50 is 3 ms, P95 is 10 ms, the average is 14 ms, P99 is 187 ms. The average hides the slow users.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Latency is a distribution, not one number</text>
+  <text x="32" y="66" class="sub">One hour of GET /products/{id}: 148,302 requests, sorted into buckets by how long each one took.</text>
+  <line x1="96" y1="352" x2="824" y2="352" stroke="#475569" stroke-width="1.5"/>
+  <line x1="96" y1="120" x2="96" y2="352" stroke="#475569" stroke-width="1.5"/>
+  <line x1="96.0" y1="352" x2="96.0" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="96.0" y="372" class="note" text-anchor="middle">1 ms</text>
+  <line x1="169.0" y1="352" x2="169.0" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="169.0" y="372" class="note" text-anchor="middle">2</text>
+  <line x1="265.6" y1="352" x2="265.6" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="265.6" y="372" class="note" text-anchor="middle">5</text>
+  <line x1="338.7" y1="352" x2="338.7" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="338.7" y="372" class="note" text-anchor="middle">10</text>
+  <line x1="411.7" y1="352" x2="411.7" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="411.7" y="372" class="note" text-anchor="middle">20</text>
+  <line x1="508.3" y1="352" x2="508.3" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="508.3" y="372" class="note" text-anchor="middle">50</text>
+  <line x1="581.3" y1="352" x2="581.3" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="581.3" y="372" class="note" text-anchor="middle">100</text>
+  <line x1="654.4" y1="352" x2="654.4" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="654.4" y="372" class="note" text-anchor="middle">200</text>
+  <line x1="751.0" y1="352" x2="751.0" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="751.0" y="372" class="note" text-anchor="middle">500</text>
+  <line x1="824.0" y1="352" x2="824.0" y2="357" stroke="#475569" stroke-width="1.2"/>
+  <text x="824.0" y="372" class="note" text-anchor="middle">1000 ms</text>
+  <text x="460.0" y="428" class="note" text-anchor="middle">response time (log scale)</text>
+  <text x="0" y="0" class="note" text-anchor="middle" transform="translate(60 240.0) rotate(-90)">number of requests</text>
+  <rect x="104.6" y="287.8" width="21.3" height="64.2" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="128.1" y="219.3" width="21.3" height="132.7" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="153.0" y="163.7" width="21.3" height="188.3" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="177.6" y="138.0" width="21.3" height="214.0" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="201.1" y="144.4" width="21.3" height="207.6" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="226.1" y="185.1" width="21.3" height="166.9" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="250.7" y="249.3" width="21.3" height="102.7" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="274.2" y="300.6" width="21.3" height="51.4" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="299.1" y="326.3" width="21.3" height="25.7" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2"/>
+  <rect x="323.7" y="337.0" width="21.3" height="15.0" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="347.2" y="342.4" width="21.3" height="9.6" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="370.8" y="345.6" width="21.3" height="6.4" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="395.7" y="347.7" width="21.3" height="4.3" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="420.3" y="348.8" width="21.3" height="3.2" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="443.8" y="349.0" width="21.3" height="3.0" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="468.7" y="348.8" width="21.3" height="3.2" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="493.3" y="346.6" width="21.3" height="5.4" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="516.9" y="341.3" width="21.3" height="10.7" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="541.8" y="333.8" width="21.3" height="18.2" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="566.4" y="326.3" width="21.3" height="25.7" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="589.9" y="322.0" width="21.3" height="30.0" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="613.4" y="324.2" width="21.3" height="27.8" rx="2" fill="#fef3c7" stroke="#b45309" stroke-width="1.2"/>
+  <rect x="638.3" y="330.6" width="21.3" height="21.4" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <rect x="663.0" y="337.0" width="21.3" height="15.0" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <rect x="686.5" y="343.4" width="21.3" height="8.6" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <rect x="711.4" y="346.6" width="21.3" height="5.4" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <rect x="736.0" y="348.8" width="21.3" height="3.2" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <rect x="759.5" y="349.0" width="21.3" height="3.0" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.2"/>
+  <line x1="215.2" y1="114" x2="215.2" y2="352" stroke="#1c7c54" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <text x="215.2" y="108" class="lbl" fill="#1c7c54" text-anchor="middle">P50 = 3 ms</text>
+  <line x1="336.5" y1="114" x2="336.5" y2="352" stroke="#2563eb" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <text x="336.5" y="108" class="lbl" fill="#2563eb" text-anchor="middle">P95 = 10 ms</text>
+  <line x1="647.5" y1="114" x2="647.5" y2="352" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <text x="647.5" y="108" class="lbl" fill="#b91c1c" text-anchor="middle">P99 = 187 ms</text>
+  <line x1="375.6" y1="150" x2="375.6" y2="352" stroke="#475569" stroke-width="1.75" stroke-dasharray="2 3"/>
+  <text x="383.6" y="146" class="lbl" fill="#475569">average = 14 ms</text>
+  <path d="M101.1,381 L101.1,386 L321.5,386 L321.5,381" fill="none" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="211.3" y="403" class="lbl" fill="#1c7c54" text-anchor="middle">cache hits: most requests</text>
+  <path d="M484.8,381 L484.8,386 L786.4,386 L786.4,381" fill="none" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="635.6" y="403" class="lbl" fill="#b91c1c" text-anchor="middle">cache misses + slow queries: the long tail</text>
+  <rect x="396" y="164" width="224" height="78" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="412" y="188" class="lbl" fill="#b91c1c">The average hides them</text>
+  <text x="412" y="208" class="note">14 ms looks healthy, yet 1 in 100</text>
+  <text x="412" y="224" class="note">users waits 187 ms or longer.</text>
+  <g transform="translate(32,448)">
+    <rect width="816" height="36" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="23" class="lbl" fill="#1c7c54">P50</text><text x="52" y="23" class="note">half of requests are faster</text>
+    <text x="250" y="23" class="lbl" fill="#2563eb">P95</text><text x="286" y="23" class="note">95 in 100 are faster</text>
+    <text x="450" y="23" class="lbl" fill="#b91c1c">P99</text><text x="486" y="23" class="note">the slowest 1% start here: alert on this, not the average</text>
+  </g>
+</svg>

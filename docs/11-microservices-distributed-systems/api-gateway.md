@@ -1,5 +1,12 @@
 # API Gateway
 
+> [!TIP]
+> **In one line:** An API gateway is one front door for all clients: it authenticates, rate-limits and routes each request to the right internal service, so services don't repeat that work.
+>
+> **In plain English:** Without a gateway, every app has to know where each of your services lives and log in to each separately. The gateway gives them one stable address and handles the shared chores once. Behind it, you can move, split or merge services and clients never notice.
+>
+> **You'll be able to:** list what a gateway does on each request: TLS, auth, rate limits, routing, aggregation, observability · tell a gateway from a load balancer and decide when a Backend-for-Frontend is worth it · run a gateway safely: stateless, replicated, and free of business logic
+
 ## Why This Matters
 
 Once you have more than one or two backend services (see `monolith-vs-microservices.md`), every client — a web app, a mobile app, a third-party integrator — is suddenly faced with a hard question: which of the ten services do I call for this feature, and how do I authenticate to each of them individually? Without a gateway, every client ends up embedding a map of your internal service topology, every service ends up re-implementing authentication, rate limiting, and request logging, and changing your internal architecture (splitting a service, merging two, moving one to a new host) breaks every client that hardcoded the old topology. An API gateway exists to fix exactly this: it gives clients one stable address and one contract, while your internal services stay free to change shape behind it.
@@ -51,6 +58,8 @@ flowchart LR
         GW
     end
 ```
+
+![Web, mobile and partner clients call one API gateway that terminates TLS, authenticates, rate-limits and routes requests to private orders, payments, inventory and users services](../assets/diagrams/11-api-gateway.svg)
 
 Every client goes through the single gateway; internal services never need to be reachable directly from the public internet, and can change, merge, or split without clients noticing, as long as the gateway's public contract stays stable.
 
@@ -237,6 +246,29 @@ An **AI Gateway** — a specialized API gateway sitting in front of one or more 
 - A Backend-for-Frontend (BFF) is a gateway variant tailored per client type; use it only when clients genuinely need different data shapes, not by default.
 - The gateway is a deliberate single point of failure — it must be highly available, stateless, and horizontally scaled, since every request depends on it.
 - Keep business logic out of the gateway; it should route and protect traffic, not understand your domain.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between an API gateway and a load balancer?</summary>
+
+A gateway routes requests across different services based on path, host or headers and adds application-aware behavior like auth and rate limits. A load balancer spreads traffic across multiple instances of the same service. They are complementary, and gateways usually sit in front of load-balanced services.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should rate-limit counters live in Redis rather than in the gateway's own memory?</summary>
+
+The gateway must run as multiple stateless replicas because it is a deliberate single point of failure. With in-process counters each replica enforces its own separate limit, so a client spread across replicas gets several times its quota, and the state is lost on every restart or deploy.
+
+</details>
+
+<details markdown="1">
+<summary>3. A team wants to add order-total calculation to the gateway because every client needs it. What should you say?</summary>
+
+Push back: business logic in the gateway is invisible to the team that owns orders, couples infrastructure to domain rules, and slowly turns the gateway into a second monolith. Keep the calculation in the orders service (or a BFF/aggregation endpoint owned by that domain) and let the gateway only route and protect traffic.
+
+</details>
 
 See also: [Monolith vs Microservices](monolith-vs-microservices.md), [REST vs gRPC](rest-vs-grpc.md), and the [glossary](../../resources/glossary.md). Service discovery and load balancing (upcoming chapters in this part) are the mechanisms a gateway relies on to find and distribute traffic to healthy backend instances.
 

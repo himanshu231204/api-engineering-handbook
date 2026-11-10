@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="572" viewBox="0 0 880 572" role="img" aria-labelledby="t d">
+  <title id="t">OFFSET versus keyset pagination</title>
+  <desc id="d">With OFFSET the database reads and discards every skipped row before returning 20, so cost grows with page depth. With keyset pagination an index seek jumps directly to the cursor and returns the next 20 rows at constant cost.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="571" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">OFFSET vs keyset pagination</text>
+  <text x="32" y="66" class="sub">Both return the same 20 rows. The difference is how much work the database does to find them.</text>
+
+  <rect x="32" y="88" width="400" height="262" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="448" y="88" width="400" height="262" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="52" y="116" class="lbl" fill="#b91c1c">OFFSET pagination</text>
+  <text x="52" y="140" class="code">LIMIT 20 OFFSET 4000</text>
+  <text x="468" y="116" class="lbl" fill="#1c7c54">Keyset (cursor) pagination</text>
+  <text x="468" y="140" class="code">WHERE (created_at, id) &lt; cursor</text>
+  <rect x="52" y="158" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="158" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="171" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="171" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="184" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="184" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="197" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="197" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="210" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="210" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="223" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="223" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="236" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="236" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="249" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="249" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="262" width="150" height="9" rx="2" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+  <rect x="468" y="262" width="150" height="9" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <rect x="52" y="292" width="150" height="9" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1"/>
+  <rect x="468" y="292" width="150" height="9" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1"/>
+  <rect x="52" y="305" width="150" height="9" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1"/>
+  <rect x="468" y="305" width="150" height="9" rx="2" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1"/>
+  <text x="127" y="284" class="note" text-anchor="middle">⋮</text>
+  <text x="543" y="284" class="note" text-anchor="middle">⋮</text>
+  <text x="218" y="196" class="lbl" fill="#b91c1c">4,000 rows are read</text>
+  <text x="218" y="214" class="note">in order… then thrown away</text>
+  <text x="218" y="232" class="note">on every request</text>
+  <text x="218" y="306" class="lbl" fill="#1c7c54">20 rows returned</text>
+  <text x="52" y="336" class="note">Deeper page = more wasted rows.</text>
+  <path d="M 640 162 C 700 190, 700 270, 626 296" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="700" y="196" class="lbl" fill="#111827">index seek jumps</text>
+  <text x="700" y="214" class="note">straight to the</text>
+  <text x="700" y="232" class="note">cursor's position</text>
+  <text x="700" y="306" class="lbl" fill="#1c7c54">20 rows returned</text>
+  <text x="468" y="336" class="note">Skipped rows are never read at all.</text>
+  <rect x="32" y="372" width="816" height="168" rx="12" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="52" y="398" class="lbl" fill="#111827">Time per page request</text>
+  <line x1="100" y1="508" x2="560" y2="508" stroke="#475569" stroke-width="1.5"/>
+  <line x1="100" y1="508" x2="100" y2="412" stroke="#475569" stroke-width="1.5"/>
+  <line x1="100" y1="504" x2="560" y2="420" stroke="#b91c1c" stroke-width="2.5"/>
+  <line x1="100" y1="502" x2="560" y2="499" stroke="#1c7c54" stroke-width="2.5"/>
+  <text x="576" y="426" class="lbl" fill="#b91c1c">OFFSET: grows with page depth</text>
+  <text x="576" y="502" class="lbl" fill="#1c7c54">Keyset: flat at any depth</text>
+  <text x="100" y="528" class="note">page 1</text>
+  <text x="560" y="528" class="note" text-anchor="end">page 200 (deep)</text>
+
+</svg>

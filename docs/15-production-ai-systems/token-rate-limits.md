@@ -1,5 +1,12 @@
 # Token Rate Limits
 
+> [!TIP]
+> **In one line:** Providers also cap tokens per minute (TPM), independent of request count — reserve input plus max_tokens before each call, reconcile with actual usage after, and split budget per tenant.
+>
+> **In plain English:** Besides counting requests, providers limit how much text flows through per minute, so one huge request can use up as much as a thousand tiny ones. It is like a shared family phone plan that caps gigabytes, not the number of apps you open.
+>
+> **You'll be able to:** Explain why TPM is usually the tighter limit for real LLM workloads · Implement reserve-then-reconcile token budgeting · Layer per-tenant sub-budgets under a provider-wide ceiling
+
 ## Why This Matters
 
 A team can pass every request-count rate limit test (see [AI Rate Limits](ai-rate-limits.md)) and still get hammered with 429s in production, because LLM providers usually enforce a **second, independent** limit: tokens per minute (TPM). Ten requests per minute sounds tiny — until each request carries an 8,000-token document as context, at which point ten requests can burn through a TPM limit that would comfortably support a thousand short chatbot messages. Token-rate limits are the dominant constraint for most real production AI workloads, precisely because token volume — not request count — is what actually costs the provider (and you) compute and money.
@@ -202,3 +209,26 @@ RAG pipelines (see [Part 16 — RAG APIs](../16-rag-apis/README.md)) are frequen
 - Budgeting requires reserving for estimated output (`max_tokens`) before the call and reconciling against actual usage after, since exact output size isn't known in advance.
 - Per-tenant sub-budgets under a shared provider-wide ceiling prevent one caller from starving everyone else.
 - Treat RPM and TPM as two independent constraints that both need their own tracking, alerting, and dashboards.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does a TPM limit count, and how does it differ from an RPM limit?</summary>
+
+TPM caps the total tokens (input plus output) processed per minute, whatever the number of requests. RPM caps the number of calls regardless of size, so you can be well under one while being throttled hard on the other.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must you reserve tokens for max_tokens before the call and release the unused part afterward?</summary>
+
+You do not know the output length in advance, so max_tokens is the safe upper bound to reserve — without it, concurrent requests can pass checks against the same budget and trigger real 429s. Releasing the unused part afterward stops the bucket from looking more exhausted than it really is.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your internal limiter reports plenty of headroom, yet the provider keeps returning TPM 429s on your RAG feature. What is the likely bug?</summary>
+
+The limiter probably counts only input tokens (or uses a rough character heuristic) and ignores reserved output, while retrieved context inflates every request. Estimate input with the model's real tokenizer, reserve max_tokens for output, and reconcile with actual usage.
+
+</details>

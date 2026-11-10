@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480" role="img" aria-labelledby="t d">
+  <title id="t">The tool-calling loop</title>
+  <desc id="d">Step 1: your app sends messages and tool schemas to the LLM. Step 2: the model replies with a tool call instead of text. Step 3: your app validates, authorizes and runs the tool. Step 4: the tool returns a result. Step 5: your app sends the messages plus the tool result back to the model. Steps 2 to 5 repeat until step 6, when the model returns a final text answer. The loop is capped at a maximum number of rounds.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="479" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The tool-calling loop</text>
+  <text x="32" y="66" class="sub">The model only asks for a tool. Your app runs it and reports back — round after round, until a final answer.</text>
+
+  <!-- loop region (behind) -->
+  <rect x="40" y="196" width="800" height="182" rx="12" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <!-- headers -->
+  <rect x="32" y="88" width="240" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="152" y="110" class="lbl" fill="#475569" text-anchor="middle">Tool / your systems</text>
+  <text x="152" y="128" class="note" text-anchor="middle">database, internal APIs</text>
+  <rect x="320" y="88" width="240" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="440" y="110" class="lbl" fill="#2563eb" text-anchor="middle">Your app</text>
+  <text x="440" y="128" class="note" text-anchor="middle">loop controller, owns the history</text>
+  <rect x="608" y="88" width="240" height="52" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="728" y="110" class="lbl" fill="#6d28d9" text-anchor="middle">LLM provider</text>
+  <text x="728" y="128" class="note" text-anchor="middle">stateless model</text>
+
+  <!-- lifelines -->
+  <line x1="152" y1="140" x2="152" y2="422" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="440" y1="140" x2="440" y2="422" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <line x1="728" y1="140" x2="728" y2="422" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+  <!-- 1: app -> llm -->
+  <circle cx="462" cy="166" r="12" fill="#1c7c54"/><text x="462" y="170" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="482" y="171" class="lbl" fill="#1f2937">messages + tool schemas</text>
+  <line x1="442" y1="182" x2="724" y2="182" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- 2: llm -> app -->
+  <circle cx="462" cy="214" r="12" fill="#1c7c54"/><text x="462" y="218" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="482" y="219" class="code">tool_call: get_order</text>
+  <line x1="726" y1="230" x2="444" y2="230" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- 3: app -> tool -->
+  <circle cx="174" cy="258" r="12" fill="#1c7c54"/><text x="174" y="262" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="194" y="263" class="lbl" fill="#1f2937">validate, authorize, run</text>
+  <line x1="438" y1="274" x2="156" y2="274" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- 4: tool -> app -->
+  <circle cx="174" cy="302" r="12" fill="#1c7c54"/><text x="174" y="306" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+  <text x="194" y="307" class="code">{"status": "shipped"}</text>
+  <line x1="154" y1="318" x2="436" y2="318" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- 5: app -> llm -->
+  <circle cx="462" cy="342" r="12" fill="#1c7c54"/><text x="462" y="346" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+  <text x="482" y="347" class="lbl" fill="#1f2937">messages + tool_result</text>
+  <line x1="442" y1="358" x2="724" y2="358" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- loop label -->
+  <rect x="50" y="352" width="290" height="20" fill="#f8fafc"/>
+  <text x="56" y="366" class="lbl" fill="#475569">↻ repeat 2–5 while the model asks for tools</text>
+
+  <!-- 6: llm -> app final -->
+  <circle cx="462" cy="398" r="12" fill="#1c7c54"/><text x="462" y="402" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+  <text x="482" y="403" class="lbl" fill="#1c7c54">final text answer → loop ends</text>
+  <line x1="726" y1="414" x2="444" y2="414" stroke="#1c7c54" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- footer -->
+  <rect x="32" y="430" width="816" height="34" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="48" y="452" class="note">Safety rails: cap the rounds (e.g. 10), time out every tool, and send tool errors back as results instead of crashing.</text>
+</svg>

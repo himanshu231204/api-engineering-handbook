@@ -1,5 +1,12 @@
 # Distributed Tracing
 
+> [!TIP]
+> **In one line:** Distributed tracing follows one request across every service using a shared trace ID, so you can see exactly which hop and which operation made it slow or fail.
+>
+> **In plain English:** When one click touches five services, each service's own logs only show its small piece. Tracing stamps the request with one ID at the front door and every service passes that ID along and records how long its part took. Afterwards you can line up all the pieces as one timeline and point at the slow step.
+>
+> **You'll be able to:** explain traces, spans, root spans and parent/child relationships · propagate context with the W3C traceparent header across HTTP and async hops · choose an error-biased sampling strategy for high-traffic systems
+
 ## Why This Matters
 
 A single user action — "place an order" — might touch five different services before it's done: an API gateway, an auth service, an order service, a payment service, and a database. When that request takes 4 seconds instead of the usual 200ms, or fails outright, logs and metrics from any *one* of those services only show you a fragment of the story. The order service's logs show it called the payment service and waited a long time; the payment service's logs show it processed the charge quickly. Neither one, on its own, tells you where the missing 3.5 seconds actually went. This is the exact problem distributed tracing exists to solve: seeing one request's entire journey across every service it touched, as a single connected picture, instead of piecing it together by hand from a dozen separate log streams. This chapter builds the core vocabulary — traces, spans, and parent/child relationships — and walks through one request traced end to end across multiple services.
@@ -231,5 +238,28 @@ Distributed tracing becomes especially valuable in AI systems because a single u
 - Trace context must be explicitly propagated (usually via HTTP headers like `traceparent` or `X-Trace-Id`) on every outgoing call — forgetting this is the most common way traces break.
 - The worked multi-service example in this chapter shows how tracing pinpoints exactly which hop and which operation is responsible for latency, something aggregate metrics cannot do.
 - Sampling, error-biased retention, and propagation across async boundaries (queues, workers) are the production-scale concerns layered on top of the core trace/span model.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between a trace and a span?</summary>
+
+A trace is the complete journey of one request, identified by a single trace ID shared across every service it touches. A span is one unit of work within that journey (one operation in one service), with a start time, duration and a parent span ID that places it in the tree.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if one service in the chain doesn't read and forward the traceparent header?</summary>
+
+The trace breaks at that hop: downstream spans are still recorded, but as an orphaned trace with no link to the original request. Generating a fresh trace ID at every service causes the same problem, producing many short, disconnected traces instead of one end-to-end picture.
+
+</details>
+
+<details markdown="1">
+<summary>3. You trace 1% of requests to save money, but the rare failing checkouts are never in your traces. What should you change?</summary>
+
+Use error-biased sampling: always keep traces for failed requests and sample only a small percentage of successful ones. The sampling decision should also be propagated with the trace context so a trace isn't cut off halfway because different services decided independently.
+
+</details>
 
 Continue to [SLI, SLO, SLA](sli-slo-sla.md), or return to the [Part 12 overview](README.md). See also [Part 11 — Microservices & Distributed Systems](../11-microservices-distributed-systems/README.md) for the architectural context these traces run inside.

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="488" viewBox="0 0 880 488" role="img" aria-labelledby="t d">
+  <title id="t">Token bucket rate limiting</title>
+  <desc id="d">A bucket holds at most b equals 20 tokens and refills at r equals 5 tokens per second. Each request that arrives takes one token and gets 200 OK; if the bucket is empty the request gets 429 Too Many Requests with a Retry-After header of 0.2 seconds, the time to refill one token. Worked example: after 4 idle seconds the bucket is full, a burst of 25 requests lets 20 through and rejects 5, and afterwards about 5 requests per second are allowed.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="487" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Token bucket: allow bursts, enforce an average rate</text>
+  <text x="32" y="66" class="sub">Each client has its own bucket. Tokens drip in at a steady rate; every request must take one.</text>
+  <rect x="120" y="90" width="200" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="220" y="110" text-anchor="middle" class="lbl" fill="#475569">Refill: r = 5 tokens / s</text>
+  <text x="220" y="126" text-anchor="middle" class="note">steady drip, never above b</text>
+  <line x1="220" y1="134" x2="220" y2="176" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <path d="M100 170 L340 170 L320 334 L120 334 Z" fill="#fef3c7" stroke="#b45309" stroke-width="1.5" stroke-linejoin="round"/>
+  <line x1="104" y1="192" x2="336" y2="192" stroke="#b45309" stroke-width="1.25" stroke-dasharray="5 4"/>
+  <text x="348" y="196" class="lbl" fill="#b45309">max b = 20</text>
+  <circle cx="154" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="176" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="198" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="220" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="242" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="264" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="286" cy="316" r="9" fill="#1c7c54"/>
+  <circle cx="165" cy="294" r="9" fill="#1c7c54"/>
+  <circle cx="187" cy="294" r="9" fill="#1c7c54"/>
+  <circle cx="209" cy="294" r="9" fill="#1c7c54"/>
+  <circle cx="231" cy="294" r="9" fill="#1c7c54"/>
+  <circle cx="253" cy="294" r="9" fill="#1c7c54"/>
+  <circle cx="275" cy="294" r="9" fill="#1c7c54"/>
+  <text x="220" y="262" text-anchor="middle" class="note">13 tokens right now</text>
+  <text x="220" y="358" text-anchor="middle" class="note">Bucket holds at most b tokens — idle time</text>
+  <text x="220" y="376" text-anchor="middle" class="note">builds up a burst allowance</text>
+  <rect x="440" y="92" width="408" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="456" y="115" class="lbl" fill="#2563eb">Request arrives</text>
+  <text x="456" y="134" class="note">Refill by elapsed time, then: is there at least 1 token?</text>
+  <line x1="536" y1="144" x2="536" y2="182" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="546" y="168" class="lbl" fill="#1c7c54">yes</text>
+  <line x1="752" y1="144" x2="752" y2="182" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="762" y="168" class="lbl" fill="#b91c1c">no</text>
+  <rect x="440" y="186" width="192" height="118" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="456" y="210" class="lbl" fill="#1c7c54">Take 1 token</text>
+  <text x="456" y="236" class="code">200 OK</text>
+  <text x="456" y="260" class="note">bucket: 13 → 12</text>
+  <text x="456" y="280" class="note">request is processed</text>
+  <rect x="656" y="186" width="192" height="118" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="672" y="210" class="lbl" fill="#b91c1c">Bucket empty</text>
+  <text x="672" y="236" class="code">429 Too Many</text>
+  <text x="672" y="258" class="code">Retry-After: 0.2</text>
+  <text x="672" y="282" class="note">1 token ÷ 5/s = 0.2 s wait</text>
+  <line x1="440" y1="236" x2="334" y2="236" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <text x="387" y="228" text-anchor="middle" class="note">−1 token</text>
+  <text x="32" y="412" class="h">Worked example (b = 20, r = 5/s)</text>
+  <rect x="32" y="424" width="252" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="54" cy="446" r="12" fill="#1c7c54"/>
+  <text x="54" y="450" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="74" y="442" class="lbl" fill="#475569">Idle for 4 seconds</text>
+  <text x="74" y="460" class="note">bucket refills to 20 (capped)</text>
+  <line x1="284" y1="446" x2="310" y2="446" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="314" y="424" width="252" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="336" cy="446" r="12" fill="#1c7c54"/>
+  <text x="336" y="450" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="356" y="442" class="lbl" fill="#475569">Burst of 25 requests</text>
+  <text x="356" y="460" class="note">20 get 200 OK, 5 get 429</text>
+  <line x1="566" y1="446" x2="592" y2="446" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="596" y="424" width="252" height="44" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="618" cy="446" r="12" fill="#1c7c54"/>
+  <text x="618" y="450" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="638" y="442" class="lbl" fill="#475569">After the burst</text>
+  <text x="638" y="460" class="note">about 5 requests/s get through</text>
+</svg>

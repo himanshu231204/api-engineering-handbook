@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="476" viewBox="0 0 880 476" role="img" aria-labelledby="t d">
+  <title id="t">How temperature reshapes next-token probabilities</title>
+  <desc id="d">For the prompt "The sky is", the model assigns probabilities to candidate next tokens. At low temperature (0.2) the distribution is sharp: "blue" gets about 92 percent, so output is consistent. At high temperature (1.5) the distribution is flat: "blue" drops to about 35 percent and unlikely tokens like "falling" or "purple" get picked more often, so output is varied. Temperature changes randomness, not truthfulness.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="475" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Temperature: how adventurous is the next-token pick?</text>
+  <text x="32" y="66" class="sub">The model scores every possible next token. Temperature reshapes those odds before one token is drawn.</text>
+
+  <rect x="32" y="86" width="816" height="38" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="110" class="lbl" fill="#2563eb">Prompt</text>
+  <text x="112" y="110" class="code">"The sky is ___"</text>
+  <text x="832" y="110" class="note" text-anchor="end">which token comes next? (numbers illustrative)</text>
+
+  <rect x="32" y="140" width="396" height="252" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="166" class="h">Low temperature (0.2)</text>
+  <text x="48" y="186" class="note">chance of each next token</text>
+  <text x="48" y="217" class="code">blue</text>
+  <rect x="132" y="203" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="132" y="203" width="221" height="18" rx="4" fill="#1c7c54"/>
+  <text x="412" y="217" class="lbl" fill="#1c7c54" text-anchor="end">92%</text>
+  <text x="48" y="247" class="code">clear</text>
+  <rect x="132" y="233" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="132" y="233" width="14" height="18" rx="4" fill="#1c7c54"/>
+  <text x="412" y="247" class="lbl" fill="#1c7c54" text-anchor="end">6%</text>
+  <text x="48" y="277" class="code">grey</text>
+  <rect x="132" y="263" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="132" y="263" width="5" height="18" rx="4" fill="#1c7c54"/>
+  <text x="412" y="277" class="lbl" fill="#1c7c54" text-anchor="end">2%</text>
+  <text x="48" y="307" class="code">falling</text>
+  <rect x="132" y="293" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="132" y="293" width="3" height="18" rx="4" fill="#1c7c54"/>
+  <text x="412" y="307" class="lbl" fill="#1c7c54" text-anchor="end">&lt;1%</text>
+  <text x="48" y="337" class="code">purple</text>
+  <rect x="132" y="323" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="132" y="323" width="3" height="18" rx="4" fill="#1c7c54"/>
+  <text x="412" y="337" class="lbl" fill="#1c7c54" text-anchor="end">&lt;1%</text>
+  <text x="48" y="362" class="note">Sharp: almost always picks "blue" → consistent output.</text>
+  <text x="48" y="380" class="note">Use for extraction, classification, tool calls.</text>
+
+  <rect x="452" y="140" width="396" height="252" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="468" y="166" class="h">High temperature (1.5)</text>
+  <text x="468" y="186" class="note">chance of each next token</text>
+  <text x="468" y="217" class="code">blue</text>
+  <rect x="552" y="203" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="552" y="203" width="84" height="18" rx="4" fill="#b45309"/>
+  <text x="832" y="217" class="lbl" fill="#b45309" text-anchor="end">35%</text>
+  <text x="468" y="247" class="code">clear</text>
+  <rect x="552" y="233" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="552" y="233" width="53" height="18" rx="4" fill="#b45309"/>
+  <text x="832" y="247" class="lbl" fill="#b45309" text-anchor="end">22%</text>
+  <text x="468" y="277" class="code">grey</text>
+  <rect x="552" y="263" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="552" y="263" width="46" height="18" rx="4" fill="#b45309"/>
+  <text x="832" y="277" class="lbl" fill="#b45309" text-anchor="end">19%</text>
+  <text x="468" y="307" class="code">falling</text>
+  <rect x="552" y="293" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="552" y="293" width="31" height="18" rx="4" fill="#b45309"/>
+  <text x="832" y="307" class="lbl" fill="#b45309" text-anchor="end">13%</text>
+  <text x="468" y="337" class="code">purple</text>
+  <rect x="552" y="323" width="240" height="18" rx="4" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="552" y="323" width="26" height="18" rx="4" fill="#b45309"/>
+  <text x="832" y="337" class="lbl" fill="#b45309" text-anchor="end">11%</text>
+  <text x="468" y="362" class="note">Flat: long shots get drawn too → varied, surprising.</text>
+  <text x="468" y="380" class="note">Use for brainstorming and creative writing.</text>
+
+  <rect x="32" y="408" width="816" height="48" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="428" class="note">Mechanics: raw scores (logits) ÷ temperature → softmax → sample one token. Top-p keeps only the likeliest tokens</text>
+  <text x="48" y="446" class="note">covering p of the probability. Temperature changes randomness, not truthfulness — a wrong answer just gets more consistent.</text>
+</svg>

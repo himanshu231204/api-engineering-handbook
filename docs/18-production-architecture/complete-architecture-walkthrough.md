@@ -1,5 +1,12 @@
 # Complete Architecture Walkthrough
 
+> [!TIP]
+> **In one line:** A production API platform is a pipeline of specialized layers — edge, gateway, stateless services, data, queue and workers, AI gateway, providers, observability — each scaling and failing independently.
+>
+> **In plain English:** Instead of one big program, a real system is a line of stations that each do one job: one checks who you are, one runs business logic, one stores data, one handles slow chores later. Because each station is separate, you can add more of one, or lose one, without the whole thing stopping. AI calls get their own station so a model provider's bad day doesn't sink everything else.
+>
+> **You'll be able to:** name each layer, its job and what it is explicitly not responsible for · explain why services stay stateless and why AI calls go through a separate AI Gateway · spot common architecture mistakes like business logic in the gateway or cache as source of truth
+
 ## Why This Matters
 
 Every chapter before this one taught you one piece of a production system in isolation: how a load balancer distributes traffic, how a circuit breaker stops cascading failure, how Redis serves a cached value in under a millisecond, how an LLM gateway routes a completion request to a fallback provider. Each of those is easy to understand on its own page. What's hard — and what actually matters when you're the engineer on call — is holding the *whole system* in your head at once: knowing which of the twelve moving parts a request touches, why each one exists, and what breaks if you removed it.
@@ -240,3 +247,26 @@ The single biggest architectural difference an AI-backed system introduces, comp
 - Application services stay stateless; all durable state lives in the data layer, which is why instances can be added, removed, or crashed freely.
 - Anything that doesn't need to block the response belongs on a queue, consumed by an independently-scaling worker pool.
 - Observability isn't a bolt-on layer — every other layer continuously feeds it, and it's what makes a six-service request debuggable at all.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does it mean that application services are stateless, and why does it matter?</summary>
+
+A service instance keeps no session or durable data in memory; all durable state lives in the data layer. So any instance can handle any request, instances can be added or removed freely, and a crash loses only the requests in flight on that instance.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does the architecture use a separate AI Gateway instead of letting each service call LLM providers directly?</summary>
+
+The AI Gateway centralizes provider credentials, routing, fallback and cost tracking, and isolates provider incidents from non-AI traffic. Direct calls scatter API keys across services, lose unified cost tracking, and let a provider outage break features nobody realized depended on it.
+
+</details>
+
+<details markdown="1">
+<summary>3. Redis gets flushed and some data is gone for good. What design rule was broken?</summary>
+
+The cache was treated as a second source of truth. In this architecture Redis is disposable: every cached value must be reconstructible from PostgreSQL, so a flush makes the system slower but never incorrect.
+
+</details>

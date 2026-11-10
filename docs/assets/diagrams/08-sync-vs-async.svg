@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Blocking worker versus event loop on a time axis</title>
+  <desc id="d">Three requests each need 20 ms of work, 200 ms of waiting on the database, then 20 ms more work. A blocking worker handles them one after another and finishes at 720 ms, idle during every wait. An event loop starts all three, switches to another request at every await, overlaps the waits and finishes at 280 ms.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Sync vs async: who does what while we wait?</text>
+  <text x="32" y="66" class="sub">3 requests, each = 20 ms work + 200 ms waiting for the database + 20 ms work. One worker, one thread.</text>
+  <text x="32" y="104" class="h">Blocking (sync): the worker sits idle while it waits</text>
+  <text x="32" y="141" class="lbl" fill="#475569">Worker</text>
+  <rect x="150.0" y="120" width="19.0" height="34" rx="4" fill="#2563eb" stroke="#2563eb" stroke-width="1"/>
+  <rect x="170.0" y="120" width="188.0" height="34" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="264.0" y="141.0" class="note" text-anchor="middle">A: idle, waiting on DB</text>
+  <rect x="359.0" y="120" width="19.0" height="34" rx="4" fill="#2563eb" stroke="#2563eb" stroke-width="1"/>
+  <rect x="378.0" y="120" width="19.0" height="34" rx="4" fill="#b45309" stroke="#b45309" stroke-width="1"/>
+  <rect x="398.0" y="120" width="188.0" height="34" rx="4" fill="#fef3c7" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="492.0" y="141.0" class="note" text-anchor="middle">B: idle, waiting on DB</text>
+  <rect x="587.0" y="120" width="19.0" height="34" rx="4" fill="#b45309" stroke="#b45309" stroke-width="1"/>
+  <rect x="606.0" y="120" width="19.0" height="34" rx="4" fill="#1c7c54" stroke="#1c7c54" stroke-width="1"/>
+  <rect x="626.0" y="120" width="188.0" height="34" rx="4" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="720.0" y="141.0" class="note" text-anchor="middle">C: idle, waiting on DB</text>
+  <rect x="815.0" y="120" width="19.0" height="34" rx="4" fill="#1c7c54" stroke="#1c7c54" stroke-width="1"/>
+  <line x1="834.0" y1="112" x2="834.0" y2="166" stroke="#b91c1c" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <text x="834.0" y="184" class="lbl" fill="#b91c1c" text-anchor="end">all done: 720 ms</text>
+  <text x="32" y="222" class="h">Non-blocking (async): at every await, the event loop switches to another request</text>
+  <text x="32" y="256" class="lbl" fill="#2563eb">Request A</text>
+  <rect x="150.0" y="236" width="19.0" height="28" rx="4" fill="#2563eb" stroke="#2563eb" stroke-width="1"/>
+  <rect x="170.0" y="236" width="188.0" height="28" rx="4" fill="#eff6ff" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="264.0" y="254.0" class="note" text-anchor="middle">A awaits the DB</text>
+  <rect x="359.0" y="236" width="19.0" height="28" rx="4" fill="#2563eb" stroke="#2563eb" stroke-width="1"/>
+  <text x="32" y="296" class="lbl" fill="#b45309">Request B</text>
+  <rect x="169.0" y="276" width="19.0" height="28" rx="4" fill="#b45309" stroke="#b45309" stroke-width="1"/>
+  <rect x="189.0" y="276" width="188.0" height="28" rx="4" fill="#fef3c7" stroke="#b45309" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="283.0" y="294.0" class="note" text-anchor="middle">B awaits the DB</text>
+  <rect x="378.0" y="276" width="19.0" height="28" rx="4" fill="#b45309" stroke="#b45309" stroke-width="1"/>
+  <text x="32" y="336" class="lbl" fill="#1c7c54">Request C</text>
+  <rect x="188.0" y="316" width="19.0" height="28" rx="4" fill="#1c7c54" stroke="#1c7c54" stroke-width="1"/>
+  <rect x="208.0" y="316" width="188.0" height="28" rx="4" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="302.0" y="334.0" class="note" text-anchor="middle">C awaits the DB</text>
+  <rect x="397.0" y="316" width="19.0" height="28" rx="4" fill="#1c7c54" stroke="#1c7c54" stroke-width="1"/>
+  <line x1="416.0" y1="230" x2="416.0" y2="350" stroke="#1c7c54" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <text x="426.0" y="272" class="lbl" fill="#1c7c54">all done: 280 ms</text>
+  <text x="426.0" y="292" class="note">the waits overlap, so total time</text>
+  <text x="426.0" y="308" class="note">≈ the slowest request, not the sum</text>
+  <line x1="150" y1="372" x2="834.0" y2="372" stroke="#475569" stroke-width="1.5"/>
+  <line x1="150.0" y1="372" x2="150.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="150.0" y="392" class="note" text-anchor="middle">0 ms</text>
+  <line x1="245.0" y1="372" x2="245.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="245.0" y="392" class="note" text-anchor="middle">100</text>
+  <line x1="340.0" y1="372" x2="340.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="340.0" y="392" class="note" text-anchor="middle">200</text>
+  <line x1="435.0" y1="372" x2="435.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="435.0" y="392" class="note" text-anchor="middle">300</text>
+  <line x1="530.0" y1="372" x2="530.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="530.0" y="392" class="note" text-anchor="middle">400</text>
+  <line x1="625.0" y1="372" x2="625.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="625.0" y="392" class="note" text-anchor="middle">500</text>
+  <line x1="720.0" y1="372" x2="720.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="720.0" y="392" class="note" text-anchor="middle">600</text>
+  <line x1="815.0" y1="372" x2="815.0" y2="377" stroke="#475569" stroke-width="1.2"/>
+  <text x="815.0" y="392" class="note" text-anchor="middle">700 ms</text>
+  <text x="32" y="376" class="note">time →</text>
+  <g transform="translate(32,412)">
+    <rect width="816" height="40" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <rect x="16" y="12" width="28" height="16" rx="4" fill="#475569"/>
+    <text x="52" y="25" class="note">CPU is busy running this request</text>
+    <rect x="280" y="12" width="28" height="16" rx="4" fill="#f1f5f9" stroke="#475569" stroke-dasharray="5 4"/>
+    <text x="316" y="25" class="note">waiting for I/O (network, database)</text>
+    <text x="800" y="25" class="note" text-anchor="end">async helps waiting, not computing</text>
+  </g>
+</svg>

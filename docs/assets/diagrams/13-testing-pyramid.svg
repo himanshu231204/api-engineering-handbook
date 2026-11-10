@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="500" viewBox="0 0 880 500" role="img" aria-labelledby="t d">
+  <title id="t">The testing pyramid</title>
+  <desc id="d">A pyramid with many fast unit tests at the base, fewer integration tests in the middle and a few end-to-end tests at the top. Moving up, each test is slower and costlier but gives more confidence that the whole system works together. Unit tests check one function with no I/O in milliseconds; integration tests run the app against a real test database; end-to-end tests use real browsers and services.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="499" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The testing pyramid</text>
+  <text x="32" y="66" class="sub">Lots of cheap, fast tests at the bottom; a few slow, expensive ones at the top.</text>
+  <polygon points="440.0,92.0 500.0,196.0 380.0,196.0" fill="#fef3c7" stroke="#b45309" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="380.0,196.0 500.0,196.0 560.0,300.0 320.0,300.0" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="320.0,300.0 560.0,300.0 620.0,404.0 260.0,404.0" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5" stroke-linejoin="round"/>
+  <text x="440" y="166" class="lbl" fill="#b45309" text-anchor="middle">E2E</text>
+  <text x="440" y="184" class="note" text-anchor="middle">few</text>
+  <text x="440" y="248" class="lbl" fill="#2563eb" text-anchor="middle">Integration</text>
+  <text x="440" y="268" class="note" text-anchor="middle">some</text>
+  <text x="440" y="352" class="lbl" fill="#1c7c54" text-anchor="middle">Unit tests</text>
+  <text x="440" y="372" class="note" text-anchor="middle">many</text>
+  <rect x="640" y="112" width="208" height="70" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="654" y="134" class="lbl" fill="#b45309">End-to-end</text>
+  <text x="654" y="154" class="note">Real browser, real services,</text>
+  <text x="654" y="171" class="note">sandboxes. Seconds+ each.</text>
+  <line x1="471.7307692307692" y1="147" x2="636" y2="147" stroke="#94a3b8" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <rect x="640" y="218" width="208" height="70" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="654" y="240" class="lbl" fill="#2563eb">Integration</text>
+  <text x="654" y="260" class="note">Real app via TestClient + a</text>
+  <text x="654" y="277" class="note">disposable test DB. ~10–100s ms.</text>
+  <line x1="532.8846153846154" y1="253" x2="636" y2="253" stroke="#94a3b8" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <rect x="640" y="322" width="208" height="70" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="654" y="344" class="lbl" fill="#1c7c54">Unit</text>
+  <text x="654" y="364" class="note">One function, no real I/O,</text>
+  <text x="654" y="381" class="note">mocks only at the edges. ~ms.</text>
+  <line x1="592.8846153846154" y1="357" x2="636" y2="357" stroke="#94a3b8" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <line x1="84" y1="392" x2="84" y2="104" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="84" y="90" class="lbl" fill="#475569" text-anchor="middle">slower, pricier</text>
+  <text x="84" y="420" class="lbl" fill="#475569" text-anchor="middle">faster, cheaper</text>
+  <line x1="204" y1="392" x2="204" y2="104" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="204" y="90" class="lbl" fill="#475569" text-anchor="middle">more confidence</text>
+  <text x="204" y="420" class="lbl" fill="#475569" text-anchor="middle">narrow scope</text>
+  <text x="84" y="438" class="note" text-anchor="middle">speed &amp; cost</text>
+  <text x="204" y="438" class="note" text-anchor="middle">whole-system confidence</text>
+  <rect x="32" y="456" width="816" height="32" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="477" class="note" fill="#1f2937">CI runs bottom-up: unit tests first so failures show in seconds, then integration, then the few E2E tests.</text>
+</svg>

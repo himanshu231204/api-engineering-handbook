@@ -1,5 +1,12 @@
 # File Upload Architecture
 
+> [!TIP]
+> **In one line:** Instead of streaming every file through your API, hand clients a short-lived presigned URL so they upload straight to object storage, then validate the bytes afterwards.
+>
+> **In plain English:** If every upload passes through your API servers, big files clog them up and you pay for the bandwidth twice. A presigned URL is a signed, time-limited permission to drop one specific file into storage. Think of a valet ticket for one parking spot: it works for that spot, for a few minutes, and nothing else.
+>
+> **You'll be able to:** Compare proxied uploads with presigned direct-to-storage uploads · Build a presign endpoint with server-generated keys and short expirations · Move content validation and malware scanning into the async worker
+
 ## Why This Matters
 
 The naive way to build file upload — a client sends bytes to your API, your API writes them to disk or forwards them to storage — works fine for a demo and falls apart at production scale. Every byte a client uploads through your API server is a byte your API server has to receive, buffer, and forward, which means upload throughput is capped by your API's compute capacity, your API's memory becomes a target for exhaustion by large files, and every upload ties up a request-handling worker for as long as the transfer takes. For a RAG system that needs to ingest anything from a 2KB text snippet to a 500MB PDF corpus dump, getting the upload architecture right — deciding what goes through your API versus what goes directly to storage — is a foundational decision that affects cost, latency, and reliability for the life of the system.
@@ -214,6 +221,29 @@ RAG systems frequently need to ingest documents at scales that make proxied uplo
 - Presigned URLs mean you validate metadata before upload and must re-validate actual content after upload — you never get to inspect bytes synchronously.
 - Malware scanning and true content-type verification belong in the async pipeline, not skipped because upload "succeeded."
 - Short expirations and server-generated storage keys are essential to keeping presigned uploads safe.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In the presigned URL flow, what does your API actually handle, given that it never sees the file bytes?</summary>
+
+It validates the request metadata (filename, declared type, size, tenant permissions), generates the storage key, issues the signed URL, records a `pending_upload` row, and later reacts to the completion signal. The bytes go from the client directly to object storage.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must the background worker re-check the file type even though the client declared content_type when it asked for the URL?</summary>
+
+The declared type is just a claim from the client and the API never inspected the bytes. The worker must check the real file type via magic bytes, the actual size, and scan for malware before parsing, and mark the document `failed` if the content does not match.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user asks for a presigned URL but never uploads anything. What problem does this leave behind, and how do you handle it?</summary>
+
+A `pending_upload` metadata row (and reserved storage key) that never transitions, slowly leaking records. Run a reaper job that finds pending uploads whose URL expired without completion and cleans them up; a spike in issued-but-unused URLs is also worth monitoring as a sign of abuse or a broken client.
+
+</details>
 
 ---
 **Previous**: [Document Ingestion APIs](document-ingestion-apis.md) · **Next**: [Chunking Pipelines](chunking-pipelines.md)

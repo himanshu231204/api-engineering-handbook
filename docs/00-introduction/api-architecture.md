@@ -1,5 +1,12 @@
 # API Architecture at a Glance
 
+> [!TIP]
+> **In one line:** A production API is a layered system — client, edge, gateway, application, then data and AI layers — and you add each layer only when a real problem demands it.
+>
+> **In plain English:** Picture an airport: check-in, security and the gate each do one job before you board. A request travels the same way. A CDN may answer straight away, a gateway checks who you are, and the app does the real work with a database or an AI model behind it.
+>
+> **You'll be able to:** Name the main layers of a production API and the job of each · Trace which layers a read, a write and an AI chat request pass through · Decide when a layer is worth adding and when it is just extra complexity
+
 ## Why This Matters
 
 Before diving chapter-by-chapter into HTTP methods and status codes, it helps to see the whole map once. Production APIs are never just "a server that answers requests" — they sit inside a layered system of gateways, caches, databases, queues, and (increasingly) AI services. Seeing the full picture now means every later chapter has a place to slot into.
@@ -119,3 +126,26 @@ The biggest architectural shift AI systems introduce is that a "backend call" ca
 - Not every API needs every layer — add complexity when the problem demands it.
 - AI systems introduce a new layer (the AI gateway) with different failure and cost characteristics than a typical database call.
 - This map will be referenced constantly — bookmark [Part 18](../18-production-architecture/README.md) for the full version.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between the API gateway layer and the application service layer?</summary>
+
+The gateway does entry work for every request — checking authentication, routing, rate limiting. The application service runs the business logic. A gateway that starts holding business logic stops being a gateway.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why not add a CDN, a gateway, a queue and a cache to every new API from day one?</summary>
+
+Each layer buys something (lower latency, central auth, resilience) but adds moving parts, failure modes and operational work. A small system often doesn't have the problem the layer solves, so you'd pay the cost for nothing.
+
+</details>
+
+<details markdown="1">
+<summary>3. A POST /orders request must also send a confirmation email. How do you avoid making the client wait for the email?</summary>
+
+Put the email on a queue as a background job. The application saves the order, responds to the client, and a worker sends the email afterwards.
+
+</details>

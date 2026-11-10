@@ -1,5 +1,12 @@
 # SQL Injection
 
+> [!TIP]
+> **In one line:** SQL injection happens when user input is glued into query text and becomes code; parameterized queries send structure and data separately, so input can only ever be data.
+>
+> **In plain English:** A database reads your query as instructions. If you paste a user's typing straight into those instructions, a clever user can type extra instructions of their own. Parameterized queries put the user's text in a sealed slot that the database will only ever treat as a value to compare against.
+>
+> **You'll be able to:** explain exactly how a payload like admin' -- rewrites a concatenated query · write safe queries with SQLAlchemy's query builder and bound text() parameters · handle dynamic column or sort names with an allowlist, since identifiers can't be bound
+
 ## Why This Matters
 
 SQL injection has been on the OWASP Top 10 for over two decades and remains a real threat because the root cause — building SQL queries by concatenating untrusted input directly into query text — is an easy mistake to make and a catastrophic one when it happens. A successful SQL injection can let an attacker read every row of every table (including other users' data), bypass authentication entirely, modify or delete data, and in some database configurations even execute operating-system commands. It is also one of the few classes of API vulnerability that is almost entirely preventable with a single, well-understood, low-cost fix: never build queries by string-concatenating input. Understanding *why* the vulnerability happens — not just "use an ORM" as a magic incantation — is what lets you recognize and avoid it in every form it takes, including the ones an ORM doesn't automatically protect you from.
@@ -69,6 +76,8 @@ flowchart TB
     L1 --> L2 --> L3 --> L4
     L4 --> Safe["Breach blast radius minimized\neven if one layer fails"]
 ```
+
+![Side-by-side comparison: string concatenation lets the input admin' -- rewrite the query and bypass the password check, while a parameterized query keeps the input as plain data](../assets/diagrams/10-sql-injection.svg)
 
 Each layer is independently useful: input validation rejects obviously malformed data early, parameterization is the actual structural fix, a least-privilege database account limits what even a successful injection could do, and monitoring/logging gives you a chance to detect and respond to what got through.
 
@@ -190,6 +199,29 @@ Retrieval-Augmented Generation systems (see [Part 16 — RAG APIs](../16-rag-api
 - ORMs parameterize by default through their query-builder APIs, but their raw-SQL escape hatches reintroduce the exact same vulnerability if used with string formatting.
 - Table/column names cannot be parameterized — dynamic identifiers must be validated against a strict allowlist instead.
 - Defense in depth — parameterization plus input validation plus least-privilege database accounts plus monitoring — limits the damage of any single layer failing.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the root cause of every SQL injection vulnerability, and what is the primary fix?</summary>
+
+The root cause is building SQL by concatenating or formatting untrusted input into the query text, which lets data change the query's grammar. The primary fix is parameterized queries (prepared statements), where the query structure is fixed first and values are bound separately as pure data.
+
+</details>
+
+<details markdown="1">
+<summary>2. If your team uses SQLAlchemy everywhere, why can SQL injection still happen?</summary>
+
+The ORM only parameterizes when you use its query-builder API or bound parameters. Its raw-SQL escape hatch used with an f-string, such as `text(f"... '{username}'")`, is plain string concatenation again, and second-order injection can occur when stored data is later concatenated into another query.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your search endpoint accepts ?sort=price and puts that value into ORDER BY. Why can't you just bind it as a parameter, and what should you do instead?</summary>
+
+Bound parameters only work for values, not identifiers such as column names or sort directions, so binding the column name doesn't work. Instead, check the requested column against a fixed allowlist of known-safe column names and reject (for example with a 422) anything not on the list.
+
+</details>
 
 See also: [Input Validation](input-validation.md), [Secrets Management](secrets-management.md), [OWASP API Security Top 10](owasp-api-security.md), [Part 4 — Databases & APIs](../04-databases-and-apis/README.md), and the [glossary](../../resources/glossary.md).
 

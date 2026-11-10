@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-labelledby="t d">
+  <title id="t">Chat message fan-out</title>
+  <desc id="d">Alice's phone sends a message over its WebSocket to gateway 1, which passes it to the message service. The service dedupes it, saves it to the message store first, then publishes it to the pub/sub channel for the conversation. Every gateway holding a member's connection receives it: gateway 2 pushes it to Bob's laptop and phone, gateway 1 pushes it to Alice's tablet. Carol is offline, so she gets a push notification and syncs history when she reconnects.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="559" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Chat: save first, then fan out</text>
+  <text x="32" y="66" class="sub">One message from Alice reaches every device of every member. Offline members are caught up later.</text>
+  <rect x="32" y="92" width="180" height="92" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="118" r="12" fill="#1c7c54"/>
+  <text x="56" y="122.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <text x="76" y="123" class="lbl" fill="#2563eb">Alice · phone</text>
+  <text x="48" y="150" class="code">message.send</text>
+  <text x="48" y="171" class="note">carries client_msg_id</text>
+  <line x1="214" y1="138.0" x2="242" y2="138.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="244" y="92" width="180" height="92" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="268" cy="118" r="12" fill="#1c7c54"/>
+  <text x="268" y="122.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <text x="288" y="123" class="lbl" fill="#475569">WS gateway 1</text>
+  <text x="260" y="150" class="note">holds Alice's socket,</text>
+  <text x="260" y="171" class="note">forwards the message</text>
+  <line x1="426" y1="138.0" x2="454" y2="138.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="456" y="92" width="180" height="92" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="480" cy="118" r="12" fill="#1c7c54"/>
+  <text x="480" y="122.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <text x="500" y="123" class="lbl" fill="#1c7c54">Message service</text>
+  <text x="472" y="150" class="note">is Alice a member?</text>
+  <text x="472" y="171" class="note">dedupe client_msg_id</text>
+  <line x1="638" y1="138.0" x2="666" y2="138.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="668" y="92" width="180" height="92" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="692" cy="118" r="12" fill="#1c7c54"/>
+  <text x="692" y="122.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <text x="712" y="123" class="lbl" fill="#b45309">Message store</text>
+  <text x="684" y="150" class="code">INSERT msg_501</text>
+  <text x="684" y="171" class="note">saved BEFORE delivery</text>
+  <line x1="546.0" y1="186" x2="546.0" y2="221" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="224" width="816" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="250" r="12" fill="#1c7c54"/>
+  <text x="56" y="254.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <text x="76" y="246" class="lbl" fill="#475569">Pub/sub: publish to channel conv_1</text>
+  <text x="76" y="264" class="note">every gateway that holds a live connection for a member of conv_1 receives the message</text>
+  <line x1="160.0" y1="278" x2="160.0" y2="313" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="316" width="256" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="56" cy="346" r="12" fill="#1c7c54"/>
+  <text x="56" y="350.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">6</text>
+  <text x="76" y="342" class="lbl" fill="#475569">WS gateway 2</text>
+  <text x="76" y="360" class="note">holds Bob's two devices</text>
+  <line x1="440.0" y1="278" x2="440.0" y2="313" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="312" y="316" width="256" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="336" cy="346" r="12" fill="#1c7c54"/>
+  <text x="336" y="350.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">6</text>
+  <text x="356" y="342" class="lbl" fill="#475569">WS gateway 1</text>
+  <text x="356" y="360" class="note">also holds Alice's tablet</text>
+  <line x1="720.0" y1="278" x2="720.0" y2="313" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <rect x="592" y="316" width="256" height="60" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <circle cx="616" cy="346" r="12" fill="#1c7c54"/>
+  <text x="616" y="350.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">7</text>
+  <text x="636" y="342" class="lbl" fill="#b91c1c">Carol: offline</text>
+  <text x="636" y="360" class="note">not connected to any gateway</text>
+  <rect x="32.0" y="416" width="120.0" height="60" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="46.0" y="441" class="lbl" fill="#2563eb">Bob · laptop</text>
+  <text x="46.0" y="461" class="code">message.new</text>
+  <line x1="92.0" y1="378" x2="92.0" y2="413" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="168.0" y="416" width="120.0" height="60" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="182.0" y="441" class="lbl" fill="#2563eb">Bob · phone</text>
+  <text x="182.0" y="461" class="code">message.new</text>
+  <line x1="228.0" y1="378" x2="228.0" y2="413" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="312" y="416" width="256" height="60" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="326" y="441" class="lbl" fill="#2563eb">Alice · tablet</text>
+  <text x="326" y="461" class="note">sender's other device stays in sync</text>
+  <line x1="440.0" y1="378" x2="440.0" y2="413" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="592" y="416" width="256" height="60" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="606" y="441" class="lbl" fill="#6d28d9">Push notification (async)</text>
+  <text x="606" y="461" class="note">on reconnect: sync history from DB</text>
+  <line x1="720.0" y1="378" x2="720.0" y2="413" stroke="#475569" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
+  <rect x="32" y="496" width="816" height="40" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="521" class="lbl" fill="#1c7c54">Why save first?</text>
+  <text x="166" y="521" class="note">If live delivery fails (gateway crash, pub/sub blip), the message is only delayed, never lost.</text>
+</svg>

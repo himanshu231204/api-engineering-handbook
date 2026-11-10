@@ -1,5 +1,12 @@
 # Integration Testing
 
+> [!TIP]
+> **In one line:** Integration tests run real requests through your real FastAPI app against a disposable test database, catching wiring, query, serialization and status-code bugs that unit tests miss.
+>
+> **In plain English:** Unit tests check each part alone; integration tests check that the parts fit together. You send a real HTTP-shaped request to your app inside the test process and let it talk to a throwaway database. After each test, everything is rolled back so the next test starts clean.
+>
+> **You'll be able to:** override the database dependency with app.dependency_overrides for a test database · isolate tests with per-test transaction rollback and seed data via the ORM · assert on status code, response body and database state, including 404/409/422 paths
+
 ## Why This Matters
 
 `unit-testing.md` proved your discount math is correct in isolation. But your API's actual failure modes rarely live in isolated pure functions — they live at the seams: does the route handler correctly wire the request body into your service? Does your repository's SQL actually return what you think it returns against a real schema? Does a unique constraint violation get translated into a proper 409 instead of an unhandled 500? Does your Pydantic response model actually serialize the ORM object correctly? None of that is visible to a unit test that mocks the database away. Integration testing is where you find out whether the pieces you unit-tested actually fit together — using a real (but disposable) database and a real HTTP client hitting your real FastAPI app, in-process.
@@ -266,4 +273,26 @@ In an AI-backed API — say, a RAG endpoint or an agent endpoint from [Part 16](
 - Seed fixture data directly through the ORM, not through the API, and assert on both the HTTP response and the resulting database state.
 - Test failure paths (404, 409, validation errors), not just the happy path — that's where most real bugs surface.
 - Integration tests are slower and fewer than unit tests but faster and more numerous than the full end-to-end tests covered in `end-to-end-testing.md`.
-</content>
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is real in an integration test that is mocked or absent in a unit test?</summary>
+
+The HTTP layer (a `TestClient` or `httpx.AsyncClient` driving the real app), the dependency injection wiring, and a real but disposable test database. Only true external boundaries, like third-party APIs or the LLM client, are still stubbed.
+
+</details>
+
+<details markdown="1">
+<summary>2. What goes wrong if the database fixture doesn't roll back or clean up after each test?</summary>
+
+Data leaks between tests, so results depend on execution order: for example a second test creating a user with the same email fails on a unique constraint. The suite becomes flaky, especially when run in parallel or repeatedly.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your POST /orders integration test only checks for status 201 and passes, but production orders are saved with the wrong total. What should the test have done?</summary>
+
+Assert on the full contract: the response body (such as `total_cents`) and the resulting database row, not just the status code. Pair it with failure-path tests (404, 409, 422) for the same endpoint, since that's where many real bugs hide.
+
+</details>

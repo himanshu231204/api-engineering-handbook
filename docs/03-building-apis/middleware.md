@@ -1,5 +1,12 @@
 # Middleware
 
+> [!TIP]
+> **In one line:** Middleware wraps every request and response in reusable layers, ideal for cross-cutting work like logging, timing, CORS, and request IDs.
+>
+> **In plain English:** Some jobs apply to every single request, whichever endpoint it hits. Middleware is like the reception desk in an office building: everyone passes it on the way in and again on the way out, so badges, sign-in, and sign-out happen in one place instead of in every office.
+>
+> **You'll be able to:** Write function middleware around `call_next` · Predict execution order from registration order · Choose pure ASGI middleware for streaming endpoints
+
 ## Why This Matters
 
 Some concerns don't belong to any single route — they apply to *every* request: logging, timing, CORS headers, request ID injection, compressing responses, catching unhandled exceptions before they leak stack traces. Repeating this logic in every route handler is both tedious and fragile (someone will forget). Middleware exists to wrap the entire request/response cycle in reusable, composable layers.
@@ -110,6 +117,8 @@ flowchart LR
     CORS2 --> RID2["RequestIDMiddleware (response)"]
     RID2 --> Client
 ```
+
+![Middleware onion: the request passes inward through request-ID, CORS and timing middleware to the route, and the response passes back outward in reverse order](../assets/diagrams/03-middleware-onion.svg)
 
 ## Request / Response Example
 
@@ -228,5 +237,28 @@ Middleware is where you'll implement **AI-specific cross-cutting concerns** in P
 - `call_next(request)` is the pivot: code before it runs on the way in, code after it runs on the way out.
 - For streaming-heavy apps, prefer pure ASGI class-based middleware over `@app.middleware("http")`.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In function-based middleware, what is the role of await call_next(request)?</summary>
+
+It is the pivot point: code before it runs on the way in (before the route), and code after it runs on the way out (with the response in hand). That is how a timing middleware can measure the whole request.
+
+</details>
+
+<details markdown="1">
+<summary>2. You register CORSMiddleware first and RequestIDMiddleware second. Which one sees the request first, and why does that surprise people?</summary>
+
+RequestIDMiddleware, because `add_middleware` wraps in reverse registration order: the last one registered becomes the outermost layer. It sees the request first and the response last, the opposite of the order the lines appear in the code.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate adds a middleware that runs a database query to log the user's plan on every request. What is the problem?</summary>
+
+Middleware runs on every single request, including ones that auth will reject and health checks, so this adds a DB round trip and latency to all traffic. Keep middleware minimal and non-blocking, and do per-user lookups in a dependency on the routes that need them.
+
+</details>
 
 Previous: `dependency-injection.md` · Next: `exception-handling.md`.

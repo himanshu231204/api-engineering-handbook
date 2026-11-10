@@ -1,5 +1,12 @@
 # JSON Schemas
 
+> [!TIP]
+> **In one line:** An LLM-facing JSON Schema has two readers — your validator and the model itself — so clear names, descriptions and enums directly improve what the model generates.
+>
+> **In plain English:** A JSON Schema is a written description of the exact shape data must have. With LLMs, the model actually reads that description before answering, so a vague field name gets a vague answer. Think of labelling the jars in a shared kitchen: a jar marked 'stuff' gets filled with anything.
+>
+> **You'll be able to:** Write JSON Schemas with types, required fields, enums and descriptions · Generate the schema and validator from one Pydantic model · Balance description clarity against token cost and version schemas safely
+
 ## Why This Matters
 
 [Structured Outputs](structured-outputs.md) established that you need a schema to constrain and validate LLM output. This chapter goes one level deeper: **JSON Schema** is the actual specification you'll use to define that shape, and it's also the specification LLM providers use under the hood for tool/function definitions and schema-constrained decoding modes. A poorly designed schema doesn't just fail to validate correctly — it actively confuses the model into producing worse output, because the schema itself is part of what the model reads and reasons about, not a passive downstream filter. Writing good LLM-facing JSON Schemas is a distinct skill from writing good REST API request schemas, even though the underlying spec is identical.
@@ -204,3 +211,26 @@ JSON Schema is the shared language across nearly every AI system in this handboo
 - Prefer `enum` over free text for fixed value sets, and write descriptions as if briefing a new teammate with no shared context.
 - Always validate independently in your own code — provider-side constraint enforcement during generation is inconsistent and should not be trusted alone.
 - The same schema discipline underlies MCP tool definitions in Part 17 and structured retrieval/response formats in RAG systems in Part 16.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which part of an LLM-facing schema most directly steers the model's output?</summary>
+
+The description fields (along with clear field names). The model reads them as part of its input and uses them to decide what to generate, so they work like prompt text rather than passive documentation.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is an enum better than a free-text string for a field like ticket category?</summary>
+
+An enum fixes the allowed values, so the model cannot drift into variants like 'Billing', 'billing issue' or 'billing_problem' that you would otherwise have to normalize. It removes a whole class of failures at the source.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your tool schema has a field named amt with no description, and the model sometimes fills in a line-item price and sometimes the total. What should you change?</summary>
+
+Rename it to something unambiguous like total_amount_usd and add a description such as 'the final total amount due, in US dollars, including tax'. Generate the schema from a Pydantic model so the same definition is used to validate the response.
+
+</details>

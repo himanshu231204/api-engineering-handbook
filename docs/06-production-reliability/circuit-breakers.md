@@ -1,5 +1,12 @@
 # Circuit Breakers
 
+> [!TIP]
+> **In one line:** A circuit breaker stops calling a dependency that keeps failing, fails fast with a fallback, then carefully tests recovery with a few trial calls before resuming.
+>
+> **In plain English:** When a shop's card machine keeps declining, the cashier stops trying every card and puts up a "cash only" sign. Every so often they try one card to see if the machine works again — and only take the sign down once it does.
+>
+> **You'll be able to:** explain the closed, open and half-open states and what moves between them · implement a thread-safe breaker with a fallback in Python · scope and tune breakers per dependency and monitor their state
+
 ## Why This Matters
 
 Timeouts and retries (see [Timeouts](timeouts.md) and [Retries](retries.md)) handle the case where a single call to a downstream dependency fails. But they have a blind spot: if the dependency is *consistently* failing — down, overloaded, mid-outage — every single caller will independently wait out its timeout, retry, wait again, and eventually fail, over and over, for as long as the outage lasts. Multiply this by every request your service handles, and you get two compounding problems: your own service wastes enormous capacity (threads, connections, latency budget) waiting on calls that are extremely unlikely to succeed, and you keep sending load at a dependency that is actively trying to recover — which can actually *prevent* it from recovering. This is how a single unhealthy dependency causes a **cascading failure** that takes down services that depend on it, and then services that depend on those. A circuit breaker exists specifically to stop this cascade.
@@ -33,13 +40,13 @@ This three-state design is what distinguishes a circuit breaker from a simple "i
 stateDiagram-v2
     [*] --> Closed
 
-    Closed --> Open: failure rate exceeds\nthreshold
-    Closed --> Closed: request succeeds\n(reset failure count)
+    Closed --> Open: failure rate exceeds<br/>threshold
+    Closed --> Closed: request succeeds<br/>(reset failure count)
 
-    Open --> HalfOpen: cooldown timer\nexpires
+    Open --> HalfOpen: cooldown timer<br/>expires
 
-    HalfOpen --> Closed: trial request(s)\nsucceed
-    HalfOpen --> Open: trial request\nfails
+    HalfOpen --> Closed: trial request(s)<br/>succeed
+    HalfOpen --> Open: trial request<br/>fails
 
     note right of Closed
         Normal operation.
@@ -59,6 +66,8 @@ stateDiagram-v2
         recovery.
     end note
 ```
+
+![Circuit breaker state machine: CLOSED trips to OPEN when failures reach the threshold; OPEN fails fast and moves to HALF-OPEN when the cooldown ends; HALF-OPEN lets one trial call through, returning to CLOSED if it succeeds or back to OPEN, restarting the cooldown, if it fails](../assets/diagrams/06-circuit-breaker-states.svg)
 
 ## Request / Response Example
 
@@ -250,6 +259,29 @@ Circuit breakers are especially valuable in front of LLM provider calls, because
 - Circuit breakers should be scoped per dependency (and often per endpoint), never shared globally across unrelated calls.
 - Pair a tripped breaker with a real fallback (cache, default value, degraded response) to make failing fast actually useful.
 - Circuit breakers and retries solve different problems and compose together — retries handle single transient failures; breakers handle sustained unhealthiness across many calls.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are a circuit breaker's three states, and what happens to a request in each?</summary>
+
+Closed: requests go through and failures are counted. Open: requests are rejected immediately without calling the dependency (fail fast, usually with a fallback). Half-open: a small number of trial requests go through to test whether the dependency has recovered.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why not just stop for 30 seconds and then resume full traffic? What does half-open add?</summary>
+
+Resuming at full traffic the instant the timer expires can flood a dependency that has only partly recovered and knock it straight back down. Half-open sends only a limited trial; success closes the circuit, failure reopens it and restarts the cooldown — so the recovery check can't become a new overload.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your service wraps every outbound call in one shared breaker, and the recommendation service goes down. What happens to payments and search calls?</summary>
+
+The shared breaker trips and starts failing calls to healthy dependencies too, turning one outage into many. Use one breaker per downstream dependency (and often per endpoint), each with its own fallback.
+
+</details>
 
 See also: [Timeouts](timeouts.md), [Retries](retries.md), [Exponential Backoff](exponential-backoff.md), and the [glossary](../../resources/glossary.md).
 

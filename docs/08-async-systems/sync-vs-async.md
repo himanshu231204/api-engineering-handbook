@@ -1,5 +1,12 @@
 # Sync vs Async
 
+> [!TIP]
+> **In one line:** 'Async' means two separate things: non-blocking I/O inside your server, and an API that returns 202 Accepted now and the result later.
+>
+> **In plain English:** Blocking code stops and waits; non-blocking code starts something slow and does other work in the meantime, like starting the washing machine and then doing the dishes instead of watching it spin. Separately, an API can answer 'got it, check back later' instead of making the client wait. Use the second for slow work that would hit timeouts, not for quick reads.
+>
+> **You'll be able to:** tell async I/O apart from async API design · decide when an endpoint should switch to 202 Accepted plus a status URL · spot timeout cascades and worker-pool exhaustion from slow synchronous work
+
 ## Why This Matters
 
 Every API you've built so far in this handbook has followed the same shape: a client sends a request, your server does some work, and the response comes back once that work is done. That model — synchronous, blocking, request-in/response-out — is simple to reason about and it's the right default for most endpoints. But it breaks down the moment "some work" takes longer than a client is willing to wait, or longer than your infrastructure is willing to hold a connection open. A request that calls a slow third-party API, processes a large file, sends a batch of emails, or waits on an LLM to generate a long response cannot honestly be modeled as "instant." If you force that work into the synchronous request/response cycle anyway, you get timeouts, exhausted worker pools, and a system that falls over under exactly the load it should be handling gracefully. Understanding sync vs. async — and, more importantly, understanding when to move work *outside* the request cycle entirely — is the foundation for everything else in this part.
@@ -68,6 +75,8 @@ flowchart LR
 ```
 
 The synchronous path is a straight line where the client's wait time equals the work's duration. The asynchronous path splits into two independent timelines: the fast request/acknowledge exchange, and the (potentially much longer) work timeline that the client checks in on separately.
+
+![Timeline comparing a blocking worker that handles three requests one after another with an event loop that overlaps their waits](../assets/diagrams/08-sync-vs-async.svg)
 
 ## Request / Response Example
 
@@ -221,3 +230,26 @@ This distinction matters enormously once LLMs enter the picture. A single LLM ca
 - `202 Accepted` plus a status-check mechanism (job ID, `Location` header, polling endpoint, or webhook) is the standard REST pattern for asynchronous API design.
 - Making an API asynchronous doesn't make the work itself faster — it changes who waits, and gives you room to add reliability (retries, queues, workers) around that work.
 - This chapter sets up the "when to go async" decision; [Python asyncio](python-asyncio.md) and [Background Tasks](background-tasks.md) cover the "how."
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does 202 Accepted tell the client, and how does it differ from 200 OK?</summary>
+
+202 means the request was valid and work has started but is not finished yet; the client should check back with a job ID or status URL. 200 OK means the finished result is in this response.
+
+</details>
+
+<details markdown="1">
+<summary>2. Does making an endpoint asynchronous make the underlying work faster? Why or why not?</summary>
+
+No. The work takes as long as before; async design only changes who waits and how they learn the result. Its benefit is avoiding timeouts and freeing server capacity, plus room to add retries and queues around the work.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your POST /reports endpoint sometimes takes 45 seconds and the load balancer timeout is 30 seconds. What goes wrong and what should you change?</summary>
+
+Requests longer than the shortest timeout in the chain fail even though the server would have finished, and slow requests tie up workers. Return 202 Accepted with a report ID and Location header, generate the report in the background, and expose GET /reports/{id} for status.
+
+</details>

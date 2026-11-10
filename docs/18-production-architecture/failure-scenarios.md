@@ -1,5 +1,12 @@
 # Failure Scenarios
 
+> [!TIP]
+> **In one line:** Every component eventually fails; good architecture contains each failure to its own layer with detectors and pre-built responses like circuit breakers, fallbacks, queues and health checks.
+>
+> **In plain English:** Think of it like a ship with sealed compartments: a leak in one part shouldn't sink the whole vessel. For each part that can break, you plan ahead how the problem is spotted and what happens automatically. Users might see a slower answer or a clear error, but almost never a whole platform that is down.
+>
+> **You'll be able to:** analyze a failure by what breaks, who notices, the automatic response and the user experience · describe how the system handles database, cache, LLM-provider, queue and instance failures · design dependency-aware health checks and alert on leading indicators
+
 ## Why This Matters
 
 A system diagram describes the happy path. Production is the study of everything that isn't the happy path. Every component in the [Complete Architecture Walkthrough](complete-architecture-walkthrough.md) will, eventually, fail — the database will become unreachable, Redis will restart, a cloud region will have a bad afternoon, an LLM provider will return 503s for twenty minutes, a queue will back up faster than workers can drain it, an application instance will be OOM-killed mid-request. None of this is exotic; it is the normal operating condition of any system that runs long enough. What separates a resilient architecture from a fragile one is not the absence of these failures but whether the architecture *contains* each one to the smallest possible blast radius, using exactly the patterns covered in [Part 6 — Production Reliability](../06-production-reliability/README.md) and [Part 15 — Production AI Systems](../15-production-ai-systems/README.md). This chapter walks through five representative failures and traces how the architecture is supposed to respond to each.
@@ -38,7 +45,7 @@ flowchart LR
     CACHE -.->|MISS| DB[(PostgreSQL - DOWN)]
     SVC -->|write| CB{Circuit Breaker}
     CB -->|OPEN: fail fast| SVC
-    DB -.x CB
+    DB -.-x CB
     style DB fill:#5a1e1e,stroke:#c0392b
     style CB fill:#5a4a1e,stroke:#e0a020
 ```
@@ -56,7 +63,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     SVC[Application Service] -->|read| CACHE[(Redis - DOWN)]
-    CACHE -.x SVC
+    CACHE -.-x SVC
     SVC -->|fallback| DB[(PostgreSQL)]
     DB -->|now absorbing\nfull read load| SVC
     style CACHE fill:#5a1e1e,stroke:#c0392b
@@ -79,7 +86,7 @@ flowchart LR
     AIGW --> CB{Circuit Breaker\nProvider A}
     CB -->|OPEN| ROUTE[Router: switch to Provider B]
     ROUTE --> LLMB[LLM Provider B - healthy]
-    CB -.x LLMA[LLM Provider A - DOWN]
+    CB -.-x LLMA[LLM Provider A - DOWN]
     style LLMA fill:#5a1e1e,stroke:#c0392b
     style CB fill:#5a4a1e,stroke:#e0a020
     style LLMB fill:#1e5a2e,stroke:#27ae60
@@ -258,3 +265,26 @@ The LLM-provider-down scenario is worth dwelling on because it is the cleanest i
 - The AI Gateway's provider fallback is the best-contained failure mode in the system because multiple providers can genuinely substitute for one another, unlike most third-party dependencies.
 - Leading indicators (queue depth, circuit breaker state, per-provider error rate) should trigger alerts before a failure becomes user-visible.
 - Untested failure handling is not failure handling — these scenarios need to be exercised deliberately, not just configured and assumed to work.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What four questions does this chapter use to analyze every failure scenario?</summary>
+
+What breaks (which component, and how), who notices first (which health check, timeout or metric), what the architecture does automatically (the containing pattern), and what the user actually experiences.
+
+</details>
+
+<details markdown="1">
+<summary>2. When Redis goes down and services fall back to the database, why isn't that fallback alone enough?</summary>
+
+Every read now hits PostgreSQL, which may receive far more load than it was sized for — a cache stampede that could take down the database too. The fallback needs protection such as request coalescing, a short local cache or load-shedding.
+
+</details>
+
+<details markdown="1">
+<summary>3. A single malformed message keeps failing and blocks everything behind it in the queue. What is missing?</summary>
+
+A dead-letter queue. After repeated failures the poison message should be moved aside so the rest of the queue keeps processing, and it can be inspected separately without stalling side effects for everyone.
+
+</details>

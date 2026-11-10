@@ -1,5 +1,12 @@
 # API Contracts
 
+> [!TIP]
+> **In one line:** An API contract — usually an OpenAPI spec — makes request and response shapes explicit and machine-readable, so breaking changes can be caught automatically before clients feel them.
+>
+> **In plain English:** A rental agreement spells out what each side promises, so nobody has to guess, and changing a clause needs notice. An API contract is that agreement for your API. Tools read it to produce docs, client code, and checks that stop accidental breaking changes.
+>
+> **You'll be able to:** Explain code-first versus contract-first and when to choose each · Classify a change as backward compatible or breaking · Set up a CI contract diff that catches breaking changes before merge
+
 ## Why This Matters
 
 An API is, fundamentally, a promise: "send me a request shaped like this, and I will respond with something shaped like that." A **contract** is that promise made explicit and machine-readable, instead of living only in your backend code (where clients can't see it) or in someone's memory (where it inevitably drifts). Without an explicit contract, every integration becomes a guessing game based on example responses, and every backend change risks silently breaking a client who happened to depend on undocumented behavior.
@@ -175,3 +182,26 @@ API contracts foreshadow one of the most important ideas in [Part 14 — AI API 
 - Structured LLM outputs are a direct extension of this same idea — a schema is a contract with the model, not just with a client.
 
 See also: [API Versioning](api-versioning.md), [Part 13 — API Testing](../13-api-testing/README.md), [Part 14 — AI API Engineering](../14-ai-api-engineering/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What's the difference between code-first and contract-first?</summary>
+
+Code-first: you write the implementation and the framework (such as FastAPI) generates the OpenAPI spec. Contract-first: you write and agree on the spec first, generate stubs and SDKs from it, then implement against it.
+
+</details>
+
+<details markdown="1">
+<summary>2. Your tests still pass after you rename email to email_address. Is the change safe?</summary>
+
+No. Passing tests show your own code runs, not that clients still work. Renaming a field is a breaking contract change, so it needs a new version and a migration plan.
+
+</details>
+
+<details markdown="1">
+<summary>3. A frontend team, a mobile team and a partner must all start building before your backend exists. Which approach fits, and how do you stop drift?</summary>
+
+Contract-first: agree on the OpenAPI spec so everyone builds against it in parallel, then add contract tests or a spec diff in CI that fails when the implementation drifts from it.
+
+</details>

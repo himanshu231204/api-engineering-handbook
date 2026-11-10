@@ -1,5 +1,12 @@
 # Tool Execution
 
+> [!TIP]
+> **In one line:** The model only requests tool calls; your executor validates, authorizes, times out, sandboxes and normalizes every call, returning errors to the model instead of crashing.
+>
+> **In plain English:** An LLM cannot run anything itself; it just writes down which tool it wants and with what inputs. Your code decides whether that request is valid and allowed, runs it safely with a time limit, and reports the result back. It is like a bank teller who checks ID and limits before handing over cash, no matter how convincing the customer sounds.
+>
+> **You'll be able to:** Validate tool arguments against a JSON schema before running anything · Wrap every call in a timeout and sandbox code-running tools · Return structured errors (invalid_arguments, permission_denied, timeout) the model can react to
+
 ## Why This Matters
 
 The model's job in an agent loop is to *decide* what to do next — it emits a tool name and a JSON blob of arguments. It never actually runs code. Something else has to take that request, execute it safely, and hand the result back. That "something else" is your code, running with your permissions, in your infrastructure, often on arguments the model invented from untrusted or partially-untrusted input.
@@ -227,3 +234,26 @@ Tool execution is where "the model is smart" stops being a relevant fact. No mat
 - Errors should be caught and returned to the model as structured tool results, not raised as exceptions that crash the loop.
 - Tool output is untrusted content once it re-enters the model's context — treat it as a potential prompt-injection vector, not as safe system data.
 - Scope credentials per tool (least privilege) and require human approval for high-risk actions like payments or deletions.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What five steps does a tool executor perform for each tool call?</summary>
+
+Validate the arguments against the tool's schema, authorize the call for this user and risk tier, execute it with a timeout (and in a sandbox if it touches the outside world), capture and normalize the result or error, and return it to the conversation as a tool-role message.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a tool error be returned to the model rather than raised as an exception?</summary>
+
+A raised exception can crash the whole agent loop. A structured error such as `invalid_arguments` lets the model correct its input and retry, while `permission_denied` tells it to stop trying, so the loop can recover or change approach.
+
+</details>
+
+<details markdown="1">
+<summary>3. A "send_invoice" tool times out on your side but actually succeeded upstream, and your retry charges the customer twice. What was missing?</summary>
+
+An idempotency key on the side-effecting call, so a retry of the same request is recognized and not executed again. Retries are only safe for state-changing tools when the upstream operation is idempotent.
+
+</details>

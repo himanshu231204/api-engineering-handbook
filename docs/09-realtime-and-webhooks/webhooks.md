@@ -1,5 +1,12 @@
 # Webhooks
 
+> [!TIP]
+> **In one line:** A webhook is the provider POSTing to your URL when an event happens; verify the signature, dedupe by event ID, return 2xx fast, and process later.
+>
+> **In plain English:** Instead of you checking repeatedly, the other service calls you the moment something happens, like a doorbell instead of peeking out the window every minute. Because anyone can ring, you check a signature first. Providers retry when they get no quick 'OK', so the same event can arrive twice and your handler must handle repeats safely.
+>
+> **You'll be able to:** build a receiver that verifies, dedupes and acknowledges quickly · choose the right status code so retries behave correctly · add a reconciliation path for events that were never delivered
+
 ## Why This Matters
 
 [Polling](polling.md) puts the burden of "did anything happen?" on the client, forever, on a timer, mostly asking a question whose answer is "no." Webhooks flip that entirely: instead of your service repeatedly asking a provider whether something happened, the provider calls *your* API the moment it does. This is how Stripe tells you a payment succeeded, how GitHub tells you a pull request was opened, and how most third-party integrations notify you of events in near real time without you polling anything. But inverting the request direction inverts the trust model too — now you're running a public endpoint that anyone on the internet can attempt to hit, pretending to be that provider, which is precisely why [Webhook Signature Verification](webhook-signature-verification.md) exists as its own chapter. Understanding webhooks properly means understanding both sides: what you owe as a receiver, and what a well-built sender does to make delivery reliable.
@@ -60,6 +67,8 @@ sequenceDiagram
 ```
 
 The key architectural decision visible in this diagram: signature verification and duplicate-checking happen *before* any real work, and the `2xx` acknowledgment is returned as soon as the event is safely queued — not after the business logic finishes.
+
+![Webhook delivery: signed POST, signature check, dedupe, enqueue, fast 200, and provider retries with backoff](../assets/diagrams/09-webhook-delivery.svg)
 
 ## Request / Response Example
 
@@ -210,6 +219,29 @@ Webhooks are the standard integration point for asynchronous AI workloads whose 
 - Respond fast (verify + queue) and do real processing asynchronously; slow synchronous handlers cause timeouts, which look like failures and trigger unwanted retries.
 - Every inbound webhook must have its signature verified before being trusted — see [Webhook Signature Verification](webhook-signature-verification.md) for the mechanics.
 - Webhooks work best paired with a reconciliation path (a "list events" API), since even reliable senders occasionally fail to deliver after exhausting retries.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why must a webhook handler be idempotent?</summary>
+
+Providers deliver at least once: if they do not see a 2xx (a timeout, or a lost response), they retry, so the same event can arrive more than once. Tracking the event ID and skipping repeats prevents double charges or double emails.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if your handler sends emails and updates three systems before returning, and that takes 40 seconds?</summary>
+
+The provider's timeout (often 5 to 30 seconds) expires, which looks like a failure, so it retries while the first request is still running, causing duplicate side effects. Verify the signature, durably save the event and its pending work in one transaction, return 2xx immediately, and do the slow work in the background. Never acknowledge before the event is safely stored, or a crash loses it.
+
+</details>
+
+<details markdown="1">
+<summary>3. A webhook arrives with a signature that does not verify. What status should you return, and why not 500?</summary>
+
+Return a 4xx such as 400: it tells the provider the delivery is invalid and not worth retrying. A 5xx means 'temporary failure, please retry', which would invite a retry storm for a request you will never accept.
+
+</details>
 
 ---
 

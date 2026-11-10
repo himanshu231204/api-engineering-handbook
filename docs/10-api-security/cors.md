@@ -1,5 +1,12 @@
 # CORS
 
+> [!TIP]
+> **In one line:** CORS is the browser asking your server "may this other website read your response?" — it protects users' browsers, not your API, so it never replaces real authentication.
+>
+> **In plain English:** Browsers normally stop a page on one website from reading answers sent by a different website. CORS lets your API name the exact websites that are allowed to read its answers. Tools like curl or another server ignore these rules completely, so they are a courtesy the browser enforces, not a lock on your door.
+>
+> **You'll be able to:** explain the preflight OPTIONS handshake and which requests trigger it · configure an explicit, per-environment origin allowlist in FastAPI's CORSMiddleware · spot the wildcard-plus-credentials and reflected-Origin misconfigurations
+
 ## Why This Matters
 
 Browsers enforce a security boundary called the **same-origin policy**: JavaScript running on `https://app.example.com` cannot, by default, read the response of a request it makes to `https://api.other-domain.com`. This is a good default — without it, any malicious website you visit could silently use your logged-in browser session to read your email, your bank balance, or your private API data from every other site you're authenticated to. But it also breaks a completely legitimate and extremely common pattern: a frontend hosted on one origin (or subdomain) calling an API hosted on another. **CORS (Cross-Origin Resource Sharing)** is the mechanism browsers use to let a server explicitly opt back into allowing specific cross-origin requests, on its own terms. Understanding CORS matters not just to make cross-origin calls work, but because a misconfigured CORS policy is one of the most common ways APIs accidentally expose authenticated data to arbitrary third-party websites.
@@ -47,6 +54,8 @@ sequenceDiagram
 
     Note over Browser: Origin header matches allowlist -- JS may read response
 ```
+
+![Sequence diagram of a CORS preflight: the browser sends an OPTIONS request, the server answers with Access-Control-Allow headers, then the real POST is sent; CORS protects users' browsers, not your server](../assets/diagrams/10-cors-preflight.svg)
 
 ## Request / Response Example
 
@@ -174,6 +183,29 @@ CORS matters directly for browser-based AI applications: a chat UI running in th
 - Never combine a wildcard `Access-Control-Allow-Origin: *` with `Access-Control-Allow-Credentials: true`, and never dynamically reflect the request's `Origin` header to fake a wildcard — this is the most dangerous and most common CORS misconfiguration.
 - CORS does not protect against non-browser clients; real security still depends on authentication and authorization on every request.
 - Maintain an explicit, environment-specific origin allowlist and scope CORS policy per route group when public and authenticated endpoints coexist.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What three parts make up an "origin", and is CORS enforced by the browser or the server?</summary>
+
+An origin is scheme + host + port, so `https://app.example.com` and `http://app.example.com` are different origins. CORS is enforced by the browser: the server only sends `Access-Control-Allow-*` headers, and the browser decides whether the calling JavaScript may read the response.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does a POST with a JSON body and an Authorization header trigger a preflight, while a plain form POST does not?</summary>
+
+`Content-Type: application/json` and custom headers like `Authorization` are outside the small "CORS-safelisted" set, so the browser must first send an `OPTIONS` preflight asking whether that method and those headers are allowed. A simple form POST uses only safelisted headers and content types, so it is sent directly and only the response's readability is checked.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate "fixes" CORS errors by echoing back whatever Origin header the request carries, with Access-Control-Allow-Credentials set to true. What has gone wrong?</summary>
+
+They have effectively disabled the same-origin policy for logged-in users: any website, including an attacker's, now gets its origin reflected as allowed and can make cookie-authenticated requests and read the responses. The fix is an explicit allowlist of trusted origins (plus `Vary: Origin`), never a reflected or wildcard origin when credentials are involved.
+
+</details>
 
 See also: [Secrets Management](secrets-management.md), [Input Validation](input-validation.md), [OWASP API Security Top 10](owasp-api-security.md), [Part 5 — Authentication & Authorization](../05-authentication-authorization/README.md), and the [glossary](../../resources/glossary.md).
 

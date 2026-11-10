@@ -1,5 +1,12 @@
 # FastAPI Fundamentals
 
+> [!TIP]
+> **In one line:** FastAPI turns Python type hints into validation, serialization, and docs automatically, and runs on ASGI so one worker can juggle many waiting requests.
+>
+> **In plain English:** You write a normal Python function and label each input with its type. FastAPI checks every incoming request against those labels before your code runs, like a customs desk that inspects each passport before anyone gets through, and turns away bad requests with a clear error.
+>
+> **You'll be able to:** Build and run a small FastAPI app with Uvicorn · Choose correctly between `async def` and `def` routes · Read a 422 error and know which input failed
+
 ## Why This Matters
 
 Part 2 taught you how to *design* a REST API — resources, methods, status codes, contracts. Now you need to actually *build* one. You could use Flask, Django REST Framework, Express, or raw ASGI, but this handbook uses **FastAPI** because it solves the three biggest pain points of API development in one framework: validation, documentation, and performance — without forcing you to write boilerplate for any of them.
@@ -61,6 +68,8 @@ flowchart LR
     Handler --> Response[Pydantic serializes response]
     Response --> Client
 ```
+
+![FastAPI request lifecycle: client, ASGI server, middleware, routing, dependencies, Pydantic validation, handler, response-model serialization, middleware, client, with invalid input stopping at validation as a 422](../assets/diagrams/03-fastapi-request-lifecycle.svg)
 
 ## Request / Response Example
 
@@ -203,5 +212,28 @@ Most LLM provider SDKs (OpenAI, Anthropic) ship both sync and async clients. Whe
 - Choose `async def` for async-native I/O; choose `def` for unavoidable blocking calls, and let FastAPI's thread pool handle it.
 - Automatic OpenAPI docs at `/docs` and `/redoc` come free from your type-annotated code.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which two libraries is FastAPI built on, and what does each handle?</summary>
+
+Starlette handles the ASGI web layer (routing, requests, responses, middleware, WebSockets), and Pydantic handles validation, parsing, and serialization from type hints. FastAPI glues them together so your type hints drive both.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you call time.sleep() or a sync requests.get() inside an async def route?</summary>
+
+It blocks the event loop, so every other concurrent request on that worker stalls until the call finishes. It degrades throughput silently rather than crashing, which is why it is hard to spot in development; use an async library or make the route a plain `def` so FastAPI runs it in the thread pool.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client calls GET /items/abc on a route declared as item_id: int. What does it get back, and did your function run?</summary>
+
+It gets a `422 Unprocessable Entity` with a `detail` list whose `loc` is `["path", "item_id"]` and type `int_parsing`. Your function never ran, because validation happens at the boundary before the handler is called.
+
+</details>
 
 Next: `request-validation-pydantic.md`.

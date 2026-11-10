@@ -1,5 +1,12 @@
 # Pagination
 
+> [!TIP]
+> **In one line:** Pagination serves collections a page at a time; offset is simple but skips or repeats items when data changes, while cursor stays fast and, with a stable sort key, correct.
+>
+> **In plain English:** Search results with numbered pages are offset pagination: easy to jump around, but new results shift everything along. A social feed's "load more" button is cursor pagination: it remembers the last post you saw and gives you what comes after it, however much was added at the top.
+>
+> **You'll be able to:** Explain why offset pagination can show duplicates or skip items · Build cursor pagination with an opaque cursor and a tie-breaker · Design a paginated response with `next_cursor`/`has_more` and a capped page size
+
 ## Why This Matters
 
 Any collection endpoint that can grow without bound — orders, users, log entries, chat messages — will eventually return too much data to send in a single response. Without pagination, a `GET /orders` on a table with ten million rows either times out, exhausts server memory, or sends a client an unusably huge payload. Pagination is the mechanism that makes collection endpoints scale from a demo with 10 rows to production with 10 million, and choosing the right pagination strategy (offset vs cursor) has real consequences for correctness and performance, not just convenience.
@@ -45,6 +52,8 @@ sequenceDiagram
     DB-->>API: next 20 rows (correct even if rows were inserted/deleted above id=462)
     API-->>Client: data + next_cursor="eyJpZCI6NDQy..."
 ```
+
+![Diagram: offset pagination repeats an item when a row is inserted, while cursor pagination stays correct](../assets/diagrams/02-pagination-cursor.svg)
 
 ## Request / Response Example
 
@@ -181,3 +190,26 @@ Pagination shows up constantly in AI-facing APIs: paginating a conversation's me
 - Default to cursor-based pagination for large, write-heavy, or public-facing collections — which describes most real-world AI API resources like conversation and document histories.
 
 See also: [Query Parameters](query-parameters.md), [Filtering and Sorting](filtering-and-sorting.md), [Part 4 — Databases & APIs](../04-databases-and-apis/README.md) for indexing considerations, and the [glossary](../../resources/glossary.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why does OFFSET 100000 get slow while a cursor query stays fast?</summary>
+
+With OFFSET the database still scans and throws away 100,000 rows before returning the page. A cursor becomes a `WHERE` condition on an indexed sort key, so the database jumps straight to the right place.
+
+</details>
+
+<details markdown="1">
+<summary>2. While a user pages through an offset-paginated list, a new item is added at the top. What happens?</summary>
+
+Everything shifts down one place, so the last item of page 1 shows up again at the start of page 2. A deletion can make an item get skipped instead.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client builds its own cursor by base64-encoding an ID. Why is that a problem, and what should the API do?</summary>
+
+Cursors are opaque tokens the server hands out; if clients build them, you can't change what's inside (say, adding a tie-breaker) without breaking them. Return `next_cursor` in each response and tell clients to send it back unchanged.
+
+</details>

@@ -1,5 +1,12 @@
 # SLI, SLO, SLA
 
+> [!TIP]
+> **In one line:** An SLI is what you measure, an SLO is your target for it, an SLA is the contract — and the error budget below 100% decides when to slow down.
+>
+> **In plain English:** First you pick a number that reflects what users feel, such as the share of requests that succeed quickly. Then you set a goal for it a little below perfect, and the gap is an allowance of failures you may "spend" on risky changes. A customer contract promises a looser number than your own goal, so you have a safety margin.
+>
+> **You'll be able to:** write precise SLI, SLO and SLA statements for a service · calculate an error budget and a burn rate from request counts · define an error budget policy that actually gates risky deploys
+
 ## Why This Matters
 
 "Make the API more reliable" is not an engineering decision — it's a wish. Reliability work costs real engineering time, and time spent chasing five nines of uptime is time not spent shipping features. Every team eventually needs a precise, shared answer to two questions: *how reliable is our system, actually?* and *how reliable does it need to be?* Without precise answers, reliability conversations turn into arguments based on gut feeling — one engineer thinks a risky deploy is fine, another thinks it's reckless, and there's no shared standard to settle it. SLIs, SLOs, and SLAs are the vocabulary that turns "be more reliable" into a measurable, negotiable, engineering-driven target. This chapter builds that vocabulary precisely, and shows how it's meant to actively drive day-to-day engineering decisions — not sit in a document nobody reads.
@@ -43,6 +50,8 @@ flowchart TB
     Burn -->|"budget low/exhausted"| Freeze["Reliability freeze:\npause risky deploys,\nfocus on fixes"]
     SLO -.->|"sometimes formalized as"| SLA["SLA: external contractual promise\n+ penalty/credit if breached"]
 ```
+
+![SLI measured, SLO target, SLA contract, and an error budget bar showing 61 percent used with a deploy-freeze line at 20 percent remaining](../assets/diagrams/12-sli-slo-sla.svg)
 
 The arrow from SLO to SLA is intentionally dashed and one-directional: not every SLO becomes a customer-facing SLA, but every SLA should be backed by an internal SLO with tighter margin — never the other way around.
 
@@ -193,5 +202,28 @@ SLOs for AI-backed features need SLIs that go beyond "did the request return 200
 - An SLO without an explicit, enforced error budget policy is decorative — the policy is what actually drives decisions like pausing risky deploys.
 - Good SLIs reflect real user-perceived experience, expressed as ratios of good events to total events, typically built from the same counters and histograms covered in metrics.md.
 - SLOs should be revisited periodically and kept stricter than any externally facing SLA, preserving margin for normal operational variance.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How do an SLI, an SLO and an SLA differ?</summary>
+
+An SLI is a measured indicator, usually a ratio of good events to total events. An SLO is an internal target for that SLI over a time window (for example 99.9% over 30 days). An SLA is a contractual promise to customers, with consequences such as service credits if it's broken.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should the internal SLO be stricter than the external SLA?</summary>
+
+If both are the same number, there is zero margin between "we missed our own goal" and "we breached a customer contract." A tighter SLO absorbs normal operational variance and gives the team time to react before money or legal obligations are at stake.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your service has a 99.9% SLO over 30 days, serves 10 million requests, and has already used 6,100 of its error budget with 12 days left at a burn rate of 2.3x. What should happen?</summary>
+
+The budget is 10,000 failed requests, and with 39% left and burning at more than twice the sustainable pace it will run out early. A real error budget policy should kick in: pause risky or non-essential deploys and shift the team's effort to reliability work until the burn rate is under control.
+
+</details>
 
 Return to the [Part 12 overview](README.md). See also [Latency and P95/P99](../07-caching-performance/latency-and-percentiles.md) for the percentile concepts that typically underlie latency SLIs, and [AI Observability](../15-production-ai-systems/ai-observability.md) for how these ideas extend to AI-backed features.

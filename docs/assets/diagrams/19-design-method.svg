@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520" role="img" aria-labelledby="t d">
+  <title id="t">The 45-minute system design method</title>
+  <desc id="d">Eight steps in order: requirements, estimates, API, data model, high-level design, deep dives and scaling, failures, trade-offs. A bar at the bottom shows the time budget for each step in a 45-minute interview: 5, 5, 5, 5, 10, 8, 4 and 3 minutes.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="519" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The 45-minute system design method</text>
+  <text x="32" y="66" class="sub">Every Part 19 case study follows these eight steps, in this order. Same method, every time.</text>
+  <rect x="32" y="92" width="186" height="128" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="58" cy="120" r="12" fill="#1c7c54"/>
+  <text x="58" y="124.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">1</text>
+  <rect x="146" y="108" width="58" height="24" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="175" y="124" class="lbl" fill="#2563eb" text-anchor="middle">5 min</text>
+  <text x="48" y="164" class="h">Requirements</text>
+  <text x="48" y="188" class="note">Functional + non-functional</text>
+  <text x="48" y="206" class="note">Ask, don't assume</text>
+  <line x1="220" y1="156.0" x2="240" y2="156.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="242" y="92" width="186" height="128" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="268" cy="120" r="12" fill="#1c7c54"/>
+  <text x="268" y="124.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">2</text>
+  <rect x="356" y="108" width="58" height="24" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="1.2"/>
+  <text x="385" y="124" class="lbl" fill="#2563eb" text-anchor="middle">5 min</text>
+  <text x="258" y="164" class="h">Estimates</text>
+  <text x="258" y="188" class="note">QPS, storage, peak load</text>
+  <text x="258" y="206" class="note">Show the arithmetic</text>
+  <line x1="430" y1="156.0" x2="450" y2="156.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="452" y="92" width="186" height="128" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="478" cy="120" r="12" fill="#1c7c54"/>
+  <text x="478" y="124.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">3</text>
+  <rect x="566" y="108" width="58" height="24" rx="12" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="595" y="124" class="lbl" fill="#b45309" text-anchor="middle">5 min</text>
+  <text x="468" y="164" class="h">API design</text>
+  <text x="468" y="188" class="note">Endpoints and payloads</text>
+  <text x="468" y="206" class="note">Agree the contract</text>
+  <line x1="640" y1="156.0" x2="660" y2="156.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="662" y="92" width="186" height="128" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="688" cy="120" r="12" fill="#1c7c54"/>
+  <text x="688" y="124.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">4</text>
+  <rect x="776" y="108" width="58" height="24" rx="12" fill="#ffffff" stroke="#b45309" stroke-width="1.2"/>
+  <text x="805" y="124" class="lbl" fill="#b45309" text-anchor="middle">5 min</text>
+  <text x="678" y="164" class="h">Data model</text>
+  <text x="678" y="188" class="note">Tables, keys, indexes</text>
+  <text x="678" y="206" class="note">Pick a store, say why</text>
+  <rect x="32" y="270" width="186" height="128" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="58" cy="298" r="12" fill="#1c7c54"/>
+  <text x="58" y="302.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">5</text>
+  <rect x="146" y="286" width="58" height="24" rx="12" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="175" y="302" class="lbl" fill="#1c7c54" text-anchor="middle">10 min</text>
+  <text x="48" y="342" class="h">High-level design</text>
+  <text x="48" y="366" class="note">Boxes and arrows</text>
+  <text x="48" y="384" class="note">Walk one request through</text>
+  <line x1="220" y1="334.0" x2="240" y2="334.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="242" y="270" width="186" height="128" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="268" cy="298" r="12" fill="#1c7c54"/>
+  <text x="268" y="302.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">6</text>
+  <rect x="356" y="286" width="58" height="24" rx="12" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="385" y="302" class="lbl" fill="#1c7c54" text-anchor="middle">8 min</text>
+  <text x="258" y="342" class="h">Deep dives</text>
+  <text x="258" y="366" class="note">Find the bottleneck</text>
+  <text x="258" y="384" class="note">What breaks at 10x?</text>
+  <line x1="430" y1="334.0" x2="450" y2="334.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="452" y="270" width="186" height="128" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="478" cy="298" r="12" fill="#1c7c54"/>
+  <text x="478" y="302.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">7</text>
+  <rect x="566" y="286" width="58" height="24" rx="12" fill="#ffffff" stroke="#b91c1c" stroke-width="1.2"/>
+  <text x="595" y="302" class="lbl" fill="#b91c1c" text-anchor="middle">4 min</text>
+  <text x="468" y="342" class="h">Failures</text>
+  <text x="468" y="366" class="note">Kill each box in turn</text>
+  <text x="468" y="384" class="note">Degrade, don't die</text>
+  <line x1="640" y1="334.0" x2="660" y2="334.0" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="662" y="270" width="186" height="128" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="688" cy="298" r="12" fill="#1c7c54"/>
+  <text x="688" y="302.5" text-anchor="middle" style="font: 700 12px Inter, system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #ffffff;">8</text>
+  <rect x="776" y="286" width="58" height="24" rx="12" fill="#ffffff" stroke="#475569" stroke-width="1.2"/>
+  <text x="805" y="302" class="lbl" fill="#475569" text-anchor="middle">3 min</text>
+  <text x="678" y="342" class="h">Trade-offs</text>
+  <text x="678" y="366" class="note">Chosen vs. rejected</text>
+  <text x="678" y="384" class="note">Give the real reason</text>
+  <path d="M755.0,222 V241 H125.0 V267" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="32" y="432" class="h">Time budget for a 45-minute interview</text>
+  <text x="848" y="432" class="note" text-anchor="end">steps 5–8 get more than half the time</text>
+  <rect x="32.0" y="444" width="86.7" height="40" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="75.3" y="469" class="lbl" fill="#2563eb" text-anchor="middle">1 · 5m</text>
+  <rect x="122.7" y="444" width="86.7" height="40" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="166.0" y="469" class="lbl" fill="#2563eb" text-anchor="middle">2 · 5m</text>
+  <rect x="213.3" y="444" width="86.7" height="40" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="256.7" y="469" class="lbl" fill="#b45309" text-anchor="middle">3 · 5m</text>
+  <rect x="304.0" y="444" width="86.7" height="40" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="347.3" y="469" class="lbl" fill="#b45309" text-anchor="middle">4 · 5m</text>
+  <rect x="394.7" y="444" width="177.3" height="40" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="483.3" y="469" class="lbl" fill="#1c7c54" text-anchor="middle">5 · 10m</text>
+  <rect x="576.0" y="444" width="141.1" height="40" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="646.5" y="469" class="lbl" fill="#1c7c54" text-anchor="middle">6 · 8m</text>
+  <rect x="721.1" y="444" width="68.5" height="40" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="755.3" y="469" class="lbl" fill="#b91c1c" text-anchor="middle">7 · 4m</text>
+  <rect x="793.6" y="444" width="50.4" height="40" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="818.8" y="469" class="lbl" fill="#475569" text-anchor="middle">8 · 3m</text>
+</svg>

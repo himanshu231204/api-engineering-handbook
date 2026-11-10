@@ -38,8 +38,8 @@ flowchart TB
         Query[POST /query] --> QEmbed[Embed Query]
         QEmbed --> Retrieve[Vector Similarity Search]
         VectorDB --> Retrieve
-        Retrieve --> Rerank[Reranker\n(cross-encoder or LLM-based)]
-        Rerank --> ContextBuild[Context Construction\n(dedupe, truncate to token budget)]
+        Retrieve --> Rerank["Reranker\n(cross-encoder or LLM-based)"]
+        Rerank --> ContextBuild["Context Construction\n(dedupe, truncate to token budget)"]
         ContextBuild --> LLM[LLM Provider]
         LLM -->|streamed tokens| Client[Client / SSE]
         ContextBuild --> Citations[Citation Tracker]

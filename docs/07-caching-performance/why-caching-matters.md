@@ -1,5 +1,12 @@
 # Why Caching Matters
 
+> [!TIP]
+> **In one line:** A cache trades a little memory and a little freshness for a lot of speed, by answering repeated questions once and reusing the answer.
+>
+> **In plain English:** Your database is slow and busy, and most requests ask for the same few things again and again. A cache keeps a ready-made copy of those popular answers in fast memory, like keeping today's newspaper on the kitchen table instead of walking to the shop each time someone wants to read it. The catch: the copy can go out of date, and the cache can be empty or down, so you design for both.
+>
+> **You'll be able to:** explain hits, misses and why skewed traffic makes caching pay off · decide which endpoints are safe to cache and for how long · name the failure modes a cache adds: staleness, cold starts, stampedes
+
 ## Why This Matters
 
 Every production API eventually hits the same wall: the database is slower than the traffic demands. You ship a clean FastAPI endpoint, it queries PostgreSQL, everything works beautifully in development with three test rows and one user — you. Then real traffic arrives. Ten requests per second becomes a thousand. The same product page, the same user profile, the same "trending posts" query gets executed over and over, each time re-reading rows from disk (or from the database's buffer pool, at best), re-running joins, re-serializing the result. The database — the most expensive, hardest-to-scale-horizontally part of your system — becomes the bottleneck for work that didn't need to be redone at all.
@@ -215,6 +222,29 @@ This is why Part 15 introduces **prompt caching** (reusing a shared prompt prefi
 - Every cached value is a bet that "slightly stale" is acceptable in exchange for speed — TTL and invalidation are how you manage that bet.
 - A cache is a new moving part with its own failure modes (cold starts, stampedes, staleness) — caching adds engineering complexity, not just performance.
 - These same ideas scale up directly into AI systems, where LLM calls are even more expensive to redo than database queries — see [Part 15](../15-production-ai-systems/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between a cache hit and a cache miss?</summary>
+
+On a hit the value is already in the cache, so it is returned in about a millisecond and the database is never touched. On a miss the value is absent or expired, so the app queries the database, stores the result in the cache with a TTL, then returns it.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does caching help so much more for a trending product page than for a random, rarely-viewed one?</summary>
+
+Read traffic is skewed: a few hot keys get most requests. A hot key is fetched from the database roughly once per TTL window and then served from memory thousands of times, while a rarely-viewed item misses almost every time, so the cache saves little work for it.
+
+</details>
+
+<details markdown="1">
+<summary>3. You deploy a new release that flushes Redis during peak traffic. What happens, and what must your system be able to survive?</summary>
+
+Every request becomes a miss at once (a cold cache), so the full traffic load hits the database simultaneously, a thundering herd. The database must be able to survive running with an empty cache, and cache warm-up or staggered TTLs help smooth the spike.
+
+</details>
 
 ---
 

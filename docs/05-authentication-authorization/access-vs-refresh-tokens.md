@@ -1,5 +1,12 @@
 # Access vs Refresh Tokens
 
+> [!TIP]
+> **In one line:** Pair a short-lived access token (sent on every call) with a long-lived, server-tracked, single-use refresh token that silently fetches the next pair.
+>
+> **In plain English:** Think of a parking meter that only takes 15 minutes at a time, plus a prepaid card you keep in your pocket. When the meter runs out you tap the card to top it up — and the card is swapped for a new one each time, so a copied old card instantly gives the thief away. You stay parked all day without anyone stealing hours of your time.
+>
+> **You'll be able to:** explain why access tokens are short-lived and refresh tokens are server-tracked · implement refresh-token rotation with reuse detection · store and transport refresh tokens safely (narrow cookie path, `HttpOnly`, hashed at rest)
+
 ## Why This Matters
 
 Two competing needs collide in almost every token-based auth system: users hate re-authenticating constantly, but short-lived credentials are far safer than long-lived ones (as established in [JWT Deeply Explained](jwt-deeply-explained.md), a leaked token is dangerous for exactly as long as it remains valid). The **access token / refresh token** pattern resolves this tension without asking the user to type a password every 15 minutes, and it's the pattern behind virtually every "stay logged in" experience in modern apps, including the [OAuth 2.0](oauth2.md) flows covered in the next chapter.
@@ -24,6 +31,8 @@ Think of an **access token like a day pass at a conference, and a refresh token 
 5. **Refresh token rotation**: on each successful refresh, the server issues a **new** refresh token and invalidates the old one, rather than reusing the same refresh token indefinitely. This means a refresh token is effectively single-use, which gives you a powerful detection signal: **if an already-used (rotated-out) refresh token is ever presented again, that's strong evidence of token theft** — a legitimate client would never present a token it already exchanged, so the server can respond by revoking the entire token family (every token descended from that login) as a precaution.
 6. **Logout**: the server explicitly revokes the refresh token server-side. The already-issued access token remains valid until its own short expiry — which is exactly why keeping that expiry short matters.
 
+![Timeline of a session: 15-minute access tokens AT1, AT2, AT3 issued back to back; at each expiry the client gets a 401, calls /token/refresh with its current single-use refresh token and receives a new pair while the old refresh token is retired; below, replaying a retired refresh token triggers revocation of the whole token family and a forced re-login](../assets/diagrams/05-access-refresh-tokens.svg)
+
 ## Architecture
 
 ```mermaid
@@ -42,7 +51,7 @@ sequenceDiagram
     Client->>API: GET /resource (access_token expired)
     API-->>Client: 401 Unauthorized
 
-    Client->>API: POST /token/refresh\nCookie: refresh_token_1
+    Client->>API: POST /token/refresh<br/>Cookie: refresh_token_1
     API->>Store: Validate refresh_token_1
     alt Token reused (already rotated out)
         Store-->>API: already used! possible theft
@@ -248,3 +257,26 @@ A full, runnable implementation of this exact pattern — JWT access tokens pair
 - Refresh tokens should be rotated on every use — reuse of an already-rotated token is a strong, actionable signal of theft.
 - Refresh tokens carry more risk than access tokens due to their longer lifetime, so they deserve tighter storage and transport scoping (narrow cookie path, `HttpOnly`, `Secure`, `SameSite=Strict`).
 - This pattern is what OAuth 2.0's access/refresh tokens (next chapter) are built on, and it generalizes well to long-running AI agent sessions.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Where is each token sent: the access token and the refresh token?</summary>
+
+The access token is sent as a bearer token on every ordinary API request. The refresh token is sent only to the dedicated refresh endpoint (for example, via a cookie scoped to /token/refresh), never to resource endpoints, which keeps your longest-lived credential's exposure small.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is presenting an already-rotated refresh token treated as evidence of theft?</summary>
+
+With rotation, each refresh token is single-use, so a legitimate client never re-sends one it has already exchanged. If a retired token appears, someone else probably holds a copy, so the server revokes the whole token family and forces a fresh login. Legitimate clients can trigger this too (two requests refreshing at once, or a lost refresh response), so clients should refresh single-flight, one request at a time, and servers may allow a short grace window for an immediate retry.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user clicks "log out", and your client simply deletes its tokens locally. What is still at risk, and what should the server do?</summary>
+
+Any copy of the refresh token (stolen or synced elsewhere) can still mint new access tokens for weeks, because nothing server-side was revoked. Logout must revoke the refresh token on the server; the current access token then dies on its own within its short TTL.
+
+</details>

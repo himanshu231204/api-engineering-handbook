@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="566" viewBox="0 0 880 566" role="img" aria-labelledby="t d">
+  <title id="t">The N+1 query problem</title>
+  <desc id="d">Lazy loading fetches 20 posts with one query and then runs one extra query per post to load its author, 21 queries in total. selectinload fetches the posts and then all authors in one batched WHERE id IN query, 2 queries in total.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="565" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">The N+1 query problem</text>
+  <text x="32" y="66" class="sub">Same page, same JSON. Left: one query per row. Right: one batched query for all rows.</text>
+
+  <rect x="32" y="88" width="400" height="384" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
+  <rect x="448" y="88" width="400" height="384" rx="12" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="52" y="116" class="lbl" fill="#b91c1c">Lazy loading: the N+1 trap</text>
+  <text x="52" y="140" class="code">for p in posts: p.author.name</text>
+  <text x="468" y="116" class="lbl" fill="#1c7c54">Eager loading: selectinload</text>
+  <text x="468" y="140" class="code">.options(selectinload(Post.author))</text>
+  <rect x="52" y="160" width="360" height="34" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="72" cy="177" r="12" fill="#1c7c54"/>
+  <text x="72" y="181" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="94" y="182" class="code">SELECT … FROM posts LIMIT 20</text>
+  <rect x="52" y="202" width="360" height="34" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="72" cy="219" r="12" fill="#1c7c54"/>
+  <text x="72" y="223" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="94" y="224" class="code">SELECT … authors WHERE id = 7</text>
+  <rect x="52" y="244" width="360" height="34" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="72" cy="261" r="12" fill="#1c7c54"/>
+  <text x="72" y="265" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <text x="94" y="266" class="code">SELECT … authors WHERE id = 9</text>
+  <rect x="52" y="286" width="360" height="34" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="72" cy="303" r="12" fill="#1c7c54"/>
+  <text x="72" y="307" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">4</text>
+  <text x="94" y="308" class="code">SELECT … authors WHERE id = 12</text>
+  <text x="232" y="346" class="note" text-anchor="middle">⋮  16 more, one per post</text>
+  <rect x="52" y="360" width="360" height="34" rx="8" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="72" cy="377" r="12" fill="#1c7c54"/>
+  <text x="72" y="381" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">21</text>
+  <text x="94" y="382" class="code">SELECT … authors WHERE id = 3</text>
+  <rect x="52" y="412" width="360" height="42" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="232" y="438" class="lbl" fill="#b91c1c" text-anchor="middle">21 queries = 21 round trips for 20 posts</text>
+  <rect x="468" y="160" width="360" height="34" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="488" cy="177" r="12" fill="#1c7c54"/>
+  <text x="488" y="181" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="510" y="182" class="code">SELECT … FROM posts LIMIT 20</text>
+  <rect x="468" y="202" width="360" height="56" rx="8" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="488" cy="230" r="12" fill="#1c7c54"/>
+  <text x="488" y="234" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="510" y="224" class="code">SELECT … FROM authors</text>
+  <text x="510" y="246" class="code">WHERE id IN (7, 9, 12, …, 3)</text>
+  <text x="468" y="290" class="note">One batched query fetches every author</text>
+  <text x="468" y="308" class="note">the page needs, all at once.</text>
+  <text x="468" y="338" class="note">20 posts or 2,000 posts:</text>
+  <text x="468" y="356" class="note">still exactly 2 queries.</text>
+  <rect x="468" y="412" width="360" height="42" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="648" y="438" class="lbl" fill="#1c7c54" text-anchor="middle">2 queries, no matter how many rows</text>
+  <rect x="32" y="490" width="816" height="44" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="517" class="note">Each query is a network round trip. N+1 cost grows with every row on the page, so it hides in small dev datasets.</text>
+
+</svg>

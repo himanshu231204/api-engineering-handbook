@@ -1,5 +1,12 @@
 # CRUD Design
 
+> [!TIP]
+> **In one line:** Create is POST to the collection, read is GET, full replace is PUT, partial update is PATCH, delete is DELETE — and PUT resets omitted fields while PATCH leaves them alone.
+>
+> **In plain English:** Managing contacts on your phone is CRUD: add a contact, look one up, edit one, delete one. An API does the same four jobs with its data. The tricky part is editing: you can rewrite the whole contact card, or just change the phone number.
+>
+> **You'll be able to:** Map Create, Read, Update and Delete to HTTP methods and status codes · Choose PUT or PATCH, and build PATCH so omitted fields stay untouched · Decide when a resource should not offer all four operations
+
 ## Why This Matters
 
 Create, Read, Update, Delete is the backbone of almost every API endpoint you will ever design. Mapping these four operations onto the right HTTP methods — and understanding the subtle but important difference between a full update and a partial update — is what makes an API predictable enough that developers can guess how it works before reading the docs. Get this mapping wrong and you force every integrator to read your source code instead of inferring behavior from HTTP semantics.
@@ -193,3 +200,26 @@ CRUD mapping applies directly to resources in AI systems: `POST /threads` create
 - Not every resource needs all four CRUD operations — deliberately omitting one (like message edits in a chat API) is a valid design decision.
 
 See also: [Resources and Endpoints](resources-and-endpoints.md), [Idempotency](idempotency.md), [Part 6 — Production Reliability](../06-production-reliability/README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What should a successful POST /orders return?</summary>
+
+`201 Created`, a `Location` header pointing to the new order's URL, and the created order — including its server-assigned ID — in the body.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is it a problem if your PUT handler quietly ignores fields the client left out?</summary>
+
+That's PATCH behaviour. PUT promises "this is the complete new state", so a client that omits a field to clear it won't get what it expects. Reset omitted fields, or reject incomplete PUT bodies with 400/422.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user changes only their shipping address. Which method should the client use, and what Pydantic detail makes the server handle it correctly?</summary>
+
+PATCH with just the changed field. On the server, `model_dump(exclude_unset=True)` separates "not sent" from "sent as null", so only the fields the client sent are updated.
+
+</details>

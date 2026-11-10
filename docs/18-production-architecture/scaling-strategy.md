@@ -1,5 +1,12 @@
 # Scaling Strategy
 
+> [!TIP]
+> **In one line:** Each layer scales on its own signal — CPU for stateless services, queue depth for workers, replicas then sharding for databases — but LLM provider capacity isn't yours.
+>
+> **In plain English:** Scaling is less about adding servers everywhere and more about finding the narrowest point and widening that one. Some parts are easy to copy, some need careful redesign as they grow, and one — the outside AI provider — has limits set by someone else. For that last part, you share traffic across several providers and decide who gets served first when capacity is tight.
+>
+> **You'll be able to:** match each layer to its scaling method and signal · order database scaling moves: vertical, read replicas, pooling, then sharding · plan AI capacity with multi-provider routing, priority tiers and load-shedding
+
 ## Why This Matters
 
 "Just scale it up" is not a strategy — it's a placeholder for one. Every layer in the [Complete Architecture Walkthrough](complete-architecture-walkthrough.md) scales differently, on a different signal, with a different ceiling. Scaling the wrong layer — adding application service instances when the database connection pool is the actual constraint, or throwing more workers at a queue when the real bottleneck is a rate-limited LLM provider — burns money and engineering time without moving the needle on the problem you actually have. This chapter goes layer by layer through how each part of the architecture scales, and closes with the single most important insight for any AI-backed system: the bottleneck usually isn't your infrastructure at all — it's the LLM provider's own capacity limits.
@@ -214,3 +221,26 @@ Every layer in a traditional backend architecture — even the database — can,
 - Cache hit rate is one of the highest-leverage scaling levers in the entire system, because every cache hit is database load that never needed to scale.
 - Workers should scale on queue depth, not CPU, because their bottleneck is usually waiting on slow external calls rather than computation.
 - LLM providers are the one layer whose capacity you don't control — the real "scaling strategy" for AI features is aggregating capacity across providers and prioritizing demand, not adding infrastructure.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What signal should a worker pool autoscale on, and why not CPU?</summary>
+
+Queue depth (or consumer lag). Workers often do I/O-bound jobs, such as calling an LLM, that spend most of their time waiting rather than computing, so CPU stays low even while the backlog grows.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should sharding be the last database scaling move rather than the first?</summary>
+
+Sharding adds permanent complexity (cross-shard queries, rebalancing) and is hard to reverse. Vertical scaling, caching, read replicas and connection pooling are cheaper and reversible, so they should be exhausted before write throughput truly forces sharding.
+
+</details>
+
+<details markdown="1">
+<summary>3. Chat responses are slow under load, so the team doubles the number of AI Gateway instances, but nothing improves. What is the likely bottleneck, and what should they do?</summary>
+
+The LLM provider's own rate limits (requests and tokens per minute), which adding gateway instances can't raise. Instead, route across multiple providers to aggregate capacity, negotiate higher limits, and add priority tiers and graceful load-shedding for when capacity is exhausted.
+
+</details>

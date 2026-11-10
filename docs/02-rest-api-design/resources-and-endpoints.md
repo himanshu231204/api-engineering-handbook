@@ -1,5 +1,12 @@
 # Resources and Endpoints
 
+> [!TIP]
+> **In one line:** URLs name things (nouns) and HTTP methods say what to do with them; each resource gets a collection endpoint and an item endpoint, nested only when it can't stand alone.
+>
+> **In plain English:** A library catalogue has shelves (collections, like "orders") and single books (one order). Nobody labels a shelf "borrow-book" — borrowing is something you do, not the shelf's name. In an API the URL names the shelf or the book, and the HTTP method is the action.
+>
+> **You'll be able to:** Turn action-style URLs like `/getOrder` into resource URLs · Design the collection and item endpoints for a new resource · Decide whether a resource should be nested or top-level
+
 ## Why This Matters
 
 Every design decision in a REST API flows from one question: "what is a resource here?" Get this right and your endpoints, HTTP methods, status codes, and even your database schema tend to fall into place naturally. Get it wrong — model your API around actions instead of things — and you end up with an RPC-in-disguise API that fights the HTTP toolchain (caching, method semantics, status codes) at every turn instead of using it.
@@ -40,6 +47,8 @@ flowchart TD
     I --> I1["/orders/482/items/1 (nested item)"]
     O1 -.references.-> C["/customers/91 (independent top-level resource)"]
 ```
+
+![Diagram: a resource tree of /users, /users/{id} and nested orders with the HTTP methods for each](../assets/diagrams/02-rest-resources.svg)
 
 The order's line items are nested because they have no independent identity outside the order. The customer is referenced, not nested, because it exists on its own and is shared across many orders.
 
@@ -165,3 +174,26 @@ This same discipline applies directly to AI APIs. In a RAG system (see [Part 16]
 - Consistent resource shapes across list and item responses reduce integration bugs and make your API predictable to learn.
 
 See also: [REST Principles](rest-principles.md), [Path Parameters](path-parameters.md), [API Naming Conventions](naming-conventions.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What two endpoint shapes does every resource type get, and which methods usually go on each?</summary>
+
+The collection, such as `/orders`: GET lists, POST creates. The item, such as `/orders/482`: GET reads, PUT or PATCH updates, DELETE removes.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is /orders/482/cancelOrder a design smell?</summary>
+
+It puts a verb in the URL, duplicating the HTTP method and inviting inconsistent names. Update the status with `PATCH /orders/482`, or, if cancelling has real side effects, create a sub-resource with `POST /orders/482/cancellations`.
+
+</details>
+
+<details markdown="1">
+<summary>3. Should an order's customer live at /orders/{id}/customer or at /customers/{id}?</summary>
+
+At `/customers/{id}`. Customers exist on their own and are shared by many orders, so they pass the independent-identity test. Nest only things like line items that can't exist without their parent.
+
+</details>

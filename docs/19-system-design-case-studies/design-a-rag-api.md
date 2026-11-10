@@ -1,5 +1,12 @@
 # Design a RAG API
 
+> [!TIP]
+> **In one line:** A RAG API pairs a slow asynchronous ingestion pipeline (extract, chunk, embed, index) with a fast query path (embed, tenant-filtered search, rerank, stream a cited answer).
+>
+> **In plain English:** Ingestion is like a librarian cataloguing new books in the back room; a query is a reader asking a question while the librarian quickly pulls the few most relevant pages. Pull the wrong pages and the answer is confidently wrong; pull too many and the important line gets buried.
+>
+> **You'll be able to:** Size a vector index from document counts, chunk size and embedding dimensions · Justify two-stage retrieval (broad vector search, then rerank) · Choose how to degrade when the reranker, embedder or vector database fails
+
 ## Problem Statement
 
 Design an API that lets users ask natural-language questions against a corpus of their own documents (PDFs, docs, wikis) and get answers grounded in that corpus, with citations back to the source material, rather than the model's raw parametric knowledge. This means building two pipelines that operate on very different timescales: a slower, offline-ish ingestion pipeline that turns raw documents into searchable vector representations, and a fast, latency-sensitive query pipeline that retrieves relevant chunks and streams a grounded answer back to the user.
@@ -200,3 +207,26 @@ At 10x scale (900M chunks, ~120 queries/s peak):
 - [Part 15 — LLM Gateways](../15-production-ai-systems/llm-gateways.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How big is the vector index for 90M chunks with 1536-dimension embeddings, and what does that tell you?</summary>
+
+Each vector is 1536 × 4 bytes ≈ 6 KB, so 90M × 6 KB ≈ 540 GB raw; HNSW-style index overhead of 1.5–2x brings it to roughly 0.8–1 TB. That is too large for a single node, so the index must be sharded — naturally by kb_id.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why retrieve a broad candidate set and rerank it, instead of taking the top-K vector matches directly?</summary>
+
+Vector similarity is good at recall but mediocre at precision. A reranker scores the ~50 candidates against the actual question text and keeps the best ~8, which materially improves answers. The cost is an extra model call on the critical path, so candidate-set size and reranker choice are tuned, not maximized.
+
+</details>
+
+<details markdown="1">
+<summary>3. The reranker goes down in one incident and the vector database in another. How should the system behave in each case?</summary>
+
+Reranker down: fall back to plain vector-similarity ranking — a slightly worse answer is better than no answer. Vector database down: there is no meaningful degraded mode, because a grounded answer is impossible without retrieval, so fail fast with a clear error — which is exactly why the vector store deserves replication and multi-AZ availability.
+
+</details>

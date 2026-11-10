@@ -1,5 +1,12 @@
 # Connection Pooling
 
+> [!TIP]
+> **In one line:** A connection pool keeps a few database connections open and lends them to requests, and its total size across every process must fit under the database's max_connections.
+>
+> **In plain English:** Opening a fresh database connection is slow, often slower than the query itself. A pool is like a restaurant with a fixed number of tables: guests use a free table, leave it for the next guest, and wait in line when every table is taken.
+>
+> **You'll be able to:** Configure `pool_size`, `max_overflow`, `pool_timeout`, `pool_recycle`, and `pool_pre_ping` · Do the pool-budget math against `max_connections` · Recognize pool exhaustion and know when to add PgBouncer
+
 ## Why This Matters
 
 An API that works fine in local testing can fall over in production the moment real concurrent traffic hits it — not because the code is wrong, but because it opens a new database connection for every single request. Establishing a TCP connection, doing TLS negotiation, and completing Postgres's authentication handshake takes real time (milliseconds, sometimes tens of milliseconds) — repeated on every request, this becomes your API's dominant latency cost and, worse, a way to exhaust the database itself. Connection pooling is the fix, and understanding how it works is essential to configuring it correctly instead of guessing.
@@ -48,6 +55,8 @@ flowchart LR
     R4 -.waits for pool_timeout, or triggers overflow.-> C4
     Pool --> PG[(PostgreSQL max_connections)]
 ```
+
+![Connection pool: requests borrow three steady connections plus one overflow connection, extra requests wait in a queue and fail after pool_timeout, and all pools must fit under max_connections](../assets/diagrams/04-connection-pool.svg)
 
 ## Request / Response Example
 
@@ -138,6 +147,29 @@ AI agent workloads that fan out many concurrent tool calls (e.g., an agent proce
 - Connection pool exhaustion is a distinct, common production failure mode that needs its own monitoring and alerting.
 - `pool_pre_ping` and `pool_recycle` prevent stale-connection errors caused by the database or network silently dropping idle connections.
 - At fleet scale, an external pooler like PgBouncer replaces per-process pools as the right architecture.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between pool_size and max_overflow?</summary>
+
+`pool_size` is the number of connections kept open at steady state. `max_overflow` is extra, temporary connections allowed during bursts, which close again once load drops.
+
+</details>
+
+<details markdown="1">
+<summary>2. You scale from 4 to 10 API processes, each with pool_size=15 and max_overflow=5, against max_connections=100. What happens?</summary>
+
+Up to 10 × 20 = 200 connections can be demanded against a limit of 100, before counting workers and admin tools, so new connections fail and requests error out. Re-do the budget per process, or put a pooler like PgBouncer in front.
+
+</details>
+
+<details markdown="1">
+<summary>3. Under load, requests fail with "pool exhausted" 503s while the database CPU is low. What does that point to, and what should you check?</summary>
+
+The application is waiting for a free connection; the database is not overloaded. Either the pool is undersized for the concurrency, or slow queries or long transactions hold connections too long, so check pool checkout metrics and the queries holding connections.
+
+</details>
 
 ---
 Previous: [Database Transactions](database-transactions.md) · Next: [Migrations](migrations.md) · Back to [Part 4 README](README.md)

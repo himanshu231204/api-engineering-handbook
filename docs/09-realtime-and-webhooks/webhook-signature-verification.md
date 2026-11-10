@@ -1,5 +1,12 @@
 # Webhook Signature Verification
 
+> [!TIP]
+> **In one line:** Recompute HMAC-SHA256(secret, timestamp + body) over the raw bytes, compare in constant time, and reject old timestamps to stop forgeries and replays.
+>
+> **In plain English:** The sender mixes a secret only you two know with the exact message and sends the resulting code in a header. You redo the same math; if even one character of the message changed, or the sender lacks the secret, the codes do not match. Think of it as a password blended into the letter itself, plus a postmark date so an old letter cannot be mailed again.
+>
+> **You'll be able to:** implement HMAC verification on the raw request body · explain why compare_digest beats == for signatures · add replay protection and zero-downtime secret rotation
+
 ## Why This Matters
 
 Once you expose a [webhook](webhooks.md) endpoint, you've published a public URL that accepts `POST` requests and — without additional protection — will happily act on whatever anyone sends it. There is nothing about the URL itself that proves a request claiming to be `payment.succeeded` from your payment provider actually came from your payment provider; an attacker who finds or guesses that URL can forge the exact same payload and trigger your business logic (mark an order as paid, grant access, send a notification) with a single crafted `curl` command. Signature verification is the mechanism that closes this hole: proof, on every single request, that the payload was produced by someone who holds a shared secret — namely, the real provider — and that it hasn't been tampered with in transit. Skipping it, or implementing it carelessly, is one of the most common and most serious mistakes in webhook-consuming code, precisely because an unverified webhook endpoint often looks and works fine in every test until the day someone deliberately abuses it.
@@ -51,6 +58,8 @@ sequenceDiagram
 ```
 
 This diagram shows the two distinct attacks signature verification with a timestamp defends against: a fully forged payload (caught by the signature mismatch) and a captured, legitimately-signed payload resent later (caught by the timestamp check, since the signature alone would otherwise pass).
+
+![How the sender builds an HMAC signature and how the receiver checks timestamp, recomputes and compares in constant time](../assets/diagrams/09-hmac-signature.svg)
 
 ## Request / Response Example
 
@@ -193,6 +202,29 @@ As AI systems increasingly rely on asynchronous webhooks — an LLM provider not
 - Verify against the raw request body, not a re-parsed/re-serialized version, since serialization differences change the hash.
 - A valid signature alone doesn't prevent replay attacks — sign and check a timestamp with a bounded tolerance window to reject captured-and-resent requests.
 - Unverified webhook endpoints are a real, common, and serious vulnerability class — every webhook receiver in this handbook's examples (see [Webhooks](webhooks.md) and [`examples/webhooks/`](../../examples/webhooks/)) should perform this check before trusting any payload.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What two things does a matching HMAC signature prove?</summary>
+
+Authenticity, since only someone holding the shared secret could produce that exact hash, and integrity, since any change to the payload in transit would change the hash and fail the comparison.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is a valid signature alone not enough, and what fixes it?</summary>
+
+An attacker can capture a real, correctly signed request and resend it later; the signature still matches because the bytes are identical. Signing a timestamp along with the body and rejecting requests outside a few-minute window limits how long a captured request stays usable, but a replay inside that window still passes. So also record each event ID durably and skip repeats.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your receiver parses the JSON, re-serializes it, and verifies the signature on that. Legitimate webhooks sometimes fail. Why?</summary>
+
+Re-serializing can change whitespace, key order or number formatting, so the bytes differ from what the sender signed and the hash no longer matches. Verify against the raw request body before any parsing.
+
+</details>
 
 ---
 

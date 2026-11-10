@@ -1,5 +1,12 @@
 # How the Internet Works
 
+> [!TIP]
+> **In one line:** Every API call is chopped into IP packets, forwarded router by router and reordered by TCP — so latency, timeouts and connection errors come from layers below your code.
+>
+> **In plain English:** The internet is many networks joined together. It works like asking for directions on a road trip: nobody knows the whole route, each person (a router) just points you to the next town. Your data travels in small numbered pieces, and TCP puts them back together at the end.
+>
+> **You'll be able to:** Name the four layers (link, internet, transport, application) and what each does · Explain why APIs use TCP while DNS and video calls often use UDP · Tell a DNS, TCP or HTTP failure apart when debugging
+
 ## Why This Matters
 
 Every API call you make or build travels across a physical and logical stack of infrastructure you didn't write and mostly don't control: cables, routers, ISPs, and protocols developed decades before "REST API" was a phrase. When a request from your FastAPI client times out, hangs, or gets a mysterious connection error, understanding *what's actually happening between "send" and "receive"* is the difference between guessing and diagnosing. You don't need to be a network engineer to build APIs — but you do need a working model of packets, addresses, and routing, because every HTTP request you'll ever send rides on top of them.
@@ -42,6 +49,8 @@ flowchart LR
     E --> F[API Server]
     F -.TCP handshake + HTTP response.-> A
 ```
+
+![Diagram: a request needs a DNS lookup, a TCP and TLS connection, then many router hops, explained by a four-layer stack](../assets/diagrams/01-packet-journey.svg)
 
 Each arrow above is a hop where a router inspects the destination IP address of a packet and forwards it toward the next network. Your HTTP request doesn't travel as one unit down this whole path — it's split into packets at your machine, reassembled in order at the server thanks to TCP, and the response makes the same kind of trip back.
 
@@ -131,3 +140,26 @@ Every call to an LLM provider — Anthropic's API, OpenAI's API, or a self-hoste
 - TCP sits below HTTP and provides reliable, ordered delivery over an inherently unreliable packet-switched network; UDP skips those guarantees for speed.
 - Every API call you make inherits the latency, failure modes, and reliability characteristics of this underlying stack — timeouts and retries exist because of it.
 - You don't need to manage packets or routing directly, but recognizing which layer a failure belongs to (DNS, TCP, or HTTP) makes debugging dramatically faster.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does TCP add on top of IP?</summary>
+
+IP only addresses and routes packets. TCP opens a connection (the three-way handshake), puts packets back in order, resends lost ones and controls the sending rate — so HTTP gets a reliable stream of bytes.
+
+</details>
+
+<details markdown="1">
+<summary>2. An outbound HTTP call in your service hangs forever, yet the remote server has no bug. How can that happen, and what prevents it?</summary>
+
+The stall can happen below the application: a router drops packets, a firewall silently blocks the connection, or the path is just slow. An explicit timeout on every outbound call stops one network stall from hanging your app.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate says the API is down because a request timed out. How do you narrow it down?</summary>
+
+Work down the stack: check that DNS resolves (`dig`), check that TCP connects (`nc -zv host port`), then look at HTTP. A timeout can mean a crashed server, but also dropped packets, a firewall or a DNS failure — each has a different fix.
+
+</details>

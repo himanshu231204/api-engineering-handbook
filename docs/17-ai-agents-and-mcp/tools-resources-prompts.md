@@ -1,5 +1,12 @@
 # Tools, Resources, Prompts
 
+> [!TIP]
+> **In one line:** MCP servers offer three primitives: tools the model calls to take actions, resources the host attaches as read-only data, and prompts users pick as templates.
+>
+> **In plain English:** Not everything an AI app needs is an action. Sometimes the model needs to do something (a tool), sometimes it just needs to read something (a resource), and sometimes a person wants a ready-made starting point (a prompt). In kitchen terms: tools are appliances you switch on, resources are ingredients on the shelf, and prompts are recipe cards.
+>
+> **You'll be able to:** Classify a capability as a tool, resource or prompt · Use resource templates and change notifications for large or live data · Ship reviewed, versioned prompt templates that embed resources
+
 ## Why This Matters
 
 MCP servers expose exactly three kinds of capability: **tools**, **resources**, and **prompts** (see [MCP Architecture](mcp-architecture.md) for where these fit in the protocol, and [MCP Servers](mcp-servers.md) for how a server declares them). It's tempting to treat all three as roughly interchangeable "stuff the model can access," but they have distinct semantics, and using the wrong primitive for a job leads to real design mistakes — e.g., exposing a search operation as a resource when it should be a tool, or forcing a static reference document through a tool call when it should be a resource. Understanding the actual difference is what lets you design MCP servers well instead of by guesswork.
@@ -192,3 +199,26 @@ The three-primitive split is MCP's answer to a design question every custom tool
 - Resources should be safe to read repeatedly (idempotent); actions with side effects belong in tools, not resources.
 - Prompts can embed resources directly, giving servers a way to ship known-good, reviewed interaction patterns alongside their data and actions.
 - This three-way split is one of the clearest conceptual contributions MCP makes beyond plain tool calling — it's a useful design lens even when you're not using MCP directly.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Who typically decides to use each of the three MCP primitives?</summary>
+
+The model decides when to call tools, the host application or user decides which resources to attach to context, and the user explicitly selects prompts (for example from a slash-command menu).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should an operation with side effects never be exposed as a resource?</summary>
+
+Reading a resource is expected to be safe and repeatable (idempotent), and hosts may cache or re-read resources freely. A side effect hidden in a resource read breaks that assumption and can trigger actions unintentionally; anything that changes state belongs in a tool.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your wiki server lists all 40,000 pages as individual resources and resources/list responses are huge. What should you use instead?</summary>
+
+A resource template such as `wiki://pages/{page_id}`, which lets clients construct valid URIs for the whole class of pages without the server enumerating every one upfront.
+
+</details>

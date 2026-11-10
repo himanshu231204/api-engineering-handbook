@@ -1,5 +1,12 @@
 # SQL Fundamentals for APIs
 
+> [!TIP]
+> **In one line:** SQL is declarative: you describe the rows you want, the query planner decides how to fetch them, and a handful of statements cover most API work.
+>
+> **In plain English:** SQL is how your API asks the database for data. It is like ordering at a restaurant: you say which dish you want and the kitchen decides how to cook it, so your job is to ask precisely and safely.
+>
+> **You'll be able to:** Write `SELECT`, `INSERT ... RETURNING`, `UPDATE`, and `DELETE` with safe `WHERE` clauses · Choose `INNER JOIN` vs `LEFT JOIN` and `WHERE` vs `HAVING` · Run parameterized queries from Python
+
 ## Why This Matters
 
 Every API that isn't a toy eventually talks to a database, and almost every production database still speaks SQL. You can hide behind an ORM for a while, but the moment a query is slow, returns the wrong rows, or needs a join across three tables, you need to read and write SQL directly. This chapter gives you the working SQL vocabulary a backend engineer needs to be dangerous — not a full database course, just the 20% that shows up in 80% of API code.
@@ -172,6 +179,29 @@ RAG pipelines and AI agents that query relational data (e.g., a "text-to-SQL" to
 - `LEFT JOIN` vs `INNER JOIN` changes which rows appear in your API response — choose deliberately.
 - Always parameterize queries; never interpolate user input into SQL text.
 - Indexes turn `WHERE`/`JOIN`/`ORDER BY` from table scans into fast lookups — introduced conceptually here, detailed in [Database Performance](database-performance.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In what order does a SELECT conceptually execute its clauses?</summary>
+
+`FROM` → `WHERE` → `GROUP BY` → `HAVING` → `SELECT` → `ORDER BY` → `LIMIT`. This explains why a `SELECT` alias cannot be used in `WHERE`: the alias does not exist yet when `WHERE` runs.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is WHERE COUNT(*) > 5 an error, and what should you write instead?</summary>
+
+Aggregates are not computed yet at the `WHERE` stage, which filters individual rows before grouping. Use `HAVING COUNT(*) > 5` after `GROUP BY`, since `HAVING` filters groups after aggregation.
+
+</details>
+
+<details markdown="1">
+<summary>3. A report endpoint lists every user with their pending order, but users with no orders are missing. What is the likely bug?</summary>
+
+It uses `INNER JOIN`, which drops users without a matching order. A `LEFT JOIN` keeps every user and fills the order columns with `NULL`.
+
+</details>
 
 ---
 Next: [PostgreSQL Integration](postgresql-integration.md) · Back to [Part 4 README](README.md) · [Glossary](../../resources/glossary.md)

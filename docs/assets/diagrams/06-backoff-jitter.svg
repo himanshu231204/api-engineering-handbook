@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="468" viewBox="0 0 880 468" role="img" aria-labelledby="t d">
+  <title id="t">Retry timing: fixed delay vs exponential backoff vs exponential backoff with jitter</title>
+  <desc id="d">Three clients fail at time zero and retry. With a fixed 2-second delay they retry together every 2 seconds, producing seven synchronized spikes. With exponential backoff they retry together at 1, 3, 7 and 15 seconds: fewer spikes, but still in lockstep. With exponential backoff plus full jitter each client waits a random part of the delay, so retries are spread out over time and the server sees a gentle trickle instead of a thundering herd.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+    <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="467" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Spacing out retries: fixed vs exponential vs + jitter</text>
+  <text x="32" y="66" class="sub">Three clients (rows A, B, C) all fail at t = 0. Each dot is one retry hitting the server.</text>
+  <rect x="32" y="88" width="816" height="74" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="112" class="lbl" fill="#b91c1c">Fixed delay</text>
+  <text x="48" y="132" class="note">wait 2s every time</text>
+  <text x="48" y="150" class="lbl" fill="#b91c1c">→ spikes forever</text>
+  <line x1="214.0" y1="107" x2="821.5" y2="107" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="111" text-anchor="end" class="note">A</text>
+  <line x1="214.0" y1="125" x2="821.5" y2="125" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="129" text-anchor="end" class="note">B</text>
+  <line x1="214.0" y1="143" x2="821.5" y2="143" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="147" text-anchor="end" class="note">C</text>
+  <rect x="285.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="366.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="447.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="528.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="609.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="690.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <rect x="771.0" y="96" width="20" height="58" rx="6" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="295.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="376.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="457.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="538.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="619.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="700.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="781.0" cy="107" r="5" fill="#b91c1c"/>
+  <circle cx="295.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="376.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="457.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="538.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="619.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="700.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="781.0" cy="125" r="5" fill="#b91c1c"/>
+  <circle cx="295.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="376.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="457.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="538.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="619.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="700.0" cy="143" r="5" fill="#b91c1c"/>
+  <circle cx="781.0" cy="143" r="5" fill="#b91c1c"/>
+  <rect x="32" y="174" width="816" height="74" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="198" class="lbl" fill="#b45309">Exponential</text>
+  <text x="48" y="218" class="note">wait 1s, 2s, 4s, 8s</text>
+  <text x="48" y="236" class="lbl" fill="#b45309">→ fewer, still in sync</text>
+  <line x1="214.0" y1="193" x2="821.5" y2="193" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="197" text-anchor="end" class="note">A</text>
+  <line x1="214.0" y1="211" x2="821.5" y2="211" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="215" text-anchor="end" class="note">B</text>
+  <line x1="214.0" y1="229" x2="821.5" y2="229" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="233" text-anchor="end" class="note">C</text>
+  <rect x="244.5" y="182" width="20" height="58" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="325.5" y="182" width="20" height="58" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="487.5" y="182" width="20" height="58" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <rect x="811.5" y="182" width="20" height="58" rx="6" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="254.5" cy="193" r="5" fill="#b45309"/>
+  <circle cx="335.5" cy="193" r="5" fill="#b45309"/>
+  <circle cx="497.5" cy="193" r="5" fill="#b45309"/>
+  <circle cx="821.5" cy="193" r="5" fill="#b45309"/>
+  <circle cx="254.5" cy="211" r="5" fill="#b45309"/>
+  <circle cx="335.5" cy="211" r="5" fill="#b45309"/>
+  <circle cx="497.5" cy="211" r="5" fill="#b45309"/>
+  <circle cx="821.5" cy="211" r="5" fill="#b45309"/>
+  <circle cx="254.5" cy="229" r="5" fill="#b45309"/>
+  <circle cx="335.5" cy="229" r="5" fill="#b45309"/>
+  <circle cx="497.5" cy="229" r="5" fill="#b45309"/>
+  <circle cx="821.5" cy="229" r="5" fill="#b45309"/>
+  <rect x="32" y="260" width="816" height="74" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="284" class="lbl" fill="#1c7c54">Exp. + jitter</text>
+  <text x="48" y="304" class="note">wait random(0, delay)</text>
+  <text x="48" y="322" class="lbl" fill="#1c7c54">→ spread out, calm</text>
+  <line x1="214.0" y1="279" x2="821.5" y2="279" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="283" text-anchor="end" class="note">A</text>
+  <line x1="214.0" y1="297" x2="821.5" y2="297" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="301" text-anchor="end" class="note">B</text>
+  <line x1="214.0" y1="315" x2="821.5" y2="315" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="204.0" y="319" text-anchor="end" class="note">C</text>
+  <circle cx="230.2" cy="279" r="5" fill="#1c7c54"/>
+  <circle cx="290.9" cy="279" r="5" fill="#1c7c54"/>
+  <circle cx="424.6" cy="279" r="5" fill="#1c7c54"/>
+  <circle cx="659.5" cy="279" r="5" fill="#1c7c54"/>
+  <circle cx="246.4" cy="297" r="5" fill="#1c7c54"/>
+  <circle cx="319.3" cy="297" r="5" fill="#1c7c54"/>
+  <circle cx="380.0" cy="297" r="5" fill="#1c7c54"/>
+  <circle cx="590.7" cy="297" r="5" fill="#1c7c54"/>
+  <circle cx="222.1" cy="315" r="5" fill="#1c7c54"/>
+  <circle cx="266.6" cy="315" r="5" fill="#1c7c54"/>
+  <circle cx="473.2" cy="315" r="5" fill="#1c7c54"/>
+  <circle cx="744.5" cy="315" r="5" fill="#1c7c54"/>
+  <line x1="214.0" y1="352" x2="839.5" y2="352" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="214.0" y1="347" x2="214.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="214.0" y="372" text-anchor="middle" class="note">0s</text>
+  <line x1="295.0" y1="347" x2="295.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="295.0" y="372" text-anchor="middle" class="note">2s</text>
+  <line x1="376.0" y1="347" x2="376.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="376.0" y="372" text-anchor="middle" class="note">4s</text>
+  <line x1="457.0" y1="347" x2="457.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="457.0" y="372" text-anchor="middle" class="note">6s</text>
+  <line x1="538.0" y1="347" x2="538.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="538.0" y="372" text-anchor="middle" class="note">8s</text>
+  <line x1="619.0" y1="347" x2="619.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="619.0" y="372" text-anchor="middle" class="note">10s</text>
+  <line x1="700.0" y1="347" x2="700.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="700.0" y="372" text-anchor="middle" class="note">12s</text>
+  <line x1="781.0" y1="347" x2="781.0" y2="357" stroke="#475569" stroke-width="1.5"/>
+  <text x="781.0" y="372" text-anchor="middle" class="note">14s</text>
+  <text x="196" y="372" text-anchor="end" class="note">time →</text>
+  <g transform="translate(32,390)">
+    <rect width="816" height="48" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+    <text x="16" y="29" class="lbl" fill="#1c7c54">Full jitter</text>
+    <text x="104" y="29" class="code">sleep(random(0, min(base × 2^(attempt−1), max_delay)))</text>
+  </g>
+</svg>

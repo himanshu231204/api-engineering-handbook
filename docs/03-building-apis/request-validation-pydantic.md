@@ -1,5 +1,12 @@
 # Request Validation with Pydantic
 
+> [!TIP]
+> **In one line:** Describe valid input once as a Pydantic model and FastAPI parses, coerces, and rejects bad request bodies for you, with precise errors, before your code runs.
+>
+> **In plain English:** Instead of writing dozens of if-checks, you write a short description of what a correct request looks like. It works like a paper form with required boxes and rules: a clerk hands back any form that is incomplete or filled in wrong, and points at the exact box.
+>
+> **You'll be able to:** Write Pydantic v2 models with `Field` constraints and nested models · Add single-field and cross-field validators · Use `extra="forbid"` to catch unknown fields
+
 ## Why This Matters
 
 Every API endpoint is a boundary between the chaotic outside world and your trusted internal code. Clients send malformed JSON, missing fields, wrong types, out-of-range numbers, and outright malicious payloads. If you validate this by hand — a wall of `if "email" not in data: raise ...` — you'll miss edge cases, and every new field means more manual checks that drift out of sync with reality.
@@ -242,5 +249,28 @@ When you build endpoints that accept structured input for an LLM pipeline — e.
 - Nested models validate recursively and produce precise `loc` paths in errors.
 - `model_config = ConfigDict(...)` (v2) replaces v1's `class Config`.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which Pydantic v2 decorator handles validation that spans several fields, such as password and password_confirm matching?</summary>
+
+`@model_validator(mode="after")`. It runs after every individual field has been validated, so it can compare fields safely; `@field_validator` is for single-field logic.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is passing Pydantic validation not the same as the input being safe and correct for your business?</summary>
+
+Validation guarantees shape and type, not business rules. Whether an email is already registered still needs a database check, and size limits on huge bodies must be enforced at the server or proxy, because Pydantic only validates what arrives.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client sends {"usernme": "ana"} (a typo) to a model that has a username field with no default. What happens with the v2 default config, and what changes with extra="forbid"?</summary>
+
+With the default (`extra="ignore"`) the unknown `usernme` is silently dropped and the request fails with a 422 because `username` is missing. With `extra="forbid"` the error also names `usernme` as an extra field, so the client sees its typo directly.
+
+</details>
 
 Previous: `fastapi-fundamentals.md` · Next: `response-models.md`.

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="540" viewBox="0 0 880 540" role="img" aria-labelledby="t d">
+  <title id="t">Fixed-size chunking versus section-based chunking with overlap</title>
+  <desc id="d">The same refund policy text is split two ways. Fixed-size chunks of 39 characters cut words in half and mix two sections in one chunk. Section-based chunks keep one topic per chunk, and repeat the boundary sentence at the start of the next chunk as overlap so no fact is lost at the cut.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="539" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Chunking: where you cut changes what each piece means</text>
+  <text x="32" y="66" class="sub">Same text, two strategies. Red = broken words. Amber highlight = overlap.</text>
+  <text x="32" y="100" class="h">The document</text>
+  <rect x="32" y="112" width="816" height="64" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="138" class="code">4.2 Refund Policy: Customers may request a refund within 30 days. The item must be unused.</text>
+  <text x="48" y="160" class="code">4.3 Exceptions: Digital goods are non-refundable once downloaded.</text>
+  <line x1="230" y1="180" x2="230" y2="212" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="650" y1="180" x2="650" y2="212" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="32" y="234" class="h">A · Fixed size: cut every 39 characters</text>
+  <text x="452" y="234" class="h">B · By section, with overlap</text>
+  <rect x="32" y="246" width="396" height="34" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="46" y="268" class="code" xml:space="preserve">4.2 Refund Policy: Customers may <tspan fill="#b91c1c" font-weight="700">reques</tspan></text>
+  <rect x="32" y="290" width="396" height="34" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="46" y="312" class="code" xml:space="preserve"><tspan fill="#b91c1c" font-weight="700">t</tspan> a refund within 30 days. The item <tspan fill="#b91c1c" font-weight="700">mus</tspan></text>
+  <rect x="32" y="334" width="396" height="34" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="46" y="356" class="code" xml:space="preserve"><tspan fill="#b91c1c" font-weight="700">t</tspan> be unused. 4.3 Exceptions: Digital <tspan fill="#b91c1c" font-weight="700">go</tspan></text>
+  <rect x="32" y="378" width="396" height="34" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="46" y="400" class="code" xml:space="preserve"><tspan fill="#b91c1c" font-weight="700">ods</tspan> are non-refundable once downloaded.</text>
+  <rect x="452" y="246" width="396" height="76" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="464" y="293" width="191.2" height="20" rx="4" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+  <text x="466" y="268" class="code">4.2 Refund Policy: Customers may request</text>
+  <text x="466" y="288" class="code">a refund within 30 days.</text>
+  <text x="466" y="308" class="code">The item must be unused.</text>
+  <text x="744" y="288" class="lbl" fill="#1c7c54">chunk 1</text>
+  <rect x="452" y="336" width="396" height="76" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <rect x="464" y="343" width="191.2" height="20" rx="4" fill="#fef3c7" stroke="#b45309" stroke-width="1"/>
+  <text x="466" y="358" class="code">The item must be unused.</text>
+  <text x="466" y="378" class="code">4.3 Exceptions: Digital goods are</text>
+  <text x="466" y="398" class="code">non-refundable once downloaded.</text>
+  <text x="669.2" y="358" class="lbl" fill="#b45309">← overlap</text>
+  <text x="744" y="398" class="lbl" fill="#1c7c54">chunk 2</text>
+  <text x="32" y="438" class="lbl" fill="#b91c1c">✗ Words cut in half; chunk 3 mixes two topics</text>
+  <text x="452" y="438" class="lbl" fill="#1c7c54">✓ One topic per chunk; no fact cut in half</text>
+  <g transform="translate(32,460)">
+    <rect width="816" height="56" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="23" class="lbl" fill="#b45309">Why overlap?</text>
+    <text x="112" y="23" class="note">Repeating the end of one chunk at the start of the next means a sentence that straddles</text>
+    <text x="112" y="42" class="note">a cut still appears complete in at least one chunk. Typical overlap: 10–20% of chunk size.</text>
+  </g>
+</svg>

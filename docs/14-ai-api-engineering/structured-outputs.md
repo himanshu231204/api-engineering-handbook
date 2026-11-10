@@ -1,5 +1,12 @@
 # Structured Outputs
 
+> [!TIP]
+> **In one line:** To get machine-usable data from an LLM, constrain it with a schema (ideally via tool calling or native schema mode), then always validate and retry a bounded number of times.
+>
+> **In plain English:** Programs need data in an exact shape, but a model naturally writes chatty prose. You give it the shape you want, check every answer against that shape, and send it back with the error if it does not fit — like a cashier who hands back a wrongly filled cheque to be redone.
+>
+> **You'll be able to:** Compare prompt-only JSON, schema-constrained decoding and tool-calling-as-structured-output · Validate model output with Pydantic and feed errors into a bounded retry · Explain why valid JSON can still contain a wrong value
+
 ## Why This Matters
 
 The moment you want to do anything beyond "show the model's text response to a human" — populate a database record, call another API with extracted fields, branch your application logic on a classification — you need the LLM's output to be **reliable, machine-parseable data**, not prose. This is harder than it sounds. LLMs are trained primarily to produce fluent natural language, and "please respond only with valid JSON matching this exact schema" is a constraint layered on top of that, not the model's native mode. Naively asking for JSON in a prompt and calling `json.loads()` on the response is one of the most common sources of silent production failures in AI-integrated systems: extra prose before the JSON, trailing commas, unescaped quotes, or a field that's the wrong type. This chapter covers why structured output is hard and the real techniques for getting it reliably.
@@ -216,3 +223,26 @@ Structured output is the connective tissue between "an LLM said something" and "
 - Schema validity proves shape correctness, not truthfulness — a hallucinated value can still pass validation.
 - Retry loops must be bounded, should feed the validation error back to the model, and need an explicit failure path.
 - Tool-calling-as-structured-output is the same mechanism that powers agent decision-making in Part 17 — mastering it here pays off directly there.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the three tiers of structured output, from least to most reliable?</summary>
+
+Prompt-only (asking for JSON in the prompt), schema-constrained decoding (the provider restricts sampling to tokens that keep the output schema-valid), and tool-calling-as-structured-output (defining a tool whose input schema is your desired shape and forcing the model to call it).
+
+</details>
+
+<details markdown="1">
+<summary>2. If the provider's structured-output mode guarantees valid JSON, why do you still need validation?</summary>
+
+Provider guarantees have edge cases and vary by model and version, and some constraints like enums or minItems may be enforced more weakly. More importantly, schema validity only proves shape — a perfectly valid object can still contain a hallucinated value.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your extraction endpoint calls json.loads on the raw model text and crashes whenever the model starts with 'Sure, here is the JSON'. How should you fix it?</summary>
+
+Extract the JSON substring defensively, validate it with a real schema library, and on failure retry with the validation error fed back to the model, capped at 2–3 attempts with an explicit failure path. Better still, switch to tool calling or a native schema mode at low temperature.
+
+</details>

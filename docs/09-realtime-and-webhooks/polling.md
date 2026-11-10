@@ -1,5 +1,12 @@
 # Polling
 
+> [!TIP]
+> **In one line:** Polling is the client asking 'anything new?' on a timer with ordinary HTTP requests; the interval trades freshness against wasted requests.
+>
+> **In plain English:** The client simply calls a normal endpoint every few seconds and checks whether the answer changed, like a child in the back seat asking 'are we there yet?'. It needs no special servers and works everywhere, but most answers are 'no', and you only ever hear news as fast as you ask. Cursors, 304 Not Modified and backoff make it cheaper.
+>
+> **You'll be able to:** build a poller with backoff, a cursor and a hard time limit · estimate the load a poll interval creates · recognize when to switch to webhooks, SSE or WebSocket
+
 ## Why This Matters
 
 Not every "real-time" feature needs a persistent connection, a message broker, or a websocket server. Sometimes the simplest possible thing — a client asking "anything new?" over and over — is exactly the right tool, and reaching for something fancier is premature engineering. Polling is the baseline every other real-time pattern in this part gets compared against: [long polling](README.md), [WebSocket](websocket.md), and [Server-Sent Events](server-sent-events.md) all exist specifically to fix problems that plain polling has. You cannot reason well about when to use those tools until you understand exactly what polling costs you — in server load, in staleness, and in wasted requests — and exactly when those costs are acceptable.
@@ -206,6 +213,29 @@ Polling shows up constantly in AI API engineering wherever work happens asynchro
 - Conditional requests (`ETag`/`304`), cursors (`since=`), and adaptive backoff make polling meaningfully cheaper without changing its fundamental architecture.
 - Polling is the right default for low-urgency, low-scale needs, and the wrong tool once staleness requirements tighten or wasted-request volume grows — at which point `long-polling.md`, [WebSocket](websocket.md), or [Server-Sent Events](server-sent-events.md) become the better fit.
 - Every other real-time pattern in this part exists specifically to remove one of polling's costs — understanding polling well is what makes their trade-offs legible.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What single setting controls the trade-off in polling, and what does it trade?</summary>
+
+The poll interval. A shorter interval means you learn about changes sooner but sends many more requests that mostly return 'nothing changed'; a longer one is cheap but leaves data stale for longer.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should a poller send a cursor such as since= or an If-None-Match ETag?</summary>
+
+So the server only answers 'what changed since X' or returns a cheap 304 Not Modified, instead of re-sending and re-diffing the whole dataset on every poll. It cuts bandwidth and server work even when request count stays the same.
+
+</details>
+
+<details markdown="1">
+<summary>3. 10,000 open browser tabs poll a job status endpoint every second, and almost every answer is 'processing'. What is the cost and what would you change?</summary>
+
+That is about 10,000 requests per second hitting your API and database for mostly unchanged data, and it can trip your own rate limits. Add adaptive backoff and a ceiling, cache the status briefly, return 304s, or move to a push pattern such as webhooks or SSE.
+
+</details>
 
 ---
 

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-labelledby="t d">
+  <title id="t">Authentication vs authorization: two gates</title>
+  <desc id="d">A request first passes the authentication gate, which asks who are you and returns 401 Unauthorized if the credential is missing or invalid. It then passes the authorization gate, which asks are you allowed to do this to this resource and returns 403 Forbidden if not. Only after both gates pass does the handler run and return 200 OK.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="469" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Two gates on every protected request</text>
+  <text x="32" y="66" class="sub">First prove who you are, then prove you may do this. Each gate has its own error code.</text>
+
+  <!-- request -->
+  <rect x="32" y="100" width="130" height="116" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="128" class="h">Request</text>
+  <text x="48" y="156" class="code">GET</text>
+  <text x="48" y="176" class="code">/orders/482</text>
+  <text x="48" y="200" class="note">+ Bearer token</text>
+  <line x1="162" y1="158" x2="192" y2="158" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- gate 1: authentication -->
+  <rect x="196" y="100" width="226" height="116" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="220" cy="126" r="12" fill="#1c7c54"/>
+  <text x="220" y="130" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="242" y="131" class="h">Authentication</text>
+  <text x="212" y="160" class="lbl" fill="#1c7c54">“Who are you?”</text>
+  <text x="212" y="182" class="note">Is the token / key / session valid?</text>
+  <text x="212" y="202" class="note">Result: caller is user_123</text>
+
+  <!-- pass arrow 1 -> 2 -->
+  <text x="444" y="148" text-anchor="middle" class="lbl" fill="#1c7c54">pass</text>
+  <line x1="422" y1="158" x2="466" y2="158" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- gate 2: authorization -->
+  <rect x="470" y="100" width="226" height="116" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="494" cy="126" r="12" fill="#1c7c54"/>
+  <text x="494" y="130" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="516" y="131" class="h">Authorization</text>
+  <text x="486" y="160" class="lbl" fill="#1c7c54">“Are you allowed?”</text>
+  <text x="486" y="182" class="note">Role, scope or ownership check</text>
+  <text x="486" y="202" class="note">for THIS resource and action</text>
+
+  <!-- pass arrow 2 -> ok -->
+  <text x="718" y="148" text-anchor="middle" class="lbl" fill="#1c7c54">pass</text>
+  <line x1="696" y1="158" x2="740" y2="158" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+
+  <!-- success -->
+  <rect x="744" y="100" width="104" height="116" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="760" y="150" class="code">200 OK</text>
+  <text x="760" y="176" class="note">Handler runs,</text>
+  <text x="760" y="194" class="note">data returned</text>
+
+  <!-- fail arrows -->
+  <line x1="309" y1="216" x2="309" y2="278" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="321" y="252" class="lbl" fill="#b91c1c">fails</text>
+  <line x1="583" y1="216" x2="583" y2="278" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="595" y="252" class="lbl" fill="#b91c1c">fails</text>
+
+  <!-- 401 -->
+  <rect x="196" y="282" width="226" height="88" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="212" y="310" class="code">401 Unauthorized</text>
+  <text x="212" y="334" class="note">“We don't know who you are.”</text>
+  <text x="212" y="354" class="note">Client should log in or refresh.</text>
+
+  <!-- 403 -->
+  <rect x="470" y="282" width="226" height="88" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="486" y="310" class="code">403 Forbidden</text>
+  <text x="486" y="334" class="note">“We know you — the answer is no.”</text>
+  <text x="486" y="354" class="note">A new token will not change it.</text>
+
+  <!-- bottom note -->
+  <g transform="translate(32,396)">
+    <rect width="816" height="48" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+    <text x="16" y="29" class="lbl" fill="#1c7c54">Logged in ≠ allowed.</text>
+    <text x="172" y="29" class="note">Always run gate 1 then gate 2 — and run gate 2 per resource, on every request.</text>
+  </g>
+</svg>

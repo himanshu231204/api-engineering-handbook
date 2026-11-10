@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="548" viewBox="0 0 880 548" role="img" aria-labelledby="t d">
+  <title id="t">MCP architecture: host, clients, servers</title>
+  <desc id="d">A host application such as a chat app or IDE contains the LLM, a tool router, and one MCP client per server. Each client talks JSON-RPC to one MCP server, over stdio for local servers or HTTP for remote ones. Each server exposes tools, resources and prompts and owns access to an underlying system: local files, a Postgres database, the GitHub API. Every connection follows initialize, list, then call.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="547" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">MCP: one host, many plug-in servers</text>
+  <text x="32" y="66" class="sub">Each server is built once and works with any MCP host. Clients and servers speak JSON-RPC 2.0.</text>
+  <rect x="32" y="92" width="280" height="366" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="48" y="116" class="lbl" style="fill: #2563eb;">Host app (chat app, IDE, agent)</text>
+  <rect x="48" y="132" width="120" height="56" rx="10" fill="#ede9fe" stroke="#6d28d9" stroke-width="1.5"/>
+  <text x="108" y="156" class="lbl" style="fill: #6d28d9;" text-anchor="middle">LLM</text>
+  <text x="108" y="174" class="note" text-anchor="middle">asks for a tool</text>
+  <rect x="48" y="252" width="120" height="56" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="108" y="276" class="lbl" style="fill: #475569;" text-anchor="middle">Tool router</text>
+  <text x="108" y="294" class="note" text-anchor="middle">picks the client</text>
+  <line x1="108" y1="190" x2="108" y2="248" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="200" y="126" width="96" height="48" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="248" y="155" class="lbl" style="fill: #2563eb;" text-anchor="middle">Client 1</text>
+  <path d="M170,280 C185,280 182,150 196,150" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="200" y="246" width="96" height="48" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="248" y="275" class="lbl" style="fill: #2563eb;" text-anchor="middle">Client 2</text>
+  <path d="M170,280 C185,280 182,270 196,270" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="200" y="366" width="96" height="48" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="248" y="395" class="lbl" style="fill: #2563eb;" text-anchor="middle">Client 3</text>
+  <path d="M170,280 C185,280 182,390 196,390" fill="none" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="48" y="432" class="note">one client per connected server</text>
+  <line x1="300" y1="150" x2="408" y2="150" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="354" y="140" class="lbl" style="fill: #475569;" text-anchor="middle">JSON-RPC</text>
+  <text x="354" y="170" class="note" text-anchor="middle">stdio</text>
+  <line x1="300" y1="270" x2="408" y2="270" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="354" y="260" class="lbl" style="fill: #475569;" text-anchor="middle">JSON-RPC</text>
+  <text x="354" y="290" class="note" text-anchor="middle">stdio</text>
+  <line x1="300" y1="390" x2="408" y2="390" stroke="#475569" stroke-width="1.75" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="354" y="380" class="lbl" style="fill: #475569;" text-anchor="middle">JSON-RPC</text>
+  <text x="354" y="410" class="note" text-anchor="middle">HTTP</text>
+  <rect x="412" y="98" width="240" height="104" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="428" y="124" class="lbl" style="fill: #1c7c54;">MCP Files server</text>
+  <rect x="428" y="140" width="60" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="458.0" y="157" class="note" text-anchor="middle">tools</text>
+  <rect x="496" y="140" width="78" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="535.0" y="157" class="note" text-anchor="middle">resources</text>
+  <text x="428" y="188" class="note">owns credentials + execution</text>
+  <rect x="412" y="218" width="240" height="104" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="428" y="244" class="lbl" style="fill: #1c7c54;">MCP Postgres server</text>
+  <rect x="428" y="260" width="60" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="458.0" y="277" class="note" text-anchor="middle">tools</text>
+  <rect x="496" y="260" width="78" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="535.0" y="277" class="note" text-anchor="middle">resources</text>
+  <text x="428" y="308" class="note">owns credentials + execution</text>
+  <rect x="412" y="338" width="240" height="104" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="428" y="364" class="lbl" style="fill: #1c7c54;">MCP GitHub server</text>
+  <rect x="428" y="380" width="60" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="458.0" y="397" class="note" text-anchor="middle">tools</text>
+  <rect x="496" y="380" width="78" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="535.0" y="397" class="note" text-anchor="middle">resources</text>
+  <rect x="582" y="380" width="66" height="26" rx="6" fill="#ffffff" stroke="#1c7c54" stroke-width="1.2"/>
+  <text x="615.0" y="397" class="note" text-anchor="middle">prompts</text>
+  <text x="428" y="428" class="note">remote · auth, TLS, rate limits</text>
+  <line x1="656" y1="150" x2="700" y2="150" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="704" y="120" width="144" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="776" y="146" class="lbl" style="fill: #475569;" text-anchor="middle">Local files</text>
+  <text x="776" y="165" class="note" text-anchor="middle">disk</text>
+  <line x1="656" y1="270" x2="700" y2="270" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="704" y="240" width="144" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="776" y="266" class="lbl" style="fill: #475569;" text-anchor="middle">Postgres</text>
+  <text x="776" y="285" class="note" text-anchor="middle">database</text>
+  <line x1="656" y1="390" x2="700" y2="390" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="704" y="360" width="144" height="60" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="776" y="386" class="lbl" style="fill: #475569;" text-anchor="middle">GitHub</text>
+  <text x="776" y="405" class="note" text-anchor="middle">REST API</text>
+  <g transform="translate(32,474)">
+    <rect width="816" height="52" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  </g>
+  <circle cx="56" cy="500" r="12" fill="#1c7c54"/>
+  <text x="56" y="504" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="76" y="496" class="lbl" style="fill: #1c7c54;">initialize</text>
+  <text x="76" y="513" class="note">agree on version + features</text>
+  <circle cx="330" cy="500" r="12" fill="#1c7c54"/>
+  <text x="330" y="504" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="350" y="496" class="lbl" style="fill: #1c7c54;">tools/list · resources/list</text>
+  <text x="350" y="513" class="note">discover what exists</text>
+  <circle cx="624" cy="500" r="12" fill="#1c7c54"/>
+  <text x="624" y="504" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="644" y="496" class="lbl" style="fill: #1c7c54;">tools/call</text>
+  <text x="644" y="513" class="note">run it, get a result</text>
+</svg>

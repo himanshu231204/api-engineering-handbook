@@ -1,5 +1,12 @@
 # Design a URL Shortener API
 
+> [!TIP]
+> **In one line:** A URL shortener is a read-heavy caching problem: generate collision-free short codes cheaply, then serve almost every redirect from cache so the link never feels slow.
+>
+> **In plain English:** It works like a coat check: you hand over a bulky coat (the long URL) and get a tiny numbered ticket (the short code). Handing coats back happens a hundred times more often than taking them in, so the popular coats are kept right by the counter (the cache).
+>
+> **You'll be able to:** Turn "100M links a month" into QPS, storage and cache-size numbers · Choose between counter-based and hash-based short-code generation · Defend 302 over 301 and keeping click tracking off the redirect path
+
 ## Problem Statement
 
 Design a service like bit.ly: users submit a long URL and get back a short code; anyone who visits the short URL is redirected to the original. The interesting engineering is almost entirely on the read side — redirects vastly outnumber creations, and every redirect adds latency to someone's click, so this is fundamentally a read-heavy, latency-sensitive caching problem wearing a simple CRUD API as a costume. The two design questions that actually matter are how to generate short codes without collisions at scale, and how to make redirects fast enough that the shortener is never the reason a link feels slow.
@@ -105,6 +112,10 @@ id_generator_ranges   -- only needed if using the counter-based ID strategy (see
 
 ## High-Level Architecture
 
+Every case study in this part follows the same repeatable interview method — requirements, estimates, API, data model, high-level design, deep dives and scaling, failures, trade-offs — with a rough time budget for each step in a 45-minute interview:
+
+![The 45-minute system design method: eight steps from requirements to trade-offs, with a time budget per step](../assets/diagrams/19-design-method.svg)
+
 ```mermaid
 graph TB
     Client[Client / Browser]
@@ -130,6 +141,8 @@ graph TB
     CreateAPI -->|write| DB
     CreateAPI -->|warm| Cache
 ```
+
+![URL shortener write path (POST, ID generator, base62 encode, database) and read path (GET short code, Redis cache, database on miss, 302 redirect, async click event)](../assets/diagrams/19-url-shortener.svg)
 
 ## Data Flow
 
@@ -189,3 +202,26 @@ At 10x scale (15,000 redirects/s average, spikes into six figures for viral link
 - [Part 8 — Message Queues](../08-async-systems/message-queues.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why is a 7-character base62 code more than enough for this design? Show the arithmetic.</summary>
+
+Base62 gives 62^7 ≈ 3.5 trillion possible codes, while the design needs about 100M links/month × 60 months ≈ 6 billion over five years — hundreds of times fewer. With that much headroom, uniqueness comes from the generation strategy (a counter split into claimed ranges), not from hoping random codes don't collide.
+
+</details>
+
+<details markdown="1">
+<summary>2. A 301 redirect would let browsers skip the server on repeat clicks and cut load. Why does the design still choose 302?</summary>
+
+Browsers and ISP caches remember a 301 and stop asking the origin, so the platform could never again expire, change or disable that link — including one later found to point at a phishing page. Keeping control of every redirect was judged worth more than the saved server load.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your Redis cache cluster goes down during a viral spike. What should the redirect service do, and what happens to click analytics if the queue is also struggling?</summary>
+
+Fall back to the database (ideally read replicas): redirects get slower but keep working, because "cache unavailable" must never mean "service unavailable". Click events are fire-and-forget, so if the queue is down some clicks may be lost — acceptable because analytics is approximate, while the redirect itself must always work.
+
+</details>

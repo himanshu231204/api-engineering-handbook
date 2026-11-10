@@ -15,25 +15,37 @@ theme:
   font: false
   icon:
     repo: fontawesome/brands/github
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   features:
+    - navigation.instant
+    - navigation.instant.progress
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
-    - navigation.top
     - navigation.indexes
+    - navigation.footer
+    - navigation.top
     - navigation.tracking
     - search.suggest
     - search.highlight
+    - search.share
     - content.code.copy
     - content.action.edit
+    - content.tooltips
     - toc.follow
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
+      primary: custom
+      accent: custom
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
@@ -41,11 +53,16 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/progress.js
+
 plugins:
   - search
   - gen-files:
       scripts:
         - scripts/gen_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
 
 hooks:
   - scripts/mkdocs_hooks.py
@@ -64,31 +81,11 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
-
-nav:
-  - Home: index.md
-  - Curriculum:
-      - "00 · Introduction": 00-introduction/README.md
-      - "01 · API Foundations": 01-api-foundations/README.md
-      - "02 · REST API Design": 02-rest-api-design/README.md
-      - "03 · Building APIs": 03-building-apis/README.md
-      - "04 · Databases & APIs": 04-databases-and-apis/README.md
-      - "05 · Authentication & Authorization": 05-authentication-authorization/README.md
-      - "06 · Production Reliability": 06-production-reliability/README.md
-      - "07 · Caching & Performance": 07-caching-performance/README.md
-      - "08 · Async & Event-Driven Systems": 08-async-systems/README.md
-      - "09 · Real-Time APIs & Webhooks": 09-realtime-and-webhooks/README.md
-      - "10 · API Security": 10-api-security/README.md
-      - "11 · Microservices & Distributed Systems": 11-microservices-distributed-systems/README.md
-      - "12 · Observability": 12-observability/README.md
-      - "13 · API Testing": 13-api-testing/README.md
-      - "14 · AI API Engineering": 14-ai-api-engineering/README.md
-      - "15 · Production AI Systems": 15-production-ai-systems/README.md
-      - "16 · RAG APIs": 16-rag-apis/README.md
-      - "17 · AI Agents & MCP": 17-ai-agents-and-mcp/README.md
-      - "18 · Production Architecture": 18-production-architecture/README.md
-      - "19 · System Design Case Studies": 19-system-design-case-studies/README.md
-      - "20 · Capstone Projects": 20-capstone-projects/README.md
-  - Projects: projects/index.md
-  - Resources: resources/index.md
-  - Diagrams: diagrams/index.md
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg

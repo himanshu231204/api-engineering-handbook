@@ -21,6 +21,25 @@ jobs:
       - name: Check every relative link resolves
         run: python3 scripts/check_links.py
 
+      - name: Check every SVG diagram is well-formed
+        run: python3 scripts/check_svgs.py
+
+  docs-build:
+    name: Build the docs site (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install MkDocs
+        run: pip install -r requirements-docs.txt
+
+      - name: Build site
+        run: mkdocs build --strict
+
   examples-compile:
     name: Byte-compile examples/
     runs-on: ubuntu-latest

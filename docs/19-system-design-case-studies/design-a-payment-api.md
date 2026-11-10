@@ -1,5 +1,12 @@
 # Design a Payment API
 
+> [!TIP]
+> **In one line:** A payment API has one hard invariant — never double-charge — and idempotency keys, a pending-before-charge state machine, signed webhooks and an append-only ledger all exist to protect it.
+>
+> **In plain English:** When a checkout request times out, nobody knows whether the money actually moved. The fix is like writing a numbered receipt before opening the till: every retry carries the same receipt number, so the system recognizes it and hands back the original result instead of charging again.
+>
+> **You'll be able to:** Make client retries safe with Idempotency-Key headers · Resolve unknown outcomes with webhooks plus a reconciliation job · Size payment, ledger and webhook traffic for bursty sale events
+
 ## Problem Statement
 
 Design an API that lets an e-commerce platform charge customers, using a third-party payment processor (Stripe-like) to actually move money. The API must never double-charge a customer even under network failures and client retries, must reconcile asynchronously with the processor's own eventually-consistent view of a payment's state, and must minimize the scope of sensitive card data the company itself has to handle.
@@ -145,6 +152,8 @@ graph TB
     Worker -->|notify| Notif
 ```
 
+![Payment flow: idempotency key check, payment intent saved as pending, PSP charge, signed webhook verified and deduplicated, then status and double-entry ledger rows written in one transaction](../assets/diagrams/19-payment-flow.svg)
+
 ## Data Flow
 
 **Happy-path charge:**
@@ -208,3 +217,26 @@ At 100x scale, the ledger and reporting workload (finance running aggregate quer
 - [Part 9 — Webhook Signature Verification](../09-realtime-and-webhooks/webhook-signature-verification.md)
 
 Back to [Part 19 — System Design Case Studies](README.md).
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. With 2M orders/day and a 15x peak multiplier, what payment-creation rate do you design for — and what becomes the bottleneck at 10x?</summary>
+
+2,000,000 ÷ 86,400 s ≈ 23 req/s on average, × 15 ≈ 350 req/s at peak. At 10x (about 3,500 req/s peak) the processor's per-account rate limit becomes the ceiling before the company's own infrastructure does, so you need queuing/backpressure, higher negotiated limits, or multiple processor accounts.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why use client-supplied idempotency keys instead of deduplicating on order_id + amount?</summary>
+
+A rule keyed on the order cannot tell a network retry apart from a legitimate second attempt on the same order (for example, a new card after the first one failed). A client key identifies the attempt itself: same key and same body returns the stored result, same key with a different body returns 409. The cost is that every client must generate and reuse keys correctly.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your call to the payment processor times out with no response at all. What should the API record, and what must it not do?</summary>
+
+It must not assume failure or blindly retry the charge — an unknown outcome is not a failure. Because the intent row was written as pending before the call, the API marks it processing/unknown and lets the signed webhook, or a reconciliation job that polls the processor for intents stuck in pending, settle the true status.
+
+</details>

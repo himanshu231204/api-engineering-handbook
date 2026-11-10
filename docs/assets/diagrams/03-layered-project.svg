@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="608" viewBox="0 0 880 608" role="img" aria-labelledby="t d">
+  <title id="t">Layered FastAPI project structure</title>
+  <desc id="d">Routers call services, services call repositories, and repositories talk to the database. Routers know HTTP but not SQL; services know business rules but not HTTP or SQL; repositories know the database but not HTTP or business rules.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="607" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">Layered project: each layer has one job</text>
+  <text x="32" y="66" class="sub">Calls only flow downward. A router never calls a repository directly.</text>
+
+  <text x="300" y="88" class="lbl" fill="#1c7c54">✓ This layer knows</text>
+  <text x="580" y="88" class="lbl" fill="#b91c1c">✗ This layer never touches</text>
+  <rect x="32" y="104" width="816" height="84" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="58" cy="134" r="12" fill="#1c7c54"/>
+  <text x="58" y="138" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">1</text>
+  <text x="78" y="139" class="h">Routers</text>
+  <text x="48" y="168" class="code">routers/orders.py</text>
+  <line x1="284" y1="116" x2="284" y2="176" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="564" y1="116" x2="564" y2="176" stroke="#d1d5db" stroke-width="1"/>
+  <text x="300" y="140" class="note">HTTP: paths, methods, status codes</text>
+  <text x="300" y="160" class="note">request and response schemas</text>
+  <text x="580" y="140" class="note">SQL, sessions, or ORM models</text>
+  <text x="580" y="160" class="note">business rules (no stock checks here)</text>
+  <line x1="140" y1="190" x2="140" y2="217" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="152" y="209" class="note">calls</text>
+  <rect x="32" y="220" width="816" height="84" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="58" cy="250" r="12" fill="#1c7c54"/>
+  <text x="58" y="254" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">2</text>
+  <text x="78" y="255" class="h">Services</text>
+  <text x="48" y="284" class="code">services/order_service.py</text>
+  <line x1="284" y1="232" x2="284" y2="292" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="564" y1="232" x2="564" y2="292" stroke="#d1d5db" stroke-width="1"/>
+  <text x="300" y="256" class="note">business rules, e.g. “enough stock?”</text>
+  <text x="300" y="276" class="note">domain errors, the repository interface</text>
+  <text x="580" y="256" class="note">HTTP: requests, status codes</text>
+  <text x="580" y="276" class="note">SQL or ORM query details</text>
+  <line x1="140" y1="306" x2="140" y2="333" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="152" y="325" class="note">calls</text>
+  <rect x="32" y="336" width="816" height="84" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="58" cy="366" r="12" fill="#1c7c54"/>
+  <text x="58" y="370" text-anchor="middle" style="font: 700 12px Inter, system-ui, sans-serif" fill="#ffffff">3</text>
+  <text x="78" y="371" class="h">Repositories</text>
+  <text x="48" y="400" class="code">repositories/order_repo.py</text>
+  <line x1="284" y1="348" x2="284" y2="408" stroke="#d1d5db" stroke-width="1"/>
+  <line x1="564" y1="348" x2="564" y2="408" stroke="#d1d5db" stroke-width="1"/>
+  <text x="300" y="372" class="note">SQLAlchemy session and queries</text>
+  <text x="300" y="392" class="note">how to fetch and store rows</text>
+  <text x="580" y="372" class="note">FastAPI or anything HTTP</text>
+  <text x="580" y="392" class="note">business decisions</text>
+  <line x1="140" y1="422" x2="140" y2="449" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="152" y="441" class="note">calls</text>
+  <rect x="32" y="452" width="816" height="52" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="484" class="h">Database (PostgreSQL)</text>
+  <text x="300" y="484" class="note">Only the repository layer talks to it directly.</text>
+  <rect x="32" y="528" width="816" height="48" rx="10" fill="#f8fafc" stroke="#e5e7eb"/>
+  <text x="48" y="557" class="code">core/</text>
+  <text x="100" y="557" class="note">config, security helpers and shared Depends() providers sit beside the layers; any layer may use them.</text>
+
+</svg>

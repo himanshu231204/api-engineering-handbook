@@ -1,5 +1,12 @@
 # Load Testing
 
+> [!TIP]
+> **In one line:** Load testing simulates realistic and peak traffic to check that your API stays fast and error-free at scale, measured with throughput, P95/P99 latency and error rate together.
+>
+> **In plain English:** A correct API that crawls or fails when a thousand people use it at once is still broken. Load testing sends many pretend users at a copy of your system and watches how long answers take and how many fail. It shows which part — often the database connection pool — runs out first.
+>
+> **You'll be able to:** design a scenario and ramp-up load profile with think-time · run Locust or k6 against staging and judge results against an SLO · tell load, stress and chaos testing apart and avoid testing production by accident
+
 ## Why This Matters
 
 `unit-testing.md` and `integration-testing.md` answer "does my API produce the correct response?" Load testing answers a completely different, equally critical question: "does my API still produce that correct response — quickly enough, and reliably enough — when a thousand users hit it at once?" A functionally perfect endpoint that takes 30 seconds to respond under real traffic, or starts returning 500s once your connection pool is exhausted, is not a working API in any practical sense. Correctness testing and performance testing are orthogonal concerns, and skipping the second one is how teams discover their database connection pool size or their synchronous blocking call (see [Sync vs Async](../08-async-systems/README.md)) the hard way — during a marketing launch or a traffic spike, in production, with real users watching a spinner.
@@ -189,4 +196,26 @@ Load testing an AI-backed endpoint has an extra dimension beyond a typical CRUD 
 - Model realistic user scenarios with think-time and a mix of endpoints, and ramp load up gradually rather than applying it instantly.
 - Never load test against production without explicit, controlled authorization; use a dedicated staging/performance environment instead.
 - For AI-backed endpoints, provider rate limits and per-call cost often become the binding constraint before your own infrastructure does — plan and budget load tests against LLM APIs accordingly.
-</content>
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How do load testing, stress testing and chaos testing differ?</summary>
+
+Load testing applies realistic expected or peak traffic to check that performance targets are met. Stress testing deliberately goes beyond expected capacity to find the breaking point and how the system fails. Chaos testing injects failures, such as killed processes or network partitions, instead of just traffic.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should load be ramped up gradually instead of applied all at once?</summary>
+
+An instant spike triggers cold-start effects (empty caches, autoscalers that haven't reacted, cold connection pools) that don't match how real traffic usually grows, and can mask or exaggerate real limits. Ramping up and holding steady shows steady-state behavior under the target load.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your load test shows throughput holding at 1,000 requests per second, so the team declares success. What else must you check before agreeing?</summary>
+
+Check latency percentiles and error rate alongside throughput: P99 may have ballooned, or a growing share of responses may be errors or timeouts. Also confirm the load generator wasn't the bottleneck and that a fixed resource like the database connection pool isn't about to saturate.
+
+</details>

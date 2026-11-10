@@ -1,5 +1,12 @@
 # Redis
 
+> [!TIP]
+> **In one line:** Redis is a shared, in-memory data structure server, not just a cache: strings, hashes, lists, sets and sorted sets each solve a different API problem in sub-millisecond time.
+>
+> **In plain English:** Redis keeps data in RAM on its own server, so every copy of your API can read and write the same values almost instantly. Instead of only storing blobs of text, it understands shapes like counters, lists and ranked scores, much like a toolbox with a specific tool for each job instead of one hammer. That makes it the go-to home for caches, sessions, rate limits, queues and leaderboards.
+>
+> **You'll be able to:** pick the right Redis data structure for a given access pattern · set TTLs on every kind of key, not just strings · avoid production traps like KEYS *, missing persistence and unbounded memory
+
 ## Why This Matters
 
 "Redis is just a cache" is one of the most common — and most limiting — misconceptions in API engineering. Understood only as a cache, you'll reach for it exactly once, for exactly one pattern (cache-aside), and miss the rest of what makes it one of the most widely deployed pieces of infrastructure in modern backend systems: rate limiting counters, session stores, leaderboards, job queues, distributed locks, pub/sub messaging, and real-time analytics all run on the same tool. Understanding *what Redis actually is* — an in-memory data structure server — unlocks all of these uses, and makes the caching patterns in the rest of this part (cache-aside, invalidation, TTL) feel like special cases of a more general and more powerful tool.
@@ -206,6 +213,29 @@ Redis shows up constantly in AI-backed API infrastructure beyond simple response
 - Persistence (RDB/AOF) is optional and configurable — decide per use case whether Redis is disposable cache or a system of record.
 - Matching your data structure to your access pattern (hash for partial updates, sorted set for rankings) unlocks capabilities a plain blob cache doesn't offer.
 - The same Redis instance commonly powers caching, rate limiting, sessions, and queues in a single production API system.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which Redis data structure would you use for a 'top 10 trending posts' leaderboard, and why?</summary>
+
+A sorted set: it keeps members ordered by score automatically (ZINCRBY to bump, ZREVRANGE to read the top N), so ranking is a fast range query instead of a sort in your application.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is running KEYS * against a production Redis dangerous?</summary>
+
+Redis executes commands one at a time, so a command that scans the entire keyspace blocks every other client until it finishes, causing a latency spike for the whole system. SCAN walks the keyspace in small batches instead.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your three API instances each keep sessions in a Python dict. Users get logged out randomly. What is wrong and how does Redis fix it?</summary>
+
+An in-process cache lives inside one instance, so a request routed to a different instance (or arriving after a restart) cannot see the session. Storing sessions in Redis, for example as a hash with a TTL, gives every instance the same shared state.
+
+</details>
 
 ---
 

@@ -1,5 +1,12 @@
 # Cache-Aside Pattern
 
+> [!TIP]
+> **In one line:** In cache-aside the application owns the cache: check it, on a miss read the database, store the result with a TTL, then return.
+>
+> **In plain English:** The cache never fetches anything by itself; your code does all the work. Think of a chef who keeps a small tray of prepped ingredients: if something is on the tray they grab it, if not they prep it from scratch and put the extra on the tray for next time. Writes simply go to the database, so the first read after a change or an expiry is slow.
+>
+> **You'll be able to:** implement the four-step cache-aside read path correctly · add negative caching for 'not found' results · protect hot keys from a stampede with a short-lived lock
+
 ## Why This Matters
 
 Cache-aside (also called "lazy loading") is the default caching strategy in most API systems, and for good reason: it's the simplest pattern that gets the core benefit of caching — protecting the database from redundant reads — with the least amount of new infrastructure. If you only learn one caching pattern well, it should be this one, because it's also the pattern that every other strategy (write-through, write-behind, TTL-based expiry) gets compared against. Understanding *why* cache-aside works the way it does, and specifically *why* it puts the application in charge of populating the cache rather than the cache or database doing it automatically, sets up everything else in this part.
@@ -60,6 +67,8 @@ sequenceDiagram
 
 The key detail visible in this diagram: the database is only ever consulted on the miss branch, and the cache population (`SET ... EX 300`) happens *before* the response is returned to the client, keeping the cache consistently ahead of the next request rather than racing it.
 
+![Cache-aside flow: read path checks the cache, falls back to the database on a miss and stores the result with a TTL; write path updates the database and deletes the cached key](../assets/diagrams/07-cache-aside.svg)
+
 ## Request / Response Example
 
 First request for a resource (cold cache):
@@ -115,6 +124,7 @@ This example shows cache-aside as a reusable decorator, including **negative cac
 import asyncio
 import json
 import os
+import uuid
 from functools import wraps
 from typing import Any, Awaitable, Callable
 
@@ -126,6 +136,16 @@ redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 NEGATIVE_CACHE_TTL = 30  # short TTL for "not found" results
 SENTINEL_NOT_FOUND = "__NOT_FOUND__"
 LOCK_TTL = 5  # seconds; guards against stampede while DB is being queried
+WAIT_RETRIES = 20  # 20 x 50 ms = at most 1 s waiting for the lock owner
+
+# Delete the lock only if it still holds OUR token. Without this, a slow fetch
+# that outlives LOCK_TTL would delete the lock a different request now owns.
+RELEASE_LOCK = """
+if redis.call("get", KEYS[1]) == ARGV[1] then
+    return redis.call("del", KEYS[1])
+end
+return 0
+"""
 
 
 def cache_aside(key_template: str, ttl: int = 300):
@@ -150,26 +170,35 @@ def cache_aside(key_template: str, ttl: int = 300):
             # others briefly wait and retry the cache instead of all
             # hitting the database at once for the same missing key.
             lock_key = f"lock:{cache_key}"
-            acquired = await redis_client.set(lock_key, "1", nx=True, ex=LOCK_TTL)
+            lock_token = uuid.uuid4().hex  # proves ownership when releasing
+            acquired = await redis_client.set(lock_key, lock_token, nx=True, ex=LOCK_TTL)
 
             if not acquired:
-                await asyncio.sleep(0.05)
-                cached = await redis_client.get(cache_key)
-                if cached is not None and cached != SENTINEL_NOT_FOUND:
-                    return {"data": json.loads(cached), "cache": "HIT_AFTER_WAIT"}
+                # Not the lock owner: poll the cache for a short, bounded time
+                # instead of querying the database.
+                for _ in range(WAIT_RETRIES):
+                    await asyncio.sleep(0.05)
+                    cached = await redis_client.get(cache_key)
+                    if cached is not None:
+                        if cached == SENTINEL_NOT_FOUND:
+                            return {"data": None, "cache": "HIT_NEGATIVE"}
+                        return {"data": json.loads(cached), "cache": "HIT_AFTER_WAIT"}
+                # The owner is slow or died: fall back to one direct read so
+                # this request still finishes (the lock's TTL guarantees progress).
 
             try:
                 result = await fetch_fn(**kwargs)
+                if result is None:
+                    # Negative caching: avoid repeated DB hits for missing data.
+                    await redis_client.set(cache_key, SENTINEL_NOT_FOUND, ex=NEGATIVE_CACHE_TTL)
+                    return {"data": None, "cache": "MISS_NEGATIVE"}
+                # Populate the cache BEFORE releasing the lock, so waiting
+                # requests find the value instead of racing to the database.
+                await redis_client.set(cache_key, json.dumps(result), ex=ttl)
+                return {"data": result, "cache": "MISS"}
             finally:
-                await redis_client.delete(lock_key)
-
-            if result is None:
-                # Negative caching: avoid repeated DB hits for missing data.
-                await redis_client.set(cache_key, SENTINEL_NOT_FOUND, ex=NEGATIVE_CACHE_TTL)
-                return {"data": None, "cache": "MISS_NEGATIVE"}
-
-            await redis_client.set(cache_key, json.dumps(result), ex=ttl)
-            return {"data": result, "cache": "MISS"}
+                if acquired:
+                    await redis_client.eval(RELEASE_LOCK, 1, lock_key, lock_token)
 
         return wrapper
 
@@ -232,6 +261,29 @@ Cache-aside is the base pattern underneath LLM response caching: check whether a
 - Negative caching and stampede protection (locks or probabilistic early expiry) are essential additions for production traffic, not optional extras.
 - It contrasts with write-through and write-behind caching, which shift work to the write path instead — covered in upcoming chapters.
 - The same pattern extends directly to caching expensive LLM calls and retrieval results in AI systems.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are the four steps of the cache-aside read path?</summary>
+
+Check the cache by key; on a hit, return the cached value; on a miss, read the authoritative answer from the database; populate the cache with that answer and a TTL before returning, so the next request hits.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if you never cache 'not found' results?</summary>
+
+Every request for a nonexistent ID always misses and falls through to the database, so a buggy client or an attacker can hammer the database cheaply. Negative caching stores a 'not found' marker with a short TTL to absorb those repeats.
+
+</details>
+
+<details markdown="1">
+<summary>3. A hot product key expires and 200 requests arrive in the same instant. With the lock from the code example, what happens to them?</summary>
+
+Only the request that wins the SET NX lock queries the database and repopulates the cache; the others poll the cache for a bounded wait (up to 1 second here) instead of all hitting the database, and the owner releases the lock only after writing the cache. The trade-offs are the extra latency for waiting requests and the fallback read if the owner is slow.
+
+</details>
 
 ---
 

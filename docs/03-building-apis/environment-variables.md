@@ -1,5 +1,12 @@
 # Environment Variables
 
+> [!TIP]
+> **In one line:** Keep anything that changes between environments, especially secrets, out of your code and read it from environment variables at runtime.
+>
+> **In plain English:** The same program should run on your laptop, in testing, and in production without being edited. It is like one heater with a different thermostat setting in each room: the heater never changes, only the setting does, and secrets never get written into the code that everyone can read.
+>
+> **You'll be able to:** Load local config from a `.env` file with `python-dotenv` · Keep `.env` out of git and commit a `.env.example` · Fail fast at startup when a required variable is missing
+
 ## Why This Matters
 
 Your API needs to behave differently depending on where it runs: a local database URL on your laptop, a different one in staging, a different one in production; debug logging on locally, off in production; a test LLM API key locally, a real one in production. If any of this is hardcoded into your source code, you're one `git push` away from leaking a production secret into a public repository, or — just as bad — accidentally running production traffic against a staging database because someone forgot to change a hardcoded string before deploying.
@@ -203,5 +210,28 @@ AI-backed APIs typically depend on multiple provider API keys (`OPENAI_API_KEY`,
 - Fail fast at startup when required configuration is missing — don't let it surface as a confusing runtime error later.
 - Never commit `.env`; always commit a values-free `.env.example`.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between os.environ["KEY"] and os.environ.get("KEY")?</summary>
+
+`os.environ["KEY"]` raises `KeyError` if the variable is missing, while `.get("KEY")` returns `None`. For required values, a clear failure is better, ideally a helper that raises a descriptive `RuntimeError` at startup.
+
+</details>
+
+<details markdown="1">
+<summary>2. You committed .env by accident, then added it to .gitignore and deleted it. Why are you not safe yet?</summary>
+
+The file stays in git history and can be recovered forever. Treat every secret in it as compromised: rotate them immediately, and purge the history as a separate step.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your app reads DATABASE_URL lazily inside a request handler and the variable is missing in production. What happens, and what should you do instead?</summary>
+
+The app boots fine and then fails mid-request with a confusing error, possibly long after deploy. Validate required variables at startup so a misconfigured deploy crashes immediately with a message that names the missing key.
+
+</details>
 
 Previous: `project-architecture.md` · Next: `configuration-management.md`.

@@ -1,5 +1,12 @@
 # Tokens and Tokenization
 
+> [!TIP]
+> **In one line:** Tokens — subword chunks, not words or characters — are the real unit of LLM cost, latency, rate limits, and context capacity.
+>
+> **In plain English:** Before the model reads your text, a tokenizer chops it into pieces from a fixed list it learned in advance. Common words are one piece; rare words, code, numbers and many non-English scripts break into several. It is like paying for a text message by syllable rather than by word.
+>
+> **You'll be able to:** Explain why tokens differ from words and characters · Estimate token count and cost locally before sending a request · Spot workloads (code, numbers, other languages) that cost more than you expect
+
 ## Why This Matters
 
 Every dimension you care about as an API engineer — cost, latency, whether a request fits, rate limits — is measured in **tokens**, not characters and not words. If your mental model is "the price is per word" or "the limit is number of characters," you will consistently mis-estimate cost, get surprised by rate limit errors, and write context-truncation logic that either wastes budget or cuts things off too aggressively. Tokens are the actual unit of currency and capacity for every LLM API, and understanding how tokenization works — not just that it exists — is what lets you estimate and control both.
@@ -41,6 +48,8 @@ flowchart LR
     E --> F["Detokenizer"]
     F --> G["Text:\n'quite fast'"]
 ```
+
+![A sentence split into ten token chips with numeric IDs, showing tokens are not words and that cost is input tokens plus output tokens](../assets/diagrams/14-tokenization.svg)
 
 The model never sees your literal characters — everything it reasons over and everything it generates is mediated by this tokenizer boundary, which is also exactly where cost and context-window accounting happen.
 
@@ -161,3 +170,26 @@ Token accounting is the hidden cost driver behind almost every architecture deci
 - The "~4 characters per token" heuristic is a rough English-prose estimate, not a reliable rule for code, numbers, or other languages.
 - Always estimate token counts locally before sending large or variable-length requests, and log actual usage from responses for ground truth.
 - Token accounting underlies context-window budgeting, chunking strategy in RAG, and tool-schema cost in agents — it's foundational to the rest of this part.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the rough token heuristic for English prose, and where does it break down?</summary>
+
+About 4 characters (or 0.75 words) per token. It underestimates for code, non-English or non-Latin text, numbers, and rare strings like UUIDs, which split into many small tokens.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why can two prompts with the same number of characters have different costs?</summary>
+
+Billing counts tokens produced by the tokenizer, not characters. A prompt full of common English words maps to fewer vocabulary entries than one full of identifiers, digits, or rare words of the same length.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your cost estimate counts only the words the user typed, but the real bill is far higher. What did you leave out?</summary>
+
+The system prompt, conversation history, tool/function schemas, and message-formatting overhead all consume input tokens on every call — plus output tokens are often priced higher. Estimate the full request with a tokenizer and compare against the API's returned usage.
+
+</details>

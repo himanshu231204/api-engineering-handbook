@@ -1,5 +1,12 @@
 # Response Models
 
+> [!TIP]
+> **In one line:** A response_model is an allowlist: whatever your function returns, only its declared fields reach the client, unless you return a Response object directly, which bypasses it.
+>
+> **In plain English:** Your code often holds more data than the client should see, such as password hashes or internal scores. A response model works like a museum display case: visitors only see what you deliberately put in the case, never what is in the storeroom.
+>
+> **You'll be able to:** Define separate `*Create`, `*Out`, and internal models for one resource · Serialize ORM objects with `from_attributes=True` · Spot routes that leak sensitive fields
+
 ## Why This Matters
 
 Validating input is only half the contract. What your API sends *back* matters just as much — and it's easy to get wrong by accident. A classic and dangerous bug: you fetch a `User` object from the database (which includes `password_hash`) and return it directly from a route. Without a response model, FastAPI will happily serialize every attribute on that object straight into the JSON response, including the hash. Response models are how you draw a hard line between your internal data shape and your public API shape.
@@ -223,5 +230,28 @@ Response models become critical when building AI endpoints that call external LL
 - `from_attributes=True` (v2) lets Pydantic read non-dict objects like ORM instances.
 - Treat response shaping as a security boundary, not just a formatting nicety.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What setting lets a Pydantic response model read attributes from a SQLAlchemy object instead of dict keys?</summary>
+
+`model_config = ConfigDict(from_attributes=True)`, the v2 name for v1's `orm_mode`. Without it, serializing a non-dict object through the model causes confusing validation errors.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is an allowlist (declare what is visible) safer than a blocklist (declare what is hidden)?</summary>
+
+With an allowlist, a new sensitive column added to the database later stays hidden by default, because it is not on the response model. With a blocklist, every new secret field leaks until someone remembers to exclude it.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your GET /users/{id} returns the ORM User object directly and has no response_model. A teammate adds a password_hash column. What goes wrong, and how do you fix it?</summary>
+
+FastAPI serializes every attribute, so `password_hash` now appears in every response. Add `response_model=UserOut`, where `UserOut` declares only `id`, `username`, and `email`, so anything else is stripped before it reaches the wire.
+
+</details>
 
 Previous: `request-validation-pydantic.md` · Next: `dependency-injection.md`.

@@ -10,6 +10,8 @@
 <!-- CI badge points at himanshu231204/api-engineering-handbook — update the owner/repo in this
      URL (and in .github/workflows/ci.yml if you rename the repo) once you push this to GitHub. -->
 
+> **📖 Read it as a website:** [himanshu231204.github.io/api-engineering-handbook](https://himanshu231204.github.io/api-engineering-handbook/). It has sidebar navigation, search, dark mode, a [study plan](docs/study-plan.md) and a progress tracker.
+
 This is a from-scratch, open-source handbook for learning API engineering — from "what is an HTTP request" all the way to building production LLM gateways, RAG pipelines, and AI agent APIs. It is written to be read start-to-finish, referenced chapter-by-chapter, or used as a long-term engineering reference.
 
 If you follow this repository from beginning to end, build the projects, and work through the exercises, you will deeply understand how modern APIs — traditional and AI-powered — are designed, built, secured, scaled, and operated in production.
@@ -195,9 +197,10 @@ Additional references: [Cheatsheets](resources/cheatsheets/) · [Interview Quest
 
 ## How to Use This Repository
 
+0. **Pick a track in the [Study Plan](docs/study-plan.md)** (Complete 16 weeks, Backend 10 weeks, AI Engineer 8 weeks).
 1. **Read sequentially the first time.** Parts 1–13 build general API/backend engineering skill; Parts 14–17 build on that foundation for AI systems. Skipping ahead to Part 14 without Parts 1–13 will leave gaps (rate limiting, caching, and observability all show up again in AI gateways).
 2. **Run the examples.** Every code-heavy chapter links to a runnable sample in `examples/`. Clone, `cd` into the folder, and follow its own README.
-3. **Do the exercises** at the end of each chapter before moving on — they're short by design.
+3. **Start every chapter with its TL;DR box and finish with its Check Yourself quiz.** Answer each question before opening it. If you get fewer than two of three right, re-read before moving on. Then do the exercises.
 4. **Build the capstone projects** in `projects/` once you finish the part(s) they depend on. They are the real test of whether the concepts stuck.
 5. **Use it as a reference afterward.** Once you've read it once, come back to specific chapters (or the cheatsheets) whenever you need a refresher while building something real.
 

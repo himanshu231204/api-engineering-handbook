@@ -1,5 +1,12 @@
 # Monolith vs Microservices
 
+> [!TIP]
+> **In one line:** Monoliths and microservices are trade-offs, not maturity levels: microservices buy independent deploys and scaling at the price of network calls and partial failures.
+>
+> **In plain English:** A monolith is one program you ship as a whole; microservices are several smaller programs that talk over the network. Splitting lets separate teams ship and scale on their own, but every former function call can now be slow, fail, or leave data half-updated. Start simple and split only along real team and business boundaries when you have a concrete reason.
+>
+> **You'll be able to:** compare monolith and microservices on deployment, scaling, consistency and operational cost · apply Conway's Law and recognize a distributed monolith · argue for a modular monolith or a specific split with concrete evidence
+
 ## Why This Matters
 
 This is probably the single most over-hyped decision in backend engineering. A huge fraction of engineering blog posts, conference talks, and job postings treat "microservices" as a synonym for "good architecture" — as if splitting a system into services is an upgrade you install once your team is mature enough. This is wrong, and believing it costs real companies real money. Segment, a well-known infrastructure company, famously split into microservices and then spent significant engineering effort merging back into a monolith because the split added operational overhead without solving the problems they actually had. Shopify runs a monolith (albeit a modularized one) at massive scale. Meanwhile, plenty of companies genuinely need microservices and would be crushed by a single deployable monolith. The honest answer to "should I use microservices?" is "it depends on your team, your domain boundaries, and your organizational structure" — and this chapter tries to give you the actual decision criteria instead of a hype-driven default.
@@ -211,6 +218,29 @@ AI systems make this trade-off especially visible because LLM inference workload
 - Conway's Law means service boundaries should mirror real team boundaries — splitting along technical layers instead of business capabilities usually produces a distributed monolith.
 - A distributed monolith (services that must deploy together or share a database) has all the operational overhead of microservices with none of the independent-deployability benefit.
 - Default to a modular monolith; split deliberately, along team and domain boundaries, once you have concrete evidence that independent scaling or independent release cadence is actually needed.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does Conway's Law say, and what does it imply for service boundaries?</summary>
+
+Conway's Law says systems end up mirroring the communication structure of the organization that builds them. So service boundaries should follow real team ownership and business capabilities; splitting without matching team boundaries just adds coordination overhead.
+
+</details>
+
+<details markdown="1">
+<summary>2. What is a "distributed monolith", and why is it the worst of both worlds?</summary>
+
+It's a set of services that must still be deployed together, share one database, or chain synchronous calls to finish a request. You pay the full microservices cost — network calls, multiple deployments, distributed debugging — but get no independent deployability, because nothing can ship on its own.
+
+</details>
+
+<details markdown="1">
+<summary>3. In the microservices place-order code, inventory is reserved but the payment call fails. What state is the system in, and what would the monolith version have guaranteed?</summary>
+
+The order exists and inventory may be reserved while payment failed, so unless compensation logic runs successfully the data is inconsistent. In the monolith, all three writes happen in one ACID transaction, so they either all commit or all roll back; the microservices version needs explicit compensation, which is what the Saga pattern formalizes.
+
+</details>
 
 See also: [API Gateway](api-gateway.md), [REST vs gRPC](rest-vs-grpc.md), [Saga Pattern](saga-pattern.md), and the [glossary](../../resources/glossary.md). Service discovery, load balancing, service-to-service authentication, Protocol Buffers, distributed transactions, and event-driven microservices are covered in upcoming chapters in this part.
 

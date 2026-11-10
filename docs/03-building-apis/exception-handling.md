@@ -1,5 +1,12 @@
 # Exception Handling
 
+> [!TIP]
+> **In one line:** Raise meaningful domain exceptions where errors happen, and translate them into one consistent JSON error shape in central exception handlers.
+>
+> **In plain English:** Business code should only say what went wrong, such as order not found, not how to phrase it over HTTP. Central handlers act like a customer-service script: whatever the complaint, every answer comes back in the same format with a code the client's software can read.
+>
+> **You'll be able to:** Create an `AppError` exception hierarchy and register handlers for it · Standardize a `{"error": {"code", "message"}}` envelope · Add a catch-all 500 handler that never leaks a stack trace
+
 ## Why This Matters
 
 Things go wrong: a resource doesn't exist, a client sends invalid data, a downstream database times out, a third-party API (including LLM providers) returns an error. What separates a professional API from a hobby project is not whether errors happen — they always will — but whether every error produces a **consistent, predictable, well-shaped response** that clients can parse and handle programmatically, instead of a raw stack trace or an inconsistent one-off JSON shape per endpoint.
@@ -293,5 +300,28 @@ This chapter's pattern maps almost directly onto AI API engineering. LLM provide
 - Always register a catch-all `Exception` handler to prevent leaking stack traces in production.
 - Correlate error responses with request IDs from your middleware layer for debuggability.
 - See the full working version in `../../examples/fastapi-crud/`.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is the difference between raising HTTPException and raising a custom exception like OrderNotFoundError?</summary>
+
+`HTTPException` sets the HTTP status right where it is raised, which is fine in a route but drags FastAPI into business code. A domain exception only says what happened, and an `@app.exception_handler` registered once decides the status code and response shape for the whole app.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why should every error response include a machine-readable code field and not just a message?</summary>
+
+Client code builds logic (retries, user-facing messages) against stable codes like `insufficient_stock`. Free-text messages change wording and would break any client that pattern-matches on them.
+
+</details>
+
+<details markdown="1">
+<summary>3. A route hits an unexpected ZeroDivisionError in production and you have no catch-all handler. What could the client see, and what should it see instead?</summary>
+
+With `debug=False` they get a bare `{"detail": "Internal Server Error"}` in a shape that differs from your envelope; with `debug=True` a full traceback could leak. Register an `Exception` handler that logs the traceback server-side and returns a generic 500 envelope with a `request_id`.
+
+</details>
 
 Previous: `middleware.md` · Next: `project-architecture.md`.

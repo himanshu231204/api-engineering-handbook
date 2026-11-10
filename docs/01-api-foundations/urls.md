@@ -1,5 +1,12 @@
 # URLs
 
+> [!TIP]
+> **In one line:** A URL has six parts; the path and query form the request target, the host goes in the Host header, and the fragment never leaves the client.
+>
+> **In plain English:** A URL is like a file path on your computer with a sticky note of options attached. One part says how to connect, one says which machine, one says which item, and the sticky note says how you want it. Special characters must be encoded so they aren't mistaken for punctuation.
+>
+> **You'll be able to:** Break any URL into its six parts · Build query strings safely with a library instead of string gluing · Explain why secrets never belong in a URL
+
 ## Why This Matters
 
 Every single API call starts with a URL. It's the address you're sending a request to, and its structure encodes several distinct pieces of information — which protocol to use, which server to contact, which resource you want, and extra parameters shaping the request. Misunderstanding URL structure leads to real bugs: putting a value in the wrong part of the URL, forgetting to encode special characters, or exposing sensitive data (like tokens) in a query string that gets logged everywhere. Before you can design good REST endpoints ([Part 2](../02-rest-api-design/README.md)), you need to know precisely what each part of a URL is for.
@@ -140,3 +147,26 @@ LLM provider APIs use URLs the same way any REST API does — a base host (`api.
 - The fragment is never sent to the server; only scheme/host/port are used to connect, and path/query are what the server actually receives.
 - Percent-encoding exists because URLs can only safely contain a restricted character set — always use a library to build URLs and query strings, never manual string concatenation.
 - Secrets belong in headers or the request body, never in the URL, because URLs are pervasively logged across the request path.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Which URL parts are used to connect, which are sent to the server, and which stay in the client?</summary>
+
+Scheme, host and port are used to open the connection. The path and query string go in the request line (the host travels separately in the `Host` header). The fragment after `#` is never sent.
+
+</details>
+
+<details markdown="1">
+<summary>2. What happens if a query value that contains & isn't percent-encoded?</summary>
+
+The server reads the `&` as the start of a new parameter, so the value is cut short and a bogus extra parameter appears. A library such as `urlencode` turns it into `%26`.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your server-side code needs to know which tab to show, and the client puts that in the URL fragment. Why doesn't it work?</summary>
+
+Browsers never send the fragment to the server. Put the value in the path or query string, or handle it entirely in the client.
+
+</details>

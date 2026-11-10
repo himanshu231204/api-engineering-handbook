@@ -1,5 +1,12 @@
 # Multi-Provider Architecture
 
+> [!TIP]
+> **In one line:** Hide every provider behind one internal request/response shape and a small adapter per provider, normalizing both fields and behavior — including errors.
+>
+> **In plain English:** Each AI vendor's API asks for the same thing in slightly different words. You write one translator per vendor so the rest of your code speaks only your own language. It is like a restaurant that uses one standard order ticket, whichever supplier ends up delivering the ingredients.
+>
+> **You'll be able to:** Implement the adapter pattern with a shared ProviderAdapter interface · Normalize provider errors into a small internal taxonomy · Spot behavioral differences that shape-only normalization misses
+
 ## Why This Matters
 
 Every LLM provider's API is shaped slightly differently — different field names, different ways of representing a system prompt, different token-usage reporting, different error codes for the same underlying problem. If your application code calls a provider's SDK directly, every one of those differences leaks into your business logic. Switching providers, adding a second provider for fallback, or A/B testing two models becomes a rewrite instead of a configuration change. Multi-provider architecture is the discipline of building one internal abstraction that hides those differences, so the rest of your system — and the [LLM gateway](llm-gateways.md) that sits in front of providers — only ever speaks one dialect.
@@ -325,3 +332,26 @@ Tool/function calling (see [Part 14 — AI API Engineering](../14-ai-api-enginee
 - Adapters normalize both data shape (field names) and behavior (errors, truncation, stop reasons) — shape-only normalization is a leaky abstraction.
 - A small, shared internal error taxonomy (timeout, rate-limited, unavailable, invalid) is what makes routing and fallback logic provider-agnostic.
 - This layer is what makes [Model Routing](model-routing.md) and [Fallback Systems](fallback-systems.md) possible without provider-specific branching in business logic.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What two things must every provider adapter normalize?</summary>
+
+The request (mapping your internal GenerationRequest into the provider's wire format, such as moving system out of messages) and the response (mapping content, stop reason and usage fields back into one internal GenerationResponse).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must adapters normalize errors, not just successful responses?</summary>
+
+Routing and fallback code branch on errors. If each provider's exceptions leak through, upstream code must special-case every vendor, which re-leaks the abstraction. A small taxonomy like timeout, rate-limited, unavailable and invalid-request keeps that logic provider-agnostic.
+
+</details>
+
+<details markdown="1">
+<summary>3. All adapters share one HTTP connection pool, and when Provider A slows down, requests to healthy Provider B start failing too. What went wrong?</summary>
+
+The slow provider exhausted the shared pool and starved the healthy one. Give each adapter its own client and connection pool so one provider's problems stay isolated.
+
+</details>

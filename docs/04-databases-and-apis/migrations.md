@@ -1,5 +1,12 @@
 # Migrations
 
+> [!TIP]
+> **In one line:** Migrations are version-controlled, ordered scripts that change the database schema, and on live systems they must be backward-compatible and must not lock big tables.
+>
+> **In plain English:** Your database's structure changes as your API grows, and those changes need a written, repeatable history. It is like renovating a house while people still live in it: you add the new room before you remove the old one, so nobody is ever left without a door.
+>
+> **You'll be able to:** Write Alembic migrations with both `upgrade()` and `downgrade()` · Rename or change columns safely with expand-contract · Avoid table locks with nullable-first columns and `CREATE INDEX CONCURRENTLY`
+
 ## Why This Matters
 
 Your database schema changes over time — new columns, new tables, renamed fields, new indexes — at the same rate your API evolves. If those changes live only as manual `ALTER TABLE` commands someone ran once against production, you have no record of what changed, no way to reproduce the schema on a new environment, and no way to safely roll back. Migrations turn schema changes into version-controlled, repeatable code, the same discipline you already apply to application code.
@@ -118,7 +125,7 @@ def downgrade():
 ```
 
 ```python
-"""add index concurrently to avoid locking the orders table
+"""add an index concurrently to avoid locking the orders table
 
 Revision ID: c3d4e5f6a7b8
 Revises: b2c3d4e5f6a7
@@ -128,13 +135,15 @@ from alembic import op
 def upgrade():
     # CONCURRENTLY builds the index without holding a write lock on the
     # table — critical for large, live production tables. It cannot run
-    # inside a transaction block, so Alembic must be told to skip its
-    # normal transactional wrapper for this migration.
-    op.execute("COMMIT")  # end the implicit transaction Alembic opened
-    op.execute("CREATE INDEX CONCURRENTLY ix_orders_user_id ON orders (user_id)")
+    # inside a transaction block, so use autocommit_block(): Alembic commits
+    # its transaction, runs the statements in autocommit mode, then goes
+    # back to normal.
+    with op.get_context().autocommit_block():
+        op.execute("CREATE INDEX CONCURRENTLY ix_orders_created_at ON orders (created_at)")
 
 def downgrade():
-    op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_user_id")
+    with op.get_context().autocommit_block():
+        op.execute("DROP INDEX CONCURRENTLY IF EXISTS ix_orders_created_at")
 ```
 
 ## Production Considerations
@@ -178,6 +187,29 @@ Schema changes for AI-adjacent tables (e.g., adding a `pgvector` column for embe
 - `NOT NULL` columns with defaults and non-concurrent index builds are the two most common ways a migration accidentally locks a production table.
 - Always write both `upgrade()` and `downgrade()` so a bad migration can be reversed.
 - Test migrations against production-scale data, not just an empty database.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. How does Alembic know which migrations still need to run on a given database?</summary>
+
+It records the current revision in a table (usually `alembic_version`), and each migration file names its `down_revision`, forming a linked chain. `alembic upgrade head` applies only the revisions after the recorded one, in order.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does renaming a column in a single migration break a rolling deploy?</summary>
+
+During the rollout, old application instances are still running and still query the old column name, which no longer exists. Expand-contract avoids this: add the new column, make every instance write to both, backfill the existing rows and verify them, then switch reads, and drop the old column in a later migration.
+
+</details>
+
+<details markdown="1">
+<summary>3. You need an index on a 50-million-row orders table that takes live writes. What do you run, and what is special about it in Alembic?</summary>
+
+`CREATE INDEX CONCURRENTLY`, which builds the index without blocking writes. It cannot run inside a transaction block, so the migration must step outside Alembic's usual transactional wrapper, using `op.get_context().autocommit_block()` as the chapter shows.
+
+</details>
 
 ---
 Previous: [Connection Pooling](connection-pooling.md) · Next: [Repository Pattern](repository-pattern.md) · Back to [Part 4 README](README.md)

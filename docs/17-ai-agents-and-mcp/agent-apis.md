@@ -1,5 +1,12 @@
 # Agent APIs
 
+> [!TIP]
+> **In one line:** Expose agents as async runs: return a run_id with 202 immediately, let clients poll or stream step events, and keep run state durable and cancellable.
+>
+> **In plain English:** An agent can take seconds or minutes, much longer than a normal web request should hang open. So the API starts the run, hands back an ID right away, and lets the client check in or watch live updates. It is like ordering at a coffee shop: you get your name on the cup, watch the barista, and can cancel if you change your mind.
+>
+> **You'll be able to:** Choose between sync, async job and streaming agent APIs · Design run endpoints with status, steps, tool calls and cancellation · Make runs durable and idempotent so restarts and retries are safe
+
 ## Why This Matters
 
 An agent loop (see [Agent Architecture](agent-architecture.md)) might take 5 iterations and 20 seconds to finish — or 15 iterations and two minutes if a tool is slow or the model needs to backtrack. A conventional REST endpoint that opens a connection, blocks until the work is done, and returns one JSON body was designed for handlers that finish in tens or hundreds of milliseconds. Exposing an agent this way works, but it strains every assumption your HTTP stack, load balancer, and client code make about "how long is a request allowed to take."
@@ -219,3 +226,26 @@ Agent APIs are where "AI engineering" and "backend engineering" fully merge: the
 - Streaming intermediate steps (tool calls, partial reasoning) is what makes agent UIs feel responsive during a multi-second-to-multi-minute run.
 - Run state must be durable (not just in-process memory) so runs survive restarts and can be queried, cancelled, or resumed.
 - Treat step count, tool call list, and run status as first-class response fields — they're essential for debugging non-deterministic agent behavior.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What does the async job pattern return when a client creates an agent run?</summary>
+
+`202 Accepted` with a `run_id` and `status: "running"` (often plus a `Location` header). The loop runs in a background worker, and the client polls the run endpoint or subscribes to a stream until the status becomes `completed`, `failed` or `awaiting_input`.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is FastAPI's BackgroundTasks not enough for production agent runs?</summary>
+
+It runs in the same process and is lost on crash, restart or deploy, so runs cannot be retried, resumed or reliably queried. A durable job queue and a persistent run store are needed instead.
+
+</details>
+
+<details markdown="1">
+<summary>3. A user closes the browser tab mid-run, but the agent keeps calling the LLM for another two minutes. What should the API provide?</summary>
+
+A cancellation endpoint such as `POST /runs/{run_id}/cancel`, with a cooperative worker that checks a cancel flag between loop iterations. Otherwise the run burns tokens for a result nobody is waiting for.
+
+</details>

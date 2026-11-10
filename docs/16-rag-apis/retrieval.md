@@ -1,5 +1,12 @@
 # Retrieval
 
+> [!TIP]
+> **In one line:** Retrieval picks the top-K chunks for a query, ideally combining semantic vector search with exact keyword search and always enforcing tenant filters.
+>
+> **In plain English:** When a question comes in, the system has to pick which stored passages to show the LLM. Meaning-based search understands paraphrases, while keyword search nails exact codes and names, so good systems use both and merge the lists. It is like hunting for a lost item by both remembering where you last used it and checking the obvious drawers.
+>
+> **You'll be able to:** Combine vector and keyword (BM25) search with rank fusion · Apply tenant and metadata filters as a hard security boundary · Tune top-K and measure retrieval with recall@K and MRR
+
 ## Why This Matters
 
 Everything upstream — ingestion, chunking, embedding, indexing — exists to serve one moment: a user (or an agent) asks a question, and your system has to decide, in real time, *which* pieces of stored knowledge are worth handing to the LLM. Get this wrong and it doesn't matter how good your chunking or embedding model was — the LLM either answers from irrelevant context (producing a confidently wrong answer) or from too little context (producing an unhelpfully vague one). Retrieval is where all the earlier design decisions get tested against real queries, and it's rarely as simple as "run a vector search and take the top 5" — production retrieval systems combine multiple signals and make deliberate trade-offs between precision, recall, and latency.
@@ -47,6 +54,8 @@ flowchart TD
     I --> J[Top-K Chunks + Scores]
     J --> K[Reranking - optional]
 ```
+
+![The full RAG pipeline in two rows: ingest (upload, parse, chunk, embed, store in a vector database) and query (embed the question, retrieve top-k, rerank, build the prompt, call the LLM, answer with citations)](../assets/diagrams/16-rag-pipeline.svg)
 
 ## Request / Response Example
 
@@ -206,6 +215,29 @@ Retrieval quality is the ceiling on agent reliability in any RAG-backed [AI agen
 - Metadata filtering (especially tenant scoping) is a correctness and security requirement, not an optional refinement.
 - Retrieval trades precision, recall, and latency against each other through the choice of `top_k` and search strategy — tune with real evaluation data.
 - Retrieval quality is the ceiling on everything downstream, including reranking, context construction, and agent reliability.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is hybrid search, and how are its two result lists usually combined?</summary>
+
+Running vector (semantic) search and keyword (BM25) search in parallel, then merging the ranked lists with a fusion algorithm such as Reciprocal Rank Fusion, which rewards chunks that rank highly in both lists.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why might pure vector search miss a query for "error code E4021"?</summary>
+
+Identifiers like error codes and SKUs carry little semantic meaning, so the embedding model may not rank the exact-match chunk as "closest." Keyword search matches the exact string, which is why hybrid search helps for these queries.
+
+</details>
+
+<details markdown="1">
+<summary>3. A support bot for many companies occasionally answers with another customer's document. What is missing from retrieval?</summary>
+
+A hard tenant filter applied at the query layer (not trusted from client input). Similarity search alone gives no guarantee about whose documents come back, so a missing tenant filter is a data leak, not just a quality bug.
+
+</details>
 
 ---
 **Previous**: [Vector Database APIs](vector-database-apis.md) · **Next**: [Reranking](reranking.md)
