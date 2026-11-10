@@ -1,0 +1,6 @@
+out/
+.cache/
+kit/node_modules/
+kit/public/diagrams/
+kit/out/
+__pycache__/
