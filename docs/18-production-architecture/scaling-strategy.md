@@ -181,7 +181,7 @@ This same "scale on the signal that actually reflects load" principle is why the
 - **Database scaling decisions are the hardest to reverse** — adding a read replica is cheap and reversible; sharding is neither. Exhaust vertical scaling, caching, and read replicas before considering it.
 - **Provider capacity should be part of capacity planning, not an afterthought** — talk to LLM providers about rate limit increases and enterprise agreements the same way you'd plan database capacity for an expected traffic increase.
 - **Autoscaling needs headroom and cooldown tuning** — scaling too reactively causes thrashing (add instances, traffic drops, remove instances, traffic returns); scaling too conservatively means real users wait during the ramp-up.
-- **Cost scales with capacity** — the [Cost Management](README.md) chapter (planned) covers this in depth, but scaling decisions in the AI layer especially have direct, per-request dollar implications that don't exist in the same way for CPU-bound infrastructure scaling.
+- **Cost scales with capacity** — the [Cost Management](cost-management.md) chapter covers this in depth, but scaling decisions in the AI layer especially have direct, per-request dollar implications that don't exist in the same way for CPU-bound infrastructure scaling.
 
 ## Common Mistakes
 

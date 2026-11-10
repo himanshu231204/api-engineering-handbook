@@ -15,7 +15,7 @@ Cache-aside (also called "lazy loading") is the default caching strategy in most
 
 Cache-aside describes a **read path** where the application code is directly responsible for managing the cache: check it, and if the answer isn't there, go get it and put it there yourself. The cache never talks to the database on its own — Redis, for example, has no idea a PostgreSQL database exists. All of the coordination lives in the application layer, which is precisely what "aside" means in the name: the cache sits *beside* the data flow, not *inside* it.
 
-This is in contrast to two other strategies you'll meet in future chapters:
+This is in contrast to two other strategies covered elsewhere in this part:
 
 - **Write-through caching** ([Write-Through Caching](write-through-caching.md)): every write to the database also writes through to the cache at the same time, so the cache is always warm and consistent immediately after a write — at the cost of extra latency on every write, whether or not that data is ever read again.
 - **Write-behind (write-back) caching**: writes go to the cache first and are asynchronously flushed to the database later, prioritizing write latency at the cost of durability risk if the cache fails before the flush happens.

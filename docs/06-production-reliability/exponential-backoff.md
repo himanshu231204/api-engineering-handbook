@@ -39,7 +39,7 @@ With a `base_delay` of 0.5s and multiplier of 2:
 
 The **cap on max backoff** matters just as much as the exponential growth itself: without it, a client that's been failing for a while could end up waiting minutes between retries, which might exceed your overall timeout budget or simply make the client feel unresponsive far longer than acceptable, even after the downstream service has recovered.
 
-Exponential backoff on its own reduces the *rate* at which a group of synchronized clients hammers a struggling service, but it does not fully solve synchronization — if every client failed at the same instant and all use the identical deterministic formula above, they all retry at the same delays, just spaced further apart each round instead of every round. Adding randomness to the delay — **jitter** — is what actually desynchronizes clients from each other. Jitter has its own dedicated upcoming chapter (`jitter.md`) in this part; the short version is: instead of sleeping for exactly `delay(attempt)`, sleep for a randomized value derived from it (e.g., a random value between 0 and `delay(attempt)`), so that clients which failed simultaneously don't all wake up and retry simultaneously.
+Exponential backoff on its own reduces the *rate* at which a group of synchronized clients hammers a struggling service, but it does not fully solve synchronization — if every client failed at the same instant and all use the identical deterministic formula above, they all retry at the same delays, just spaced further apart each round instead of every round. Adding randomness to the delay — **jitter** — is what actually desynchronizes clients from each other. Jitter has its own dedicated chapter ([Jitter](jitter.md)) in this part; the short version is: instead of sleeping for exactly `delay(attempt)`, sleep for a randomized value derived from it (e.g., a random value between 0 and `delay(attempt)`), so that clients which failed simultaneously don't all wake up and retry simultaneously.
 
 ## Mental Model
 
@@ -49,7 +49,7 @@ Think of a crowded restaurant that just had a fire alarm go off and everyone rus
 
 1. A request fails with a retryable error (see [Retries](retries.md)).
 2. The client computes a delay for this attempt number using the exponential formula, capped at `max_delay`.
-3. The client sleeps for that delay (optionally randomized via jitter — see `jitter.md`, planned).
+3. The client sleeps for that delay (optionally randomized via jitter — see [Jitter](jitter.md)).
 4. The client retries the request.
 5. If it fails again, the attempt counter increments, and the delay for the *next* retry is recomputed — larger than the last, up to the cap.
 6. This continues until either the request succeeds or the maximum retry count from [Retries](retries.md) is reached, at which point the client gives up and propagates a final failure.
@@ -137,7 +137,7 @@ def compute_backoff_delay(attempt: int) -> float:
     # Full jitter: pick a random value between 0 and the capped delay,
     # rather than sleeping the exact deterministic value. This is what
     # actually desynchronizes clients that failed at the same moment --
-    # see jitter.md (planned) for a deeper treatment of jitter strategies
+    # see jitter.md for a deeper treatment of jitter strategies
     # (full jitter, equal jitter, decorrelated jitter).
     return random.uniform(0, capped_delay)
 
@@ -167,7 +167,7 @@ def retry_with_backoff(
 
 - **The max delay cap must fit inside your overall timeout budget.** If a caller has a 5-second SLA but your `max_delay` is 10 seconds, you'll blow the SLA on the very first capped retry — tune `max_delay` against the budget discussed in [Timeouts](timeouts.md).
 - **A multiplier of 2 is a strong, well-tested default**, but it's not universal — systems with very cheap, fast-recovering dependencies sometimes use a smaller multiplier (e.g., 1.5) to retry a bit more aggressively; systems calling notoriously overload-prone dependencies sometimes use a larger one.
-- **Backoff without jitter still helps, but it's an incomplete fix** for the synchronized-clients problem. If your client population is large and traffic is bursty (e.g., a mobile app after a network partition heals and thousands of devices reconnect at once), jitter is not optional — plan to layer it in per the upcoming `jitter.md` chapter.
+- **Backoff without jitter still helps, but it's an incomplete fix** for the synchronized-clients problem. If your client population is large and traffic is bursty (e.g., a mobile app after a network partition heals and thousands of devices reconnect at once), jitter is not optional — plan to layer it in per [Jitter](jitter.md).
 - **Log the delay actually used on each retry**, not just that a retry happened — this makes it possible to diagnose, after the fact, whether backoff behaved as configured during an incident.
 
 ## Common Mistakes
@@ -182,7 +182,7 @@ def retry_with_backoff(
 
 - Use `min(base * multiplier^(attempt-1), max_delay)` as your formula, with a multiplier of 2 as a sensible default.
 - Always set a `max_delay` cap that fits inside your overall timeout/SLA budget.
-- Add jitter on top of the computed delay for any system with more than a handful of concurrent clients (see `jitter.md`, planned, for jitter strategy options).
+- Add jitter on top of the computed delay for any system with more than a handful of concurrent clients (see [Jitter](jitter.md) for jitter strategy options).
 - Make `base_delay`, `multiplier`, `max_delay`, and `max_attempts` configurable via environment variables so they can be tuned per-environment without a code deploy.
 - Log both the attempt number and the actual delay used, so backoff behavior is visible during incident review.
 
@@ -205,7 +205,7 @@ LLM providers are a textbook case for exponential backoff, because their `429` r
 
 - Exponential backoff spaces out retries with a growing delay (`base * multiplier^attempt`, capped at `max_delay`), reducing pressure on a recovering downstream service over successive rounds of retries.
 - Always cap the maximum delay, and make sure that cap fits inside your overall timeout/SLA budget.
-- Backoff alone does not fully solve synchronized retries from many clients that failed at once — that requires jitter, covered in its own upcoming chapter.
+- Backoff alone does not fully solve synchronized retries from many clients that failed at once — that requires jitter, covered in [Jitter](jitter.md).
 - A multiplier of 2 is a solid, widely-used default, but should be tuned to the failure characteristics of the specific dependency.
 - Most production HTTP/LLM SDKs implement backoff internally — know your defaults rather than assuming they're appropriate for your SLA.
 
@@ -232,6 +232,6 @@ A single capped retry can wait longer than the entire budget, so the request blo
 
 </details>
 
-See also: [Retries](retries.md), [Timeouts](timeouts.md), [Rate Limiting](rate-limiting.md), and the [glossary](../../resources/glossary.md). The jitter chapter (`jitter.md`, planned) builds directly on the formula introduced here.
+See also: [Retries](retries.md), [Timeouts](timeouts.md), [Rate Limiting](rate-limiting.md), and the [glossary](../../resources/glossary.md). The [Jitter](jitter.md) chapter builds directly on the formula introduced here.
 
 [← Back to Part 6 — Production Reliability](README.md)

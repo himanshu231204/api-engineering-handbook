@@ -155,7 +155,7 @@ def mark_order_shipped(order_id: int) -> None:
 # --- Consumer side: a SEPARATE process, not the API server ---
 
 async def webhook_consumer_loop():
-    """Runs in its own worker process (see the upcoming workers.md chapter),
+    """Runs in its own worker process (see workers.md),
     completely decoupled from the API server's lifecycle."""
     queue = await get_queue()
     async for message, ack in queue.consume(topic="order.shipped"):
@@ -207,7 +207,7 @@ def log_processing_failure(message: Message) -> None:
 
 ## AI Engineering Perspective
 
-Message queues are the backbone of production AI pipelines that can't reasonably run inline in a request. Document ingestion for RAG (see [Part 16 — RAG APIs](../16-rag-apis/README.md)) is a canonical example: a file upload publishes a "process this document" message, and a fleet of consumer workers handles chunking, embedding, and indexing — decoupled from the upload request entirely, and resilient to any single worker crashing mid-document. Multi-step AI agent workflows (see [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README.md)) often use queues to hand off long-running tool executions so an agent orchestrator isn't blocked waiting on a slow external action. And LLM rate-limit management (see [Part 15 — Production AI Systems](../15-production-ai-systems/README.md)) frequently relies on a queue as a natural throttling point: producers enqueue LLM requests as fast as they arrive, while a bounded pool of consumers pulls from the queue at a rate that respects the provider's tokens-per-minute limit, smoothing out bursts that would otherwise trigger `429` errors. This general concept is what job-queues.md, rabbitmq-concepts.md, and kafka-concepts.md (upcoming chapters) build on with concrete, production-grade systems.
+Message queues are the backbone of production AI pipelines that can't reasonably run inline in a request. Document ingestion for RAG (see [Part 16 — RAG APIs](../16-rag-apis/README.md)) is a canonical example: a file upload publishes a "process this document" message, and a fleet of consumer workers handles chunking, embedding, and indexing — decoupled from the upload request entirely, and resilient to any single worker crashing mid-document. Multi-step AI agent workflows (see [Part 17 — AI Agents & MCP](../17-ai-agents-and-mcp/README.md)) often use queues to hand off long-running tool executions so an agent orchestrator isn't blocked waiting on a slow external action. And LLM rate-limit management (see [Part 15 — Production AI Systems](../15-production-ai-systems/README.md)) frequently relies on a queue as a natural throttling point: producers enqueue LLM requests as fast as they arrive, while a bounded pool of consumers pulls from the queue at a rate that respects the provider's tokens-per-minute limit, smoothing out bursts that would otherwise trigger `429` errors. This general concept is what [Job Queues](job-queues.md), [RabbitMQ Concepts](rabbitmq-concepts.md), and [Kafka Concepts](kafka-concepts.md) build on with concrete, production-grade systems.
 
 ## Exercises
 
@@ -227,7 +227,7 @@ Message queues are the backbone of production AI pipelines that can't reasonably
 - At-least-once delivery is the realistic default for most queue systems — consumers must be idempotent, because redelivery after a crash is expected behavior, not an edge case.
 - Only acknowledge a message after processing has genuinely completed; premature acknowledgment silently loses work exactly the way `BackgroundTasks` does.
 - Queues are the durability boundary that in-process approaches like `BackgroundTasks` cannot provide — reach for one when work must survive a crash or be retried.
-- This chapter covers the general concept; concrete systems (RabbitMQ, Kafka) and the job-queue/worker patterns built on top of them are covered in upcoming chapters in this part.
+- This chapter covers the general concept; concrete systems ([RabbitMQ](rabbitmq-concepts.md), [Kafka](kafka-concepts.md)) and the job-queue/worker patterns built on top of them are covered in [Job Queues](job-queues.md) and [Workers](workers.md).
 
 ### Check Yourself
 

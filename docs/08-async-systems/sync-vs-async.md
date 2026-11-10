@@ -189,7 +189,7 @@ def get_report(job_id: str):
 
 - **Timeouts cascade.** Reverse proxies, load balancers, and client libraries all have their own default timeouts (often 30–60 seconds). A synchronous endpoint that occasionally takes longer than the *shortest* timeout in that chain will fail unpredictably, even though the server "would have" finished eventually.
 - **Worker pool exhaustion.** A synchronous web server (e.g., a fixed pool of WSGI workers) has a hard cap on concurrent requests. Slow synchronous work — even I/O-bound work with nothing CPU-heavy about it — occupies a worker for the entire duration, directly reducing how many *other* requests the server can serve at the same time.
-- **Async design doesn't eliminate work, it relocates it.** Moving work to `202 Accepted` + background processing doesn't make the report generate faster; it changes who waits and how. You still need somewhere durable for that work to run — see [Background Tasks](background-tasks.md), and eventually job queues and workers (upcoming chapters in this part) for guaranteed execution.
+- **Async design doesn't eliminate work, it relocates it.** Moving work to `202 Accepted` + background processing doesn't make the report generate faster; it changes who waits and how. You still need somewhere durable for that work to run — see [Background Tasks](background-tasks.md), and [Job Queues](job-queues.md) and [Workers](workers.md) for guaranteed execution.
 - **Not everything should be async.** A `GET /users/42` that reads one row from an indexed table should stay synchronous — wrapping fast operations in a job/poll pattern adds latency (a round trip to submit, then a round trip to poll) and complexity for no benefit.
 
 ## Common Mistakes

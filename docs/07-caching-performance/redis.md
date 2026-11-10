@@ -122,7 +122,7 @@ OK
 2) "542"
 ```
 
-The `EX 300` in the first command sets a TTL of 300 seconds directly on write — this is the single most important habit to build, and it's the topic of the upcoming `ttl.md` chapter.
+The `EX 300` in the first command sets a TTL of 300 seconds directly on write — this is the single most important habit to build, and it's the topic of the [TTL](ttl.md) chapter.
 
 ## Code Example
 
@@ -170,7 +170,7 @@ async def top_trending_posts(count: int = 10) -> list[tuple[str, float]]:
 
 - **Memory is finite.** Redis holds everything in RAM, so uncontrolled key growth (no TTLs, unbounded lists/sets) can exhaust memory and trigger eviction or OOM errors. Configure a `maxmemory` policy (e.g., `allkeys-lru`) as a safety net, but don't rely on it as your primary TTL strategy.
 - **Single-threaded execution means slow commands block everything.** Commands like `KEYS *` (scans the entire keyspace) or large `SORT`/`SMEMBERS` on huge collections can stall all other clients. Use `SCAN` instead of `KEYS` in production, and be deliberate about data structure sizes.
-- **Redis is a single point of failure unless deployed for high availability.** Production deployments typically use Redis Sentinel (automated failover) or Redis Cluster (sharding + replication) rather than a single instance — this becomes especially relevant in the upcoming `distributed-caching.md` chapter.
+- **Redis is a single point of failure unless deployed for high availability.** Production deployments typically use Redis Sentinel (automated failover) or Redis Cluster (sharding + replication) rather than a single instance — this becomes especially relevant in [Distributed Caching](distributed-caching.md).
 - **Network latency still applies.** Redis is fast, but it's still a network hop. Batch operations with pipelining or `MGET`/`MSET` when fetching many keys at once, rather than issuing N sequential round trips.
 
 ## Common Mistakes

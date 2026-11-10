@@ -18,7 +18,7 @@ You now know when to move work outside the request/response cycle ([Sync vs Asyn
 The critical distinction to internalize:
 
 - **In-process background tasks** (`BackgroundTasks`) run inside your web server's own process/event loop. If that process crashes, restarts, or is killed (a deploy, an out-of-memory error, a scale-down event) *after* the response was sent but *before* the task finished, the task is simply gone — there is no record it was ever supposed to run, and nothing retries it.
-- **Out-of-process job queues** (job queues and workers — upcoming chapters in this part) persist the work item in an external system (a database table, Redis, RabbitMQ, Kafka) *before* acknowledging it, so a separate worker process can pick it up, retry it on failure, and survive the web server restarting entirely independently.
+- **Out-of-process job queues** ([Job Queues](job-queues.md) and [Workers](workers.md)) persist the work item in an external system (a database table, Redis, RabbitMQ, Kafka) *before* acknowledging it, so a separate worker process can pick it up, retry it on failure, and survive the web server restarting entirely independently.
 
 `BackgroundTasks` trades durability for simplicity. That trade is worth making for low-stakes, best-effort work, and wrong for anything where "this must eventually happen" is a real requirement.
 
@@ -137,7 +137,7 @@ def create_user_record(email: str, password: str) -> int:
 # CONTRAST — work that needs guaranteed delivery should NOT use
 # BackgroundTasks. This is what a real queue interface looks like instead
 # (see message-queues.md for the concept, and job-queues.md / workers.md,
-# upcoming chapters, for concrete systems like Celery, RabbitMQ, or SQS):
+# for concrete systems like Celery, RabbitMQ, or SQS):
 #
 # @app.post("/orders/{order_id}/charge", status_code=202)
 # async def charge_order(order_id: int, queue: JobQueue = Depends(get_queue)):
@@ -152,7 +152,7 @@ def create_user_record(email: str, password: str) -> int:
 - **`BackgroundTasks` does not survive process restarts.** A deploy, a crash, or an autoscaler killing an instance mid-task loses that task permanently and silently — there is no log entry saying "this was supposed to run and didn't" unless you build one yourself.
 - **No retries.** If `send_welcome_email` raises because the SMTP server had a transient blip, FastAPI logs the exception (by default) and moves on — nobody retries it.
 - **No cross-process visibility.** If you run multiple instances of your API behind a load balancer, a `BackgroundTasks` job only ever runs on the instance that handled the original request — you can't see, cancel, or monitor it from anywhere else.
-- **Resource contention with the web server.** Because tasks run on the same process serving live requests, a background task that's accidentally slow or CPU-heavy competes directly for the same resources as your actual request-handling capacity — the opposite of the isolation you get from a separate worker process (see the upcoming `workers.md` chapter).
+- **Resource contention with the web server.** Because tasks run on the same process serving live requests, a background task that's accidentally slow or CPU-heavy competes directly for the same resources as your actual request-handling capacity — the opposite of the isolation you get from a separate worker process (see [Workers](workers.md)).
 - **Good fit: fire-and-forget, idempotent, low-stakes work** — logging an analytics event, invalidating a cache key, sending a non-critical notification. **Bad fit: anything requiring guaranteed execution, retries, ordering, or auditability** — payments, inventory updates, anything a compliance or billing system depends on.
 
 ## Common Mistakes
@@ -166,7 +166,7 @@ def create_user_record(email: str, password: str) -> int:
 ## Best Practices
 
 - Use `BackgroundTasks` only for work that is safe to lose occasionally and doesn't need retries: logging, cache invalidation, best-effort notifications, cleanup of temporary resources.
-- For anything that must eventually happen — payments, order fulfillment, sending data to a downstream system that expects every event — write it to a durable queue or outbox table *before* responding, and let a separate worker process it. See the upcoming job-queues and workers chapters, and [Message Queues](message-queues.md) for the underlying concept.
+- For anything that must eventually happen — payments, order fulfillment, sending data to a downstream system that expects every event — write it to a durable queue or outbox table *before* responding, and let a separate worker process it. See [Job Queues](job-queues.md) and [Workers](workers.md), and [Message Queues](message-queues.md) for the underlying concept.
 - Wrap background task functions in their own try/except and log failures explicitly — don't rely on default framework logging as your only signal.
 - Keep background tasks short. If a task is slow enough to noticeably compete with request-handling resources, it belongs in a separate worker process, not the web server.
 - Treat `BackgroundTasks` as in-process convenience, not a queue substitute — if you find yourself wanting to check a task's status from a different request or a different server instance, that's the signal you need a real queue.
@@ -192,7 +192,7 @@ def create_user_record(email: str, password: str) -> int:
 - `BackgroundTasks` runs scheduled work in-process, after the response is sent, on the same event loop and same server instance that handled the request.
 - It has no persistence and no retries — a process restart or crash loses any pending or in-flight background task silently.
 - It's the right tool for best-effort, low-stakes, quick work; it's the wrong tool for anything requiring guaranteed execution, retries, or cross-instance visibility.
-- Work that must not be lost belongs in a durable queue processed by a separate worker, not in `BackgroundTasks` — see [Message Queues](message-queues.md) and the upcoming job-queues and workers chapters.
+- Work that must not be lost belongs in a durable queue processed by a separate worker, not in `BackgroundTasks` — see [Message Queues](message-queues.md), [Job Queues](job-queues.md) and [Workers](workers.md).
 - The decision isn't about how "big" the work is — it's about whether losing it occasionally is an acceptable outcome.
 
 ### Check Yourself

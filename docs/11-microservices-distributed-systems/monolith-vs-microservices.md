@@ -242,6 +242,6 @@ The order exists and inventory may be reserved while payment failed, so unless c
 
 </details>
 
-See also: [API Gateway](api-gateway.md), [REST vs gRPC](rest-vs-grpc.md), [Saga Pattern](saga-pattern.md), and the [glossary](../../resources/glossary.md). Service discovery, load balancing, service-to-service authentication, Protocol Buffers, distributed transactions, and event-driven microservices are covered in upcoming chapters in this part.
+See also: [API Gateway](api-gateway.md), [REST vs gRPC](rest-vs-grpc.md), [Saga Pattern](saga-pattern.md), and the [glossary](../../resources/glossary.md). [Service Discovery](service-discovery.md), [Load Balancing](load-balancing.md), [Service-to-Service Authentication](service-to-service-authentication.md), [Protocol Buffers](protocol-buffers.md), [Distributed Transactions](distributed-transactions.md), and [Event-Driven Microservices](event-driven-microservices.md) are covered in the rest of this part.
 
 [← Back to Part 11 — Microservices & Distributed Systems](README.md)

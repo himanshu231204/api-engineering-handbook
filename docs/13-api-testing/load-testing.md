@@ -18,8 +18,8 @@
 Load testing is one member of a small family of related but distinct techniques:
 
 - **Load testing** — realistic expected/peak traffic, checking the system meets its performance targets under conditions it's actually designed for.
-- **Stress testing** (`stress-testing.md`, planned) — deliberately exceeding expected capacity to find the breaking point and observe *how* the system fails.
-- **Chaos testing** (`chaos-testing-basics.md`, planned) — injecting failures (killed processes, network partitions) rather than just traffic, to test resilience.
+- **Stress testing** ([Stress Testing](stress-testing.md)) — deliberately exceeding expected capacity to find the breaking point and observe *how* the system fails.
+- **Chaos testing** ([Chaos Testing Basics](chaos-testing-basics.md)) — injecting failures (killed processes, network partitions) rather than just traffic, to test resilience.
 
 This chapter focuses specifically on load testing: traffic at or near real-world levels, used to validate capacity and catch performance regressions before they reach production.
 
@@ -191,7 +191,7 @@ Load testing an AI-backed endpoint has an extra dimension beyond a typical CRUD 
 
 ## Key Takeaways
 
-- Load testing measures system behavior under expected/peak realistic traffic — distinct from stress testing (finding the breaking point) and chaos testing (injecting failures), both planned as later chapters in this part.
+- Load testing measures system behavior under expected/peak realistic traffic — distinct from stress testing (finding the breaking point) and chaos testing (injecting failures), covered in [Stress Testing](stress-testing.md) and [Chaos Testing Basics](chaos-testing-basics.md).
 - Watch throughput, latency percentiles (especially P95/P99, not just the average), and error rate together — any one metric alone can hide a real problem.
 - Model realistic user scenarios with think-time and a mix of endpoints, and ramp load up gradually rather than applying it instantly.
 - Never load test against production without explicit, controlled authorization; use a dedicated staging/performance environment instead.

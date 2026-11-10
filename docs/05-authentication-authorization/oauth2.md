@@ -20,7 +20,7 @@ OAuth 2.0 defines four roles:
 - **Authorization Server**: the service that authenticates the resource owner and issues tokens (e.g., Google's OAuth server).
 - **Resource Server**: the API that actually holds the protected data and accepts the resulting access token (e.g., the Google Calendar API — sometimes the same physical server as the authorization server, sometimes not).
 
-Crucially, OAuth 2.0 is an **authorization** protocol, not an authentication protocol — it answers "what can this client do on the user's behalf?" not "who is this user?" (That identity layer is what [OpenID Connect](README.md) adds on top of OAuth 2.0, covered as a planned chapter in this Part.) A recurring, real-world mistake is using a bare OAuth access token as if it proves user identity to the client application — it doesn't, by itself.
+Crucially, OAuth 2.0 is an **authorization** protocol, not an authentication protocol — it answers "what can this client do on the user's behalf?" not "who is this user?" (That identity layer is what [OpenID Connect](openid-connect.md) adds on top of OAuth 2.0.) A recurring, real-world mistake is using a bare OAuth access token as if it proves user identity to the client application — it doesn't, by itself.
 
 ## Mental Model
 
@@ -228,7 +228,7 @@ async def callback(request: Request, code: str, state: str):
 
 - **Using the Implicit flow for new integrations.** It's deprecated for good reason — always use Authorization Code + PKCE.
 - **Skipping `state` validation**, opening the door to login/session CSRF.
-- **Treating an OAuth access token as proof of user identity in the client app.** OAuth alone tells you "this token can access these scopes," not "this is user X" — that identity assertion is what [OpenID Connect](README.md) layers on top via the ID token.
+- **Treating an OAuth access token as proof of user identity in the client app.** OAuth alone tells you "this token can access these scopes," not "this is user X" — that identity assertion is what [OpenID Connect](openid-connect.md) layers on top via the ID token.
 - **Requesting overly broad scopes** "just in case," which both increases risk on leak and looks alarming on the consent screen, hurting user trust and conversion.
 - **Hardcoding or committing the client secret** for confidential clients — load it from environment variables/secrets managers, same discipline as any other credential in this Part.
 
