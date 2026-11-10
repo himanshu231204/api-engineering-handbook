@@ -129,6 +129,7 @@ import time
 import uuid
 
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from prometheus_client import Counter, Histogram, make_asgi_app
 
 request_id_var: contextvars.ContextVar[str] = contextvars.ContextVar("request_id", default="-")
@@ -167,7 +168,15 @@ async def observe(request: Request, call_next):
     start = time.perf_counter()
     status = 500  # if call_next raises, we still record a 500
     try:
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        except Exception:
+            # Starlette's outer error handler would build a 500 without our header,
+            # so answer here and keep the ID the client can quote to support.
+            log.exception("request.unhandled")
+            response = JSONResponse(
+                {"error": {"code": "internal_error", "request_id": rid}}, status_code=500
+            )
         status = response.status_code
         response.headers["X-Request-ID"] = rid
         return response

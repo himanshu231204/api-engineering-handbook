@@ -190,8 +190,10 @@ POLICIES = [
                      and r.environment.get("mfa") is True
                      and business_hours(r)),
     # Deny rule: nobody approves their own expense, whatever else permits it.
+    # Fail closed: if the submitter is unknown we cannot prove the approver is
+    # someone else, so this rule matches and the approval is denied.
     Policy("no-self-approval", "deny", frozenset({"expense:approve"}),
-           lambda r: r.subject["id"] == r.resource.get("submitter_id")),
+           lambda r: r.resource.get("submitter_id") in (None, r.subject["id"])),
 ]
 engine = PolicyEngine(POLICIES, version="2026-11-05.3")
 

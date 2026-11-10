@@ -172,10 +172,12 @@ async def main() -> None:
         loop.add_signal_handler(sig, stop.set)
 
     tasks: set[asyncio.Task] = set()
+    stop_waiter = asyncio.create_task(stop.wait())   # lets shutdown wake the capacity wait
     while not stop.is_set():
         free = CONCURRENCY - len(tasks)
         if free <= 0:                               # backpressure: do not fetch
-            await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            # Wake on a finished job OR on shutdown, so a full worker still starts draining at once.
+            await asyncio.wait({*tasks, stop_waiter}, return_when=asyncio.FIRST_COMPLETED)
             continue
         # 1) take over jobs whose worker died (idle longer than visibility)
         claimed = await r.xautoclaim(STREAM, GROUP, CONSUMER,
@@ -190,6 +192,7 @@ async def main() -> None:
             tasks.add(t)
             t.add_done_callback(tasks.discard)
 
+    stop_waiter.cancel()
     log.info("draining %d in-flight jobs", len(tasks))
     if tasks:
         _, pending = await asyncio.wait(tasks, timeout=DRAIN_BUDGET_S)

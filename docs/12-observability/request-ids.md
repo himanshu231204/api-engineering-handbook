@@ -104,7 +104,9 @@ import uuid
 
 import httpx
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 # Accept only short, boring IDs: letters, digits, dash, underscore, dot.
@@ -168,6 +170,27 @@ async def unhandled(request: Request, exc: Exception):
         status_code=500,
         content={"error": {"code": "internal_error", "request_id": rid}},
         headers={"X-Request-ID": rid} if rid else None,
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_failed(request: Request, exc: RequestValidationError):
+    # FastAPI's default 422 body has no request ID; add it (the header is added by the middleware).
+    rid = getattr(request.state, "request_id", None)
+    fields = [{"loc": list(e["loc"]), "msg": e["msg"]} for e in exc.errors()]
+    return JSONResponse(
+        status_code=422,
+        content={"error": {"code": "validation_error", "request_id": rid, "fields": fields}},
+    )
+
+
+@app.exception_handler(StarletteHTTPException)
+async def http_error(request: Request, exc: StarletteHTTPException):
+    rid = getattr(request.state, "request_id", None)
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": {"code": "http_error", "message": str(exc.detail), "request_id": rid}},
+        headers=getattr(exc, "headers", None),
     )
 
 

@@ -29,7 +29,28 @@ TLDR = re.compile(r"# [^\n]+\n\n> \[!TIP\]\n> \*\*In one line:\*\* [^\n]+\n>\n> 
 MIN_WORDS = 900
 
 
+FENCE = re.compile(r"^\s*(`{3,}|~{3,})(.*)$")
+
+
+def has_unclosed_fence(text: str) -> bool:
+    """Line-based fence parser: a closer must use the opener's character and be at least as long."""
+    opener = None  # (marker character, length)
+    for line in text.split("\n"):
+        m = FENCE.match(line)
+        if not m:
+            continue
+        marker, rest = m.group(1), m.group(2)
+        if opener is None:
+            if marker[0] == "`" and "`" in rest:
+                continue  # an info string cannot contain a backtick, so this is inline code
+            opener = (marker[0], len(marker))
+        elif marker[0] == opener[0] and len(marker) >= opener[1] and not rest.strip():
+            opener = None
+    return opener is not None
+
+
 def check(path: Path) -> tuple[list[str], list[str]]:
+    """Return (errors, warnings) for one chapter file; any error fails the run."""
     s = path.read_text(encoding="utf-8")
     errors, warnings = [], []
     part19 = path.parent.name.startswith("19-")
@@ -38,10 +59,14 @@ def check(path: Path) -> tuple[list[str], list[str]]:
         errors.append("missing or malformed TL;DR callout right after the H1")
     if s.count("### Check Yourself") != 1:
         errors.append("needs exactly one '### Check Yourself'")
-    if s.count('<details markdown="1">') != 3 or s.count("</details>") != 3:
-        errors.append('quiz needs exactly 3 <details markdown="1"> blocks')
-    if s.count("```") % 2:
-        errors.append("unbalanced code fences")
+    else:
+        # Judge the quiz by what is inside its own section, not by <details> blocks elsewhere.
+        quiz = s[s.index("### Check Yourself"):]
+        questions = re.findall(r'<details markdown="1">\s*<summary>(\d+)\. ', quiz)
+        if questions != ["1", "2", "3"] or quiz.count("<details") != 3 or quiz.count("</details>") != 3:
+            errors.append('Check Yourself needs exactly 3 numbered <details markdown="1"> questions (1, 2, 3)')
+    if has_unclosed_fence(s):
+        errors.append("unclosed or mismatched code fence")
     if PLACEHOLDER.search(s):
         errors.append("placeholder text (TODO/TBD/coming soon/lorem ipsum)")
     if "</content>" in s or "<parameter" in s:
@@ -64,6 +89,7 @@ def check(path: Path) -> tuple[list[str], list[str]]:
 
 
 def main() -> int:
+    """Check every in-scope chapter, print a report, and return the process exit code."""
     files = sorted(
         p for p in DOCS.glob("[0-9][0-9]-*/*.md")
         if p.name != "README.md" and not p.parent.name.startswith("00-")

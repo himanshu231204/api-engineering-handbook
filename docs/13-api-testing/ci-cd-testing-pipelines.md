@@ -141,7 +141,7 @@ jobs:
       postgres:
         image: postgres:16                   # same major version as production
         env:
-          POSTGRES_PASSWORD: postgres        # throwaway CI database, not a real secret
+          POSTGRES_PASSWORD: ci-${{ github.run_id }}   # unique per run: no fixed credential in the repo
         ports: ["5432:5432"]
         options: >-
           --health-cmd "pg_isready -U postgres"
@@ -150,7 +150,7 @@ jobs:
           --health-retries 10
     env:
       # Read by tests/conftest.py (see test-databases.md)
-      TEST_DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
+      TEST_DATABASE_URL: postgresql+asyncpg://postgres:ci-${{ github.run_id }}@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

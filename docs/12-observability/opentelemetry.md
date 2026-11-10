@@ -108,7 +108,7 @@ The nesting reflects the data model: one resource, containing instrumentation sc
 
 ## Code Example
 
-First the application side. It configures the SDK exactly once, exports over OTLP/HTTP, and instruments FastAPI, httpx and SQLAlchemy. It was run against an in-memory SQLite database; a request to an endpoint that ran `select 1` produced a SERVER span for the route with `connect` and `select` CLIENT spans under it, all with `service.name=orders-api` (the exporter then failed to reach a Collector, as expected when none is running, which does not affect the request).
+First the application side. It configures the SDK exactly once, exports over OTLP/HTTP, and instruments FastAPI, httpx and SQLAlchemy. It was run against an in-memory SQLite database; a request to `/ping-db`, which runs `select 1`, produced a SERVER span for the route with `connect` and `select` CLIENT spans under it, all with `service.name=orders-api` (the exporter then failed to reach a Collector, as expected when none is running, which does not affect the request).
 
 ```python
 import os
@@ -124,6 +124,7 @@ from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.trace.sampling import ParentBased, TraceIdRatioBased
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
 
@@ -160,6 +161,14 @@ app = FastAPI(lifespan=lifespan)
 FastAPIInstrumentor.instrument_app(app, excluded_urls="healthz", exclude_spans=["send", "receive"])
 HTTPXClientInstrumentor().instrument()
 SQLAlchemyInstrumentor().instrument(engine=engine.sync_engine)
+
+
+@app.get("/ping-db")
+async def ping_db() -> dict:
+    # Produces a SERVER span for the route with `connect` and `select` CLIENT spans under it.
+    async with engine.connect() as conn:
+        await conn.execute(text("select 1"))
+    return {"ok": True}
 ```
 
 Install with `pip install opentelemetry-sdk opentelemetry-exporter-otlp-proto-http opentelemetry-instrumentation-fastapi opentelemetry-instrumentation-httpx opentelemetry-instrumentation-sqlalchemy`. Run with `OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318 uvicorn app:app`. The endpoint is read from the environment, so no address is hard-coded.

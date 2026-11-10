@@ -126,6 +126,7 @@ import os
 import secrets
 
 from fastapi import Depends, FastAPI, HTTPException, Request, Response
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -135,6 +136,17 @@ ALLOWED_ORIGINS = set(
     os.environ.get("ALLOWED_ORIGINS", "https://app.bank.example").split(",")
 )
 SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
+
+# The frontend (app.bank.example) calls this API (api.bank.example) cross-origin, so the
+# browser needs CORS to send the cookie, read the token response and pass the preflight.
+# CORS is what lets the legitimate page in; it is NOT the CSRF defence (the layers below are).
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=sorted(ALLOWED_ORIGINS),     # exact origins; never "*" with credentials
+    allow_credentials=True,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "X-CSRF-Token"],
+)
 
 
 def _mac(session_id: str, nonce: str) -> str:
