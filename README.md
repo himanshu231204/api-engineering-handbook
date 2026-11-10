@@ -238,7 +238,7 @@ The handbook teaches concepts that transfer across stacks — Node.js, Go, or Ja
 
 ## Project Status
 
-This is an actively developed, in-progress handbook. Every part has a complete index chapter describing what it covers; chapters are filled in incrementally, prioritizing depth over speed. See each part's `README.md` for a chapter-by-chapter status table, and see [ROADMAP.md](ROADMAP.md) for the overall build plan and what's coming next.
+All 20 parts are written: 192 chapters, each opening with a plain-English TL;DR and ending with a Check Yourself quiz, plus 80+ hand-drawn SVG diagrams, 12 runnable examples and 10 capstone project specs. The handbook is still actively improved. See each part's `README.md` for the chapter list and [ROADMAP.md](ROADMAP.md) for what's coming next (examples hardening and a final polish pass).
 
 Legend used throughout the docs:
 

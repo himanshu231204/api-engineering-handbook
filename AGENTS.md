@@ -102,12 +102,13 @@ Run these from the repo root and fix anything they report — the repo has held 
 ```bash
 python3 scripts/check_links.py
 python3 scripts/check_svgs.py
+python3 scripts/check_chapters.py
 python3 scripts/check_examples_compile.py
 pip install -r requirements-docs.txt   # once, for the MkDocs build
 mkdocs build --strict
 ```
 
-The three scripts are stdlib-only, no install required; the MkDocs build needs `requirements-docs.txt`. These are the checks `.github/workflows/ci.yml` runs on every push/PR to `main` (plus an advisory markdownlint pass).
+The four scripts are stdlib-only, no install required; the MkDocs build needs `requirements-docs.txt`. These are the checks `.github/workflows/ci.yml` runs on every push/PR to `main` (plus an advisory markdownlint pass).
 
 For an `examples/*` change: `scripts/check_examples_compile.py` is the syntax floor; actually run the example end-to-end if you have the ability to install its `requirements.txt`.
 

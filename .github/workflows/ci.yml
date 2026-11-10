@@ -24,6 +24,9 @@ jobs:
       - name: Check every SVG diagram is well-formed
         run: python3 scripts/check_svgs.py
 
+      - name: Check every chapter follows the template and learner aids
+        run: python3 scripts/check_chapters.py
+
   docs-build:
     name: Build the docs site (strict)
     runs-on: ubuntu-latest

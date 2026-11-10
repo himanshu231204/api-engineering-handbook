@@ -6,7 +6,7 @@ hide:
 
 <div class="hb-hero" markdown>
 
-<span class="hb-badge">✅ <b>142 chapters</b> · free &amp; open source · MIT licensed</span>
+<span class="hb-badge">✅ <b>192 chapters</b> · free &amp; open source · MIT licensed</span>
 
 # Learn API engineering, from your first HTTP request to production AI systems.
 
@@ -22,8 +22,8 @@ hide:
 
 <div class="hb-stats">
   <div class="hb-stat"><b>20</b><span>Parts</span></div>
-  <div class="hb-stat"><b>142</b><span>Chapters</span></div>
-  <div class="hb-stat"><b>400+</b><span>Self-check questions</span></div>
+  <div class="hb-stat"><b>192</b><span>Chapters</span></div>
+  <div class="hb-stat"><b>570+</b><span>Self-check questions</span></div>
   <div class="hb-stat"><b>10</b><span>Capstone projects</span></div>
 </div>
 
