@@ -1,0 +1,117 @@
+<svg fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-labelledby="r18-request-flow-t r18-request-flow-d">
+  <title id="r18-request-flow-t">One request end to end: POST /orders</title>
+  <desc id="r18-request-flow-d">A POST /orders request goes from the client through DNS, the CDN, the load balancer and the API gateway to the order service, which commits to PostgreSQL, updates Redis and publishes an order.created message to a queue before returning 201 Created in roughly 20 to 150 milliseconds. A worker processes the message after the response. Each box notes its typical latency and how it can fail.</desc>
+  <defs>
+    <marker id="r18-request-flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8199BB"/>
+    </marker>
+    <style>
+      .r18-request-flow-title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r18-request-flow-sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r18-request-flow-h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r18-request-flow-lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .r18-request-flow-note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r18-request-flow-code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <text x="32" y="44" class="r18-request-flow-title">One request, end to end: POST /orders</text>
+  <text x="32" y="66" class="r18-request-flow-sub">Follow the numbers. Grey = typical time spent there; red = what can go wrong at that hop.</text>
+  <rect x="32" y="90" width="148" height="114" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <circle cx="52" cy="112" r="12" fill="#61DBA8"/>
+  <text x="52" y="116" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">1</text>
+  <text x="70" y="117" class="r18-request-flow-lbl" fill="#5787F0">Client</text>
+  <text x="44" y="140" class="r18-request-flow-note">sends HTTPS request</text>
+  <text x="44" y="174" class="r18-request-flow-note" fill="#A0A0B0">~0 ms</text>
+  <text x="44" y="189" class="r18-request-flow-note" fill="#E76060">network drop → retry</text>
+  <line x1="181" y1="142.0" x2="197" y2="142.0" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="199" y="90" width="148" height="114" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <circle cx="219" cy="112" r="12" fill="#61DBA8"/>
+  <text x="219" y="116" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">2</text>
+  <text x="237" y="117" class="r18-request-flow-lbl" fill="#A0A0B0">DNS</text>
+  <text x="211" y="140" class="r18-request-flow-note">name → IP address</text>
+  <text x="211" y="174" class="r18-request-flow-note" fill="#A0A0B0">~1–50 ms (cached)</text>
+  <text x="211" y="189" class="r18-request-flow-note" fill="#E76060">stale record, outage</text>
+  <line x1="348" y1="142.0" x2="364" y2="142.0" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="366" y="90" width="148" height="114" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <circle cx="386" cy="112" r="12" fill="#61DBA8"/>
+  <text x="386" y="116" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">3</text>
+  <text x="404" y="117" class="r18-request-flow-lbl" fill="#A0A0B0">CDN edge</text>
+  <text x="378" y="140" class="r18-request-flow-note">POST not cached,</text>
+  <text x="378" y="156" class="r18-request-flow-note">passes straight through</text>
+  <text x="378" y="174" class="r18-request-flow-note" fill="#A0A0B0">+1–5 ms</text>
+  <text x="378" y="189" class="r18-request-flow-note" fill="#E76060">edge PoP down</text>
+  <line x1="515" y1="142.0" x2="531" y2="142.0" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="533" y="90" width="148" height="114" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <circle cx="553" cy="112" r="12" fill="#61DBA8"/>
+  <text x="553" y="116" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">4</text>
+  <text x="571" y="117" class="r18-request-flow-lbl" fill="#A0A0B0">Load balancer</text>
+  <text x="545" y="140" class="r18-request-flow-note">TLS, pick healthy</text>
+  <text x="545" y="156" class="r18-request-flow-note">gateway instance</text>
+  <text x="545" y="174" class="r18-request-flow-note" fill="#A0A0B0">+1–2 ms</text>
+  <text x="545" y="189" class="r18-request-flow-note" fill="#E76060">unhealthy targets</text>
+  <line x1="682" y1="142.0" x2="698" y2="142.0" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="700" y="90" width="148" height="114" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="1.5"/>
+  <circle cx="720" cy="112" r="12" fill="#61DBA8"/>
+  <text x="720" y="116" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">5</text>
+  <text x="738" y="117" class="r18-request-flow-lbl" fill="#69DDAD">API gateway</text>
+  <text x="712" y="140" class="r18-request-flow-note">auth, rate limit,</text>
+  <text x="712" y="156" class="r18-request-flow-note">trace ID, routing</text>
+  <text x="712" y="174" class="r18-request-flow-note" fill="#A0A0B0">+2–10 ms</text>
+  <text x="712" y="189" class="r18-request-flow-note" fill="#E76060">401 / 429 here</text>
+  <line x1="774" y1="205" x2="774" y2="232" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="700" y="236" width="148" height="114" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="1.5"/>
+  <circle cx="720" cy="258" r="12" fill="#61DBA8"/>
+  <text x="720" y="262" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">6</text>
+  <text x="738" y="263" class="r18-request-flow-lbl" fill="#69DDAD">Order service</text>
+  <text x="712" y="286" class="r18-request-flow-note">validate body,</text>
+  <text x="712" y="302" class="r18-request-flow-note">run the handler</text>
+  <text x="712" y="320" class="r18-request-flow-note" fill="#A0A0B0">+1–5 ms CPU</text>
+  <text x="712" y="335" class="r18-request-flow-note" fill="#E76060">crash → LB reroutes</text>
+  <rect x="533" y="236" width="148" height="114" rx="10" fill="#302808" stroke="#F58733" stroke-width="1.5"/>
+  <circle cx="553" cy="258" r="12" fill="#61DBA8"/>
+  <text x="553" y="262" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">7</text>
+  <text x="571" y="263" class="r18-request-flow-lbl" fill="#F69850">PostgreSQL</text>
+  <text x="545" y="286" class="r18-request-flow-note">one transaction:</text>
+  <text x="545" y="302" class="r18-request-flow-note">insert + commit</text>
+  <text x="545" y="320" class="r18-request-flow-note" fill="#A0A0B0">+5–100 ms (most)</text>
+  <text x="545" y="335" class="r18-request-flow-note" fill="#E76060">down → fast 503</text>
+  <line x1="698" y1="288.0" x2="683" y2="288.0" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="366" y="236" width="148" height="114" rx="10" fill="#302808" stroke="#F58733" stroke-width="1.5"/>
+  <circle cx="386" cy="258" r="12" fill="#61DBA8"/>
+  <text x="386" y="262" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">8</text>
+  <text x="404" y="263" class="r18-request-flow-lbl" fill="#F69850">Redis cache</text>
+  <text x="378" y="286" class="r18-request-flow-note">update or invalidate</text>
+  <text x="378" y="302" class="r18-request-flow-note">order key</text>
+  <text x="378" y="320" class="r18-request-flow-note" fill="#A0A0B0">under 1 ms</text>
+  <text x="378" y="335" class="r18-request-flow-note" fill="#E76060">down → slower reads</text>
+  <rect x="199" y="236" width="148" height="114" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <circle cx="219" cy="258" r="12" fill="#61DBA8"/>
+  <text x="219" y="262" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">9</text>
+  <text x="237" y="263" class="r18-request-flow-lbl" fill="#A0A0B0">Queue</text>
+  <text x="211" y="286" class="r18-request-flow-note">publish</text>
+  <text x="211" y="302" class="r18-request-flow-note">order.created</text>
+  <text x="211" y="320" class="r18-request-flow-note" fill="#A0A0B0">+1–5 ms</text>
+  <text x="211" y="335" class="r18-request-flow-note" fill="#E76060">backlog → late email</text>
+  <rect x="32" y="236" width="148" height="114" rx="10" fill="#100830" stroke="#8349DF" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <circle cx="52" cy="258" r="12" fill="#61DBA8"/>
+  <text x="52" y="262" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#0E0622">10</text>
+  <text x="72" y="263" class="r18-request-flow-lbl" fill="#9563E3">Worker</text>
+  <text x="44" y="286" class="r18-request-flow-note">email, analytics —</text>
+  <text x="44" y="302" class="r18-request-flow-note">after the response</text>
+  <text x="44" y="320" class="r18-request-flow-note" fill="#A0A0B0">seconds, async</text>
+  <text x="44" y="335" class="r18-request-flow-note" fill="#E76060">retries / dead-letter</text>
+  <path d="M740,350 V370 H440 V353" fill="none" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <path d="M808,350 V392 H273 V353" fill="none" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r18-request-flow-arrow)"/>
+  <text x="560" y="366" class="r18-request-flow-note">then update cache</text>
+  <text x="560" y="388" class="r18-request-flow-note">then publish the side-effect message</text>
+  <line x1="197" y1="288.0" x2="183" y2="288.0" stroke="#648BC4" stroke-width="1.75" stroke-dasharray="5 4" marker-end="url(#r18-request-flow-arrow)"/>
+  <rect x="32" y="412" width="816" height="64" rx="10" fill="#11271B" stroke="#50D89F" stroke-width="1.5"/>
+  <text x="48" y="436" class="r18-request-flow-lbl" fill="#69DDAD">Response: 201 Created retraces the path back to the client — total ≈ 20–150 ms, mostly the database round trip.</text>
+  <text x="48" y="458" class="r18-request-flow-note">Step 10 is never on the clock: the client already has its answer. Anything that need not block the reply goes on the queue.</text>
+  <rect x="32" y="490" width="816" height="54" rx="10" fill="#111C27" stroke="#648BC4" stroke-width="1.5"/>
+  <text x="48" y="512" class="r18-request-flow-lbl" fill="#A0A0B0">Where to look when it’s slow:</text>
+  <text x="240" y="512" class="r18-request-flow-note">one trace ID from the gateway follows the request through every hop,</text>
+  <text x="48" y="532" class="r18-request-flow-note">so you can see whether time went to the edge, the gateway, the service or the database.</text>
+</svg>

@@ -1,0 +1,669 @@
+[
+ {
+  "say": "Your API request crosses five layers before it returns.",
+  "cap": "Your API request crosses [five layers] before it returns.",
+  "chapter": 0,
+  "beat": "hook",
+  "scene": "logo_reveal",
+  "pill": null,
+  "asset": [],
+  "start": 0.25,
+  "end": 4.31
+ },
+ {
+  "say": "Add the wrong one, and you'll lose weeks debugging it.",
+  "cap": "Add the [wrong] one, and you'll lose [weeks] debugging it.",
+  "chapter": 0,
+  "beat": "hook",
+  "start": 4.55,
+  "end": 7.39
+ },
+ {
+  "say": "Which layers does your API need? By the end of this video, you'll name each layer, trace three requests through them, and know when to skip one.",
+  "cap": "Which layers does [your API] need? Name them, [trace] three requests, know when to [skip].",
+  "chapter": 0,
+  "beat": "hook",
+  "start": 7.63,
+  "end": 16.44
+ },
+ {
+  "say": "Here's the plan, in five parts.",
+  "cap": "Here's the plan, in [five] parts.",
+  "chapter": 0,
+  "beat": "road",
+  "scene": "roadmap",
+  "pill": "5 parts · about 8 minutes",
+  "asset": [],
+  "start": 16.89,
+  "end": 18.75
+ },
+ {
+  "say": "One, the big map. Two, who does what. Three, three requests traced through it.",
+  "cap": "[Big map]. [Who does what]. [Three requests].",
+  "chapter": 0,
+  "beat": "road",
+  "start": 18.98,
+  "end": 23.54
+ },
+ {
+  "say": "Four, a real run. And five, when not to add a layer.",
+  "cap": "[A real run]. And when [not] to add a layer.",
+  "chapter": 0,
+  "beat": "road",
+  "start": 23.78,
+  "end": 27.28
+ },
+ {
+  "say": "Picture an airport. Check in, security, then the gate. One job each, before you board.",
+  "cap": "An airport: [check-in], [security], the [gate]. One [job] each.",
+  "chapter": 1,
+  "beat": "air",
+  "scene": "svg_analogy",
+  "pill": "one narrow job per layer",
+  "asset": [],
+  "start": 29.28,
+  "end": 34.95
+ },
+ {
+  "say": "A request travels the same way. A CDN may answer straight away. A gateway checks who you are. The app does the real work.",
+  "cap": "A [CDN] may answer. A [gateway] checks who you are. The [app] does the work.",
+  "chapter": 1,
+  "beat": "air",
+  "start": 35.19,
+  "end": 43.77
+ },
+ {
+  "say": "Here is the whole map, straight from the handbook. It starts with a client: a browser, a mobile app, another service, even an AI agent.",
+  "cap": "The whole [map]. It starts with a [client]: browser, app, service, [AI agent].",
+  "chapter": 1,
+  "beat": "map",
+  "scene": "svg_flow",
+  "pill": "client → edge → gateway → application → data / AI",
+  "asset": [
+   "repo/mermaid/api-architecture-layers-td.svg"
+  ],
+  "start": 44.23,
+  "end": 53.22
+ },
+ {
+  "say": "The client reaches a CDN or load balancer, then an API gateway, then your application service.",
+  "cap": "[CDN], then [gateway], then your [application] service.",
+  "chapter": 1,
+  "beat": "map",
+  "start": 53.46,
+  "end": 60.73
+ },
+ {
+  "say": "And behind the application sit four things: a cache, a database, a message queue with workers, and an AI gateway that reaches the language model providers.",
+  "cap": "Behind the app: [cache], [database], [queue], [AI gateway].",
+  "chapter": 1,
+  "beat": "map",
+  "start": 60.97,
+  "end": 71.76
+ },
+ {
+  "say": "The chapter draws the same system a second way, grouped into layers.",
+  "cap": "The same system, grouped into [layers].",
+  "chapter": 1,
+  "beat": "lay",
+  "scene": "svg_flow",
+  "pill": "five layers, one narrow job each",
+  "asset": [
+   "repo/mermaid/api-architecture-layers-lr.svg"
+  ],
+  "start": 72.21,
+  "end": 76.52
+ },
+ {
+  "say": "Edge. Gateway. Application. Data. And AI.",
+  "cap": "[Edge]. [Gateway]. [Application]. [Data]. And [AI].",
+  "chapter": 1,
+  "beat": "lay",
+  "start": 76.76,
+  "end": 79.59
+ },
+ {
+  "say": "Five layers, each with a narrow job. Client, edge, gateway, application, then data and AI.",
+  "cap": "Each layer has a [narrow job]. Client, edge, gateway, application, [data and AI].",
+  "chapter": 1,
+  "beat": "lay",
+  "start": 79.83,
+  "end": 86.51
+ },
+ {
+  "say": "The handbook's mental model is a company org chart, not one person doing everything.",
+  "cap": "A company [org chart], not one person doing [everything].",
+  "chapter": 2,
+  "beat": "org",
+  "scene": "svg_icons",
+  "pill": "a company org chart, not one person doing everything",
+  "asset": [],
+  "start": 88.51,
+  "end": 94.02
+ },
+ {
+  "say": "The CDN is the receptionist. If they already have your answer, they hand it over right there.",
+  "cap": "The [CDN] is the receptionist: they hand over a [cached] answer.",
+  "chapter": 2,
+  "beat": "org",
+  "start": 94.26,
+  "end": 100.13
+ },
+ {
+  "say": "The gateway is security and routing. It checks your badge, then sends you to the right department.",
+  "cap": "The [gateway] checks your [badge], then [routes] you.",
+  "chapter": 2,
+  "beat": "org",
+  "start": 100.37,
+  "end": 106.45
+ },
+ {
+  "say": "The application service is that department, doing the real work. The database is the filing cabinet.",
+  "cap": "The [app] does the work. The [database] is the filing cabinet.",
+  "chapter": 2,
+  "beat": "org",
+  "start": 106.69,
+  "end": 113.25
+ },
+ {
+  "say": "The queue is the ticket system. The AI gateway talks to outside AI vendors.",
+  "cap": "The [queue] is the ticket system. The [AI gateway] talks to outside vendors.",
+  "chapter": 2,
+  "beat": "org",
+  "start": 113.49,
+  "end": 118.84
+ },
+ {
+  "say": "Zoom in on the gateway: one front door, one address for web, mobile and partner clients.",
+  "cap": "The [gateway]: one [front door], one address.",
+  "chapter": 2,
+  "beat": "gw",
+  "scene": "svg_diagram",
+  "pill": "one front door for every client",
+  "asset": [
+   "repo/svg/11-api-gateway.svg"
+  ],
+  "start": 119.29,
+  "end": 125.3
+ },
+ {
+  "say": "It does the shared chores once: authenticate, rate limit, and route to the right private service.",
+  "cap": "[Authenticate], [rate limit], [route]. Once, for everyone.",
+  "chapter": 2,
+  "beat": "gw",
+  "start": 125.54,
+  "end": 131.51
+ },
+ {
+  "say": "Fail a check, and the request is rejected right there: a 401, or a 429. No service does any work.",
+  "cap": "Fail a check: [401] or [429]. No service does any work.",
+  "chapter": 2,
+  "beat": "gw",
+  "start": 131.75,
+  "end": 139.9
+ },
+ {
+  "say": "And it stays dumb. A gateway that also holds business logic stops being a gateway.",
+  "cap": "Keep it [dumb]. No [business logic] in the gateway.",
+  "chapter": 2,
+  "beat": "gw",
+  "start": 140.14,
+  "end": 145.67
+ },
+ {
+  "say": "The cache sits beside the app. Reads check it first.",
+  "cap": "The [cache] sits beside the app. Reads check it [first].",
+  "chapter": 2,
+  "beat": "cache",
+  "scene": "svg_diagram",
+  "pill": "cache-aside: check the cache first",
+  "asset": [
+   "repo/svg/07-cache-aside.svg"
+  ],
+  "start": 146.12,
+  "end": 149.37
+ },
+ {
+  "say": "A hit comes back in about 1 millisecond. A miss reads the database, then saves the answer for next time.",
+  "cap": "A [hit]: about [1 ms]. A [miss]: read the database, [save] it.",
+  "chapter": 2,
+  "beat": "cache",
+  "start": 149.61,
+  "end": 156.72
+ },
+ {
+  "say": "On a write, the app updates the database and deletes the cached copy, so nobody reads stale data.",
+  "cap": "On a write: update the database, [delete] the cached copy.",
+  "chapter": 2,
+  "beat": "cache",
+  "start": 156.96,
+  "end": 163.03
+ },
+ {
+  "say": "The queue is for work that shouldn't make the client wait. Like sending a confirmation email.",
+  "cap": "The [queue] is for work the client shouldn't [wait] for.",
+  "chapter": 2,
+  "beat": "queue",
+  "scene": "svg_diagram",
+  "pill": "answer fast, work later",
+  "asset": [
+   "repo/svg/08-message-queue.svg"
+  ],
+  "start": 163.49,
+  "end": 168.94
+ },
+ {
+  "say": "The API validates the request, drops a job on the queue, and answers right away.",
+  "cap": "Validate, [enqueue], answer [right away].",
+  "chapter": 2,
+  "beat": "queue",
+  "start": 169.19,
+  "end": 174.97
+ },
+ {
+  "say": "Workers do the slow part later. If a worker crashes, the job goes back on the queue.",
+  "cap": "[Workers] do the slow part. A crash? The job [goes back].",
+  "chapter": 2,
+  "beat": "queue",
+  "start": 175.21,
+  "end": 180.75
+ },
+ {
+  "say": "That buys you decoupling, durability, and a steady pace when traffic spikes.",
+  "cap": "[Decoupling], [durability], steady pace in a [spike].",
+  "chapter": 2,
+  "beat": "queue",
+  "start": 180.99,
+  "end": 185.88
+ },
+ {
+  "say": "The AI gateway is one front door for every model call. Your apps never talk to a provider directly.",
+  "cap": "The [AI gateway]: one front door for [every] model call.",
+  "chapter": 2,
+  "beat": "ai",
+  "scene": "svg_diagram",
+  "pill": "one front door for every model call",
+  "asset": [
+   "repo/svg/15-llm-gateway.svg"
+  ],
+  "start": 186.33,
+  "end": 193.14
+ },
+ {
+  "say": "It handles authentication, rate limits, caching, routing and cost tracking once, for everyone. And if a provider is down, it falls back to another.",
+  "cap": "[Auth], [limits], [caching], [routing], [cost]. A provider down? [Fallback].",
+  "chapter": 2,
+  "beat": "ai",
+  "start": 193.38,
+  "end": 203.22
+ },
+ {
+  "say": "Request one, a simple read: GET /products/9. It hits the CDN first.",
+  "cap": "Request one: [GET /products/9]. It hits the [CDN] first.",
+  "chapter": 3,
+  "beat": "read",
+  "scene": "svg_flow",
+  "pill": "GET /products/9",
+  "asset": [
+   "repo/mermaid/api-request-flow.svg"
+  ],
+  "start": 205.22,
+  "end": 211.44
+ },
+ {
+  "say": "If the CDN has the answer cached, it returns right there. Nothing behind it ever hears about the request.",
+  "cap": "[Cached] at the edge? Done. Nothing behind it [hears] about it.",
+  "chapter": 3,
+  "beat": "read",
+  "start": 211.68,
+  "end": 218.98
+ },
+ {
+  "say": "If not, the gateway authenticates and rate limits, then routes it to the application service.",
+  "cap": "Not cached: the [gateway] checks, then [routes] to the app.",
+  "chapter": 3,
+  "beat": "read",
+  "start": 219.22,
+  "end": 225.02
+ },
+ {
+  "say": "The app checks its cache. A hit skips the database. A miss queries it, then stores the result.",
+  "cap": "[Hit]: skip the database. [Miss]: query, then [store].",
+  "chapter": 3,
+  "beat": "read",
+  "start": 225.26,
+  "end": 231.27
+ },
+ {
+  "say": "Then the response retraces the same path, back to the client.",
+  "cap": "The response [retraces] the same path back.",
+  "chapter": 3,
+  "beat": "read",
+  "start": 231.51,
+  "end": 235.36
+ },
+ {
+  "say": "Request two, a write: POST /orders. This is the handbook's end to end view of it.",
+  "cap": "Request two: [POST /orders]. The [end to end] view.",
+  "chapter": 3,
+  "beat": "write",
+  "scene": "svg_diagram",
+  "pill": "POST /orders",
+  "asset": [
+   "repo/svg/18-request-flow.svg"
+  ],
+  "start": 235.81,
+  "end": 241.3
+ },
+ {
+  "say": "A POST isn't cached, so it passes straight through to the application service.",
+  "cap": "A POST is [not cached]: it passes [straight through].",
+  "chapter": 3,
+  "beat": "write",
+  "start": 241.54,
+  "end": 245.98
+ },
+ {
+  "say": "The order service validates the body, commits to PostgreSQL in one transaction, updates Redis, and publishes a message to the queue.",
+  "cap": "[Validate], [commit], update [Redis], [publish] a message.",
+  "chapter": 3,
+  "beat": "write",
+  "start": 246.22,
+  "end": 255.71
+ },
+ {
+  "say": "A 201 comes back in roughly 20 to 150 milliseconds. The worker sends the email after the response, so the client never waits.",
+  "cap": "[201] in about [20 to 150 ms]. The email goes out [after].",
+  "chapter": 3,
+  "beat": "write",
+  "start": 255.94,
+  "end": 265.89
+ },
+ {
+  "say": "Request three, an AI chat message. The handbook traces it in seven steps.",
+  "cap": "Request three: [POST /chat]. Seven [steps].",
+  "chapter": 3,
+  "beat": "chat",
+  "scene": "code_card",
+  "pill": "POST /chat: seven steps",
+  "asset": [
+   "harvest/code/block1.txt"
+  ],
+  "start": 266.35,
+  "end": 271.5
+ },
+ {
+  "say": "The gateway validates the token and checks the rate limit. The app loads the conversation from PostgreSQL, and checks Redis.",
+  "cap": "[Gateway]: token, rate limit. [App]: Postgres, Redis.",
+  "chapter": 3,
+  "beat": "chat",
+  "start": 271.74,
+  "end": 280.52
+ },
+ {
+  "say": "Then the app calls the AI gateway, which routes to an available provider, with a fallback if the primary is down.",
+  "cap": "The [AI gateway] routes to a provider, with a [fallback].",
+  "chapter": 3,
+  "beat": "chat",
+  "start": 280.76,
+  "end": 288.25
+ },
+ {
+  "say": "The answer streams back token by token, through the app and the gateway to the client.",
+  "cap": "The answer [streams] back, token by token.",
+  "chapter": 3,
+  "beat": "chat",
+  "start": 288.49,
+  "end": 293.76
+ },
+ {
+  "say": "And logging and cost tracking happen afterwards, through a queue, so they never slow the reply.",
+  "cap": "[Logging] and [cost] go through a [queue], after.",
+  "chapter": 3,
+  "beat": "chat",
+  "start": 294.0,
+  "end": 299.68
+ },
+ {
+  "say": "Same map, three different paths. A read can stop at the CDN. A write goes to the database and queues the slow work. A chat goes through the AI gateway.",
+  "cap": "Three [paths]. A read can [stop] at the CDN. A chat uses the [AI gateway].",
+  "chapter": 3,
+  "beat": "sum",
+  "scene": "svg_compare",
+  "pill": "same map, three different paths",
+  "asset": [],
+  "start": 300.12,
+  "end": 311.1
+ },
+ {
+  "say": "Now let's watch the AI layer for real. This is the handbook's LLM gateway example, a small FastAPI app.",
+  "cap": "The handbook's [LLM gateway] example: a small [FastAPI] app.",
+  "chapter": 4,
+  "beat": "route",
+  "scene": "code_card",
+  "pill": "examples/llm-gateway",
+  "asset": [
+   "examples/llm-gateway/main.py"
+  ],
+  "start": 313.1,
+  "end": 321.6
+ },
+ {
+  "say": "Its setup is a few lines: providers in priority order, and a token bucket that allows five requests, refilling one per second.",
+  "cap": "[Providers] in priority order. A [token bucket]: five requests, [1/sec].",
+  "chapter": 4,
+  "beat": "route",
+  "start": 321.84,
+  "end": 330.81
+ },
+ {
+  "say": "Over the limit, the gateway answers 429. And every response gets a cost attached.",
+  "cap": "Over the limit: [429]. Every response gets a [cost].",
+  "chapter": 4,
+  "beat": "route",
+  "start": 331.05,
+  "end": 337.07
+ },
+ {
+  "say": "Five calls to the same chat endpoint. Four were served by the first provider.",
+  "cap": "Five calls. Four served by the [first] provider.",
+  "chapter": 4,
+  "beat": "run1",
+  "scene": "terminal_clip",
+  "pill": "real run · commands trimmed",
+  "asset": [
+   "demo/real_output.txt"
+  ],
+  "start": 337.52,
+  "end": 342.43
+ },
+ {
+  "say": "On the fifth, it failed, and the gateway fell back to provider A, the only one that costs anything.",
+  "cap": "The fifth: it failed. The gateway fell [back] to provider A.",
+  "chapter": 4,
+  "beat": "run1",
+  "start": 342.67,
+  "end": 349.03
+ },
+ {
+  "say": "The usage endpoint rolls up cost per tenant: five requests, a fraction of a cent.",
+  "cap": "[Usage]: five requests, a fraction of a [cent].",
+  "chapter": 4,
+  "beat": "run1",
+  "start": 349.27,
+  "end": 354.78
+ },
+ {
+  "say": "Now a burst of eight requests. The first five pass. The next three get a 429: rate limited, right at the gateway.",
+  "cap": "A burst of eight: five [pass], three get [429].",
+  "chapter": 4,
+  "beat": "run2",
+  "scene": "terminal_clip",
+  "pill": "real run · a burst of 8 requests",
+  "asset": [
+   "demo/real_output.txt"
+  ],
+  "start": 355.23,
+  "end": 363.62
+ },
+ {
+  "say": "Now the most important rule. Not every API needs every layer. A small internal tool can be one application service with a database behind it, and that's the right architecture at that scale.",
+  "cap": "Not every API needs [every] layer. A small tool: [app] plus database. That's [right].",
+  "chapter": 5,
+  "beat": "simple",
+  "scene": "svg_compare",
+  "pill": "every layer has a price",
+  "asset": [],
+  "start": 365.62,
+  "end": 378.78
+ },
+ {
+  "say": "Each layer buys you something. A cache buys latency. A gateway buys central auth. A queue buys resilience. But the price is more moving parts, more failure modes, more to operate.",
+  "cap": "[Cache]: latency. [Gateway]: central auth. [Queue]: resilience. The [price]: complexity.",
+  "chapter": 5,
+  "beat": "simple",
+  "start": 379.02,
+  "end": 391.94
+ },
+ {
+  "say": "Mistake one. Assuming every API needs a gateway, a queue, and a cache from day one. Most don't, at first. Add a layer for a real problem, not a hypothetical one.",
+  "cap": "Mistake 1: every layer on [day one]. Add one for a [real] problem.",
+  "chapter": 5,
+  "beat": "x1",
+  "scene": "svg_compare",
+  "pill": "every layer on day one",
+  "asset": [],
+  "start": 392.39,
+  "end": 403.99
+ },
+ {
+  "say": "Mistake two. Treating microservices as automatically more production grade than a well built monolith. It depends on the problem. Part 11 covers it.",
+  "cap": "Mistake 2: [microservices] are not [automatically] better.",
+  "chapter": 5,
+  "beat": "x2",
+  "scene": "svg_compare",
+  "pill": "it depends on the problem · Part 11",
+  "asset": [],
+  "start": 404.44,
+  "end": 414.93
+ },
+ {
+  "say": "Mistake three. Bolting the AI layer on as an afterthought. It needs its own timeouts, fallbacks, and cost tracking.",
+  "cap": "Mistake 3: AI as an [afterthought]. It needs [timeouts], [fallbacks], [cost] tracking.",
+  "chapter": 5,
+  "beat": "x3",
+  "scene": "svg_compare",
+  "pill": "slow · can fail · costs per call",
+  "asset": [],
+  "start": 415.38,
+  "end": 423.19
+ },
+ {
+  "say": "A database query is usually fast and predictable. A model call can be slow, non-deterministic, and billed by usage. That's why it deserves its own box.",
+  "cap": "A query is usually [fast]. A model call is [slow], [random], [metered].",
+  "chapter": 5,
+  "beat": "aip",
+  "scene": "svg_compare",
+  "pill": "the AI layer has different failure and cost",
+  "asset": [],
+  "start": 423.64,
+  "end": 434.74
+ },
+ {
+  "say": "So Parts 14 to 17 add LLM gateways, token rate limits, prompt caching, and semantic caching. Ideas a typical CRUD API never needed.",
+  "cap": "[LLM gateways], [token limits], [prompt caching], [semantic caching].",
+  "chapter": 5,
+  "beat": "aip",
+  "start": 434.98,
+  "end": 447.61
+ },
+ {
+  "say": "Let's recap.",
+  "cap": "Let's [recap].",
+  "chapter": 6,
+  "beat": "rec",
+  "scene": "recap_grid",
+  "pill": "layers earn their place",
+  "asset": [],
+  "start": 449.61,
+  "end": 450.58
+ },
+ {
+  "say": "A production API is a layered system: client, edge, gateway, application, then data and AI.",
+  "cap": "A layered system: client, edge, [gateway], [app], data and [AI].",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 450.82,
+  "end": 457.97
+ },
+ {
+  "say": "Each layer has one narrow job, and requests take different paths through them.",
+  "cap": "One [narrow job] each. Different requests, different [paths].",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 458.21,
+  "end": 462.79
+ },
+ {
+  "say": "Add a layer only for a real problem, and treat the AI layer like the database.",
+  "cap": "Add a layer only for a [real] problem. Treat the [AI layer] like the database.",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 463.02,
+  "end": 468.36
+ },
+ {
+  "say": "And bookmark Part 18. It's the full production version of this map.",
+  "cap": "Bookmark [Part 18]: the full production map.",
+  "chapter": 6,
+  "beat": "rec",
+  "start": 468.6,
+  "end": 472.88
+ },
+ {
+  "say": "Quick check before you go. A POST /orders request must also send a confirmation email. How do you avoid making the client wait for it?",
+  "cap": "POST /orders must send an email. How do you not make the client [wait]?",
+  "chapter": 6,
+  "beat": "quiz",
+  "scene": "quiz_card",
+  "pill": "Check yourself",
+  "asset": [],
+  "start": 473.33,
+  "end": 482.75
+ },
+ {
+  "say": "Pause and answer. Got it? Put the email on a queue as a background job. A worker sends it after the response.",
+  "cap": "Put it on a [queue]. A [worker] sends it [after] the response.",
+  "chapter": 6,
+  "beat": "quiz",
+  "start": 482.99,
+  "end": 490.52
+ },
+ {
+  "say": "Next up: the handbook's learning roadmap, a guided path through all 20 parts.",
+  "cap": "Next: the [learning roadmap] through all [20] parts.",
+  "chapter": 6,
+  "beat": "out",
+  "scene": "end_screen",
+  "pill": null,
+  "asset": [],
+  "start": 490.97,
+  "end": 496.09
+ },
+ {
+  "say": "Or try the chapter's exercise: the layers a GET /orders/{id} request passes through, in a food delivery app.",
+  "cap": "Try it: layers for [GET /orders/{id}] in a [food delivery] app.",
+  "chapter": 6,
+  "beat": "out",
+  "start": 496.33,
+  "end": 504.14
+ },
+ {
+  "say": "Subscribe, and I'll see you in the next one.",
+  "cap": "[Subscribe], and see you in the next one.",
+  "chapter": 6,
+  "beat": "out",
+  "start": 504.38,
+  "end": 506.72
+ }
+]

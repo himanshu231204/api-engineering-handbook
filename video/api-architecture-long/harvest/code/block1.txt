@@ -1,0 +1,7 @@
+1. Client → POST /chat  {"message": "Summarize this doc"}
+2. Gateway validates JWT, checks rate limit
+3. App service loads conversation from Postgres, checks Redis cache for recent context
+4. App service calls AI Gateway
+5. AI Gateway routes to an available LLM provider (with a fallback if the primary is down)
+6. Response streams back through App service → Gateway → Client
+7. App service asynchronously logs the interaction and updates usage/cost tracking via a queue

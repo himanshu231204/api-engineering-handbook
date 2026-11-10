@@ -1,0 +1,15 @@
+flowchart TD
+    Client["Client (browser, mobile app, service, AI agent)"]
+    CDN["CDN / Load Balancer"]
+    Gateway["API Gateway (auth, rate limiting, routing)"]
+    App["Application Service(s)"]
+    Cache["Cache (Redis)"]
+    DB["Database (PostgreSQL)"]
+    Queue["Message Queue / Workers"]
+    AI["AI Gateway → LLM Providers"]
+
+    Client --> CDN --> Gateway --> App
+    App --> Cache
+    App --> DB
+    App --> Queue
+    App --> AI

@@ -1,0 +1,149 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="ai" data-width="1920" data-height="1080">
+<div id="ai-stage" class="stage">
+<div id="ai-e1" class="el chip" style="left:460px;top:44px;background:#39FF88;color:#0E0622;font-size:30px;">from the handbook · Part 15</div>
+<div id="ai-e2" class="el" style="left:190px;top:100px;width:1540px;height:770px"><svg style="width:1540px;height:770px;display:block;overflow:visible" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440" role="img" aria-labelledby="r15-llm-gateway-t r15-llm-gateway-d">
+  <title id="r15-llm-gateway-t">One gateway between your apps and every AI provider</title>
+  <desc id="r15-llm-gateway-d">Three applications (chat service, RAG pipeline, agent worker) all send requests to one LLM gateway. Inside the gateway, requests pass through auth, rate limits, cache, routing, cost tracking and logging. The gateway then calls provider A, provider B or provider C.</desc>
+  <defs>
+    <marker id="r15-llm-gateway-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8199BB"/>
+    </marker>
+    <style>
+      .r15-llm-gateway-title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r15-llm-gateway-sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r15-llm-gateway-h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #FFFFFF; }
+      .r15-llm-gateway-lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .r15-llm-gateway-note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #A0A0B0; }
+      .r15-llm-gateway-code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #FFFFFF; }
+    </style>
+  </defs>
+
+  <text x="32" y="44" class="r15-llm-gateway-title">One front door for every AI call</text>
+  <text x="32" y="66" class="r15-llm-gateway-sub">Apps never talk to providers directly. The gateway handles the hard, repetitive parts once.</text>
+
+  <!-- apps -->
+  <text x="32" y="102" class="r15-llm-gateway-h">Your apps</text>
+  <rect x="32" y="116" width="170" height="52" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="117" y="138" class="r15-llm-gateway-lbl" fill="#5787F0" text-anchor="middle">Chat service</text>
+  <text x="117" y="156" class="r15-llm-gateway-note" text-anchor="middle">one request shape</text>
+  <rect x="32" y="188" width="170" height="52" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="117" y="210" class="r15-llm-gateway-lbl" fill="#5787F0" text-anchor="middle">RAG pipeline</text>
+  <text x="117" y="228" class="r15-llm-gateway-note" text-anchor="middle">embed + generate</text>
+  <rect x="32" y="260" width="170" height="52" rx="10" fill="#081A30" stroke="#3B73ED" stroke-width="1.5"/>
+  <text x="117" y="282" class="r15-llm-gateway-lbl" fill="#5787F0" text-anchor="middle">Agent worker</text>
+  <text x="117" y="300" class="r15-llm-gateway-note" text-anchor="middle">many calls per task</text>
+
+  <!-- arrows apps -> gateway -->
+  <line x1="204" y1="142" x2="268" y2="196" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+  <line x1="204" y1="214" x2="268" y2="214" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+  <line x1="204" y1="286" x2="268" y2="232" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+
+  <!-- gateway -->
+  <rect x="272" y="92" width="336" height="316" rx="12" fill="#11271B" stroke="#50D89F" stroke-width="1.5"/>
+  <text x="440" y="118" class="r15-llm-gateway-h" text-anchor="middle">LLM Gateway</text>
+  <g>
+    <circle cx="300" cy="148" r="12" fill="#61DBA8"/><text x="300" y="152" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">1</text>
+    <text x="324" y="153" class="r15-llm-gateway-lbl" fill="#FFFFFF">Auth</text><text x="400" y="153" class="r15-llm-gateway-note">who is calling?</text>
+    <circle cx="300" cy="186" r="12" fill="#61DBA8"/><text x="300" y="190" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">2</text>
+    <text x="324" y="191" class="r15-llm-gateway-lbl" fill="#FFFFFF">Rate limits</text><text x="420" y="191" class="r15-llm-gateway-note">requests and tokens</text>
+    <circle cx="300" cy="224" r="12" fill="#61DBA8"/><text x="300" y="228" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">3</text>
+    <text x="324" y="229" class="r15-llm-gateway-lbl" fill="#FFFFFF">Caching</text><text x="400" y="229" class="r15-llm-gateway-note">skip the call if answered</text>
+    <circle cx="300" cy="262" r="12" fill="#61DBA8"/><text x="300" y="266" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">4</text>
+    <text x="324" y="267" class="r15-llm-gateway-lbl" fill="#FFFFFF">Routing</text><text x="400" y="267" class="r15-llm-gateway-note">pick model, fall back</text>
+    <circle cx="300" cy="300" r="12" fill="#61DBA8"/><text x="300" y="304" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">5</text>
+    <text x="324" y="305" class="r15-llm-gateway-lbl" fill="#FFFFFF">Cost tracking</text><text x="430" y="305" class="r15-llm-gateway-note">tokens → dollars</text>
+    <circle cx="300" cy="338" r="12" fill="#61DBA8"/><text x="300" y="342" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0E0622" text-anchor="middle">6</text>
+    <text x="324" y="343" class="r15-llm-gateway-lbl" fill="#FFFFFF">Logging</text><text x="400" y="343" class="r15-llm-gateway-note">traces and quality</text>
+  </g>
+  <text x="440" y="388" class="r15-llm-gateway-note" text-anchor="middle">keys, retries and format translation live here too</text>
+
+  <!-- arrows gateway -> providers -->
+  <line x1="610" y1="180" x2="672" y2="142" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+  <line x1="610" y1="250" x2="672" y2="250" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+  <line x1="610" y1="320" x2="672" y2="358" stroke="#648BC4" stroke-width="1.75" marker-end="url(#r15-llm-gateway-arrow)"/>
+
+  <!-- providers -->
+  <text x="678" y="102" class="r15-llm-gateway-h">Providers</text>
+  <rect x="678" y="116" width="170" height="52" rx="10" fill="#100830" stroke="#8349DF" stroke-width="1.5"/>
+  <text x="763" y="138" class="r15-llm-gateway-lbl" fill="#9563E3" text-anchor="middle">Provider A</text>
+  <text x="763" y="156" class="r15-llm-gateway-note" text-anchor="middle">OpenAI-style API</text>
+  <rect x="678" y="224" width="170" height="52" rx="10" fill="#100830" stroke="#8349DF" stroke-width="1.5"/>
+  <text x="763" y="246" class="r15-llm-gateway-lbl" fill="#9563E3" text-anchor="middle">Provider B</text>
+  <text x="763" y="264" class="r15-llm-gateway-note" text-anchor="middle">Anthropic-style API</text>
+  <rect x="678" y="332" width="170" height="52" rx="10" fill="#100830" stroke="#8349DF" stroke-width="1.5"/>
+  <text x="763" y="354" class="r15-llm-gateway-lbl" fill="#9563E3" text-anchor="middle">Provider C</text>
+  <text x="763" y="372" class="r15-llm-gateway-note" text-anchor="middle">self-hosted model</text>
+
+  <text x="32" y="352" class="r15-llm-gateway-note">Without it: every team re-builds</text>
+  <text x="32" y="370" class="r15-llm-gateway-note">keys, retries and logging, and</text>
+  <text x="32" y="388" class="r15-llm-gateway-note">nobody knows what AI costs.</text>
+</svg>
+</div>
+<svg id="ai-e3" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><rect id="ai-e3-r" x="660" y="255" width="600" height="565" rx="18" fill="none" stroke="#39FF88" stroke-width="6" stroke-dasharray="2330" stroke-dashoffset="2330" stroke-linecap="round"/></svg>
+<svg id="ai-e4" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><rect id="ai-e4-r" x="1370" y="297" width="310" height="481" rx="18" fill="none" stroke="#9D4EFF" stroke-width="6" stroke-dasharray="1582" stroke-dashoffset="1582" stroke-linecap="round"/></svg>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+tl.fromTo("#ai-stage",{opacity:0,scale:1.04},{opacity:1,scale:1,duration:.22,ease:"power3.out"},0);
+A("ai-e1","pop",0.12,null);
+tl.fromTo("#ai-e2",{opacity:1,clipPath:"inset(0 0 100% 0)"},{opacity:1,clipPath:"inset(0 0 82.73% 0)",duration:.5,ease:"power2.out"},0.12);
+tl.fromTo("#ai-e2",{clipPath:"inset(0 0 82.73% 0)"},{clipPath:"inset(0 0 54.55% 0)",duration:.5,ease:"power2.out",immediateRender:false},1.84);
+tl.fromTo("#ai-e2",{clipPath:"inset(0 0 54.55% 0)"},{clipPath:"inset(0 0 0.00% 0)",duration:.5,ease:"power2.out",immediateRender:false},4.4);
+RING("ai-e3",7.166,2330,14.856);
+RING("ai-e4",14.906,1582,null);
+tl.fromTo("#ai-stage",{opacity:1},{opacity:0,duration:.2,immediateRender:false},16.994);
+window.__timelines = window.__timelines || {};
+window.__timelines["ai"] = tl;
+</script>
+</div>
+</template>

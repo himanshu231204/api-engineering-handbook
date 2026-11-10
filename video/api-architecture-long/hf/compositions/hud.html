@@ -1,0 +1,43 @@
+<template>
+<style>
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif}
+#hud-bar{position:absolute;left:0;top:0;width:1920px;height:80px}
+#hud-track{position:absolute;left:20px;top:8px;width:1880px;height:4px;background:#1A1A1A}
+#hud-fill{position:absolute;left:20px;top:8px;width:1880px;height:4px;background:#FFE500;transform-origin:0 50%}
+.tick{position:absolute;top:2px;width:3px;height:16px;background:#666}
+.ht{position:absolute;left:24px;top:26px;font-size:28px;font-weight:700;color:#A0A0B0;opacity:0}
+</style>
+<div id="root" data-composition-id="hud" data-width="1920" data-height="1080">
+<div id="hud-bar"><div id="hud-track"></div><div id="hud-fill"></div><div class="tick" style="left:128.5px"></div><div class="tick" style="left:348.0px"></div><div class="tick" style="left:780.5px"></div><div class="tick" style="left:1180.2px"></div><div class="tick" style="left:1374.8px"></div><div class="tick" style="left:1686.1px"></div><div id="hud-t0" class="ht"></div><div id="hud-t1" class="ht">The big map</div><div id="hud-t2" class="ht">Who does what</div><div id="hud-t3" class="ht">Three requests</div><div id="hud-t4" class="ht">See it run</div><div id="hud-t5" class="ht">Don't over-build</div><div id="hud-t6" class="ht">Recap</div></div>
+<script>
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#hud-fill",{scaleX:0},{scaleX:1,duration:507.3333333333333,ease:"none"},0);
+tl.fromTo("#hud-t1",{opacity:0},{opacity:1,duration:.2},29.78);
+tl.fromTo("#hud-t1",{opacity:1},{opacity:0,duration:.15,immediateRender:false},88.21);
+tl.fromTo("#hud-t2",{opacity:0},{opacity:1,duration:.2},89.01);
+tl.fromTo("#hud-t2",{opacity:1},{opacity:0,duration:.15,immediateRender:false},204.92);
+tl.fromTo("#hud-t3",{opacity:0},{opacity:1,duration:.2},205.72);
+tl.fromTo("#hud-t3",{opacity:1},{opacity:0,duration:.15,immediateRender:false},312.80);
+tl.fromTo("#hud-t4",{opacity:0},{opacity:1,duration:.2},313.60);
+tl.fromTo("#hud-t4",{opacity:1},{opacity:0,duration:.15,immediateRender:false},365.31);
+tl.fromTo("#hud-t5",{opacity:0},{opacity:1,duration:.2},366.12);
+tl.fromTo("#hud-t5",{opacity:1},{opacity:0,duration:.15,immediateRender:false},449.31);
+tl.fromTo("#hud-t6",{opacity:0},{opacity:1,duration:.2},450.11);
+tl.fromTo("#hud-t6",{opacity:1},{opacity:0,duration:.15,immediateRender:false},507.03);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},27.53);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},29.20);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},86.76);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},88.43);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},203.47);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},205.14);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},311.35);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},313.02);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},363.87);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},365.54);
+tl.fromTo("#hud-bar",{opacity:1},{opacity:0,duration:.15,immediateRender:false},447.86);
+tl.fromTo("#hud-bar",{opacity:0},{opacity:1,duration:.2,immediateRender:false},449.53);
+window.__timelines = window.__timelines || {};
+window.__timelines["hud"] = tl;
+</script>
+</div>
+</template>

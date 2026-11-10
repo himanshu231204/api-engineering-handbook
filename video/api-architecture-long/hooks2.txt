@@ -1,0 +1,4 @@
+Your API request crosses five layers before it returns. Add the wrong one and you'll lose weeks debugging it. Which layers does your API need?
+Five layers sit between your user and your database. Add one too early and you'll pay for it every time something breaks. Which ones can you skip?
+Your API request crosses five layers in under two hundred milliseconds. If you can't name them, you'll waste hours debugging the wrong one. Can you?
+Your API is five layers, not one server. Add one too many and you'll lose weeks to bugs nobody can trace. Which ones does yours need?

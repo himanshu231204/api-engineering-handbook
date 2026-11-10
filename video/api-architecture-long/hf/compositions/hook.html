@@ -1,0 +1,90 @@
+<template>
+<style>
+@font-face{font-family:'Caveat';src:url('assets/fonts/caveat-700.woff2') format('woff2');font-weight:700;}
+#root{position:absolute;inset:0;font-family:'Inter',sans-serif;color:#fff;}
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:50% 50%;}
+.el{position:absolute;opacity:0;}
+.svgl{position:absolute;left:0;top:0;pointer-events:none;overflow:visible}
+.box{border-radius:26px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-sizing:border-box}
+.bt{font-weight:900;line-height:1.1}
+.bs{font-size:30px;font-weight:700;color:#A0A0B0;margin-top:10px;line-height:1.2}
+.chip{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:900;white-space:nowrap;text-align:center}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700;color:#E8E8F0}
+.codecard{border-radius:24px;border:1px solid #2A2A2A;overflow:hidden;box-sizing:border-box}
+.bar{height:62px;background:#111;display:flex;align-items:center;padding-left:24px;gap:10px;border-bottom:1px solid #2A2A2A;box-sizing:border-box}
+.dot{display:inline-block;width:18px;height:18px;border-radius:50%}
+.ttl,.url{font-size:28px;font-weight:700;margin-left:18px;font-family:'JetBrains Mono',monospace}
+.url{background:#222;border-radius:999px;padding:6px 22px;color:#C8C8D4}
+.k{color:#FF2E88}.s{color:#39FF88}.f{color:#00F0FF}.c{color:#7A7A90}.d{color:#FF9100}.n{color:#FFE500}.g{color:#39FF88}.o{color:#FF9100}.r{color:#FF3B3B}.m{color:#7A7A90}
+.pillwrap{position:absolute;left:0;top:806px;width:1920px;text-align:center;opacity:0}
+.pill{display:inline-block;background:#111;border:1px solid #2A2A2A;border-radius:999px;padding:12px 40px;font-size:38px;font-weight:900;color:#A0A0B0}
+.shot{border-radius:22px;border:1px solid #2A2A2A;overflow:hidden;background:#0A0A0A;box-sizing:border-box}
+.vp{position:absolute;left:0;width:100%;overflow:hidden}
+.vp img{position:absolute;left:0;top:0;transform-origin:50% 50%}
+.num{font-weight:900;line-height:1}
+.lab{font-size:40px;font-weight:900;color:#fff;margin-top:6px}
+</style>
+<div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+<div id="hook-stage" class="stage">
+<div id="hook-e1" class="el " style="left:150px;top:120px;filter:drop-shadow(0 0 14px rgba(255,229,0,.55))"><svg width="300" height="300" viewBox="0 0 300 300"><circle cx="150" cy="150" r="136" fill="none" stroke="#FFE500" stroke-width="10"/><text x="150" y="182" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="92" fill="#FFE500">&lt;/&gt;</text></svg></div>
+<div id="hook-e2" class="el " style="left:500px;top:150px;width:1350px;font-size:118px;font-weight:900;color:#fff;text-align:left;line-height:1.12;">API <span style="color:#FFE500">ARCHITECTURE</span></div>
+<div id="hook-e3" class="el " style="left:506px;top:320px;width:1200px;font-size:50px;font-weight:700;color:#A0A0B0;text-align:left;line-height:1.12;">A production API, at a glance.</div>
+<div id="hook-e4" class="el box" style="left:125px;top:520px;width:290px;height:210px;border:5px solid #00F0FF;background:rgba(0,240,255,0.09);box-shadow:0 0 28px rgba(0,240,255,0.3);"><div class="bt" style="font-size:42px;color:#fff">Client</div><div class="bs">browser · app · agent</div></div>
+<div id="hook-e5" class="el box" style="left:470px;top:520px;width:290px;height:210px;border:5px solid #39FF88;background:rgba(57,255,136,0.09);box-shadow:0 0 28px rgba(57,255,136,0.3);"><div class="bt" style="font-size:42px;color:#fff">Edge</div><div class="bs">CDN · load balancer</div></div>
+<svg id="hook-e6" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="hook-e6-l" x1="418" y1="625" x2="442.0" y2="625.0" stroke="#A0A0B0" stroke-width="5" stroke-linecap="round" stroke-dasharray="46.0" /><polygon id="hook-e6-h" points="464,625 444.1901637482411,634.5692417504471 444.1901637482411,615.4307582495529" fill="#A0A0B0"/></svg>
+<div id="hook-e7" class="el box" style="left:815px;top:520px;width:290px;height:210px;border:5px solid #FF2E88;background:rgba(255,46,136,0.09);box-shadow:0 0 28px rgba(255,46,136,0.3);"><div class="bt" style="font-size:42px;color:#fff">Gateway</div><div class="bs">auth · rate limits</div></div>
+<svg id="hook-e8" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="hook-e8-l" x1="763" y1="625" x2="787.0" y2="625.0" stroke="#A0A0B0" stroke-width="5" stroke-linecap="round" stroke-dasharray="46.0" /><polygon id="hook-e8-h" points="809,625 789.1901637482412,634.5692417504471 789.1901637482412,615.4307582495529" fill="#A0A0B0"/></svg>
+<div id="hook-e9" class="el box" style="left:1160px;top:520px;width:290px;height:210px;border:5px solid #FF9100;background:rgba(255,145,0,0.09);box-shadow:0 0 28px rgba(255,145,0,0.3);"><div class="bt" style="font-size:42px;color:#fff">Application</div><div class="bs">the real work</div></div>
+<svg id="hook-e10" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="hook-e10-l" x1="1108" y1="625" x2="1132.0" y2="625.0" stroke="#A0A0B0" stroke-width="5" stroke-linecap="round" stroke-dasharray="46.0" /><polygon id="hook-e10-h" points="1154,625 1134.190163748241,634.5692417504471 1134.190163748241,615.4307582495529" fill="#A0A0B0"/></svg>
+<div id="hook-e11" class="el box" style="left:1505px;top:520px;width:290px;height:210px;border:5px solid #9D4EFF;background:rgba(157,78,255,0.09);box-shadow:0 0 28px rgba(157,78,255,0.3);"><div class="bt" style="font-size:42px;color:#fff">Data + AI</div><div class="bs">DB · cache · queue · LLM</div></div>
+<svg id="hook-e12" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><line id="hook-e12-l" x1="1453" y1="625" x2="1477.0" y2="625.0" stroke="#A0A0B0" stroke-width="5" stroke-linecap="round" stroke-dasharray="46.0" /><polygon id="hook-e12-h" points="1499,625 1479.190163748241,634.5692417504471 1479.190163748241,615.4307582495529" fill="#A0A0B0"/></svg>
+<div id="hook-e13" class="el note" style="left:520px;top:770px;width:1100px;font-family:'Caveat';font-weight:700;font-size:64px;color:#FF9100;transform-origin:left center;line-height:1;">the wrong layer = weeks of debugging</div>
+<svg id="hook-e14" class="svgl" width="1920" height="1080" viewBox="0 0 1920 1080"><rect id="hook-e14-r" x="105" y="500" width="1710" height="250" rx="18" fill="none" stroke="#FFE500" stroke-width="6" stroke-dasharray="3920" stroke-dashoffset="3920" stroke-linecap="round"/></svg>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+
+const A=(id,kind,t,out)=>{const s='#'+id;
+ if(kind==='fade') tl.fromTo(s,{opacity:0,y:20},{opacity:1,y:0,duration:.3,ease:'power3.out'},t);
+ else if(kind==='pop') tl.fromTo(s,{opacity:0,scale:.6},{opacity:1,scale:1,duration:.34,ease:'back.out(1.9)'},t);
+ else if(kind==='wipe') tl.fromTo(s,{opacity:1,clipPath:'inset(0 100% 0 0)'},{opacity:1,clipPath:'inset(0 0% 0 0)',duration:.45,ease:'none'},t);
+ else if(kind==='slam') tl.fromTo(s,{opacity:0,scale:1.8},{opacity:1,scale:1,duration:.3,ease:'back.out(1.4)'},t);
+ else if(kind==='grey') tl.fromTo(s,{opacity:.45},{opacity:1,duration:.35,ease:'power2.out'},t);
+ else if(kind==='static') tl.set(s,{opacity:1},0);
+ if(out!==null) tl.fromTo(s,{opacity:1},{opacity:0,duration:.2,ease:'power2.in',immediateRender:false},out);
+};
+const D=(id,t,L,solid,out)=>{
+ if(solid){ tl.fromTo('#'+id+'-l',{strokeDashoffset:L},{strokeDashoffset:0,duration:.45,ease:'power2.out'},t);
+   tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.38);
+ } else { tl.fromTo('#'+id+'-l',{opacity:0},{opacity:1,duration:.3},t); tl.fromTo('#'+id+'-h',{opacity:0},{opacity:1,duration:.12},t+.25); }
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out);
+};
+const RING=(id,t,L,out)=>{ tl.fromTo('#'+id+'-r',{strokeDashoffset:L},{strokeDashoffset:0,duration:.5,ease:'power2.out'},t);
+ if(out!==null) tl.fromTo('#'+id,{opacity:1},{opacity:0,duration:.2,immediateRender:false},out); };
+const PILL=(id,t)=>{ tl.fromTo('#'+id,{opacity:0,y:14},{opacity:1,y:0,duration:.3,ease:'power3.out'},t-0.1);
+ tl.fromTo('#'+id+'-p',{color:'#A0A0B0'},{color:'#ffffff',duration:.4,ease:'power2.out'},t); };
+const STAT=(id,t,v,suf)=>{ const o={v:0}; const n=document.getElementById(id+'-n');
+ tl.fromTo('#'+id,{opacity:0,scale:1.5},{opacity:1,scale:1,duration:.32,ease:'back.out(1.4)'},t);
+ tl.fromTo(o,{v:0},{v:v,duration:.9,ease:'power2.out',onUpdate:()=>{n.textContent=Math.round(o.v)+suf;}},t); };
+
+
+A("hook-e1","static",0.0,null);
+A("hook-e2","static",0.0,null);
+A("hook-e3","static",0.0,null);
+A("hook-e4","pop",1.31,null);
+A("hook-e5","pop",1.61,null);
+D("hook-e6",1.7100000000000002,46.0,true,null);
+A("hook-e7","pop",1.9100000000000001,null);
+D("hook-e8",2.0100000000000002,46.0,true,null);
+A("hook-e9","pop",2.21,null);
+D("hook-e10",2.31,46.0,true,null);
+A("hook-e11","pop",2.51,null);
+D("hook-e12",2.61,46.0,true,null);
+A("hook-e13","wipe",6.132,null);
+RING("hook-e14",11.67,3920,null);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["hook"] = tl;
+</script>
+</div>
+</template>

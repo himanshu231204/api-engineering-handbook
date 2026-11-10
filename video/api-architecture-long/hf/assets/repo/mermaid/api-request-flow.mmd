@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant C as Client
+    participant CDN as CDN / Load Balancer
+    participant GW as API Gateway
+    participant App as Application Service
+    participant Cache as Cache
+    participant DB as Database
+
+    C->>CDN: HTTPS request
+    CDN->>GW: Forward request
+    GW->>GW: Authenticate + rate limit
+    GW->>App: Route to service
+    App->>Cache: Check cache
+    alt Cache hit
+        Cache-->>App: Cached data
+    else Cache miss
+        App->>DB: Query
+        DB-->>App: Result
+        App->>Cache: Store result
+    end
+    App-->>GW: Response
+    GW-->>CDN: Response
+    CDN-->>C: HTTPS response
