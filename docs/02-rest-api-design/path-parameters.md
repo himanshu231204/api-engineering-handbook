@@ -35,7 +35,7 @@ Path parameters are declared in route templates using a placeholder syntax (`{or
 
 ```mermaid
 flowchart LR
-    A["Client Request\n/orders/482/items/17"] --> B{Router matches\ntemplate /orders/{order_id}/items/{item_id}}
+    A["Client Request\n/orders/482/items/17"] --> B{"Router matches\ntemplate /orders/{order_id}/items/{item_id}"}
     B --> C["Extract & type-coerce:\norder_id=482 (int)\nitem_id=17 (int)"]
     C --> D{"Handler: does item 17\nbelong to order 482?"}
     D -->|Yes| E[200 OK + item data]

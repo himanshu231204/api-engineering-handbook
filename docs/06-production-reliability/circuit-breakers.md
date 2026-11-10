@@ -40,13 +40,13 @@ This three-state design is what distinguishes a circuit breaker from a simple "i
 stateDiagram-v2
     [*] --> Closed
 
-    Closed --> Open: failure rate exceeds\nthreshold
-    Closed --> Closed: request succeeds\n(reset failure count)
+    Closed --> Open: failure rate exceeds<br/>threshold
+    Closed --> Closed: request succeeds<br/>(reset failure count)
 
-    Open --> HalfOpen: cooldown timer\nexpires
+    Open --> HalfOpen: cooldown timer<br/>expires
 
-    HalfOpen --> Closed: trial request(s)\nsucceed
-    HalfOpen --> Open: trial request\nfails
+    HalfOpen --> Closed: trial request(s)<br/>succeed
+    HalfOpen --> Open: trial request<br/>fails
 
     note right of Closed
         Normal operation.

@@ -53,7 +53,7 @@ sequenceDiagram
     GW->>P: full request (prefix byte-identical)
     P->>P: reuse cached prefix computation, process only suffix
     P-->>GW: response, cached_input_tokens=<prefix size>
-    Note over GW: Gateway logs cache hit, applies discounted\ncost rate for cached_input_tokens
+    Note over GW: Gateway logs cache hit, applies discounted<br/>cost rate for cached_input_tokens
 ```
 
 ## Request / Response Example

@@ -56,7 +56,7 @@ sequenceDiagram
     participant AuthZ as Authorization Layer
     participant DB as Resource Store
 
-    Client->>API: GET /orders/482\n(Authorization: Bearer <token>)
+    Client->>API: GET /orders/482<br/>(Authorization: Bearer <token>)
     API->>AuthN: Verify token / session
     alt Invalid or missing credential
         AuthN-->>Client: 401 Unauthorized

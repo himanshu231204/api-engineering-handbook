@@ -34,12 +34,12 @@ This is the capstone-of-capstones: a multi-tenant AI SaaS backend that combines 
 
 ```mermaid
 flowchart TB
-    Client[Client / SPA / Mobile] --> Gateway[API Gateway\n(routing, authN, rate limiting)]
-    Gateway --> Auth[Auth Service\n(Project 2)]
-    Gateway --> AppAPI[Application API\n(tenants, billing, feature routes)]
-    Gateway --> AIFeature[AI Feature Service\nRAG (Project 7) or Agent (Project 9)]
+    Client[Client / SPA / Mobile] --> Gateway["API Gateway\n(routing, authN, rate limiting)"]
+    Gateway --> Auth["Auth Service\n(Project 2)"]
+    Gateway --> AppAPI["Application API\n(tenants, billing, feature routes)"]
+    Gateway --> AIFeature["AI Feature Service\nRAG (Project 7) or Agent (Project 9)"]
 
-    AIFeature --> LLMGateway[Internal LLM Gateway\n(Project 8)]
+    AIFeature --> LLMGateway["Internal LLM Gateway\n(Project 8)"]
     LLMGateway --> ProviderA[Provider A]
     LLMGateway --> ProviderB[Provider B]
 
@@ -52,19 +52,19 @@ flowchart TB
     Queue --> Workers[Background Workers\ningestion, billing rollup, webhook delivery]
     Workers --> ObjectStorage[(Object Storage\ndocuments, exports)]
 
-    AppAPI --> Webhooks[Outbound Webhook System\n(Project 4 pattern)]
+    AppAPI --> Webhooks["Outbound Webhook System\n(Project 4 pattern)"]
 
-    subgraph Observability Stack
+    subgraph OBS ["Observability Stack"]
         Logs[Structured Logs]
         Metrics[Metrics]
         Tracing[Distributed Tracing]
     end
 
-    Gateway -.-> Observability Stack
-    AppAPI -.-> Observability Stack
-    AIFeature -.-> Observability Stack
-    Workers -.-> Observability Stack
-    LLMGateway -.-> Observability Stack
+    Gateway -.-> OBS
+    AppAPI -.-> OBS
+    AIFeature -.-> OBS
+    Workers -.-> OBS
+    LLMGateway -.-> OBS
 ```
 
 ## API Endpoints

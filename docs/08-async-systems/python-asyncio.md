@@ -41,23 +41,23 @@ The key mechanical fact: **nothing runs in parallel on multiple CPU cores here.*
 
 ```mermaid
 sequenceDiagram
-    participant Loop as Event Loop
+    participant EL as Event Loop
     participant A as Coroutine A (request 1)
     participant B as Coroutine B (request 2)
     participant DB as Database / LLM API (I/O)
 
-    Loop->>A: run until first await
+    EL->>A: run until first await
     A->>DB: await query()
     Note over A: A suspends, control returns to loop
-    Loop->>B: run until first await
+    EL->>B: run until first await
     B->>DB: await llm_call()
     Note over B: B suspends, control returns to loop
-    DB-->>Loop: A's query result ready
-    Loop->>A: resume A with result
-    A-->>Loop: A completes, response sent
-    DB-->>Loop: B's LLM result ready
-    Loop->>B: resume B with result
-    B-->>Loop: B completes, response sent
+    DB-->>EL: A's query result ready
+    EL->>A: resume A with result
+    A-->>EL: A completes, response sent
+    DB-->>EL: B's LLM result ready
+    EL->>B: resume B with result
+    B-->>EL: B completes, response sent
 ```
 
 Both requests are handled on one thread, but because each spends most of its time waiting on external I/O rather than doing CPU work, the loop interleaves them and neither blocks the other — total wall-clock time for both is close to `max(time_A, time_B)`, not `time_A + time_B`.

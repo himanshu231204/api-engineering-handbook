@@ -27,14 +27,14 @@ Expose an agent loop — an LLM that reasons, calls tools, observes results, and
 ```mermaid
 flowchart TB
     Client[Client] -->|POST /agents/id/runs| API[Agent API]
-    API --> Orchestrator[Agent Orchestrator\n(loop controller)]
-    Orchestrator --> LLM[LLM Client\n(via Project 8 Gateway)]
+    API --> Orchestrator["Agent Orchestrator\n(loop controller)"]
+    Orchestrator --> LLM["LLM Client\n(via Project 8 Gateway)"]
     Orchestrator --> Guardrails[Iteration/Time/Cost Cap Enforcer]
     Orchestrator --> ToolRegistry[Tool Registry]
     ToolRegistry --> Calc[Calculator Tool]
     ToolRegistry --> Search[Web Search Tool]
     ToolRegistry --> DBTool[DB Lookup Tool]
-    ToolRegistry -.MCP.-> MCPServer[MCP Server\n(stretch: one tool as MCP)]
+    ToolRegistry -.MCP.-> MCPServer["MCP Server\n(stretch: one tool as MCP)"]
     Orchestrator --> RunStore[(runs, steps tables)]
     Orchestrator -->|SSE stream of steps| Client
 ```

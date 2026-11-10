@@ -26,10 +26,10 @@ Build a standalone authentication service — separate from any business API —
 ```mermaid
 flowchart LR
     Client[Client App] -->|register/login| Auth[Auth Service]
-    Auth --> Hash[Password Hasher\n(bcrypt/argon2)]
-    Auth --> TokenSvc[Token Service\n(JWT sign/verify)]
+    Auth --> Hash["Password Hasher\n(bcrypt/argon2)"]
+    Auth --> TokenSvc["Token Service\n(JWT sign/verify)"]
     Auth --> DB[(Users, Roles,\nRefreshTokens, ResetTokens)]
-    Auth -->|JWKS / public key| Other[Other API Services\n(Projects 3, 6, 7, 8, 9...)]
+    Auth -->|JWKS / public key| Other["Other API Services\n(Projects 3, 6, 7, 8, 9...)"]
     Client -->|Bearer access_token| Other
     Other -->|verify signature locally| TokenSvc
     Auth -.->|optional OAuth redirect| Provider[Google / GitHub OAuth]

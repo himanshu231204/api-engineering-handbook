@@ -28,7 +28,7 @@ Build an order and payment API that models a real e-commerce checkout flow: cart
 ```mermaid
 flowchart LR
     Client[Client] -->|create cart / order| API[Order API]
-    API --> OrderSvc[Order Service\n(state machine)]
+    API --> OrderSvc["Order Service\n(state machine)"]
     Client -->|POST /orders/id/charge\nIdempotency-Key| API
     API --> IdemStore[(Idempotency Key Store)]
     API --> PaySvc[Payment Service]

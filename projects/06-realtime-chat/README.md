@@ -28,10 +28,10 @@ Build a WebSocket-based chat system with rooms/channels, persisted message histo
 flowchart LR
     ClientA[Client A] <-->|WebSocket /ws/rooms/id| Gateway[WebSocket Gateway]
     ClientB[Client B] <-->|WebSocket /ws/rooms/id| Gateway
-    Gateway --> ConnMgr[Connection Manager\n(in-memory room -> sockets)]
+    Gateway --> ConnMgr["Connection Manager\n(in-memory room -> sockets)"]
     Gateway -->|persist first| MsgDB[(messages table)]
     Gateway --> Presence[(Presence Store\nRedis)]
-    ClientA -->|GET /rooms/id/messages\n(history, pagination)| API[REST API]
+    ClientA -->|"GET /rooms/id/messages\n(history, pagination)"| API[REST API]
     API --> MsgDB
     Gateway -.->|pub/sub for multi-instance fanout| PubSub[(Redis Pub/Sub)]
 ```

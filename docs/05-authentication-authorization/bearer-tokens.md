@@ -46,7 +46,7 @@ sequenceDiagram
     participant API as API Server
     participant Verifier as Token Verifier
 
-    Client->>API: GET /v1/resource\nAuthorization: Bearer <token>
+    Client->>API: GET /v1/resource<br/>Authorization: Bearer <token>
     API->>Verifier: Validate token
     alt Stateless (JWT)
         Verifier->>Verifier: Check signature + expiry locally
@@ -61,7 +61,7 @@ sequenceDiagram
         API-->>Client: 200 OK + resource
     end
 
-    Note over Client,API: Anyone who obtains this exact token string\ncan replay this entire flow successfully.\nThat is the defining property of "bearer".
+    Note over Client,API: Anyone who obtains this exact token string<br/>can replay this entire flow successfully.<br/>That is the defining property of "bearer".
 ```
 
 ## Request / Response Example

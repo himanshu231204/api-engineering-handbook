@@ -31,7 +31,7 @@ flowchart LR
     API -->|enqueue job| Queue[(Job Queue\nRedis/RQ or Celery)]
     Queue --> Worker1[Worker]
     Queue --> Worker2[Worker]
-    Worker1 --> Extractor[Text Extractor\n(pdf/docx/txt parser)]
+    Worker1 --> Extractor["Text Extractor\n(pdf/docx/txt parser)"]
     Extractor --> Chunker[Chunking Pipeline]
     Chunker --> ChunkDB[(chunks table)]
     Worker1 -->|update status| DocDB

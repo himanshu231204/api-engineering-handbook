@@ -59,7 +59,7 @@ sequenceDiagram
     participant RBAC as RBAC Enforcement
     participant DB as roles/permissions store
 
-    Client->>API: DELETE /orders/482\nAuthorization: Bearer <token>
+    Client->>API: DELETE /orders/482<br/>Authorization: Bearer <token>
     API->>AuthN: Resolve principal
     AuthN-->>API: user_id = 123
     API->>RBAC: Can user_123 perform orders:delete?

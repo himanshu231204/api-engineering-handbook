@@ -72,15 +72,15 @@ sequenceDiagram
     participant Client
     participant API as Resource Server
 
-    Note over Auth: Holds private signing key (RS256)\nor shared secret (HS256)
+    Note over Auth: Holds private signing key (RS256)<br/>or shared secret (HS256)
     Client->>Auth: POST /login (credentials)
     Auth->>Auth: Verify credentials
     Auth->>Auth: Build header + payload
     Auth->>Auth: Sign: header_b64.payload_b64 -> signature
     Auth-->>Client: JWT: header.payload.signature
 
-    Client->>API: GET /resource\nAuthorization: Bearer <JWT>
-    Note over API: Holds public key (RS256)\nor shared secret (HS256) - never the private key
+    Client->>API: GET /resource<br/>Authorization: Bearer <JWT>
+    Note over API: Holds public key (RS256)<br/>or shared secret (HS256) - never the private key
     API->>API: 1. Pin expected alg (server config, NOT token header)
     API->>API: 2. Recompute signature, compare
     API->>API: 3. Check exp, iss, aud claims

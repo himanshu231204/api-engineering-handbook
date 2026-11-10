@@ -58,7 +58,7 @@ flowchart TB
     subgraph DB["PostgreSQL"]
         E[Tables & Rows]
     end
-    A <-->|attribute access, .add(), .commit()| B
+    A <-->|"attribute access, .add(), .commit()"| B
     B --> C
     C -->|compiled SQL| E
     E -->|rows| C

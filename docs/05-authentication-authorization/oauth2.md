@@ -57,20 +57,20 @@ sequenceDiagram
     participant AuthS as Authorization Server
     participant ResS as Resource Server
 
-    Client->>Client: Generate code_verifier (random)\ncode_challenge = SHA256(code_verifier)
-    Client->>User: Redirect to /authorize\n?client_id&redirect_uri&scope&state&code_challenge
+    Client->>Client: Generate code_verifier (random)<br/>code_challenge = SHA256(code_verifier)
+    Client->>User: Redirect to /authorize<br/>?client_id&redirect_uri&scope&state&code_challenge
     User->>AuthS: GET /authorize (via browser redirect)
     AuthS->>User: Login + consent screen
     User->>AuthS: Approve access
-    AuthS-->>User: Redirect to redirect_uri\n?code=AUTH_CODE&state=...
+    AuthS-->>User: Redirect to redirect_uri<br/>?code=AUTH_CODE&state=...
     User->>Client: Deliver code + state (browser redirect)
     Client->>Client: Verify state matches original
 
-    Client->>AuthS: POST /token\n{code, code_verifier, client_id, redirect_uri}
+    Client->>AuthS: POST /token<br/>{code, code_verifier, client_id, redirect_uri}
     AuthS->>AuthS: Verify SHA256(code_verifier) == code_challenge
     AuthS-->>Client: {access_token, refresh_token, expires_in}
 
-    Client->>ResS: GET /calendar/events\nAuthorization: Bearer <access_token>
+    Client->>ResS: GET /calendar/events<br/>Authorization: Bearer <access_token>
     ResS->>AuthS: (optionally) validate token
     ResS-->>Client: 200 OK + calendar data
 ```

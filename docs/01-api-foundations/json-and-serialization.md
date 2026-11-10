@@ -68,7 +68,7 @@ flowchart LR
     subgraph Server
         P[Python object<br/>dict / Pydantic model]
     end
-    P -->|serialize / encode| J["JSON text\n{\"id\": 42, ...}"]
+    P -->|serialize / encode| J["JSON text\n{#quot;id#quot;: 42, ...}"]
     J -->|sent as HTTP body| Wire[( )]
     Wire -->|received| J2[JSON text]
     subgraph Client

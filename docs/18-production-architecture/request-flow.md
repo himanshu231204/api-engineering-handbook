@@ -68,7 +68,7 @@ sequenceDiagram
     CDN->>GW: forward
     GW->>GW: authN + rate limit check
     GW->>SVC: route request
-    SVC->>DB: BEGIN; INSERT order; COMMIT
+    SVC->>DB: BEGIN#59; INSERT order#59; COMMIT
     DB-->>SVC: order row
     SVC->>CACHE: SET order:42 (or invalidate)
     SVC->>Q: publish order.created
@@ -99,7 +99,7 @@ sequenceDiagram
     CHAT-->>GW: relay tokens
     GW-->>CDN: relay tokens
     CDN-->>C: tokens rendered incrementally
-    Note over LLM,C: first token ~200-800ms,\nfull response ~3-10s
+    Note over LLM,C: first token ~200-800ms,<br/>full response ~3-10s
     LLM-->>AIGW: [stream done]
     CHAT->>CHAT: persist full message to DB (async)
 ```

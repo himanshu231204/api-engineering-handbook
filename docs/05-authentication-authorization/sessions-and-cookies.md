@@ -54,18 +54,18 @@ sequenceDiagram
     API->>API: Verify credentials
     API->>Store: Create session {user_id, expires_at}
     Store-->>API: session_id = "sk_9f2e..."
-    API-->>Browser: 200 OK\nSet-Cookie: session_id=sk_9f2e...; HttpOnly; Secure; SameSite=Lax
+    API-->>Browser: 200 OK<br/>Set-Cookie: session_id=sk_9f2e...#59; HttpOnly#59; Secure#59; SameSite=Lax
 
     Note over Browser: Cookie stored, resent automatically
 
-    Browser->>API: GET /account/profile\nCookie: session_id=sk_9f2e...
+    Browser->>API: GET /account/profile<br/>Cookie: session_id=sk_9f2e...
     API->>Store: Look up sk_9f2e...
     Store-->>API: {user_id: 123, expires_at: ...}
     API-->>Browser: 200 OK (profile data)
 
-    Browser->>API: POST /logout\nCookie: session_id=sk_9f2e...
+    Browser->>API: POST /logout<br/>Cookie: session_id=sk_9f2e...
     API->>Store: Delete session sk_9f2e...
-    API-->>Browser: 200 OK\nSet-Cookie: session_id=; Max-Age=0
+    API-->>Browser: 200 OK<br/>Set-Cookie: session_id=#59; Max-Age=0
 ```
 
 ## Request / Response Example

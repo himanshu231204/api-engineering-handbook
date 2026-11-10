@@ -28,13 +28,13 @@ Build a gateway API that sits between your applications and multiple LLM provide
 flowchart LR
     Client[Client App] -->|API Key| Gateway[LLM Gateway]
     Gateway --> AuthN[API Key Auth + Tenant Lookup]
-    Gateway --> RateLimiter[Token-Bucket Rate Limiter\n(per key, Redis)]
+    Gateway --> RateLimiter["Token-Bucket Rate Limiter\n(per key, Redis)"]
     Gateway --> Budget[Budget Enforcer]
-    Gateway --> Router[Model Router\n(logical -> provider+model)]
+    Gateway --> Router["Model Router\n(logical -> provider+model)"]
     Router --> CB1[Circuit Breaker: Provider A]
     Router --> CB2[Circuit Breaker: Provider B]
-    CB1 --> ProviderA[Provider A Client\n(OpenAI)]
-    CB2 --> ProviderB[Provider B Client\n(Anthropic)]
+    CB1 --> ProviderA["Provider A Client\n(OpenAI)"]
+    CB2 --> ProviderB["Provider B Client\n(Anthropic)"]
     CB1 -.fallback on failure.-> CB2
     ProviderA --> UsageLog[(usage_logs — tokens, cost)]
     ProviderB --> UsageLog

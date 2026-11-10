@@ -52,7 +52,7 @@ sequenceDiagram
     P-->>GW: 200 OK
     GW-->>S1: response
 
-    Note over GW,P: Bucket refills over time; S2 retries later
+    Note over GW,P: Bucket refills over time, so S2 can retry later
     S2->>GW: generate() request (retry)
     GW->>P: request from S2 (capacity now available)
     P-->>GW: 200 OK

@@ -43,9 +43,9 @@ sequenceDiagram
     Console->>Console: Generate random key: sk_live_9fA2...
     Console->>DB: Store SHA-256(key) + scopes + owner
     Console-->>Dev: Show full key ONCE ("sk_live_9fA2...")
-    Note over Dev: Developer stores key securely\n(secrets manager, env var)
+    Note over Dev: Developer stores key securely<br/>(secrets manager, env var)
 
-    Dev->>API: GET /v1/invoices\nX-API-Key: sk_live_9fA2...
+    Dev->>API: GET /v1/invoices<br/>X-API-Key: sk_live_9fA2...
     API->>API: Hash presented key
     API->>DB: Look up hash
     DB-->>API: {owner: acme_co, scopes: [read:invoices], active: true}

@@ -51,7 +51,7 @@ sequenceDiagram
     Client->>API: GET /resource (access_token expired)
     API-->>Client: 401 Unauthorized
 
-    Client->>API: POST /token/refresh\nCookie: refresh_token_1
+    Client->>API: POST /token/refresh<br/>Cookie: refresh_token_1
     API->>Store: Validate refresh_token_1
     alt Token reused (already rotated out)
         Store-->>API: already used! possible theft

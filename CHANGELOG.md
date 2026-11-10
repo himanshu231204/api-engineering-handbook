@@ -26,6 +26,7 @@ All notable changes to this project are documented here. Format loosely follows 
 - Reference implementations (FastAPI + Pydantic v2 + SQLAlchemy async + SQLite) for capstone projects 01 (Bookshelf CRUD API), 02 (Authentication Service), and 04 (Webhook Processing System), each with `app/`, `tests/`, `requirements.txt`, `.env.example`, and a "Reference Implementation" section on its `README.md` — satisfies the v0.7 milestone.
 
 ### Fixed
+- **26 Mermaid diagrams that did not render** on GitHub and the Pages site: unquoted flowchart labels containing parentheses or braces (9 capstone project specs and 3 chapters), `;` inside sequence-diagram messages, a `Loop` participant that collided with Mermaid's `loop` keyword, the unsupported `-.x` edge, an edge to a spaced subgraph name, and `\n` printed literally in sequence/state diagrams (now `<br/>`). All 172 diagrams were validated against mermaid@11.
 - Corrected README status tables for Parts 5–13 and 18: flipped 50 chapters from ✅ Written back to 🚧 Planned where the chapter files don't exist on disk; `scripts/check_links.py` reports 0 broken links in `docs/`.
 
 ## [0.1.0] — Initial scaffold

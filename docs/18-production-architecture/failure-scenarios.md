@@ -45,7 +45,7 @@ flowchart LR
     CACHE -.->|MISS| DB[(PostgreSQL - DOWN)]
     SVC -->|write| CB{Circuit Breaker}
     CB -->|OPEN: fail fast| SVC
-    DB -.x CB
+    DB -.-x CB
     style DB fill:#5a1e1e,stroke:#c0392b
     style CB fill:#5a4a1e,stroke:#e0a020
 ```
@@ -63,7 +63,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     SVC[Application Service] -->|read| CACHE[(Redis - DOWN)]
-    CACHE -.x SVC
+    CACHE -.-x SVC
     SVC -->|fallback| DB[(PostgreSQL)]
     DB -->|now absorbing\nfull read load| SVC
     style CACHE fill:#5a1e1e,stroke:#c0392b
@@ -86,7 +86,7 @@ flowchart LR
     AIGW --> CB{Circuit Breaker\nProvider A}
     CB -->|OPEN| ROUTE[Router: switch to Provider B]
     ROUTE --> LLMB[LLM Provider B - healthy]
-    CB -.x LLMA[LLM Provider A - DOWN]
+    CB -.-x LLMA[LLM Provider A - DOWN]
     style LLMA fill:#5a1e1e,stroke:#c0392b
     style CB fill:#5a4a1e,stroke:#e0a020
     style LLMB fill:#1e5a2e,stroke:#27ae60
