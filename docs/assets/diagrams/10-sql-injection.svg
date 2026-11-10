@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560" role="img" aria-labelledby="t d">
+  <title id="t">SQL injection: concatenated strings versus parameterized queries</title>
+  <desc id="d">The same input, admin' --, is handled two ways. With string concatenation it becomes part of the SQL text, the double dash comments out the password check and the admin row is returned. With a parameterized query the template is sent separately from the values, so the input is compared as plain text and the login safely fails.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="559" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">SQL injection: when input turns into code</text>
+  <text x="32" y="66" class="sub">The same login input, handled two ways. The difference is whether input can change the query’s grammar.</text>
+  <rect x="232" y="86" width="416" height="44" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <text x="248" y="113" class="lbl" fill="#b45309">Attacker types username:</text>
+  <text x="436" y="113" class="code">admin' --</text>
+  <line x1="330" y1="130" x2="222" y2="160" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <line x1="550" y1="130" x2="658" y2="160" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="32" y="180" class="h" fill="#b91c1c">✗  String concatenation</text>
+  <rect x="32" y="192" width="380" height="92" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <circle cx="52" cy="214" r="12" fill="#1c7c54"/>
+  <text x="52" y="218" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="72" y="219" class="lbl" fill="#475569">Code glues input into the SQL text</text>
+  <text x="48" y="244" class="code">f"... WHERE username = '{username}'</text>
+  <text x="48" y="266" class="code">   AND password_hash = '{pw}'"</text>
+  <line x1="222.0" y1="284" x2="222.0" y2="306" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="308" width="380" height="112" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <circle cx="52" cy="330" r="12" fill="#1c7c54"/>
+  <text x="52" y="334" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="72" y="335" class="lbl" fill="#b91c1c">Database receives one string</text>
+  <text x="48" y="360" class="code">... WHERE username = 'admin' </text>
+  <text x="48" y="382" class="code"><tspan fill="#b91c1c">--' AND password_hash = '…'</tspan></text>
+  <text x="48" y="405" class="note">“--” starts a comment: the password check is gone.</text>
+  <line x1="222.0" y1="420" x2="222.0" y2="442" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="32" y="444" width="380" height="44" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="471" class="lbl" fill="#b91c1c">Result: returns the admin row, no password needed</text>
+  <text x="468" y="180" class="h" fill="#1c7c54">✓  Parameterized query</text>
+  <rect x="468" y="192" width="380" height="92" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="488" cy="214" r="12" fill="#1c7c54"/>
+  <text x="488" y="218" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="508" y="219" class="lbl" fill="#1c7c54">Code sends a fixed template…</text>
+  <text x="484" y="244" class="code">... WHERE username = :username</text>
+  <text x="484" y="266" class="code">   AND password_hash = :pw</text>
+  <line x1="658.0" y1="284" x2="658.0" y2="306" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="468" y="308" width="380" height="112" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="488" cy="330" r="12" fill="#1c7c54"/>
+  <text x="488" y="334" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="508" y="335" class="lbl" fill="#1c7c54">…and the values separately</text>
+  <text x="484" y="360" class="code">{"username": "admin' --"}</text>
+  <text x="484" y="383" class="note">The structure is already fixed, so the value</text>
+  <text x="484" y="401" class="note">can only ever be data in its slot.</text>
+  <line x1="658.0" y1="420" x2="658.0" y2="442" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="468" y="444" width="380" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="484" y="471" class="lbl" fill="#1c7c54">Result: no user called “admin' --” — login fails</text>
+  <rect x="32" y="506" width="816" height="38" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="48" y="530" class="note">Fix: SQLAlchemy .where() or text() with :name parameters. Column names can’t be bound, so allowlist them instead.</text>
+</svg>

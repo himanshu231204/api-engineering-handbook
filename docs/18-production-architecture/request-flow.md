@@ -1,5 +1,12 @@
 # Request Flow, End to End
 
+> [!TIP]
+> **In one line:** Every request follows the same edge path — CDN, load balancer, gateway — then becomes either a fast bounded write (POST /orders) or a long streamed AI call (POST /chat).
+>
+> **In plain English:** Imagine following one request with a stopwatch from the moment it leaves the user's device to the moment the answer arrives. A normal order is a quick in-and-out: check identity, save to the database, put slow chores on a to-do queue, reply. A chat request instead waits on a slow outside AI model, so it sends the answer back piece by piece while it is still being written.
+>
+> **You'll be able to:** trace POST /orders and POST /chat hop by hop and say where time is spent · decide what belongs in the synchronous path versus the queue · set separate timeouts and metrics such as time-to-first-token for streamed requests
+
 ## Why This Matters
 
 Knowing what each component does, as covered in the [Complete Architecture Walkthrough](complete-architecture-walkthrough.md), is necessary but not sufficient. The question that actually gets asked in an incident channel or a system design interview is sharper: *for this one request, in this exact order, which components got touched, and how long did each one take?* Answering that requires tracing a real request — not a diagram — through the system. This chapter does that twice: once for an ordinary CRUD write, and once for an AI-backed request that streams a response back to the client. Together they cover the two fundamentally different request shapes a modern API platform has to support.
@@ -96,6 +103,8 @@ sequenceDiagram
     LLM-->>AIGW: [stream done]
     CHAT->>CHAT: persist full message to DB (async)
 ```
+
+![One POST /orders request traced through client, DNS, CDN, load balancer, gateway, order service, PostgreSQL, Redis and queue, with typical latency and failure modes at each hop](../assets/diagrams/18-request-flow.svg)
 
 ## Request / Response Example
 
@@ -220,3 +229,26 @@ The clearest way to see how AI changes request-flow design is to compare the two
 - `POST /chat` routes through a second, specialized gateway (the AI Gateway) because its critical dependency — the LLM provider — has fundamentally different latency and failure characteristics than a database.
 - Time-to-first-token, not total duration, is the metric that determines whether a streamed AI response feels fast.
 - The same trace ID should follow a request across both gateways and every service hop, which is what makes either flow debuggable in production.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. In the POST /orders flow, which work happens before the 201 response, and which happens afterwards?</summary>
+
+Before responding, the gateway authenticates, rate-limits and routes, and the Order Service validates the body, commits the order in one database transaction, publishes `order.created` and updates or invalidates the cache. After the response, a worker consumes the queue message and does slower follow-ups like emails and analytics.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why does an AI Gateway try its cache check and provider selection before opening the stream, and fall back before any tokens are sent?</summary>
+
+Users judge a streamed response by time to first token, so that decision work must not delay or interrupt the stream. And a stream can't cleanly restart mid-flight, so a fallback to a secondary provider is only seamless if it happens before any output reached the client.
+
+</details>
+
+<details markdown="1">
+<summary>3. A client times out waiting for POST /orders and retries. What could go wrong, and what prevents it?</summary>
+
+Without protection the retry can create a duplicate order, because the first attempt may have succeeded. Sending an `Idempotency-Key` header lets the service recognize the retry and return the original result instead of writing a second order.
+
+</details>

@@ -1,5 +1,12 @@
 # REST vs gRPC
 
+> [!TIP]
+> **In one line:** Use REST/JSON at the public edge for universal compatibility, and gRPC/Protobuf for high-volume internal calls between services you control — neither is simply "the modern one".
+>
+> **In plain English:** REST sends readable text that any browser, tool or language understands. gRPC sends compact binary messages based on a shared contract file, which is faster and type-checked but needs special tooling and doesn't work directly from browsers. Many systems use REST for the outside world and gRPC inside.
+>
+> **You'll be able to:** compare HTTP/1.1 + JSON with HTTP/2 + Protobuf on payload size, multiplexing and tooling · name gRPC's four call patterns and when each is useful · choose a protocol for a given client and traffic pattern, including load-balancing implications
+
 ## Why This Matters
 
 Once you have multiple services calling each other (see `monolith-vs-microservices.md`), you have to pick a protocol for those calls — and it's tempting to reach for whichever one is trendiest rather than the one that fits the actual traffic pattern. gRPC gets pitched as a strictly "faster, more modern" replacement for REST, and REST gets dismissed as legacy. Neither framing is accurate. REST (over HTTP/1.1 + JSON) and gRPC (over HTTP/2 + Protocol Buffers) solve overlapping but genuinely different problems, and picking the wrong one for your situation has real costs — either unnecessary complexity and tooling friction, or genuinely worse performance and weaker streaming support than the problem demands.
@@ -235,6 +242,29 @@ Most public LLM provider APIs (OpenAI, Anthropic, and similar) are REST/JSON ove
 - gRPC's four call patterns (unary, server streaming, client streaming, bidirectional streaming) are first-class; REST approximates streaming with SSE or WebSocket as an add-on.
 - Browser support and debugging tooling are gRPC's real practical weaknesses; schema-evolution discipline and per-language client generation are the recurring cost of both, but stricter in Protobuf.
 - A common, defensible architecture uses REST at the public edge (often through an API gateway) and gRPC internally between services you own.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What are gRPC's four call patterns?</summary>
+
+Unary (one request, one response), server streaming (one request, a stream of responses), client streaming (a stream of requests, one response), and bidirectional streaming (both sides stream independently over one connection). REST natively has only the unary style and adds streaming via SSE or WebSocket.
+
+</details>
+
+<details markdown="1">
+<summary>2. Why can a plain L4 load balancer distribute gRPC traffic badly?</summary>
+
+gRPC multiplexes many calls over a single long-lived HTTP/2 connection, and an L4 balancer balances connections, not individual requests. All of one client's calls can therefore land on one backend instance, so gRPC usually needs L7-aware or client-side load balancing.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your browser single-page app needs to call an internal gRPC orders service. What is the cleanest approach?</summary>
+
+Don't expose gRPC to the browser: browsers can't speak raw gRPC, and gRPC-Web needs a translation proxy and doesn't support all streaming modes. Put a REST/JSON API gateway at the edge that the browser calls, and let the gateway talk gRPC to the internal service.
+
+</details>
 
 See also: [API Gateway](api-gateway.md), [Monolith vs Microservices](monolith-vs-microservices.md), and the [glossary](../../resources/glossary.md). Protocol Buffers are covered in depth in the upcoming `protocol-buffers.md` chapter in this part.
 

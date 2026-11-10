@@ -1,5 +1,12 @@
 # Secrets Management
 
+> [!TIP]
+> **In one line:** Keep secrets out of code entirely: reference them by name, inject them at runtime from environment variables or a secret manager, scope access tightly, and rotate them.
+>
+> **In plain English:** A password or API key in your code ends up copied into every clone and backup, forever. Instead, your code only knows the name of the secret, and the real value is handed over when the program starts. If a key ever leaks, you switch it off and issue a new one straight away, then investigate.
+>
+> **You'll be able to:** load secrets safely with pydantic-settings and SecretStr · explain when to move from environment variables to a secret manager like Vault or AWS Secrets Manager · run a leak response: revoke and rotate first, audit access, then find the root cause
+
 ## Why This Matters
 
 Every API talks to something it needs a secret to trust: a database password, a JWT signing key (see [JWT Deeply Explained](../05-authentication-authorization/jwt-deeply-explained.md)), a third-party API key, a webhook signing secret (see `webhook-security.md`, planned), or credentials for cloud infrastructure. If any one of those secrets leaks — committed to a public repo, printed in a log, baked into a Docker image, pasted into a Slack channel — an attacker doesn't need to find a clever vulnerability at all. They just log in as you. Secrets management is the discipline of making sure that never happens: secrets are never stored where source code lives, are only accessible to the systems that legitimately need them, are rotated on a schedule and immediately after any suspected exposure, and are revocable within minutes rather than days. It is one of the least glamorous parts of API engineering and one of the most consequential — a huge share of real-world breaches trace back to a leaked credential, not a zero-day exploit.
@@ -186,6 +193,29 @@ AI systems introduce their own secret sprawl: provider API keys (OpenAI, Anthrop
 - Rotate secrets on a schedule and immediately upon any suspected leak; prefer short-lived credentials over static ones wherever the underlying system supports it.
 - When a leak happens, revoke/rotate first and investigate root cause second — speed limits the blast radius.
 - AI systems add new leak surfaces (prompts, retrieved content, agent tool configs) that deserve the same discipline as any database credential.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What five parts of a secret's lifecycle does secrets management cover?</summary>
+
+Storage (where it lives at rest, never in source control), distribution (how a process receives it), access control (who and what may read it), rotation (replacing values on a schedule and after leaks), and auditing (knowing who accessed it and when).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why doesn't deleting a committed API key in a later commit fix the leak?</summary>
+
+The secret remains in git history, in every existing clone and fork, and in any backups or CI logs, so it is still exposed. The only real fix is to revoke and rotate the secret immediately, then audit for misuse during the exposure window.
+
+</details>
+
+<details markdown="1">
+<summary>3. A teammate passes the database password as a Docker build argument so the image "just works". What are the risks, and what should they do instead?</summary>
+
+The secret gets baked into image layers, so anyone who can pull the image can extract it, and rotating it requires a rebuild. Secrets should be injected at deploy or runtime instead, as environment variables from the orchestrator's secret store or fetched from a secret manager when the process starts.
+
+</details>
 
 See also: [CORS](cors.md), [SQL Injection](sql-injection.md), [Input Validation](input-validation.md), [OWASP API Security Top 10](owasp-api-security.md), and the [glossary](../../resources/glossary.md).
 

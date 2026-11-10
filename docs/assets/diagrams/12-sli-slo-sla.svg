@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520" role="img" aria-labelledby="t d">
+  <title id="t">SLI, SLO, SLA and the error budget</title>
+  <desc id="d">An SLI is a measurement such as the share of successful requests. An SLO is the internal target for it, for example 99.9 percent over 30 days. An SLA is the looser contractual promise to customers, for example 99.5 percent or a service credit. The gap between the SLO and 100 percent is the error budget: with 10 million requests, 10,000 may fail. The bar shows 6,100 used and 39 percent left, with a deploy-freeze line at 20 percent remaining.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="519" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">SLI → SLO → SLA, and the error budget</text>
+  <text x="32" y="66" class="sub">Measure it, target it, then (sometimes) promise it. The allowed failures are a budget you can spend.</text>
+  <rect x="32" y="90" width="248" height="124" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="56" cy="116" r="12" fill="#1c7c54"/>
+  <text x="56" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="78" y="121" class="h" fill="#2563eb">SLI</text>
+  <text x="118" y="121" class="note">what you measure</text>
+  <text x="48" y="156" class="code">good requests ÷ all requests</text>
+  <text x="48" y="182" class="note">e.g. 99.94% succeeded so far</text>
+  <line x1="282" y1="152" x2="313" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="316" y="90" width="248" height="124" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="340" cy="116" r="12" fill="#1c7c54"/>
+  <text x="340" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="362" y="121" class="h" fill="#1c7c54">SLO</text>
+  <text x="402" y="121" class="note">your internal target</text>
+  <text x="332" y="156" class="code">≥ 99.9% over 30 days</text>
+  <text x="332" y="182" class="note">owned by the team; drives decisions</text>
+  <line x1="566" y1="152" x2="597" y2="152" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <rect x="600" y="90" width="248" height="124" rx="10" fill="#fef3c7" stroke="#b45309" stroke-width="1.5"/>
+  <circle cx="624" cy="116" r="12" fill="#1c7c54"/>
+  <text x="624" y="120" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="646" y="121" class="h" fill="#b45309">SLA</text>
+  <text x="686" y="121" class="note">the customer contract</text>
+  <text x="616" y="156" class="code">≥ 99.5% per month</text>
+  <text x="616" y="182" class="note">or a 10% service credit</text>
+  <text x="32" y="240" class="note" fill="#1f2937">Keep the SLO stricter than the SLA, so you notice and react before a contract is breached.</text>
+  <text x="32" y="284" class="h">Error budget = (1 − SLO) × traffic = 0.1% × 10,000,000 requests = 10,000 allowed failures</text>
+  <rect x="32" y="302" width="816" height="44" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <path d="M42,302 H530 V346 H42 A10,10 0 0 1 32,336 V312 A10,10 0 0 1 42,302 Z" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="330" class="lbl" fill="#b91c1c">Used: 6,100 failures (61%)</text>
+  <text x="546" y="330" class="lbl" fill="#1c7c54">Left: 3,900 (39%)</text>
+  <line x1="685" y1="294" x2="685" y2="354" stroke="#111827" stroke-width="1.75"/>
+  <text x="685" y="372" class="lbl" fill="#111827" text-anchor="middle">20% left → freeze risky deploys</text>
+  <text x="32" y="372" class="note">0</text>
+  <text x="848" y="372" class="note" text-anchor="end">10,000</text>
+  <rect x="32" y="410" width="396" height="90" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <text x="48" y="434" class="lbl" fill="#1c7c54">Budget left? Spend it</text>
+  <text x="48" y="456" class="note">Ship bigger features, try the risky migration.</text>
+  <text x="48" y="474" class="note">Some failure is allowed — 100% is not the goal.</text>
+  <rect x="452" y="410" width="396" height="90" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="468" y="434" class="lbl" fill="#b91c1c">Burning too fast? Stop and fix</text>
+  <text x="468" y="456" class="note">Burn rate 2.3× with days to go → pause risky</text>
+  <text x="468" y="474" class="note">deploys, work on reliability until it recovers.</text>
+</svg>

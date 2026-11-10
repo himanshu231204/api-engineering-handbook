@@ -1,5 +1,12 @@
 # Unit Testing
 
+> [!TIP]
+> **In one line:** Unit tests check one piece of your own logic in isolation — fast, deterministic, no real database or network — and form the wide base of the testing pyramid.
+>
+> **In plain English:** Pull a single function out, give it inputs by hand, and check what comes back, without starting the web server or database. Because each test runs in milliseconds, you can have hundreds and run them constantly. They prove your logic is right, but not that all the parts are wired together correctly.
+>
+> **You'll be able to:** write Arrange–Act–Assert tests with pytest, including the error paths · decide what to mock (true external dependencies) and what to use for real · refactor logic out of route handlers so it can be tested without FastAPI
+
 ## Why This Matters
 
 Every API you ship is, underneath the HTTP plumbing, a collection of plain functions: a function that calculates a discount, a function that validates an email format, a function that decides whether a JWT has expired, a function that computes pagination offsets. If those functions are wrong, it doesn't matter how well-designed your REST endpoints are (see [Part 2 — REST API Design](../02-rest-api-design/README.md)) or how solid your database layer is (see [Part 4 — Databases & APIs](../04-databases-and-apis/README.md)) — the API will return wrong answers. Unit tests are how you pin down the correctness of that logic in isolation, fast, before it ever touches a network socket, a database connection, or a real HTTP request. Get this layer wrong — skip it, or test the wrong things at this layer — and every test suite built on top of it (integration, end-to-end) becomes slower and more brittle than it needs to be, because you end up re-verifying business logic through a full HTTP stack every single time.
@@ -59,6 +66,8 @@ flowchart LR
     Fn --> Output["Return value / exception"]
     Output --> Assert["assert output == expected"]
 ```
+
+![Testing pyramid with many fast unit tests at the base, fewer integration tests in the middle and a few end-to-end tests on top](../assets/diagrams/13-testing-pyramid.svg)
 
 The pyramid shape is deliberate: unit tests should vastly outnumber integration tests, which should outnumber end-to-end tests, because each layer up costs more time to run and more effort to maintain, while catching a narrower, more system-level class of bugs.
 
@@ -237,4 +246,26 @@ AI-adjacent code has plenty of unit-testable logic hiding beside the non-determi
 - Don't unit-test the framework (FastAPI/Pydantic's own behavior) — test your business logic, including its error paths, not just the happy path.
 - Extracting logic out of route handlers into plain functions is what makes fast, framework-free unit testing possible in the first place.
 - Unit tests catch logic bugs cheaply; they cannot prove the whole system works together — that's the job of `integration-testing.md` and beyond.
-</content>
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What four properties should a good unit test have?</summary>
+
+It should be fast (milliseconds), deterministic (same result every run on every machine), independent (test order doesn't matter), and isolated from I/O (no real database, network, disk or clock unless faked).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why is writing a test that asserts FastAPI returns 422 for a missing Pydantic field usually wasted effort?</summary>
+
+It re-tests the framework's own behavior, which the FastAPI and Pydantic maintainers already test. Your effort is better spent testing your own validation rules and business logic, including their failure and edge cases.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your test for price_order mocks so many collaborators that it still passes after apply_coupon is deleted. What is wrong, and how do you fix it?</summary>
+
+The test is over-mocked: it only proves the mocks were configured, not that the real logic works. Use real, simple objects (such as a real `Coupon`) for pure logic and mock only true external dependencies like the database, network or clock, asserting on the observable result.
+
+</details>

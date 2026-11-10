@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="632" viewBox="0 0 880 632" role="img" aria-labelledby="t d">
+  <title id="t">CORS preflight: how a browser asks before a cross-origin request</title>
+  <desc id="d">A browser page on app.example.com sends an OPTIONS preflight to api.example.com, the server answers with Access-Control-Allow headers, and only then does the browser send the real POST and let JavaScript read the response. A wrong or missing Allow-Origin makes the browser block it. Non-browser clients like curl ignore CORS entirely, so CORS protects users' browsers, not your server.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 20px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .sub   { font: 400 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6b7280; }
+      .h     { font: 600 15px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #111827; }
+      .lbl   { font: 600 13px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+      .note  { font: 400 12px Inter, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #4b5563; }
+      .code  { font: 500 13px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; fill: #1f2937; }
+    </style>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0.5" y="0.5" width="879" height="631" rx="16" fill="#ffffff" stroke="#e5e7eb"/>
+  <text x="32" y="44" class="title">CORS preflight: the browser asks first</text>
+  <text x="32" y="66" class="sub">For a JSON POST with an Authorization header, from app.example.com to api.example.com.</text>
+  <rect x="32" y="88" width="220" height="58" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="142" y="112" class="lbl" fill="#2563eb" text-anchor="middle">Browser</text>
+  <text x="142" y="132" class="note" text-anchor="middle">JS running on app.example.com</text>
+  <rect x="628" y="88" width="220" height="58" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="738" y="112" class="lbl" fill="#475569" text-anchor="middle">API server</text>
+  <text x="738" y="132" class="note" text-anchor="middle">api.example.com</text>
+  <line x1="142" y1="146" x2="142" y2="502" stroke="#cbd5e1" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <line x1="738" y1="146" x2="738" y2="502" stroke="#cbd5e1" stroke-width="1.75" stroke-dasharray="5 4"/>
+  <rect x="170" y="162" width="540" height="78" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <circle cx="192" cy="184" r="12" fill="#1c7c54"/>
+  <text x="192" y="188" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">1</text>
+  <text x="212" y="189" class="lbl" fill="#2563eb">Preflight: OPTIONS /v1/orders</text>
+  <text x="212" y="212" class="code">Origin: https://app.example.com</text>
+  <text x="212" y="232" class="code">Access-Control-Request-Method: POST</text>
+  <line x1="144" y1="270" x2="734" y2="270" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440" y="260" class="note" text-anchor="middle">“May this origin send a POST with these headers?”</text>
+  <rect x="170" y="286" width="540" height="78" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="192" cy="308" r="12" fill="#1c7c54"/>
+  <text x="192" y="312" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">2</text>
+  <text x="212" y="313" class="lbl" fill="#1c7c54">Server answers: 204 No Content</text>
+  <text x="212" y="336" class="code">Access-Control-Allow-Origin: https://app.example.com</text>
+  <text x="212" y="356" class="code">Access-Control-Allow-Methods: GET, POST</text>
+  <line x1="736" y1="394" x2="146" y2="394" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)"/>
+  <text x="440" y="384" class="note" text-anchor="middle">“Yes — this exact origin is on my allowlist.”</text>
+  <rect x="170" y="410" width="540" height="62" rx="10" fill="#e8f5ee" stroke="#1c7c54" stroke-width="1.5"/>
+  <circle cx="192" cy="432" r="12" fill="#1c7c54"/>
+  <text x="192" y="436" text-anchor="middle" font-family="Inter, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="12" font-weight="700" fill="#ffffff">3</text>
+  <text x="212" y="437" class="lbl" fill="#1c7c54">Real request: POST /v1/orders  →  201 Created</text>
+  <text x="212" y="459" class="note">Allow-Origin matches, so the browser lets JS read the response.</text>
+  <line x1="146" y1="496" x2="734" y2="496" stroke="#475569" stroke-width="1.75" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+  <text x="440" y="486" class="note" text-anchor="middle">POST goes out, 201 Created comes back</text>
+  <rect x="32" y="522" width="396" height="86" rx="10" fill="#fee2e2" stroke="#b91c1c" stroke-width="1.5"/>
+  <text x="48" y="546" class="lbl" fill="#b91c1c">If Allow-Origin is missing or wrong</text>
+  <text x="48" y="568" class="note">The browser blocks the call and logs a “CORS</text>
+  <text x="48" y="586" class="note">error” in the console. Your code never sees it.</text>
+  <rect x="452" y="522" width="396" height="86" rx="10" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="468" y="546" class="lbl" fill="#475569">CORS protects users’ browsers, not your server</text>
+  <text x="468" y="568" class="note">curl, mobile apps and other servers ignore CORS</text>
+  <text x="468" y="586" class="note">completely. Real security = authentication + authorization.</text>
+</svg>

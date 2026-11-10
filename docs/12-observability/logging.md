@@ -1,5 +1,12 @@
 # Logging
 
+> [!TIP]
+> **In one line:** Logs are timestamped records you read after something breaks; make them leveled, structured, tagged with a request ID — and never let them contain secrets or personal data.
+>
+> **In plain English:** A log line is a note your program leaves about what it was doing, like a diary entry with a time on it. Good notes say clearly what happened to which request, in a format a computer can search. Bad notes either say nothing useful or accidentally write down passwords for everyone to see.
+>
+> **You'll be able to:** choose the right log level (DEBUG to CRITICAL) for an event · emit structured JSON logs to stdout with a request_id on every line · decide what must never be logged and how long logs should be kept
+
 ## Why This Matters
 
 The first time your API breaks in production at 2 a.m., you will not have a debugger attached to it. You will not be able to step through the request that failed, inspect variables, or reproduce the exact race condition that triggered it. What you will have — if you set things up correctly — is a trail of log lines describing what the system was doing right before it went wrong. Logging is the most basic form of observability, and it's the one every API needs from day one, long before you have metrics dashboards or distributed tracing. Done well, logs let you reconstruct the story of a request after the fact. Done badly — too sparse, too noisy, or leaking secrets — logs become either useless or a liability. This chapter covers how to log with intent: what to capture, what to never capture, and how to structure log output so it's actually usable once your system has more than one server.
@@ -41,6 +48,8 @@ flowchart LR
     E --> F["Search / dashboards / alerts"]
     E --> G["Retention policy\n(auto-delete after N days)"]
 ```
+
+![Logs, metrics and traces each answer a different question and are linked by a shared trace_id](../assets/diagrams/12-three-pillars.svg)
 
 The key architectural point: your application only ever talks to stdout. Everything from the collector onward is infrastructure, not application code — which means you can change your entire log aggregation backend without touching a single line of API code, as long as you keep writing structured lines to stdout.
 
@@ -178,5 +187,28 @@ AI systems raise the stakes on "what NOT to log" considerably. A chat API's requ
 - Structured (key-value/JSON) logging is what makes logs queryable at scale, a theme this chapter introduces and structured-logging.md develops fully.
 - A shared correlation identifier across log lines for one request is the single highest-leverage logging habit; request-ids.md covers this in depth.
 - Log aggregation moves the "where do I look" problem from individual servers to one searchable system, which is essential once you run more than one instance.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. Why should an application in a container write logs to stdout instead of sending them to a remote log service itself?</summary>
+
+Writing to stdout keeps request-handling code independent of the log backend: an outside agent such as Fluent Bit or Vector ships the lines on. If the app talked to the log service directly, a slow or down backend could block or even crash the API, and switching backends would require code changes.
+
+</details>
+
+<details markdown="1">
+<summary>2. What does structured logging buy you over free-text messages once you have many servers?</summary>
+
+Structured (key-value or JSON) lines can be filtered and aggregated on fields like `order_id` or `request_id` directly in tools like Loki or Elasticsearch. Free text has to be parsed with fragile regexes, which makes "show every line for order 8842 across every service" slow or impossible.
+
+</details>
+
+<details markdown="1">
+<summary>3. During an incident you find a WARNING and an ERROR from the same minute but can't tell if they came from the same user action. What habit was missing, and what else must the fix avoid?</summary>
+
+Every log line for a request should carry a shared correlation identifier such as `request_id`, which ties scattered lines into one story. While adding context, the team must still keep secrets and PII (passwords, tokens, card numbers) out of the logs, because logs are kept longer and read by more people than the original data.
+
+</details>
 
 Continue to [Metrics](metrics.md) for the complementary, aggregate view of system health, or return to the [Part 12 overview](README.md).

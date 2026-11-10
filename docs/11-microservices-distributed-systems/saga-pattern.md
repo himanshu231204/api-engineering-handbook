@@ -1,5 +1,12 @@
 # Saga Pattern
 
+> [!TIP]
+> **In one line:** A saga replaces one cross-service transaction with a chain of local steps; if a step fails, compensating actions undo the completed steps in reverse order.
+>
+> **In plain English:** When order, inventory and payment live in different services, no single database can roll everything back for you. So you do each step on its own and write an "undo" for each one. If step three fails, you run the undos for step two and then step one — like retracing your steps after a wrong turn.
+>
+> **You'll be able to:** explain why distributed ACID transactions aren't available across separate service databases · choose between choreography and orchestration for a given saga · design idempotent forward and compensating steps and order irreversible steps last
+
 ## Why This Matters
 
 In a monolith, "create an order, reserve inventory, charge payment" can be a single ACID database transaction: if any step fails, the whole thing rolls back automatically, and the database guarantees no other request ever sees a half-finished state. Split those three steps across three separately-owned services with three separate databases (see `monolith-vs-microservices.md`), and that guarantee disappears — there is no distributed ACID transaction spanning independent databases in a typical microservices architecture. If the payment charge fails after inventory has already been reserved, nothing automatically undoes the reservation. You either accept that inconsistent states can happen and design deliberately around it, or you build cross-service transactions yourself. The Saga pattern is the standard, deliberate way to do the latter — and understanding it well is what separates "we have microservices" from "we have microservices that don't quietly corrupt data during partial failures."
@@ -74,6 +81,8 @@ sequenceDiagram
     O-->>Orch: OK
     Orch-->>Client: Order failed, no charge made
 ```
+
+![Order saga where the payment step fails and compensating actions run in reverse: release inventory, then cancel the order](../assets/diagrams/11-saga.svg)
 
 ## Request / Response Example
 
@@ -307,6 +316,29 @@ Multi-step AI agent workflows (see [Part 17 — AI Agents & MCP](../17-ai-agents
 - Every forward step and every compensating action must be idempotent — retries after network failures are a normal, expected occurrence, not an edge case.
 - A saga is eventually consistent: the system passes through real, observable intermediate states that other code must be written to tolerate.
 - Not every step can be perfectly undone; order hard-to-compensate steps last, and always alert loudly when a compensation itself fails.
+
+### Check Yourself
+
+<details markdown="1">
+<summary>1. What is a compensating transaction, and how is it different from a database rollback?</summary>
+
+A compensating transaction is an explicit, application-level undo you write yourself, such as releasing reserved inventory or refunding a charge. A database rollback is automatic and free; a compensation is a real separate action that can fail itself and cannot always perfectly undo a step (you can't un-send an email).
+
+</details>
+
+<details markdown="1">
+<summary>2. Why must every saga step and compensation be idempotent?</summary>
+
+Network failures mean a step's completion signal can be lost and the step retried or redelivered. Without idempotency (for example an idempotency key built from the saga ID and step name), a retried `release_inventory` or `refund_payment` could double-release stock or double-refund money.
+
+</details>
+
+<details markdown="1">
+<summary>3. Your orchestrator keeps saga state only in memory and is redeployed while a payment step is in flight. What happens, and how do you prevent it?</summary>
+
+The orchestrator forgets which steps completed and which compensations are pending, so orders can be stranded half-finished with inventory reserved and nothing to undo it. Persist saga step state in a durable store so a restarted orchestrator can resume or compensate exactly where it left off.
+
+</details>
 
 See also: [Monolith vs Microservices](monolith-vs-microservices.md), [API Gateway](api-gateway.md), [Part 6 — Production Reliability](../06-production-reliability/README.md) (idempotency), [Part 8 — Async Systems](../08-async-systems/README.md), and the [glossary](../../resources/glossary.md). Distributed transactions and event-driven microservices are covered in more depth in upcoming chapters in this part.
 
