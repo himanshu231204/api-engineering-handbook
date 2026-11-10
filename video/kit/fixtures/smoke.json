@@ -1,0 +1,9 @@
+{"timeline": {"fps": 30, "width": 1920, "height": 1080, "title": "DNS", "part": 1, "index": 5, "totalFrames": 180,
+ "beats": [
+  {"name": "Hook", "startFrame": 0, "frames": 90, "audio": null,
+   "cues": [{"scene": "Title", "args": {}, "startFrame": 0, "frames": 90}],
+   "captions": [{"startFrame": 10, "endFrame": 80, "text": "DNS turns a name into an IP address."}]},
+  {"name": "Concept", "startFrame": 90, "frames": 90, "audio": null,
+   "cues": [{"scene": "Concept", "args": {"heading": "Names to numbers", "body": "Computers route by number; people remember names."}, "startFrame": 90, "frames": 90}],
+   "captions": []}
+ ]}}
