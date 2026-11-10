@@ -6,28 +6,28 @@ FIX = {"e1": "Here's a real request. GET /users/42.", "i2": "One decorator maps 
 def clean(k, s):
     if k in FIX: return FIX[k]
     for a, b in [("A P I", "API"), ("Post gress Q L", "PostgreSQL"), ("Mongo D B", "MongoDB"), ("M D N", "MDN"), ("four zero four", "404"), ("four twenty two", "422"),
-                 ("forty-two", "42"), ("Two hundred", "200"), ("two hundred", "200"), ("Two hundreds", "2xx"), ("Four hundreds", "4xx"), ("Five hundreds", "5xx")]:
+                 ("forty-two", "42"), ("Two hundreds", "2xx"), ("Four hundreds", "4xx"), ("Five hundreds", "5xx"), ("Two hundred", "200"), ("two hundred", "200")]:
         s = s.replace(a, b)
     return s
 def ts(t):
     h, m = int(t // 3600), int(t % 3600 // 60); sec = t % 60
     return f"{h:02d}:{m:02d}:{int(sec):02d},{int(round((sec % 1) * 1000)):03d}".replace("1000", "999")
+import math, textwrap
+MAXW, MINDUR = 42, 1.0     # chars per caption line, seconds on screen per cue
 cues = []
 for ln in T["lines"]:
     text = clean(ln["key"], ln["say"])
-    words = text.split()
-    chunks, cur = [], []
-    for w in words:
-        if len(" ".join(cur + [w])) > 80 and cur: chunks.append(cur); cur = []
-        cur.append(w)
-    if cur: chunks.append(cur)
-    tot = sum(len(" ".join(c)) for c in chunks); t0 = ln["start"]; d = ln["end"] - ln["start"]
-    for c in chunks:
-        s = " ".join(c); dd = d * len(s) / tot
-        # wrap to 2 lines of <= 42 chars
-        if len(s) > 42:
-            mid = s.rfind(" ", 0, 43); s = s[:mid] + "\n" + s[mid + 1:]
-        cues.append((t0, t0 + dd, s)); t0 += dd
+    n = max(1, math.ceil(len(text) / (2 * MAXW)))              # cues needed at two lines each
+    width = min(MAXW, math.ceil(len(text) / (2 * n)) + 6)      # balanced lines, so no one-word tail cue
+    lines = textwrap.wrap(text, width=width)
+    while len(lines) > 2 * n and width < MAXW:                 # widen until it fits, but never past 42 chars
+        width += 1; lines = textwrap.wrap(text, width=width)
+    chunks = ["\n".join(lines[i:i + 2]) for i in range(0, len(lines), 2)]
+    tot = sum(len(c) for c in chunks); t0 = ln["start"]; d = ln["end"] - ln["start"]
+    durs = [max(d * len(c) / tot, min(MINDUR, d)) for c in chunks]
+    scale = d / sum(durs); durs = [x * scale for x in durs]
+    for c, dd in zip(chunks, durs):
+        cues.append((t0, t0 + dd, c)); t0 += dd
 with open(ROOT + "/captions.srt", "w") as f:
     for i, (a, b, s) in enumerate(cues, 1): f.write(f"{i}\n{ts(a)} --> {ts(b)}\n{s}\n\n")
 print("srt cues", len(cues))

@@ -6,9 +6,12 @@ try { ({ chromium } = require('playwright')); } catch (e) { ({ chromium } = requ
 const fs = require('fs');
 (async () => {
   const [src, dst] = process.argv.slice(2);
+  if (!src || !dst) { console.error('usage: node bake_svg_styles.js in.svg out.svg'); process.exit(2); }
+  const svgText = fs.readFileSync(src, 'utf8');
   const b = await chromium.launch();
+  try {
   const p = await b.newPage();
-  await p.setContent('<body style="margin:0;background:#000">' + fs.readFileSync(src, 'utf8') + '</body>');
+  await p.setContent('<body style="margin:0;background:#000">' + svgText + '</body>');
   const out = await p.evaluate(() => {
     const svg = document.querySelector('svg');
     const props = ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'stroke-linecap', 'opacity', 'font-family', 'font-size', 'font-weight', 'text-anchor', 'filter', 'color', 'dominant-baseline'];
@@ -27,5 +30,5 @@ const fs = require('fs');
     return svg.outerHTML;
   });
   fs.writeFileSync(dst, out);
-  await b.close();
-})();
+  } finally { await b.close(); }
+})().catch(e => { console.error(e.message || e); process.exit(1); });

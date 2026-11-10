@@ -172,6 +172,11 @@ class Scene:
             r = max(0.0, 100.0 * (1 - u / total))
             return f"inset(0 0 {r:.2f}% 0)" if axis == "y" else f"inset(0 {r:.2f}% 0 0)"
         full = "inset(0 0 100% 0)" if axis == "y" else "inset(0 100% 0 0)"
+        # two reveal steps must never share a start time (the later clip-path tween would override the earlier one)
+        fixed = [steps[0]]
+        for ts_, us_ in steps[1:]:
+            fixed.append((max(ts_, fixed[-1][0] + 0.2), us_))
+        steps = fixed
         t0, u0 = steps[0]
         self.js.append(f'tl.fromTo("#{i}",{{opacity:1,clipPath:"{full}"}},{{opacity:1,clipPath:"{clip(u0)}",duration:.5,ease:"power2.out"}},{t0});')
         for (ta, ua), (tb, ub) in zip(steps, steps[1:]):
@@ -477,9 +482,8 @@ def beat_c2c():
     cid, ids, (y0, lh) = S.code(120, 140, 960, lines, "response", size=36, lh=54, times=times)
     S.stat(200, "", 1180, 120, 560, LIME, "OK", S.t("f1", "200"), size=210)
     # f4: where did the data come from?
-    t4 = S.t("f4", "PostgreSQL")
     for i, (txt, col) in enumerate([("PostgreSQL?", CYAN), ("MongoDB?", LIME), ("a dict?", PINK)]):
-        S.box(120 + i * 330, 716, 300, 80, col, txt, tsize=32, dashed=True, t=S.t("f4", ["PostgreSQL", "MongoDB", "dictionary"][i]))
+        S.box(120 + i * 330, 716, 300, 80, col, txt, tsize=32, dashed=True, t=S.t("f4", ["Post", "Mongo", "dictionary"][i]))
     S.note("the client can't tell", 1180, 700, YEL, 66, w=640, t=S.t("f4", "point") - 0.2)
     S.write()
 

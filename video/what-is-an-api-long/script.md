@@ -44,7 +44,7 @@ Runtime 06:40. Chapters:
 - **02:07** The server answers with a status code. 200 means OK.
 - **02:12** Then comes the body, in JSON. An id, a name, an email.
 - **02:16** Nothing in this response says whether the data came from PostgreSQL, MongoDB, or a plain dictionary. That's the point.
-- **02:25** Status codes come in families. 200s mean success. 4xx mean the caller made a mistake. 5xx mean the server did.
+- **02:25** Status codes come in families. 2xx mean success. 4xx mean the caller made a mistake. 5xx mean the server did.
 - **02:35** One more thing from MDN. HTTP is stateless. Every request stands alone, so the server doesn't remember the last one unless you send something that identifies you.
 
 ## The server side

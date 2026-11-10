@@ -7,8 +7,12 @@ usage: repo_svg_to_dark.py in.svg out.svg [prefix]
   without their <style> rules leaking into the scene CSS
 """
 import colorsys, os, re, sys
-src, dst = sys.argv[1], sys.argv[2]
-pre = "r" + (sys.argv[3] if len(sys.argv) > 3 else re.sub(r"[^a-z0-9]+", "-", os.path.splitext(os.path.basename(src))[0].lower())) + "-"   # CSS class names must not start with a digit
+import argparse
+ap = argparse.ArgumentParser(description="Convert a handbook concept SVG to a transparent neon-on-black SVG.")
+ap.add_argument("src"); ap.add_argument("dst"); ap.add_argument("prefix", nargs="?")
+a = ap.parse_args()
+src, dst = a.src, a.dst
+pre = "r" + (a.prefix or re.sub(r"[^a-z0-9]+", "-", os.path.splitext(os.path.basename(src))[0].lower())) + "-"   # CSS class names must not start with a digit
 s = open(src).read()
 
 def rgb(h):
@@ -53,5 +57,5 @@ s = re.sub(r"url\(#([^)]+)\)", lambda m: f"url(#{pre}{m.group(1)})", s)
 s = re.sub(r'aria-labelledby="([^"]+)"', lambda m: 'aria-labelledby="' + " ".join(pre + c for c in m.group(1).split()) + '"', s)
 s = re.sub(r"<svg ", '<svg fill="#FFFFFF" ', s, count=1)              # text without an explicit fill defaulted to black
 open(dst, "w").write(s)
-vb = re.search(r'viewBox="0 0 (\d+) (\d+)"', s)
-print(f"{dst}: {vb.group(1)}x{vb.group(2)}, prefix={pre}")
+vb = re.search(r'viewBox="[\-\d\.]+ [\-\d\.]+ ([\d\.]+) ([\d\.]+)"', s)
+print(f"{dst}: {vb.group(1) + 'x' + vb.group(2) if vb else 'unknown size'}, prefix={pre}")

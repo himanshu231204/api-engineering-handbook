@@ -235,7 +235,7 @@
   "end": 145.09
  },
  {
-  "say": "Status codes come in families. 200s mean success. 4xx mean the caller made a mistake. 5xx mean the server did.",
+  "say": "Status codes come in families. 2xx mean success. 4xx mean the caller made a mistake. 5xx mean the server did.",
   "cap": "[2xx] success. [4xx] the caller erred. [5xx] the server erred.",
   "chapter": 2,
   "beat": "c2e",

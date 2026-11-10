@@ -16,7 +16,9 @@ chap, out = os.path.abspath(sys.argv[1]), os.path.abspath(sys.argv[2])
 text = open(chap).read()
 rel = os.path.relpath(chap, repo)
 for d in ("mermaid", "svg", "code"): os.makedirs(f"{out}/{d}", exist_ok=True)
-H = {"chapter": rel, "title": re.search(r"^# (.+)$", text, re.M).group(1)}
+m_title = re.search(r"^# (.+)$", text, re.M)
+if not m_title: sys.exit(f"{rel}: no H1 heading (# Title) found; is this a chapter file?")
+H = {"chapter": rel, "title": m_title.group(1)}
 tldr = re.search(r"> \[!TIP\]\n((?:>.*\n?)+)", text)
 if tldr:
     t = re.sub(r"^> ?", "", tldr.group(1), flags=re.M)
@@ -28,7 +30,9 @@ secs = re.split(r"^## ", text, flags=re.M)[1:]
 H["sections"] = [s.split("\n", 1)[0].strip() for s in secs]
 # mermaid + code fences
 H["mermaid"], H["code"] = [], []
-for i, m in enumerate(re.finditer(r"```(\w+)?\n(.*?)```", text, re.S)):
+n_code = 0
+# fences must start a line, so a closing fence is never taken as an opener
+for m in re.finditer(r"^```(\w*)[^\n]*\n(.*?)^```[ \t]*$", text, re.S | re.M):
     lang, body = (m.group(1) or "text"), m.group(2)
     sec = re.findall(r"^## (.+)$", text[: m.start()], re.M)
     sec = sec[-1] if sec else ""
@@ -38,7 +42,8 @@ for i, m in enumerate(re.finditer(r"```(\w+)?\n(.*?)```", text, re.S)):
         H["mermaid"].append({"mmd": os.path.relpath(p, out), "svg": os.path.relpath(p[:-4] + ".svg", out), "section": sec, "first_line": body.strip().splitlines()[0]})
     else:
         ext = {"python": "py", "http": "http", "json": "json", "bash": "sh", "text": "txt"}.get(lang, lang)
-        p = f"{out}/code/block{i + 1}.{ext}"; open(p, "w").write(body)
+        n_code += 1
+        p = f"{out}/code/block{n_code}.{ext}"; open(p, "w").write(body)
         H["code"].append({"file": os.path.relpath(p, out), "lang": lang, "section": sec, "lines": len(body.splitlines())})
 # concept SVGs
 H["svgs"] = []

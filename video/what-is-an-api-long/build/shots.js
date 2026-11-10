@@ -1,4 +1,6 @@
 const { chromium } = require('playwright');
+const path = require('path');
+let failed = 0;
 (async () => {
   const b = await chromium.launch();
   const targets = [
@@ -11,10 +13,11 @@ const { chromium } = require('playwright');
     try {
       await p.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       await p.waitForTimeout(3500);
-      await p.screenshot({ path: `../hf/assets/shots/${name}.png` });
+      await p.screenshot({ path: path.join(__dirname, '..', 'hf', 'assets', 'shots', `${name}.png`) });
       console.log('ok', name);
-    } catch (e) { console.log('fail', name, e.message.slice(0,120)); }
+    } catch (e) { console.log('fail', name, e.message.slice(0,120)); failed++; }
     await ctx.close();
   }
   await b.close();
+  if (failed) process.exit(1);
 })();
